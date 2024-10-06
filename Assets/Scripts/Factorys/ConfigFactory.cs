@@ -17,6 +17,7 @@ namespace Factorys
                 "BulletFission" => typeof(BulletFissionConfig),
                 "NormalZombie" => typeof(NormalZombieConfig),
                 "Global" => typeof(GlobalConfig),
+                "PlayerDataConfig" => typeof(PlayerDataConfig),
                 "Laser" => typeof(LaserConfig),
                 "LaserFission" => typeof(LaserFissionConfig),
                 "ElectroPenetrate" => typeof(ElectroPenetrateConfig),

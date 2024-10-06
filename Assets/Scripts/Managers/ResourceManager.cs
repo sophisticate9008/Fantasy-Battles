@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UIBase;
 using UnityEngine;
 using YooAsset;
 
 public class ResourceManager : MonoBehaviour
 {
-    public EPlayMode PlayMode = EPlayMode.EditorSimulateMode;
+    public EPlayMode PlayMode = EPlayMode.OfflinePlayMode;
     public static ResourceManager Instance { get; private set; }
     private ResourcePackage package;
     private string packageName = "DefaultPackage";
@@ -116,7 +117,7 @@ public class ResourceManager : MonoBehaviour
             StartCoroutine(CreateDownloader());
         }
     }
-       IEnumerator CreateDownloader()
+    IEnumerator CreateDownloader()
     {
         yield return new WaitForSecondsRealtime(0.5f);
         var package = YooAssets.GetPackage(packageName);
@@ -137,4 +138,5 @@ public class ResourceManager : MonoBehaviour
             // PatchEventDefine.FoundUpdateFiles.SendEventMessage(totalDownloadCount, totalDownloadBytes);
         }
     }
+
 }

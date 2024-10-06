@@ -42,8 +42,24 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/AssetPackage/UI
-        CollectorGUID: a394b972ddf6e2d4aaa5178f1a712986
+      - CollectPath: Assets/AssetPackage/UI/ItemBackground
+        CollectorGUID: 9171c597ad1b6b545a3f6e3ae7f8eced
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/UI/Prefabs
+        CollectorGUID: 1a3bdb8fd92abfd439968e9e3df99851
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/UI/BottomBar
+        CollectorGUID: e32fe0d4c3212c84cbddba5deeee1653
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

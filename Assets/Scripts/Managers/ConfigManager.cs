@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using Factorys;
+
 using UnityEngine;
 
 public class ConfigManager : MonoBehaviour
@@ -28,7 +29,12 @@ public class ConfigManager : MonoBehaviour
             config = ConfigFactory.CreateInjectedConfig(className);
             configCache[className] = config; // 缓存配置
         }
-        CreatePool(className, config);
+        try {
+            CreatePool(className, config);
+        }catch {
+            
+        }
+        
         return config;
     }
     private void CreatePool(string configName, IConfig config)
@@ -43,4 +49,5 @@ public class ConfigManager : MonoBehaviour
             
         }
     }
+
 }
