@@ -89,7 +89,7 @@ namespace MyBase
         }
         public virtual void Attack()
         {
-
+            throw new System.NotImplementedException();
         }
         public virtual List<GameObject> FindRandomTarget(int count = 1)
         {

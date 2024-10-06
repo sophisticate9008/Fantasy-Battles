@@ -3,6 +3,7 @@ using ArmConfigs;
 using Factorys;
 using MyBase;
 using UnityEngine;
+using YooAsset;
 namespace Arms
 {
     public class BulletArm : ArmBase, IRepeatable
@@ -18,6 +19,7 @@ namespace Arms
         {
             base.Start();
             RepeatLevel = ConcreteConfig.RepeatLevel;
+
         }
 
         // [Inject]
@@ -34,6 +36,7 @@ namespace Arms
         public override void OtherFindTarget()
         {
             FindTargetNearestOrElite();
+            
         }
         public override void Attack()
         {
