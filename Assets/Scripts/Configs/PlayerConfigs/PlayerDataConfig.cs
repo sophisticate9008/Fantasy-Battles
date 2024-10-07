@@ -7,22 +7,22 @@ using MyBase;
 public class PlayerDataConfig : ConfigBase
 {
     public List<ItemBase> items = new();
-    public int diamondCount = 25000;
-    public int keyPurpleCount = 100;
-    public int keyblueCount = 100;
+    public int diamond = 25000;
+    public int keyPurple = 100;
+    public int keyBlue = 100;
 
     // 事件，用于通知外部某个字段已更新
     public event Action<string> OnDataChanged;
 
     // 更新字段的通用方法
-    public void UpdateValue(string fieldName, int newValue)
+    public void UpdateValue(string fieldName, Object newValue)
     {
         // 通过反射获取字段
         FieldInfo field = GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.Public);
         if (field != null)
         {
             // 获取字段当前的值
-            int currentValue = (int)field.GetValue(this); // 这里使用 this
+            Object currentValue = field.GetValue(this); // 这里使用 this
             if (currentValue != newValue)
             {
                 // 设置新的值
@@ -33,9 +33,9 @@ public class PlayerDataConfig : ConfigBase
     }
 
     // 获取字段的值
-    public int GetValue(string fieldName)
+    public Object GetValue(string fieldName)
     {
         FieldInfo field = GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.Public);
-        return field != null ? (int)field.GetValue(this) : 0; // 这里使用 this
+        return field != null ? field.GetValue(this) : 0; // 这里使用 this
     }
 }
