@@ -2658,6 +2658,7 @@ MonoBehaviour:
   goodName: keyPurple
   price: 250
   currencyName: diamond
+  goodCount: 2
 --- !u!114 &1240498021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4458,6 +4459,7 @@ MonoBehaviour:
   goodName: keyBlue
   price: 50
   currencyName: diamond
+  goodCount: 2
 --- !u!114 &1829459124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5107,6 +5109,22 @@ PrefabInstance:
     - target: {fileID: 629386105803190495, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787013466540858980, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
+      propertyPath: m_Color.a
+      value: 0.76862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787013466540858980, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
+      propertyPath: m_Color.b
+      value: 0.2718334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787013466540858980, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
+      propertyPath: m_Color.g
+      value: 0.2718334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5787013466540858980, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
+      propertyPath: m_Color.r
+      value: 0.2754717
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
