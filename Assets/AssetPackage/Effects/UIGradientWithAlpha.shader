@@ -2,6 +2,7 @@ Shader "Custom/UIGradientWithAxisSelection"
 {
     Properties
     {
+        _MainTex ("Texture", 2D) = "white" {}
         _StartColor ("Start Color", Color) = (1,1,1,1)   // 起始颜色
         _EndColor ("End Color", Color) = (1,0,0,1)       // 结束颜色
         _GradientDirection ("Gradient Direction (0: X, 1: Y, 2: XY)", Range(0,2)) = 1 // 渐变方向选择

@@ -11,11 +11,6 @@ public class PlayerDataConfig : ConfigBase
     public int keyPurple = 100;
     public int keyBlue = 100;
 
-    public Dictionary<string, int> ResNameToLevel = new Dictionary<string, int>() {
-        {"keyBlue", 3},
-        {"keyPurple", 4},
-
-    };
 
     // 事件，用于通知外部某个字段已更新
     public event Action<string> OnDataChanged;

@@ -17,7 +17,7 @@ namespace UIBase
         public int Id => itemInfo.id;
         public override void Init()
         {
-            string color = LevelToColor();
+            string color = Tool.LevelToColorString(Level);
             Sprite background = YooAssets.LoadAssetSync<Sprite>(color).AssetObject as Sprite;
             Prefab.GetComponent<Image>().sprite = background;
             Transform children = Prefab.transform.GetChild(0);
@@ -27,21 +27,16 @@ namespace UIBase
                 children = Prefab.transform.GetChild(1);
                 children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("Flag" + Place).AssetObject as Sprite;
             }
+            GetComponent<Button>().onClick.AddListener(ShowDes);
         }
-        public string LevelToColor()
-        {
-            return Level switch
-            {
-                1 => "gray",
-                2 => "green",
-                3 => "blue",
-                4 => "purple",
-                5 => "orange",
-                6 => "red",
-                7 => "muticolour",
-                _ => throw new System.NotImplementedException(),
-            };
+        public void ShowDes(){
+            GameObject desPrefab = YooAssets.LoadAssetSync("Des").AssetObject as GameObject;
+            DesUIBase des = Instantiate(desPrefab).AddComponent<DesUIBase>();
+            des.itemInfo = itemInfo;
+            des.Init();
+            UIManager.Instance.ShowUI(des);
         }
+
 
 
     }

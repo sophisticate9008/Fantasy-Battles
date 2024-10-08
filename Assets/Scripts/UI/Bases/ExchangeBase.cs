@@ -1,3 +1,4 @@
+using Factorys;
 using MyBase;
 using UIBase;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class ExchangeBase : ConsumeBase
     private InputField inputField;
     public Button good;
     public Button confirm;
+    private ItemBase itemInfo;
     private const int maxBuyCount = 99;
 
     // 初始化方法
@@ -30,7 +32,7 @@ public class ExchangeBase : ConsumeBase
         BindButton();
         GenerateItem();
         inputField.text = buyCount.ToString();
-        goodNameText.text = goodName;
+        goodNameText.text = itemInfo.simpleName;
         needItem.sprite = YooAssets.LoadAssetSync<Sprite>(currencyName).AssetObject as Sprite;
         // 限制输入框只能输入数字
         inputField.contentType = InputField.ContentType.IntegerNumber;
@@ -67,16 +69,11 @@ public class ExchangeBase : ConsumeBase
 
             // 销毁现有物体
             Destroy(currentItem.gameObject);
-
             // 加载新Prefab并实例化
             GameObject ItemPrefab = YooAssets.LoadAssetSync<GameObject>("ItemBase").AssetObject as GameObject;
             GameObject newItem = Instantiate(ItemPrefab);
             ItemUIBase item = newItem.AddComponent<ItemUIBase>();
-            ItemBase itemInfo = new ItemBase();
-            itemInfo.id = 600;
-            itemInfo.resName = goodName;
-            itemInfo.level = PlayerDataConfig.ResNameToLevel[goodName];
-            itemInfo.count = goodCount;
+            itemInfo = ItemFactory.Create(goodName, goodCount);
             item.itemInfo = itemInfo;
             item.Init();
             // 将新物体设置为与原物体的父物体一致
