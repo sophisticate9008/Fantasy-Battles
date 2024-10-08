@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance => _instance;
 
     private Stack<TheUIBase> uiStack = new Stack<TheUIBase>();
+    private Stack<TheUIBase> maskStack = new Stack<TheUIBase>();
     private GameObject uiCanvas;
     private GameObject currentMask; // 当前遮罩
 
@@ -89,10 +90,12 @@ public class UIManager : MonoBehaviour
         currentMask = Instantiate(maskPrefab, uiCanvas.transform);
         // 添加全屏透明遮罩，监听点击事件
         currentMask.AddComponent<MaskListener>().onMaskClicked += OnMaskClicked;
+        maskStack.Push(currentMask.GetComponent<TheUIBase>());
     }
 
     private void RemoveMask()
     {
+        currentMask = maskStack.Pop().gameObject;
         if (currentMask != null)
         {
             Destroy(currentMask);
@@ -138,6 +141,6 @@ public class MaskListener : MonoBehaviour, IPointerClickHandler
     {
         // 如果点击不在 UI 元素上，触发遮罩点击事件
         onMaskClicked?.Invoke();
-
+        Destroy(gameObject);
     }
 }

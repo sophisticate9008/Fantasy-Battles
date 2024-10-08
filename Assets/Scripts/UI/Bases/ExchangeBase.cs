@@ -72,8 +72,12 @@ public class ExchangeBase : ConsumeBase
             GameObject ItemPrefab = YooAssets.LoadAssetSync<GameObject>("ItemBase").AssetObject as GameObject;
             GameObject newItem = Instantiate(ItemPrefab);
             ItemUIBase item = newItem.AddComponent<ItemUIBase>();
-            item.resName = goodName;
-            item.num = goodCount;
+            ItemBase itemInfo = new ItemBase();
+            itemInfo.id = 600;
+            itemInfo.resName = goodName;
+            itemInfo.level = PlayerDataConfig.ResNameToLevel[goodName];
+            itemInfo.count = goodCount;
+            item.itemInfo = itemInfo;
             item.Init();
             // 将新物体设置为与原物体的父物体一致
             newItem.transform.SetParent(originalRectTransform.parent, false);

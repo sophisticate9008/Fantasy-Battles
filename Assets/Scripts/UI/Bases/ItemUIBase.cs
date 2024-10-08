@@ -1,3 +1,4 @@
+using MyBase;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,23 +9,28 @@ namespace UIBase
     public class ItemUIBase : TheUIBase
     {
 
-
-        public string resName;
-        public int level;
-        public int num = 1;
+        public ItemBase itemInfo;
+        private string ResName => itemInfo.resName;
+        public int Level => itemInfo.level;
+        public int Count => itemInfo.count;
+        public string Place => itemInfo.place;
+        public int Id => itemInfo.id;
         public override void Init()
         {
-            ResNameToLevel();
             string color = LevelToColor();
             Sprite background = YooAssets.LoadAssetSync<Sprite>(color).AssetObject as Sprite;
             Prefab.GetComponent<Image>().sprite = background;
             Transform children = Prefab.transform.GetChild(0);
-            children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>(resName).AssetObject as Sprite;
-            children.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = num.ToString();
+            children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>(ResName).AssetObject as Sprite;
+            children.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Count.ToString();
+            if(Id < 500) {
+                children = Prefab.transform.GetChild(1);
+                children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("Flag" + Place).AssetObject as Sprite;
+            }
         }
         public string LevelToColor()
         {
-            return level switch
+            return Level switch
             {
                 1 => "gray",
                 2 => "green",
@@ -35,15 +41,6 @@ namespace UIBase
                 7 => "muticolour",
                 _ => throw new System.NotImplementedException(),
             };
-        }
-        public void ResNameToLevel()
-        {
-            if(PlayerDataConfig.ResNameToLevel.ContainsKey(resName)) {
-                level = PlayerDataConfig.ResNameToLevel[resName];
-            }else {
-                level = 3;
-            }
-            
         }
 
 

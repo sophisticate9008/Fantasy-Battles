@@ -8,6 +8,8 @@ namespace MyBase
     [Serializable]
     public class ItemBase
     {
+        //图片名字
+        public string resName;
         //过期时间
         public DateTime expireTime;
         //id 同质物品 比如效果同质的宝石 装备，前500预留给宝石
