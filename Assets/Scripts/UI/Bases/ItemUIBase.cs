@@ -11,9 +11,10 @@ namespace UIBase
 
         public string resName;
         public int level;
-        public int num;
+        public int num = 1;
         public override void Init()
         {
+            ResNameToLevel();
             string color = LevelToColor();
             Sprite background = YooAssets.LoadAssetSync<Sprite>(color).AssetObject as Sprite;
             Prefab.GetComponent<Image>().sprite = background;
@@ -21,7 +22,8 @@ namespace UIBase
             children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>(resName).AssetObject as Sprite;
             children.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = num.ToString();
         }
-        public string LevelToColor(){
+        public string LevelToColor()
+        {
             return level switch
             {
                 1 => "gray",
@@ -34,8 +36,13 @@ namespace UIBase
                 _ => throw new System.NotImplementedException(),
             };
         }
+        public void ResNameToLevel()
+        {
+            if(PlayerDataConfig.ResNameToLevel.ContainsKey(resName))
+            level = PlayerDataConfig.ResNameToLevel[resName];
+        }
 
-        
+
     }
 
 

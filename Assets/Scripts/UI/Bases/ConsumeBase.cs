@@ -7,9 +7,8 @@ public class ConsumeBase : TheUIBase, IConsume
     public int _ConsumeCount;
     public string _itemName;
 
-    public string ItemName { get => _itemName; set => _itemName = value; }
-    public int ConsumeCount { get => _ConsumeCount; set => _ConsumeCount = value; }
-
+    public virtual string ItemName { get => _itemName; set => _itemName = value; }
+    public virtual int ConsumeCount { get => _ConsumeCount; set => _ConsumeCount = value; }
     public virtual void PreConsume()
     {
         if ((int)PlayerDataConfig.GetValue(ItemName) >= ConsumeCount)
@@ -31,6 +30,9 @@ public class ConsumeBase : TheUIBase, IConsume
         PlayerDataConfig.UpdateValue(ItemName, (int)PlayerDataConfig.GetValue(ItemName) - ConsumeCount);
     }
     private void Start() {
+        BindButton();
+    }
+    public virtual void BindButton() {
         GetComponent<Button>().onClick.AddListener(PreConsume);
     }
 }

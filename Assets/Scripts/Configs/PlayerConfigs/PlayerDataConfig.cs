@@ -11,6 +11,12 @@ public class PlayerDataConfig : ConfigBase
     public int keyPurple = 100;
     public int keyBlue = 100;
 
+    public Dictionary<string, int> ResNameToLevel = new Dictionary<string, int>() {
+        {"keyBlue", 3},
+        {"keyPurple", 4},
+
+    };
+
     // 事件，用于通知外部某个字段已更新
     public event Action<string> OnDataChanged;
 
@@ -37,5 +43,15 @@ public class PlayerDataConfig : ConfigBase
     {
         FieldInfo field = GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.Public);
         return field != null ? field.GetValue(this) : 0; // 这里使用 this
+    }
+    public void UpdateValueAdd(string fieldName, int val)
+    {
+        int orginValue = (int)GetValue(fieldName);
+        UpdateValue(fieldName, orginValue + val);
+    }
+    public void UpdateValueSubtract(string fieldName, int val)
+    {
+        int orginValue = (int)GetValue(fieldName);
+        UpdateValue(fieldName, orginValue - val);
     }
 }

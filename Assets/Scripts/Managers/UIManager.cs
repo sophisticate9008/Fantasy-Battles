@@ -1,8 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
+using MyBase;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using YooAsset;
 
 public class UIManager : MonoBehaviour
 {
@@ -53,6 +56,11 @@ public class UIManager : MonoBehaviour
 
         // 添加遮罩
 
+    }
+    private IEnumerator AutoCloseMessageUI()
+    {
+        yield return new WaitForSeconds(0.3f);
+        CloseUI();
     }
 
     public void CloseUI()
@@ -105,6 +113,17 @@ public class UIManager : MonoBehaviour
         TheUIBase theUIBase = Instantiate(MessagePrefab).GetComponent<TheUIBase>();
         theUIBase.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
         ShowUI(theUIBase);
+        StartCoroutine(AutoCloseMessageUI());
+    }
+    public void OnExchange(string goodName, string currencyName,int price)
+    {
+        GameObject exchangeBasePrefab = YooAssets.LoadAssetSync("ExchangeBase").AssetObject as GameObject;
+        ExchangeBase exchangeBase = Instantiate(exchangeBasePrefab).GetComponent<ExchangeBase>();
+        exchangeBase.goodName = goodName;
+        exchangeBase.currencyName = currencyName;
+        exchangeBase.price = price;
+        exchangeBase.Init();
+        ShowUI(exchangeBase);
     }
 }
 
