@@ -10,13 +10,10 @@ namespace MyBase
     {
         //过期时间
         public DateTime expireTime;
-        //id 同质物品 比如效果同质的宝石 装备
-        public int id;
+        //id 同质物品 比如效果同质的宝石 装备，前500预留给宝石
+        public int id; 
         //堆叠之后的物品数量
         public int count;
-        //宝石，装备，材料
-        public string type;
-        //宝石位置
         public string place;
         //品质等级
         public int level;
@@ -35,7 +32,6 @@ namespace MyBase
             // 除 count 外，其他属性必须都相等
             return item1.expireTime == item2.expireTime &&
                    item1.id == item2.id &&
-                   item1.type == item2.type &&
                    item1.place == item2.place &&
                    item1.level == item2.level &&
                    item1.description == item2.description &&
@@ -62,7 +58,7 @@ namespace MyBase
         // 重写 GetHashCode 方法
         public override int GetHashCode()
         {
-            return HashCode.Combine(expireTime, id, type, place, level, description, isEmbedded, isLock);
+            return HashCode.Combine(expireTime, id, place, level, description, isEmbedded, isLock);
         }
 
     }

@@ -10,6 +10,7 @@ public class ExchangeBase : ConsumeBase
     public string goodName;
     public string currencyName;
     public int price;
+    public int goodCount;
     public override string ItemName => currencyName;
     public override int ConsumeCount => price * buyCount;
     private Text goodNameText;
@@ -72,6 +73,7 @@ public class ExchangeBase : ConsumeBase
             GameObject newItem = Instantiate(ItemPrefab);
             ItemUIBase item = newItem.AddComponent<ItemUIBase>();
             item.resName = goodName;
+            item.num = goodCount;
             item.Init();
             // 将新物体设置为与原物体的父物体一致
             newItem.transform.SetParent(originalRectTransform.parent, false);
@@ -149,7 +151,7 @@ public class ExchangeBase : ConsumeBase
 
     public override bool PostConsume()
     {
-        PlayerDataConfig.UpdateValueAdd(goodName, buyCount);
+        PlayerDataConfig.UpdateValueAdd(goodName, buyCount * goodCount);
         return true;
     }
 }

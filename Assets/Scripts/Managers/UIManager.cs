@@ -115,13 +115,14 @@ public class UIManager : MonoBehaviour
         ShowUI(theUIBase);
         StartCoroutine(AutoCloseMessageUI());
     }
-    public void OnExchange(string goodName, string currencyName,int price)
+    public void OnExchange(string goodName, string currencyName,int price, int goodCount = 1)
     {
         GameObject exchangeBasePrefab = YooAssets.LoadAssetSync("ExchangeBase").AssetObject as GameObject;
         ExchangeBase exchangeBase = Instantiate(exchangeBasePrefab).GetComponent<ExchangeBase>();
         exchangeBase.goodName = goodName;
         exchangeBase.currencyName = currencyName;
         exchangeBase.price = price;
+        exchangeBase.goodCount = goodCount;
         exchangeBase.Init();
         ShowUI(exchangeBase);
     }

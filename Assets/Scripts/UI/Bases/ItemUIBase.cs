@@ -38,8 +38,12 @@ namespace UIBase
         }
         public void ResNameToLevel()
         {
-            if(PlayerDataConfig.ResNameToLevel.ContainsKey(resName))
-            level = PlayerDataConfig.ResNameToLevel[resName];
+            if(PlayerDataConfig.ResNameToLevel.ContainsKey(resName)) {
+                level = PlayerDataConfig.ResNameToLevel[resName];
+            }else {
+                level = 3;
+            }
+            
         }
 
 
