@@ -13,11 +13,11 @@ namespace UIBase
         private string ResName => itemInfo.resName;
         public int Level => itemInfo.level;
         public int Count => itemInfo.count;
-        public string Place => itemInfo.place;
+        public int PlaceId => itemInfo.placeId;
         public int Id => itemInfo.id;
         public override void Init()
         {
-            string color = Tool.LevelToColorString(Level);
+            string color = LevelUtil.LevelToColorString(Level);
             Sprite background = YooAssets.LoadAssetSync<Sprite>(color).AssetObject as Sprite;
             Prefab.GetComponent<Image>().sprite = background;
             Transform children = Prefab.transform.GetChild(0);
@@ -25,7 +25,8 @@ namespace UIBase
             children.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Count.ToString();
             if(Id < 500) {
                 children = Prefab.transform.GetChild(1);
-                children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("Flag" + Place).AssetObject as Sprite;
+                children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("Place" + PlaceId).AssetObject as Sprite;
+                children.GetComponent<Image>().gameObject.SetActive(true);
             }
             GetComponent<Button>().onClick.AddListener(ShowDes);
         }

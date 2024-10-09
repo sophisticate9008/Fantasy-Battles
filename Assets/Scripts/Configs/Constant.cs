@@ -7,4 +7,5 @@ public class Constant {
     public static readonly string SelfPrefabResPath = "Prefabs/Self/";
     public static readonly string EnemyPrefabResPath = "Prefabs/Enemy/";
     public static readonly string PrefabResOther = "Prefabs/Other/";
+    public static readonly int JewelMaxId = 10;
 }

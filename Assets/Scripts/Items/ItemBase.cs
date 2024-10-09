@@ -18,7 +18,7 @@ namespace MyBase
         public int id; 
         //堆叠之后的物品数量
         public int count;
-        public string place;
+        public int placeId;
         //品质等级
         public int level;
         //物品描述
@@ -36,7 +36,7 @@ namespace MyBase
             // 除 count 外，其他属性必须都相等
             return item1.expireTime == item2.expireTime &&
                    item1.id == item2.id &&
-                   item1.place == item2.place &&
+                   item1.placeId == item2.placeId &&
                    item1.level == item2.level &&
                    item1.description == item2.description &&
                    item1.isEmbedded == item2.isEmbedded &&
@@ -62,7 +62,7 @@ namespace MyBase
         // 重写 GetHashCode 方法
         public override int GetHashCode()
         {
-            return HashCode.Combine(expireTime, id, place, level, description, isEmbedded, isLock);
+            return HashCode.Combine(expireTime, id, placeId, level, description, isEmbedded, isLock);
         }
 
     }

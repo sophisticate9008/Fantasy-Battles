@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tool
+public class LevelUtil
 {
     public static Color LevelToColor(int level)
     {
@@ -28,6 +28,34 @@ public class Tool
             5 => "orange",
             6 => "red",
             7 => "muticolour",
+            _ => throw new System.NotImplementedException(),
+        };
+    }
+    public static string LevelToJewelSimpleName(int level)
+    {
+        return level switch
+        {
+            1 => "普通宝石",
+            2 => "精良宝石",
+            3 => "稀有宝石",
+            4 => "完美宝石",
+            5 => "传说宝石",
+            6 => "绝世宝石",
+            7 => "至尊宝石",
+            _ => throw new System.NotImplementedException(),
+        };
+    }
+    public static string LevelToJewelResName(int level)
+    {
+        return level switch
+        {
+            1 => "icon_baoshi_1",
+            2 => "icon_baoshi_2",
+            3 => "icon_baoshi_3",
+            4 => "icon_baoshi_4",
+            5 => "icon_baoshi_5",
+            6 => "icon_baoshi_6",
+            7 => "icon_baoshi_7",
             _ => throw new System.NotImplementedException(),
         };
     }
