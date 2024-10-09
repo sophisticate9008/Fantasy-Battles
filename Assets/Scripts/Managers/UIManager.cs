@@ -114,11 +114,11 @@ public class UIManager : MonoBehaviour
     {
         if (text == null) return;
         TheUIBase theUIBase = Instantiate(MessagePrefab).GetComponent<TheUIBase>();
-        theUIBase.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
+        theUIBase.gameObject.transform.GetChild(0).GetComponent<Text>().text = text;
         ShowUI(theUIBase);
         StartCoroutine(AutoCloseMessageUI());
     }
-    public void OnExchange(string goodName, string currencyName,int price, int goodCount = 1)
+    public void OnExchange(string goodName, string currencyName, int price, int goodCount = 1)
     {
         GameObject exchangeBasePrefab = YooAssets.LoadAssetSync("ExchangeBase").AssetObject as GameObject;
         ExchangeBase exchangeBase = Instantiate(exchangeBasePrefab).GetComponent<ExchangeBase>();
@@ -128,6 +128,24 @@ public class UIManager : MonoBehaviour
         exchangeBase.goodCount = goodCount;
         exchangeBase.Init();
         ShowUI(exchangeBase);
+    }
+    public void OnCommonUI(string title, string text)
+    {
+        GameObject CommonUIPrefab = YooAssets.LoadAssetSync("CommonUI").AssetObject as GameObject;
+        CommonUIBase commonUIBase = Instantiate(CommonUIPrefab).AddComponent<CommonUIBase>();
+        commonUIBase.title = title;
+        commonUIBase.innerText = text;
+        commonUIBase.Init();
+        ShowUI(commonUIBase);
+    }
+    public void OnCommonUI(string title, TheUIBase ui)
+    {
+        GameObject CommonUIPrefab = YooAssets.LoadAssetSync("CommonUI").AssetObject as GameObject;
+        CommonUIBase commonUIBase = Instantiate(CommonUIPrefab).AddComponent<CommonUIBase>();
+        commonUIBase.title = title;
+        commonUIBase.Init();
+        commonUIBase.ReplaceInner(ui);
+        ShowUI(commonUIBase);
     }
 }
 

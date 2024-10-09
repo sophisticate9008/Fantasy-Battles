@@ -7,10 +7,12 @@ using MyBase;
 public class PlayerDataConfig : ConfigBase
 {
     public List<ItemBase> items = new();
+    public List<JewelBase> jewels = new();
     public int diamond = 25000;
     public int keyPurple = 100;
-    public int keyBlue = 100;
-
+    public int keyBlue = 200;
+    public int guaranteeBlue = 10;//蓝色保底
+    public int guaranteePurple = 10;//紫色保底
 
     // 事件，用于通知外部某个字段已更新
     public event Action<string> OnDataChanged;
@@ -30,6 +32,7 @@ public class PlayerDataConfig : ConfigBase
                 field.SetValue(this, newValue); // 这里也使用 this
                 OnDataChanged?.Invoke(fieldName); // 触发事件
             }
+
         }
     }
 

@@ -153,6 +153,7 @@ public class ExchangeBase : ConsumeBase
     public override bool PostConsume()
     {
         PlayerDataConfig.UpdateValueAdd(goodName, buyCount * goodCount);
+        UIManager.Instance.OnMessage("购买成功");
         return true;
     }
 }

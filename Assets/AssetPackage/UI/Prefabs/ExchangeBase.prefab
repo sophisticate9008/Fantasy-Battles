@@ -296,6 +296,7 @@ MonoBehaviour:
   goodName: 
   currencyName: 
   price: 0
+  goodCount: 0
   good: {fileID: 0}
   confirm: {fileID: 0}
 --- !u!1 &990738751314774212
@@ -635,10 +636,10 @@ RectTransform:
   - {fileID: 1164981515891544834}
   m_Father: {fileID: 1685186102116122926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.237091, y: 265.39697}
-  m_SizeDelta: {x: -110.0599, y: -589.8666}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -3.2370605, y: -59.103027}
+  m_SizeDelta: {x: 549.94006, y: 59.133423}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2746031537254827289
 CanvasRenderer:
@@ -716,10 +717,10 @@ RectTransform:
   - {fileID: 6531331405965234382}
   m_Father: {fileID: 1685186102116122926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -6.2495117, y: 11.552673}
-  m_SizeDelta: {x: -281.4615, y: -201.0414}
+  m_SizeDelta: {x: 378.5385, y: 448.95862}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7097898642297265226
 CanvasRenderer:
@@ -1503,6 +1504,10 @@ PrefabInstance:
     - target: {fileID: 6153759017554425987, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008454988433575700, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 25.099976
       objectReference: {fileID: 0}
     - target: {fileID: 8692604265823964123, guid: 74e153d23ef03204b8870fa366e8d470, type: 3}
       propertyPath: m_Sprite
