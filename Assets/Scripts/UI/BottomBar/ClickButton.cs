@@ -34,21 +34,29 @@ public class ClickButton : MonoBehaviour
             }
             index++;
         }
+        if (childAnimators.Count > 0)
+        {
+            OnButtonClick(childAnimators[0], 0);
+        }
 
     }
 
     // 当按钮被点击时执行的逻辑
     void OnButtonClick(Animator clickedAnimator, int index)
     {
-        for(int i = 0; i < GameObject.Find("Pages").transform.GetChild(0).childCount - 1; i++) {
-            if(index == i) {
+        for (int i = 0; i < GameObject.Find("Pages").transform.GetChild(0).childCount - 1; i++)
+        {
+            if (index == i)
+            {
                 pages[i].SetActive(true);
-            }else {
+            }
+            else
+            {
                 pages[i].SetActive(false);
             }
         }
         pages[index].SetActive(true);
-        
+
         // 遍历所有子对象，关闭其他动画，只开启点击的那个动画
         foreach (Animator anim in childAnimators)
         {

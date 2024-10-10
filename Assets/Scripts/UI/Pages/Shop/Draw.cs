@@ -108,10 +108,16 @@ public class Draw : ConsumeBase
         // ItemUIBase itemUI  = itemBasePrefab.AddComponent<ItemUIBase>();
         for (int i = 0; i < drawList.Count; i++)
         {
+            
             ItemUIBase itemUI = Instantiate(itemBasePrefab).AddComponent<ItemUIBase>();
             itemUI.itemInfo = drawList[i];
             itemUI.Init();
-            itemUI.transform.SetParent(drawPanel.transform.RecursiveFind("JewelContent"));
+            try {
+                itemUI.transform.SetParent(drawPanel.transform.RecursiveFind("JewelContent"));
+            }catch {
+                Destroy(itemUI.gameObject);
+            }
+            
             yield return new WaitForSeconds(0.1f);
         }
     }

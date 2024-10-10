@@ -95,11 +95,15 @@ public class UIManager : MonoBehaviour
 
     private void RemoveMask()
     {
-        currentMask = maskStack.Pop().gameObject;
-        if (currentMask != null)
+        if (maskStack.Count > 0)
         {
-            Destroy(currentMask);
+            currentMask = maskStack.Pop().gameObject;
+            if (currentMask != null)
+            {
+                Destroy(currentMask);
+            }
         }
+
     }
 
     private void OnMaskClicked()
