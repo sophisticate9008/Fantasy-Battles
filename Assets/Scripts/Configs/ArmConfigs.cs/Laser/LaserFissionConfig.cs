@@ -16,7 +16,7 @@ namespace ArmConfigs
             ScopeRadius = 3f;
             TriggerType = "stay";
             DamageType = "energy";
-            Duration = 0.21f;
+            Duration = 0.1f;
             AttackCd = 0.2f;
         }
     }
