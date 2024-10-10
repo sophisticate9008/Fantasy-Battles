@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LevelUtil
+public class ItemUtil
 {
     public static Dictionary<int, float> probDictBlue = new()
     {
@@ -81,6 +81,18 @@ public class LevelUtil
             5 => "icon_baoshi_5",
             6 => "icon_baoshi_6",
             7 => "icon_baoshi_7",
+            _ => throw new System.NotImplementedException(),
+        };
+    }
+    public static string PlaceIdToPlaceName(int placeId) {
+        return placeId switch
+        {
+            1 => "头盔",
+            2 => "护臂",
+            3 => "裤子",
+            4 => "盔甲",
+            5 => "鞋子",
+            6 => "手套",
             _ => throw new System.NotImplementedException(),
         };
     }

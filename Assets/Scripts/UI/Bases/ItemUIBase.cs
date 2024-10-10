@@ -17,7 +17,7 @@ public class ItemUIBase : TheUIBase
     public int Id => itemInfo.id;
     public override void Init()
     {
-        string color = LevelUtil.LevelToColorString(Level);
+        string color = ItemUtil.LevelToColorString(Level);
         Sprite background = YooAssets.LoadAssetSync<Sprite>(color).AssetObject as Sprite;
         Prefab.GetComponent<Image>().sprite = background;
         Transform children = Prefab.transform.GetChild(0);
@@ -32,7 +32,7 @@ public class ItemUIBase : TheUIBase
         GetComponent<Button>().onClick.RemoveAllListeners();
         GetComponent<Button>().onClick.AddListener(ShowDes);
     }
-    public void ShowDes()
+    public virtual void ShowDes()
     {
         GameObject desPrefab = YooAssets.LoadAssetSync("Des").AssetObject as GameObject;
         DesUIBase des = Instantiate(desPrefab).AddComponent<DesUIBase>();

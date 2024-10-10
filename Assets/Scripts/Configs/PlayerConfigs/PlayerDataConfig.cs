@@ -6,14 +6,20 @@ using MyBase;
 [Serializable]
 public class PlayerDataConfig : ConfigBase
 {
-    public List<ItemBase> items = new();
-    public List<JewelBase> jewels = new();
+
     public int diamond = 25000;
     public int keyPurple = 100;
     public int keyBlue = 200;
     public int guaranteeBlue = 10;//蓝色保底
     public int guaranteePurple = 10;//紫色保底
-
+    public List<JewelBase> place1 = new();
+    public List<JewelBase> place2 = new();
+    public List<JewelBase> place3 = new();
+    public List<JewelBase> place4 = new();
+    public List<JewelBase> place5 = new();
+    public List<JewelBase> place6 = new();
+    public List<ItemBase> items = new();
+    public List<JewelBase> jewels = new();
     // 事件，用于通知外部某个字段已更新
     public event Action<string> OnDataChanged;
 

@@ -10,8 +10,8 @@ public class JewelBase : ItemBase
         this.level = level;
         this.placeId = placeId;
         this.description = description;
-        simpleName = LevelUtil.LevelToJewelSimpleName(level);
-        resName = LevelUtil.LevelToJewelResName(level);
+        simpleName = ItemUtil.LevelToJewelSimpleName(level);
+        resName = ItemUtil.LevelToJewelResName(level);
         this.count = count;
     }
     public JewelBase Clone()

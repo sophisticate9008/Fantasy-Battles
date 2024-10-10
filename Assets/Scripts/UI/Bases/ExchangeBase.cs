@@ -1,6 +1,4 @@
 using Factorys;
-using MyBase;
-using UIBase;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;

@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using MyBase;
-using TMPro;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,12 +19,19 @@ public class UIManager : MonoBehaviour
 
     public GameObject maskPrefab; // 遮罩预制体
     public GameObject MessagePrefab;
-
+    public GameObject listenedToClose;
+    public string[] excluedTypes;
+    public bool enableClick = true;
     private void Awake()
     {
         if (_instance == null)
         {
             _instance = this;
+            //拦截鼠标点击事件
+            typeof(ExecuteEvents).GetField("s_PointerClickHandler", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, new ExecuteEvents.EventFunction<IPointerClickHandler>(OnPointerClick));
+            // 拦截鼠标按下事件
+            // typeof(ExecuteEvents).GetField("s_PointerDownHandler", BindingFlags.NonPublic | BindingFlags.Static)
+            //     .SetValue(null, new ExecuteEvents.EventFunction<IPointerDownHandler>(OnPointerDown));
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -40,7 +46,83 @@ public class UIManager : MonoBehaviour
             Debug.LogError("UICanvas not found. Please make sure there is a Canvas in the scene.");
         }
     }
+    // private void OnPointerDown(IPointerDownHandler handler, BaseEventData eventData)
+    // {
+    //     PointerEventData pointerEventData = ExecuteEvents.ValidateEventData<PointerEventData>(eventData);
+    //     if (pointerEventData != null)
+    //     {
+    //         // 检测条件，设置 preventClick
+    //         return;
+    //     }
+    // }
+    void OnPointerClick(IPointerClickHandler handler, BaseEventData eventData)
+    {
+        PointerEventData pointerEventData = ExecuteEvents.ValidateEventData<PointerEventData>(eventData);
+        if (pointerEventData != null)
+        {
+            if (enableClick)
+            {
+                handler.OnPointerClick(pointerEventData);
+            }
 
+        }
+    }
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Input.mousePosition
+            };
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+            //如果包含自身面板，则不处理
+            foreach (var result in results)
+            {
+                Debug.Log(result.gameObject.name);
+                if (result.gameObject == listenedToClose)
+                {
+                    return;
+                }
+            }
+            //排除列表
+            foreach (var result in results)
+            {
+                foreach (string exclude in excluedTypes)
+                {
+                    // 获取点击对象的组件
+                    var component = result.gameObject.GetComponent(exclude);
+                    if (component != null)
+                    {
+                        // 包含在排除列表中，跳过关闭面板
+                        return;
+                    }
+                }
+            }
+            if (listenedToClose != null)
+            {
+                enableClick = false;
+                OnListenedclose();
+                SetTimeout(() => enableClick = true, 0.3f);
+            }
+            //否则关闭
+
+
+        }
+    }
+
+    public void OnListenedToclose(GameObject theUI, string[] excluedTypes)
+    {
+        listenedToClose = theUI;
+        this.excluedTypes = excluedTypes;
+    }
+    private void OnListenedclose()
+    {
+        listenedToClose.SetActive(false);
+        listenedToClose = null;
+
+    }
     public void ShowUI(TheUIBase ui)
     {
         AddMask();
@@ -162,6 +244,17 @@ public class UIManager : MonoBehaviour
         {
             action?.Invoke();
         });
+    }
+    public Coroutine SetTimeout(Action action, float delay)
+    {
+        return StartCoroutine(TimeoutCoroutine(action, delay));
+    }
+
+    // 协程，处理延迟
+    private IEnumerator TimeoutCoroutine(Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
     }
 }
 

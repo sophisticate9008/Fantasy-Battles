@@ -35,13 +35,13 @@ public class Draw : ConsumeBase
         base.Start();
         if (probabilitySelection == ProbabilityType.ProbDict1)
         {
-            selectedDict = LevelUtil.probDictBlue;
+            selectedDict = ItemUtil.probDictBlue;
             guaranteeName = "guaranteeBlue";
             minLevel = 3;
         }
         else
         {
-            selectedDict = LevelUtil.probDictPurple;
+            selectedDict = ItemUtil.probDictPurple;
             guaranteeName = "guaranteePurple";
             minLevel = 4;
         }
@@ -86,12 +86,12 @@ public class Draw : ConsumeBase
         if (guaranteeCount > 1)
         {
             PlayerDataConfig.UpdateValueSubtract(guaranteeName, 1);
-            level = LevelUtil.GetRandomLevel(selectedDict);
+            level = ItemUtil.GetRandomLevel(selectedDict);
         }
         else
         {
             PlayerDataConfig.UpdateValue(guaranteeName, 10);
-            level = LevelUtil.GetRandomLevel(selectedDict, minLevel);
+            level = ItemUtil.GetRandomLevel(selectedDict, minLevel);
         }
         int id = Random.Range(1, Constant.JewelMaxId + 1);
         int placeId = Random.Range(1, 7);

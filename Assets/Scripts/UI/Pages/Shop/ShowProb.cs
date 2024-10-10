@@ -12,9 +12,9 @@ public class ShowProb : TheUIBase
 
     public void Show() {
         if (probabilitySelection == ProbabilityType.ProbDict1) {
-            UIManager.Instance.OnCommonUI("蓝色宝箱概率", LevelUtil.ProbDictToString(LevelUtil.probDictBlue));
+            UIManager.Instance.OnCommonUI("蓝色宝箱概率", ItemUtil.ProbDictToString(ItemUtil.probDictBlue));
         }else {
-            UIManager.Instance.OnCommonUI("紫色宝箱概率", LevelUtil.ProbDictToString(LevelUtil.probDictPurple));
+            UIManager.Instance.OnCommonUI("紫色宝箱概率", ItemUtil.ProbDictToString(ItemUtil.probDictPurple));
         }
     }
     private void Start() {

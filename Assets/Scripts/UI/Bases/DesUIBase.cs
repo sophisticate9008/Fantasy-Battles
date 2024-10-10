@@ -19,7 +19,7 @@ public class DesUIBase : TheUIBase
         simpleName.text = itemInfo.simpleName;
         desContent.text = itemInfo.description;
         Material newMaterial = new Material(material);
-        newMaterial.SetColor("_EndColor", LevelUtil.LevelToColor(itemInfo.level));
+        newMaterial.SetColor("_EndColor", ItemUtil.LevelToColor(itemInfo.level));
         transform.RecursiveFind("Title").GetComponent<Image>().material = newMaterial;
     }
     public void FindNecessary() {

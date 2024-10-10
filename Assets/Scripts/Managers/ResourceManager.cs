@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UIBase;
 using UnityEngine;
 using YooAsset;
 
