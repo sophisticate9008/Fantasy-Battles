@@ -2,8 +2,8 @@
 using System;
 
 
-namespace MyBase
-{
+
+
 
     [Serializable]
     public class ItemBase
@@ -62,4 +62,3 @@ namespace MyBase
         }
 
     }
-}

@@ -24,13 +24,12 @@ public static class TransformExtensions
             {
                 return result;
             }
-
-
         }
 
         // 如果在所有子物体中都未找到，返回 null
         return null;
     }
+
     /// <summary>
     /// 复制原 RectTransform 的布局属性到新 RectTransform 上
     /// </summary>
@@ -54,6 +53,20 @@ public static class TransformExtensions
         else
         {
             Debug.LogWarning("Both original and new Transform must be RectTransforms.");
+        }
+    }
+
+    /// <summary>
+    /// 清除当前 Transform 下的所有子物体。
+    /// </summary>
+    /// <param name="parent">要清除子物体的 Transform。</param>
+    public static void ClearChildren(this Transform parent)
+    {
+        // 遍历当前 Transform 的所有子物体
+        foreach (Transform child in parent)
+        {
+            // 销毁子物体
+            Object.Destroy(child.gameObject);
         }
     }
 }

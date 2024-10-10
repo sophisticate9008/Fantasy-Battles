@@ -19,7 +19,7 @@ public class CommonUIBase : TheUIBase
     
     public void ReplaceInner(TheUIBase ui) {
         ui.transform.CopyRectTransform(inner.transform);
-        ui.transform.SetParent(inner.transform, false);
+        ui.transform.SetParent(inner.transform.parent, false);
         Destroy(inner);
     }
 

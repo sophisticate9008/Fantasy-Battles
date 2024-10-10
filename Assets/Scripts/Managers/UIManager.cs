@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MyBase;
@@ -142,7 +143,7 @@ public class UIManager : MonoBehaviour
         commonUIBase.Init();
         ShowUI(commonUIBase);
     }
-    public void OnCommonUI(string title, TheUIBase ui)
+    public CommonUIBase OnCommonUI(string title, TheUIBase ui)
     {
         GameObject CommonUIPrefab = YooAssets.LoadAssetSync("CommonUI").AssetObject as GameObject;
         CommonUIBase commonUIBase = Instantiate(CommonUIPrefab).AddComponent<CommonUIBase>();
@@ -150,6 +151,17 @@ public class UIManager : MonoBehaviour
         commonUIBase.Init();
         commonUIBase.ReplaceInner(ui);
         ShowUI(commonUIBase);
+        return commonUIBase;
+    }
+    public void OnCommonUI(string title, TheUIBase ui, Action action)
+    {
+        CommonUIBase commonUIBase = OnCommonUI(title, ui);
+        Button confirm = commonUIBase.transform.RecursiveFind("Confirm").GetComponent<Button>();
+        confirm.gameObject.SetActive(true);
+        confirm.onClick.AddListener(() =>
+        {
+            action?.Invoke();
+        });
     }
 }
 

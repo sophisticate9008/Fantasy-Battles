@@ -29,6 +29,7 @@ public class ItemUIBase : TheUIBase
             children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("Place" + PlaceId).AssetObject as Sprite;
             children.GetComponent<Image>().gameObject.SetActive(true);
         }
+        GetComponent<Button>().onClick.RemoveAllListeners();
         GetComponent<Button>().onClick.AddListener(ShowDes);
     }
     public void ShowDes()
