@@ -7,25 +7,20 @@ using YooAsset;
 public class DesUIBase : TheUIBase
 {
     public ItemBase itemInfo;
-    private Image pic;
+
     private Text simpleName;
     private Text desContent;
-    private Material material;
     public override void Init()
     {
         
         FindNecessary();
-        pic.sprite = YooAssets.LoadAssetSync<Sprite>(itemInfo.resName).AssetObject as Sprite;
         simpleName.text = itemInfo.simpleName;
         desContent.text = itemInfo.description;
-        Material newMaterial = new Material(material);
-        newMaterial.SetColor("_EndColor", ItemUtil.LevelToColor(itemInfo.level));
-        transform.RecursiveFind("Title").GetComponent<Image>().material = newMaterial;
+        ItemUtil.ChangeMetrailColor(transform.RecursiveFind("Title"), itemInfo.level);
+        ItemUtil.SetSprite(transform.RecursiveFind("Pic"), itemInfo.resName);
     }
     public void FindNecessary() {
-        pic = transform.RecursiveFind("Pic").GetComponent<Image>();
         simpleName = transform.RecursiveFind("SimpleName").GetComponent<Text>();
         desContent = transform.RecursiveFind("Content").GetComponent<Text>();
-        material = transform.RecursiveFind("Title").GetComponent<Image>().material;
     }
 }

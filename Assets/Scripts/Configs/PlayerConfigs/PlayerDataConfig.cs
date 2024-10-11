@@ -20,6 +20,9 @@ public class PlayerDataConfig : ConfigBase
     public List<JewelBase> place6 = new();
     public List<ItemBase> items = new();
     public List<JewelBase> jewels = new();
+
+    //该字段用来手动通知宝石变动更新
+    public int jewelChange = 0;
     // 事件，用于通知外部某个字段已更新
     public event Action<string> OnDataChanged;
 
@@ -34,7 +37,7 @@ public class PlayerDataConfig : ConfigBase
             Object currentValue = field.GetValue(this); // 这里使用 this
             if (currentValue != newValue)
             {
-                // 设置新的值
+                SaveConfig();
                 field.SetValue(this, newValue); // 这里也使用 this
                 OnDataChanged?.Invoke(fieldName); // 触发事件
             }
@@ -46,7 +49,7 @@ public class PlayerDataConfig : ConfigBase
     public Object GetValue(string fieldName)
     {
         FieldInfo field = GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.Public);
-        return field != null ? field.GetValue(this) : 0; // 这里使用 this
+        return field?.GetValue(this); // 这里使用 this
     }
     public void UpdateValueAdd(string fieldName, int val)
     {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemUtil
 {
@@ -55,7 +56,7 @@ public class ItemUtil
             _ => throw new System.NotImplementedException(),
         };
     }
-    
+
     public static string LevelToJewelSimpleName(int level)
     {
         return level switch
@@ -84,7 +85,8 @@ public class ItemUtil
             _ => throw new System.NotImplementedException(),
         };
     }
-    public static string PlaceIdToPlaceName(int placeId) {
+    public static string PlaceIdToPlaceName(int placeId)
+    {
         return placeId switch
         {
             1 => "头盔",
@@ -99,7 +101,8 @@ public class ItemUtil
     public static string ProbDictToString(Dictionary<int, float> probabilityDict)
     {
         string result = "";
-        foreach (var probability in probabilityDict) {
+        foreach (var probability in probabilityDict)
+        {
             int level = probability.Key;
             float prob = probability.Value;
             result += $"<color={LevelToColorHex(level)}>{LevelToJewelSimpleName(level)}  {prob * 100}% </color> \n";
@@ -170,5 +173,17 @@ public class ItemUtil
         // 默认返回最低保底等级（通常不会执行到这里）
         return minLevel;
     }
+    public static void ChangeMetrailColor(Transform transform, int level)
+    {
+        Material material = transform.GetComponent<Image>().material;
+        Material newMaterial = new Material(material);
+        newMaterial.SetColor("_EndColor", ItemUtil.LevelToColor(level));
+        transform.GetComponent<Image>().material = newMaterial;
+    }
 
+    public static void SetSprite(Transform transform, string resName)
+    {
+        Image pic = transform.GetComponent<Image>();
+        pic.sprite = YooAsset.YooAssets.LoadAssetSync<Sprite>(resName).AssetObject as Sprite;
+    }
 }

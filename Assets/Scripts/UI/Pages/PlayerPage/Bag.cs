@@ -10,6 +10,17 @@ public class Bag : TheUIBase
 {
     private readonly List<JewelBase> newJewels = new();
     GameObject itemUIPrefab;
+    private void Start()
+    {
+        PlayerDataConfig.OnDataChanged += OnJewelChange;
+    }
+    private void OnJewelChange(string fieldName)
+    {
+        if (fieldName == "jewelChange")
+        {
+            MergeJewel();
+        }
+    }
     private void BindButton()
     {
         Button upgrade = transform.RecursiveFind("Upgrade").GetComponent<Button>();
@@ -49,7 +60,7 @@ public class Bag : TheUIBase
         // 更新玩家宝石列表
         PlayerDataConfig.jewels = newJewels;
         SortJewel();
-        PlayerDataConfig.SaveConfig();
+
         GetJewelCount();
         GenerateJewelUI();
 
@@ -112,20 +123,20 @@ public class Bag : TheUIBase
             // 创建联合键 (level, placeId)
             var key = (jewel.level, jewel.placeId);
             // 如果字典中已存在该键，则将宝石加入对应列表
-            if (originJewelDict.TryGetValue(key, out List<JewelBase> jewelList))
+            if (!jewel.isLock)
             {
-                //锁定的跳过
-                if (!jewel.isLock)
+                if (originJewelDict.TryGetValue(key, out List<JewelBase> jewelList))
                 {
+                    //锁定的跳过
                     jewelList.Add(jewel);
                 }
+                else
+                {
+                    // 否则创建新的列表并添加到字典中
+                    originJewelDict[key] = new List<JewelBase> { jewel };
+                }
+            }
 
-            }
-            else
-            {
-                // 否则创建新的列表并添加到字典中
-                originJewelDict[key] = new List<JewelBase> { jewel };
-            }
         }
         // 遍历字典，找到符合升级条件的宝石，数量总和大于五进一步处理
         List<JewelBase> ConsumeList = new();
@@ -192,17 +203,13 @@ public class Bag : TheUIBase
             {
                 if (jewel == consumeJewel)
                 {
-                    jewel.count -= consumeJewel.count;
-                    if (jewel.count <= 1)
-                    {
-                        PlayerDataConfig.jewels.Remove(jewel);
-                    }
+                    jewel.SubtractCount(consumeJewel.count);
                     break;
                 }
             }
         }
         PlayerDataConfig.jewels.AddRange(newJewels);
-        PlayerDataConfig.SaveConfig();
+
         GenerateUpgradeUI(newJewels, 1);
         newJewels.Clear();
         MergeJewel();
@@ -220,7 +227,7 @@ public class Bag : TheUIBase
         Transform parent = theUIBase.transform.RecursiveFind("Content");
         foreach (JewelBase jewel in jewelList)
         {
-            JewelUIBase itemUI = Instantiate(itemUIPrefab).AddComponent<JewelUIBase>();
+            ItemUIBase itemUI = Instantiate(itemUIPrefab).AddComponent<ItemUIBase>();
             itemUI.itemInfo = jewel;
             itemUI.Init();
             itemUI.transform.SetParent(parent);

@@ -80,7 +80,6 @@ public class UIManager : MonoBehaviour
             //如果包含自身面板，则不处理
             foreach (var result in results)
             {
-                Debug.Log(result.gameObject.name);
                 if (result.gameObject == listenedToClose)
                 {
                     return;
@@ -100,7 +99,7 @@ public class UIManager : MonoBehaviour
                     }
                 }
             }
-            if (listenedToClose != null)
+            if (listenedToClose != null && listenedToClose.activeSelf == true)
             {
                 enableClick = false;
                 OnListenedclose();

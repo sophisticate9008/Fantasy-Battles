@@ -28,7 +28,7 @@ public class ConsumeBase : TheUIBase, IConsume
     public virtual void AfterConsume()
     {
         PlayerDataConfig.UpdateValue(ItemName, (int)PlayerDataConfig.GetValue(ItemName) - ConsumeCount);
-        PlayerDataConfig.SaveConfig();
+
     }
     public virtual void Start() {
         BindButton();

@@ -8,6 +8,7 @@ using System;
     [Serializable]
     public class ItemBase
     {
+        public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerDataConfig") as PlayerDataConfig;
         //资源名字
         public string resName;
         //中文名字
@@ -60,5 +61,5 @@ using System;
         {
             return HashCode.Combine(id, placeId, level, description, isLock);
         }
-
+        
     }

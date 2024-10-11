@@ -19,6 +19,12 @@ public class JewelBase : ItemBase
         
         return new JewelBase(id, level, placeId, description,count);
     }
+    public void SubtractCount(int num) {
+        count -= num;
+        if(count < 1) {
+            PlayerDataConfig.jewels.Remove(this);
+        }
+    }
 }
 
 

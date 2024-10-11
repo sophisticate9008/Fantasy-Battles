@@ -21,28 +21,35 @@ public class JewelUIBase : ItemUIBase
         {
             if (itemInfo.id == jewel.id)
             {
-                SetAlpha();
+                SetDiff(jewel.level);
                 return;
             }
         }
     }
-    public void SetAlpha()
+
+    public void SetDiff(int embedLevel)
     {
         Image bg = gameObject.GetComponent<Image>();
         Image jewel = transform.GetChild(0).GetComponent<Image>();
-        if (bg != null)
-        {
-            Color bgColor = bg.color;
-            bgColor.a = 80f / 255f;  // 将 alpha 设置为 80/255
-            bg.color = bgColor;
+        GameObject upgrade = transform.RecursiveFind("Upgrade").gameObject;
+        if(itemInfo.level <= embedLevel) {
+            if (bg != null)
+            {
+                Color bgColor = bg.color;
+                bgColor.a = 80f / 255f;  // 将 alpha 设置为 80/255
+                bg.color = bgColor;
+            }
+
+            if (jewel != null)
+            {
+                Color jewelColor = jewel.color;
+                jewelColor.a = 80f / 255f;  // 将 alpha 设置为 80/255
+                jewel.color = jewelColor;
+            }            
+        }else {
+            upgrade.SetActive(true);
         }
 
-        if (jewel != null)
-        {
-            Color jewelColor = jewel.color;
-            jewelColor.a = 80f / 255f;  // 将 alpha 设置为 80/255
-            jewel.color = jewelColor;
-        }
     }
     public override void ShowDes()
     {
