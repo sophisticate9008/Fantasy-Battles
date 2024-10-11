@@ -21,6 +21,10 @@ public class Bag : TheUIBase
             MergeJewel();
         }
     }
+    private void OnDestroy()
+    {
+        PlayerDataConfig.OnDataChanged -= OnJewelChange;
+    }
     private void BindButton()
     {
         Button upgrade = transform.RecursiveFind("Upgrade").GetComponent<Button>();
@@ -225,12 +229,25 @@ public class Bag : TheUIBase
         GameObject upgradeJewel = YooAssets.LoadAssetSync("UpgradeJewel").AssetObject as GameObject;
         TheUIBase theUIBase = Instantiate(upgradeJewel).AddComponent<TheUIBase>();
         Transform parent = theUIBase.transform.RecursiveFind("Content");
+        float delay = 0.08f;
+        int idx = 0;
         foreach (JewelBase jewel in jewelList)
         {
-            ItemUIBase itemUI = Instantiate(itemUIPrefab).AddComponent<ItemUIBase>();
-            itemUI.itemInfo = jewel;
-            itemUI.Init();
-            itemUI.transform.SetParent(parent);
+            Action action = () =>
+            {
+                ItemUIBase itemUI = Instantiate(itemUIPrefab).AddComponent<ItemUIBase>();
+                itemUI.itemInfo = jewel;
+                itemUI.Init();
+                itemUI.transform.SetParent(parent);
+            };
+            if (mode == 0)
+            {
+                action.Invoke();
+            }
+            else
+            {
+                UIManager.Instance.SetTimeout(action, delay * idx++);
+            }
         }
         if (mode == 0)
         {

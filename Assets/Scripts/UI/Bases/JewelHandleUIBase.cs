@@ -31,6 +31,9 @@ public class JewelHandleUIBase : TheUIBase
             ShowJewelsOnPlace();
         }
     }
+    private void OnDestroy() {
+        PlayerDataConfig.OnDataChanged -= OnJewelChange;
+    }
     public void FindNecessary()
     {
 
@@ -135,6 +138,7 @@ public class JewelHandleUIBase : TheUIBase
                     return;
                 }
             }
+            idx++;
         }
         //小于5直接镶嵌
         if (PlaceJewels.Count < 5)
@@ -158,6 +162,7 @@ public class JewelHandleUIBase : TheUIBase
         theUIBase.itemInfo = itemInfo;
         theUIBase.Init();
         UIManager.Instance.ShowUI(theUIBase);
+        Debug.Log("生成备份");
         backup.transform.RecursiveFind("Embed").gameObject.SetActive(false);
         backup.transform.RecursiveFind("Refresh").gameObject.SetActive(false);
         backup.transform.RecursiveFind("Msg").gameObject.SetActive(true);
