@@ -32,7 +32,7 @@ public class ItemUtil
     {
         return level switch
         {
-            1 => "#787878",
+            1 => "#BABABA",
             2 => "#4E8E00",
             3 => "#0F58D7",
             4 => "#A30ED7",

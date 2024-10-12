@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,7 +20,43 @@ public class JewelHandleUIBase : TheUIBase
     public ItemBase itemInfo;
     private JewelBase JewelInfo => itemInfo as JewelBase;
     private List<JewelBase> PlaceJewels => (List<JewelBase>)PlayerDataConfig.GetValue("place" + itemInfo.placeId);
-    private Button[] IndexButtons => transform.RecursiveFind("PlaceJewels").GetComponentsInChildren<Button>();
+    List<Button> indexButtons;
+    List<Button> unembedButtons;
+    private List<Button> IndexButtons
+    {
+        get
+        {
+            if (indexButtons != null)
+            {
+                return indexButtons;
+            }
+            else
+            {
+                indexButtons = transform.RecursiveFind("PlaceJewels").GetComponentsInDirectChildren<Button>();
+                return indexButtons;
+            }
+        }
+    }
+    List<Button> UnembedButtons
+    {
+        get
+        {
+            if (unembedButtons != null)
+            {
+                return unembedButtons;
+            }
+            else
+            {
+                List<Button> _ = new();
+                foreach (Button b in IndexButtons)
+                {
+                    _.Add(b.transform.RecursiveFind("Unembed").GetComponent<Button>());
+                }
+                unembedButtons = _;
+                return unembedButtons;
+            }
+        }
+    }
     private void Start()
     {
         PlayerDataConfig.OnDataChanged += OnJewelChange;
@@ -31,7 +68,8 @@ public class JewelHandleUIBase : TheUIBase
             ShowJewelsOnPlace();
         }
     }
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         PlayerDataConfig.OnDataChanged -= OnJewelChange;
     }
     public void FindNecessary()
@@ -70,7 +108,13 @@ public class JewelHandleUIBase : TheUIBase
             refresh.gameObject.SetActive(true);
         }
     }
-
+    public void InitByEquipment()
+    {
+        FindNecessary();
+        transform.RecursiveFind("JewelDes").gameObject.SetActive(false);
+        ShowJewelsOnPlace();
+        BindUnembedButton();
+    }
     private void ChangeInfo()
     {
         pic.sprite = YooAssets.LoadAssetSync<Sprite>(itemInfo.resName).AssetObject as Sprite;
@@ -153,6 +197,34 @@ public class JewelHandleUIBase : TheUIBase
         GenerateSelectUI();
 
     }
+    void BindUnembedButton()
+    {
+        int idx = 0;
+        foreach (Button b in UnembedButtons)
+        {
+            b.gameObject.SetActive(true);
+            int _ = idx++;
+            b.onClick.AddListener(() =>
+            {
+                OnUnembedButtonClick(_);
+            });
+        }
+    }
+    void OnUnembedButtonClick(int index)
+    {
+        try
+        {
+            JewelBase origin = PlaceJewels[index];
+            PlayerDataConfig.jewels.Add(origin);
+            PlaceJewels.Remove(origin);
+            PlayerDataConfig.UpdateValueAdd("jewelChange", 1);
+        }catch {
+
+        }
+
+    }
+
+    //装备界面复用
 
     //镶嵌的时候copy并更改ui
     private void GenerateSelectUI()
@@ -162,7 +234,6 @@ public class JewelHandleUIBase : TheUIBase
         theUIBase.itemInfo = itemInfo;
         theUIBase.Init();
         UIManager.Instance.ShowUI(theUIBase);
-        Debug.Log("生成备份");
         backup.transform.RecursiveFind("Embed").gameObject.SetActive(false);
         backup.transform.RecursiveFind("Refresh").gameObject.SetActive(false);
         backup.transform.RecursiveFind("Msg").gameObject.SetActive(true);
@@ -171,7 +242,7 @@ public class JewelHandleUIBase : TheUIBase
 
     private void BeginSelect()
     {
-        for (int i = 0; i < IndexButtons.Length; i++)
+        for (int i = 0; i < IndexButtons.Count; i++)
         {
             int index = i; // 创建一个局部变量存储当前的按钮索引
             IndexButtons[i].onClick.AddListener(() => OnButtonClicked(index));

@@ -179,7 +179,6 @@ public class Bag : TheUIBase
         //倒着去除
         for (int i = backupList.Count - 1; i >= 0; i--)
         {
-            Debug.Log("" + backupList[i].count);
             //大于restCount
             if (backupList[i].count > restCount)
             {

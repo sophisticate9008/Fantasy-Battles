@@ -70,6 +70,24 @@ public static class TransformExtensions
             Object.Destroy(child.gameObject);
         }
     }
-
+    /// <summary>
+    /// 获得直系子代的组件
+    /// </summary>
+    /// <param name="parent">父物体 Transform。</param>
+    public static List<T> GetComponentsInDirectChildren<T>(this Transform parent) where T : Component
+    {
+        List<T> components = new List<T>();
+        // 遍历当前 Transform 的所有子物体
+        foreach (Transform child in parent)
+        {
+            // 获取子物体上的组件
+            T component = child.GetComponent<T>();
+            // 如果子物体上存在组件，则添加到列表中
+            if (component != null) {
+                components.Add(component); 
+            }
+        }
+        return components;
+    }
 
 }

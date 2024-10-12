@@ -226,6 +226,7 @@ public class UIManager : MonoBehaviour
     }
     public CommonUIBase OnCommonUI(string title, TheUIBase ui)
     {
+        ui.gameObject.SetActive(true);
         GameObject CommonUIPrefab = YooAssets.LoadAssetSync("CommonUI").AssetObject as GameObject;
         CommonUIBase commonUIBase = Instantiate(CommonUIPrefab).AddComponent<CommonUIBase>();
         commonUIBase.title = title;

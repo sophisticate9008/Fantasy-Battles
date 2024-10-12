@@ -29,7 +29,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColorMask: 15
     - _GradientDirection: 2
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
     m_Colors:
     - _EndColor: {r: 0.8415094, g: 0.49172375, b: 0.055571258, a: 1}
     - _StartColor: {r: 0.98490566, g: 0.88951224, b: 0.7637664, a: 1}
