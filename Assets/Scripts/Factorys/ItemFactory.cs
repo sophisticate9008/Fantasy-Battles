@@ -10,30 +10,33 @@ namespace Factorys
             {
                 "keyBlue" => new ItemBase
                 {
-                    simpleName = "蓝钥匙",
+                    simpleName = ItemUtil.VarNameToSipleName(resName),
                     resName = resName,
                     id = 501,
                     count = count,
                     level = 3,
                     description = "蓝钥匙，可以打开蓝色宝箱",
                 },
-                "keyPurple" => new ItemBase {
-                    simpleName = "紫钥匙",
+                "keyPurple" => new ItemBase
+                {
+                    simpleName = ItemUtil.VarNameToSipleName(resName),
                     resName = resName,
                     id = 502,
                     count = count,
                     level = 4,
                     description = "紫钥匙，可以打开紫色宝箱",
                 },
-                
+
                 _ => throw new System.NotImplementedException(),
             };
 
         }
-        public static JewelBase Create(int id, int level, int placeId) {
+        public static JewelBase Create(int id, int level, int placeId)
+        {
             return new JewelBase(id, level, placeId, IdToJewelDesc(id, level));
         }
-        private static string IdToJewelDesc(int id, int level) {
+        private static string IdToJewelDesc(int id, int level)
+        {
             return id switch
             {
                 1 => $"攻击力加{level * 10}",

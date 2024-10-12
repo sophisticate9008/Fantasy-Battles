@@ -12,15 +12,9 @@ public class Equipments : TheUIBase
         EquipmentButtons = transform.GetComponentsInDirectChildren<Button>();
         PlayerDataConfig.OnDataChanged += OnJewelChange;
         BindButtons();
-    }
-    private void OnEnable()
-    {
         ChangeEmbedUIColor();
     }
-    public override void Init()
-    {
-        ChangeEmbedUIColor();
-    }
+
     private void OnDestroy()
     {
         PlayerDataConfig.OnDataChanged -= OnJewelChange;

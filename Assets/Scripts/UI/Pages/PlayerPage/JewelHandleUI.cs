@@ -13,7 +13,7 @@ public class JewelHandleUIBase : TheUIBase
     private Material material;
     private Button lockButton;
     private Button unlockButton;
-    private Button refresh;
+    private Button wash;
     private Button embed;
     private Text countText;
     private Text placeText;
@@ -81,7 +81,7 @@ public class JewelHandleUIBase : TheUIBase
         material = transform.RecursiveFind("Title").GetComponent<Image>().material;
         lockButton = transform.RecursiveFind("Lock").GetComponent<Button>();
         unlockButton = transform.RecursiveFind("Unlock").GetComponent<Button>();
-        refresh = transform.RecursiveFind("Refresh").GetComponent<Button>();
+        wash = transform.RecursiveFind("Wash").GetComponent<Button>();
         embed = transform.RecursiveFind("Embed").GetComponent<Button>();
         countText = transform.RecursiveFind("Count").GetComponent<Text>();
         placeText = transform.RecursiveFind("Place").GetComponent<Text>();
@@ -89,9 +89,9 @@ public class JewelHandleUIBase : TheUIBase
     public override void Init()
     {
         FindNecessary();
-        refresh.onClick.RemoveAllListeners();
+        wash.onClick.RemoveAllListeners();
         embed.onClick.RemoveAllListeners();
-        refresh.onClick.AddListener(OnRefresh);
+        wash.onClick.AddListener(OnWash);
         embed.onClick.AddListener(OnEmbed);
         lockButton.onClick.RemoveAllListeners();
         lockButton.onClick.AddListener(OnUnlock);
@@ -101,11 +101,11 @@ public class JewelHandleUIBase : TheUIBase
         ShowJewelsOnPlace();
         if (itemInfo.level < 5)
         {
-            refresh.gameObject.SetActive(false);
+            wash.gameObject.SetActive(false);
         }
         else
         {
-            refresh.gameObject.SetActive(true);
+            wash.gameObject.SetActive(true);
         }
     }
     public void InitByEquipment()
@@ -158,6 +158,15 @@ public class JewelHandleUIBase : TheUIBase
             b.transform.GetChild(1).GetComponent<Text>().text = text;
         }
 
+    }
+    void OnWash()
+    {
+        gameObject.SetActive(false);
+        GameObject WashPanelPrefab = YooAssets.LoadAssetSync("Wash").AssetObject as GameObject;
+        Wash washUI = Instantiate(WashPanelPrefab).AddComponent<Wash>();
+        washUI.originItem = JewelInfo;
+        washUI.Init();
+        UIManager.Instance.ShowUI(washUI);
     }
     private void OnEmbed()
     {
@@ -218,7 +227,9 @@ public class JewelHandleUIBase : TheUIBase
             PlayerDataConfig.jewels.Add(origin);
             PlaceJewels.Remove(origin);
             PlayerDataConfig.UpdateValueAdd("jewelChange", 1);
-        }catch {
+        }
+        catch
+        {
 
         }
 
@@ -235,7 +246,7 @@ public class JewelHandleUIBase : TheUIBase
         theUIBase.Init();
         UIManager.Instance.ShowUI(theUIBase);
         backup.transform.RecursiveFind("Embed").gameObject.SetActive(false);
-        backup.transform.RecursiveFind("Refresh").gameObject.SetActive(false);
+        backup.transform.RecursiveFind("Wash").gameObject.SetActive(false);
         backup.transform.RecursiveFind("Msg").gameObject.SetActive(true);
         theUIBase.BeginSelect();
     }
@@ -257,9 +268,7 @@ public class JewelHandleUIBase : TheUIBase
         PlayerDataConfig.UpdateValueAdd("jewelChange", 1);
         UIManager.Instance.SetTimeout(() => UIManager.Instance.CloseUI(), 1f);
     }
-    private void OnRefresh()
-    {
-    }
+
     private void OnLock()
     {
         itemInfo.isLock = true;

@@ -12,6 +12,7 @@ public class PlayerDataConfig : ConfigBase
     public int keyBlue = 200;
     public int guaranteeBlue = 10;//蓝色保底
     public int guaranteePurple = 10;//紫色保底
+    public int washWater = 120;
     public List<JewelBase> place1 = new();
     public List<JewelBase> place2 = new();
     public List<JewelBase> place3 = new();

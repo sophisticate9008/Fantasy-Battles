@@ -17,8 +17,7 @@ public class ConsumeBase : TheUIBase, IConsume
                 AfterConsume();
             }
         }else {
-            UIManager.Instance.OnMessage("Not enough " + ItemName);
-            Debug.Log("Not enough " + ItemName);
+            UIManager.Instance.OnMessage(ItemUtil.VarNameToSipleName(ItemName) + "不足");
         }
     }
     public virtual bool PostConsume()

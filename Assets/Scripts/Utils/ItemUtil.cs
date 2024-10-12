@@ -98,6 +98,15 @@ public class ItemUtil
             _ => throw new System.NotImplementedException(),
         };
     }
+    public static string VarNameToSipleName(string varName) {
+        return varName switch
+        {
+            "keyPurple" => "紫钥匙",
+            "keyBlue" => "蓝钥匙",
+            "washWater" => "洗练试剂",
+            _ => throw new System.NotImplementedException(),
+        };
+    }
     public static string ProbDictToString(Dictionary<int, float> probabilityDict)
     {
         string result = "";
