@@ -34,6 +34,7 @@ namespace ArmsChild
         public virtual GameObject AllKindFindTarget()
         {
             GameObject indeedEnemy;
+            //优先使用传递
             if (TargetEnemyByArm != null)
             {
                 indeedEnemy = TargetEnemyByArm;
@@ -45,18 +46,19 @@ namespace ArmsChild
             }
             else
             {
-                if (TargetEnemy == null)
+                List<GameObject> enemies = FindTargetInScope(setTargetEnemy: false);
+                if (enemies.Count > 0)
                 {
-
-                    FindTargetInScope();
+                    indeedEnemy = enemies[0];
+                    Debug.Log("indeedEnemyPos: " + indeedEnemy.transform.position);
                 }
-                indeedEnemy = TargetEnemy;
-                if (indeedEnemy == null)
+                else
                 {
-                    FindTargetRandom(null);
+                    indeedEnemy = null;
                 }
-                indeedEnemy = TargetEnemy;
             }
+
+            TargetEnemyByArm = indeedEnemy;
             return indeedEnemy;
         }
         public override void TriggerByTypeCallBack(string type)
@@ -71,7 +73,8 @@ namespace ArmsChild
             if (GetType().Name == "Laser")
             {
                 LaserFissionConfig laserFissionConfig = ConfigManager.Instance.GetConfigByClassName("LaserFission") as LaserFissionConfig;
-                List<GameObject> enemys = FindTargetInScope(laserFissionConfig.FissionLevel, expectEnemy);
+                List<GameObject> enemys = FindTargetInScope(laserFissionConfig.FissionLevel, expectEnemy,
+                    false, laserFissionConfig.ScopeRadius);
                 if (enemys == null)
                 {
                     return;
@@ -92,7 +95,8 @@ namespace ArmsChild
             foreach (var hit in hitEnemys)
             {
                 //排除第一个接触的也就是次级产生的敌人或者首次的目标敌人
-                if(hit == hitEnemys[0]) {
+                if (hit == hitEnemys[0])
+                {
                     continue;
                 }
                 if (hit != expectEnemy)

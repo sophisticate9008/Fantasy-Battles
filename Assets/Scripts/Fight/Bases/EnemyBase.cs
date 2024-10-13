@@ -1,5 +1,4 @@
 
-using System;
 using System.Collections.Generic;
 using Factorys;
 using UnityEngine;
@@ -24,15 +23,20 @@ namespace MyBase
         public int MaxLife { get; set; }
         public int NowLife { get; set; }
         public float EasyHurt { get; set; }
-
+        public bool isDead;
         public virtual void Init()
         {
+            isDead = false;
             NowLife = Config.Life;
             MaxLife = Config.Life;
             ImmunityCount = Config.ImmunityCount;
             TransmitBack(y: 0, returnSpawn: true);
             CanAction = true;
             IsInit = true;
+            try {
+                animatorManager.SetAnimParameter(animator, "isRunning", true);
+            }catch {}
+            
 
         }
         public virtual void TransmitBack(float y, bool returnSpawn = false)
@@ -76,7 +80,7 @@ namespace MyBase
 
         public void FixedUpdate()
         {
-            if (!CanAction)
+            if (!CanAction && !isDead)
             {
                 animatorManager.StopAnim(animator);
             }
@@ -152,16 +156,26 @@ namespace MyBase
 
         public virtual void Die()
         {
-            TriggerByType("die", gameObject);
-            ReturnToPool();
+            if (!isDead)
+            {
+                isDead = true;
+                TriggerByType("die", gameObject);
+                animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
+            }
+
+
+            // animatorManager.SetAnimParameter(animator, "isDead", true);
+
         }
 
         void TriggerByType(string type, GameObject obj)
         {
             foreach (var component in InstalledComponents)
             {
-                foreach(var _ in component.Value.Type) {
-                    if(_ == type) {
+                foreach (var _ in component.Value.Type)
+                {
+                    if (_ == type)
+                    {
                         component.Value.TriggerExec(obj);
                     }
                 }

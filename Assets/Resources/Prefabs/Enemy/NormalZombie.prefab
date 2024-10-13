@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 173871443722100689}
   - component: {fileID: 2511309703175904796}
   - component: {fileID: 6149008448608647862}
+  - component: {fileID: 7106417972946509899}
   m_Layer: 3
   m_Name: NormalZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &198762743838678835
 Transform:
   m_ObjectHideFlags: 0
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.24, y: 1.89, z: 0}
-  m_LocalScale: {x: 0.383, y: 0.41912678, z: 1}
+  m_LocalScale: {x: 0.5771044, y: 0.6024109, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -163,3 +164,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatorManager: {fileID: 0}
   animator: {fileID: 0}
+--- !u!95 &7106417972946509899
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6829519116288272442}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: af6c6b6eb076d864d9c538d1ae5cea54, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

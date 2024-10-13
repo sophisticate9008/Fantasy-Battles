@@ -24,7 +24,7 @@ namespace ArmConfigs
             TriggerType = "stay";
             DamageType = "energy";
             CritRate = 0.5f;
-            ScopeRadius = 3f;
+            ScopeRadius = 12f;
             IsLineCast = true;
 
         }

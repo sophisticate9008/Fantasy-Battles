@@ -13,7 +13,7 @@ namespace ArmConfigs
         {
             base.Init();
             Name = "次级激光";
-            ScopeRadius = 3f;
+            ScopeRadius = 1f;
             TriggerType = "stay";
             DamageType = "energy";
             Duration = 0.1f;

@@ -193,14 +193,14 @@ namespace MyBase
         }
 
 
-        public void FindTargetRandom(GameObject nowEnemy)
+        public GameObject FindTargetRandom(GameObject nowEnemy, bool setTargetEnemy = true)
         {
             EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
-
+            GameObject randomEnemy;
             if (enemies.Length > 0)
             {
                 // 将所有敌人添加到列表中，并移除当前敌人
-                List<EnemyBase> enemyList = new List<EnemyBase>(enemies);
+                List<EnemyBase> enemyList = new(enemies);
                 if (nowEnemy != null && nowEnemy.activeSelf)
                 {
                     enemyList.Remove(nowEnemy.GetComponent<EnemyBase>());  // 移除当前敌人
@@ -209,29 +209,39 @@ namespace MyBase
                 {
                     // 随机选择一个敌人
                     int randomIndex = Random.Range(0, enemyList.Count);
-                    GameObject randomEnemy = enemyList[randomIndex].gameObject;
-                    TargetEnemy = randomEnemy;
+                    randomEnemy = enemyList[randomIndex].gameObject;
                 }
                 else
                 {
                     // 没有其他敌人，设置为null
-                    TargetEnemy = null;
+                    randomEnemy = null;
+
                 }
             }
             else
             {
                 // 如果没有找到敌人，设置为null
-                TargetEnemy = null;
+                randomEnemy = null;
             }
+            if (setTargetEnemy)
+            {
+                TargetEnemy = randomEnemy;
+            }
+            return randomEnemy;
         }
-        public List<GameObject> FindTargetInScope(int num = 1, GameObject expectObj = null)
+        public List<GameObject> FindTargetInScope(int num = 1, GameObject expectObj = null,
+           bool setTargetEnemy = true, float scopeRadius = -1, bool isRandom = false)
         {
             if (num == 0)
             {
                 return null;
             }
+
             Vector3 detectionCenter;
-            float scopeRadius = Config.ScopeRadius;
+            if (scopeRadius < 0)
+            {
+                scopeRadius = Config.ScopeRadius;
+            }
 
             // 如果 expectObj 不为空，使用其位置作为检测中心，否则使用当前物体的碰撞体中心
             if (expectObj != null && expectObj.activeSelf)
@@ -244,7 +254,7 @@ namespace MyBase
                 detectionCenter = collider.bounds.center;
             }
 
-            // 获取范围内的所有碰撞体
+            // 获取范围内的所有碰撞体，按离底部远近排序
             Collider2D[] collidersInRange = Physics2D.OverlapCircleAll(detectionCenter, scopeRadius);
 
             // 排除 expectObj 本身
@@ -257,7 +267,14 @@ namespace MyBase
             List<EnemyBase> enemiesInRange = collidersInRange
                 .Select(collider => collider.GetComponent<EnemyBase>())
                 .Where(enemy => enemy != null)
+                .OrderBy(enemy => Vector2.Distance(detectionCenter, enemy.transform.position))
                 .ToList();
+
+            // 打印敌人位置调试信息
+            foreach (EnemyBase enemy in enemiesInRange)
+            {
+                Debug.Log(enemy.transform.position);
+            }
 
             // 如果没有敌人，则返回空列表
             if (enemiesInRange.Count == 0)
@@ -265,16 +282,35 @@ namespace MyBase
                 return new List<GameObject>();
             }
 
-            // 随机选择 num 个敌人
-            var randomEnemies = enemiesInRange.OrderBy(e => UnityEngine.Random.value).Take(num).Select(e => e.gameObject).ToList();
-
-            // 如果 num == 1，将唯一敌人设置为 TargetEnemy
-            if (num == 1 && randomEnemies.Count > 0)
+            // 如果 isRandom 为 true，随机选择 num 个敌人
+            List<GameObject> selectedEnemies;
+            if (isRandom)
             {
-                TargetEnemy = randomEnemies[0];
+                selectedEnemies = enemiesInRange
+                    .OrderBy(e => UnityEngine.Random.value) // 随机打乱顺序
+                    .Take(num) // 选择 num 个敌人
+                    .Select(e => e.gameObject) // 获取对应的 GameObject
+                    .ToList();
+            }
+            else
+            {
+                // 按顺序选择最近的 num 个敌人
+                selectedEnemies = enemiesInRange
+                    .Take(num) // 选择 num 个敌人
+                    .Select(e => e.gameObject) // 获取对应的 GameObject
+                    .ToList();
             }
 
-            return randomEnemies;
+            // 如果 num == 1，将唯一敌人设置为 TargetEnemy
+            if (num == 1 && selectedEnemies.Count > 0)
+            {
+                if (setTargetEnemy)
+                {
+                    TargetEnemy = selectedEnemies[0];
+                }
+            }
+
+            return selectedEnemies;
         }
 
         public void ReturnToPool()
