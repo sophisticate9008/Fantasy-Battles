@@ -12,7 +12,7 @@ namespace MyBase
 
     public class ArmChildBase : MonoBehaviour, IClone, IArmChild
     {
-        private float stayTriggerTime;
+        private float stayTime;
         public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as ArmConfigBase;
         public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
         // public Dictionary<string, float> DamageAddition => GlobalConfig.GetDamageAddition();
@@ -45,8 +45,7 @@ namespace MyBase
             // 如果子弹超出屏幕边界，返回 true
             return viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0 || viewportPosition.y > 1;
         }
-
-        public void OnTriggerEnter2D(Collider2D collision)
+        public virtual void OnEnter2D(Collider2D collision)
         {
             if (IsNotSelf(collision))
             {
@@ -62,14 +61,21 @@ namespace MyBase
 
             }
         }
+        public virtual void  OnCollisionEnter2D(Collision2D collision) {
+            OnEnter2D(collision.collider);
+
+        }
+        public void OnTriggerEnter2D(Collider2D collision)
+        {
+            OnEnter2D(collision);
+        }
         //排除自身
         private bool IsNotSelf(Collider2D collision)
         {
             IArmChild self = collision.GetComponent<IArmChild>();
             return self == null;
         }
-
-        private void OnTriggerExit2D(Collider2D collision)
+        public virtual void OnExit2D(Collider2D collision)
         {
             if (IsNotSelf(collision))
             {
@@ -77,40 +83,54 @@ namespace MyBase
 
             }
         }
-        private void OnTriggerStay2D(Collider2D collision)
+        private void OnTriggerExit2D(Collider2D collision)
         {
-
+            OnExit2D(collision);
+        }
+        public virtual void OnCollisionExit2D(Collision2D collision) {
+            OnExit2D(collision.collider);
+        }
+        public virtual void OnStay2D(Collider2D collision) {
             if (IsNotSelf(collision))
             {
-                if (Time.time - stayTriggerTime > Config.AttackCd)
+                if (Time.time - stayTime > Config.AttackCd)
                 {
-                    stayTriggerTime = Time.time;
+                    stayTime = Time.time;
                     CollideObjs["stay"].Enqueue(collision.gameObject);
                 }
 
-            }
+            }            
         }
-        public void TriggerByType(string type, GameObject obj)
+        private void OnTriggerStay2D(Collider2D collision)
         {
-            TriggerByTypeCallBack(type);
+            OnStay2D(collision);
+
+        }
+        
+        public virtual void  OnCollisionStayr2D(Collision2D collision) {
+            OnStay2D(collision.collider);
+        }
+        public void OnByType(string type, GameObject obj)
+        {
+            OnByTypeCallBack(type);
             foreach (var component in InstalledComponents)
             {
                 foreach (var _ in component.Value.Type)
                 {
                     if (_ == type)
                     {
-                        component.Value.TriggerExec(obj);
+                        component.Value.Exec(obj);
                     }
                 }
             }
         }
-        public virtual void TriggerByTypeCallBack(string type)
+        public virtual void OnByTypeCallBack(string type)
         {
 
         }
-        private void OnTriggerByQueue()
+        private void OnByQueue()
         {
-            TriggerByType("update", null);
+            OnByType("update", null);
             foreach (var kvp in collideObjs)
             {
                 if (gameObject.activeSelf)
@@ -124,7 +144,7 @@ namespace MyBase
         private IEnumerator ProcessQueueByKey(string key, Queue<GameObject> queue)
         {
             // 获取当前触发类型
-            var triggerType = Config.TriggerType;
+            var onType = Config.OnType;
 
             // 当队列中有对象时，逐个处理
             while (queue.Count > 0)
@@ -132,13 +152,13 @@ namespace MyBase
                 var obj = queue.Dequeue();
 
                 // 如果当前 key 匹配触发类型，则创建伤害
-                if (triggerType == key)
+                if (onType == key)
                 {
                     CreateDamage(obj);
                 }
 
                 // 调用触发处理
-                TriggerByType(key, obj);
+                OnByType(key, obj);
 
                 // 可以选择在每次处理后等待一帧，以免阻塞主线程
                 yield return null;
@@ -150,7 +170,7 @@ namespace MyBase
             {
 
                 Move();
-                OnTriggerByQueue();
+                OnByQueue();
             }
         }
         //重写自定义传入tlc，比如说区域中心伤害翻倍之类的
@@ -270,12 +290,6 @@ namespace MyBase
                 .OrderBy(enemy => Vector2.Distance(detectionCenter, enemy.transform.position))
                 .ToList();
 
-            // 打印敌人位置调试信息
-            foreach (EnemyBase enemy in enemiesInRange)
-            {
-                Debug.Log(enemy.transform.position);
-            }
-
             // 如果没有敌人，则返回空列表
             if (enemiesInRange.Count == 0)
             {
@@ -362,7 +376,7 @@ namespace MyBase
         public virtual void OnEnable()
         {
 
-            stayTriggerTime = -10;
+            stayTime = -10;
             Invoke(nameof(ReturnToPool), Config.Duration);
         }
         //路径伤害

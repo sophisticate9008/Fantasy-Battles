@@ -49,7 +49,7 @@ public class ReboundComponent : ComponentBase, IReboundable
         }
     }
 
-    public override void TriggerExec(GameObject enemyObj)
+    public override void Exec(GameObject enemyObj)
     {
         Rebound();
     }

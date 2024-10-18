@@ -23,7 +23,7 @@ namespace ArmConfigs
             Description = "次级子弹,造成本体的25%伤害";
             DamageType = "ad";
             DamageExtraType = "penetrable";
-            TriggerType = "enter";
+            OnType = "enter";
             ComponentStrs.Add("穿透");
         }
     }

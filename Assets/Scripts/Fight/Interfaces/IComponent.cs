@@ -7,7 +7,7 @@ public interface IComponent {
     public string ComponentName{get;set;}
     public GameObject SelfObj{get; set;}
 
-    public void TriggerExec(GameObject enemyObj);
+    public void Exec(GameObject enemyObj);
 
     public void Init();
 }

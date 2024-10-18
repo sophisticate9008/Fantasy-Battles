@@ -50,7 +50,6 @@ namespace ArmsChild
                 if (enemies.Count > 0)
                 {
                     indeedEnemy = enemies[0];
-                    Debug.Log("indeedEnemyPos: " + indeedEnemy.transform.position);
                 }
                 else
                 {
@@ -61,9 +60,9 @@ namespace ArmsChild
             TargetEnemyByArm = indeedEnemy;
             return indeedEnemy;
         }
-        public override void TriggerByTypeCallBack(string type)
+        public override void OnByTypeCallBack(string type)
         {
-            if (type != Config.TriggerType) { return; }
+            if (type != Config.OnType) { return; }
             LaserFission();
             PathDamage();
             PathFlame();
@@ -101,7 +100,6 @@ namespace ArmsChild
                 }
                 if (hit != expectEnemy)
                 {
-                    Debug.Log("造成了路径伤害");
                     CreateDamage(hit);
                 }
 

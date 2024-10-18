@@ -36,7 +36,7 @@ namespace MyComponents
             SelfObj.GetComponent<ArmChildBase>().ReturnToPool();
         }
 
-        public override void TriggerExec(GameObject enemyObj)
+        public override void Exec(GameObject enemyObj)
         {
             // PenetrationLevel -= enemyObj.GetComponent<EnemyBase>().Config.blocks;
             if (PenetrationLevel <= 0)

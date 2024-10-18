@@ -10,7 +10,7 @@ namespace ArmConfigs
             Name = "电磁穿透";
             Description = "电磁穿透";
             ScopeRadius = 2;
-            TriggerType = "enter";
+            OnType = "enter";
             DamageType = "elec";
             Tlc = 2;
             CritRate = 0.2f;

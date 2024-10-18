@@ -21,7 +21,7 @@ namespace ArmConfigs
             AttackCd = 0.2f;
             AttackCount = 1;
             Duration = 3f;
-            TriggerType = "stay";
+            OnType = "stay";
             DamageType = "energy";
             CritRate = 0.5f;
             ScopeRadius = 12f;

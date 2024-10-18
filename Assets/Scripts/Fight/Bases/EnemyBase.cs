@@ -159,7 +159,7 @@ namespace MyBase
             if (!isDead)
             {
                 isDead = true;
-                TriggerByType("die", gameObject);
+                OnByType("die", gameObject);
                 animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
             }
 
@@ -168,7 +168,7 @@ namespace MyBase
 
         }
 
-        void TriggerByType(string type, GameObject obj)
+        void OnByType(string type, GameObject obj)
         {
             foreach (var component in InstalledComponents)
             {
@@ -176,7 +176,7 @@ namespace MyBase
                 {
                     if (_ == type)
                     {
-                        component.Value.TriggerExec(obj);
+                        component.Value.Exec(obj);
                     }
                 }
             }

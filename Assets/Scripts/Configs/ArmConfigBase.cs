@@ -20,9 +20,11 @@ namespace MyBase
         [SerializeField] private float cd;
         [SerializeField] private float attackCd;
         [SerializeField] private int attackCount;
-        [SerializeField] private float lastTime;
         [SerializeField] private List<string> componentStrs = new List<string>();
         [SerializeField] private float buffDamageTlc;
+        [SerializeField] private float selfScale = 1;
+        //持续时间
+        [SerializeField] private float duration = 20f;
 
         // Prefab 属性
         public override GameObject Prefab
@@ -36,6 +38,11 @@ namespace MyBase
                 return prefab;
             }
         }
+        public virtual float SelfScale {
+            get { return selfScale; }
+            set { selfScale = value; }
+        }
+
         public virtual float BuffDamageTlc {
             get { return buffDamageTlc; }
             set { buffDamageTlc = value; }
@@ -101,18 +108,13 @@ namespace MyBase
             set => attackCount = value;
         }
 
-        public virtual float LastTime
-        {
-            get => lastTime;
-            set => lastTime = value;
-        }
 
         public virtual List<string> ComponentStrs
         {
             get => componentStrs;
             set => componentStrs = value;
         }
-        public virtual float Duration {get;set;} = 20f;
+        public virtual float Duration {get => duration;set => duration =value;}
         public virtual string Owner {get; set;}
         //伤害类型 
         public virtual string DamageType {get; set;}
@@ -120,12 +122,14 @@ namespace MyBase
         //伤害位置 all / land
         public virtual string DamagePos {get; set;} = "all";
         // 触发类型
-        public virtual string TriggerType{get; set;}
+        public virtual string OnType{get; set;}
 
         public virtual string DamageExtraType {get => ""; set{}}
         //自身索敌半径
         public virtual float ScopeRadius {get; set;} = 3f;
+        //线段路径伤害
         public virtual bool IsLineCast {get;set;} = false;
+        //射线路径伤害
         public virtual bool IsRayCast {get;set;} = false;
         // 构造函数
         public ArmConfigBase()

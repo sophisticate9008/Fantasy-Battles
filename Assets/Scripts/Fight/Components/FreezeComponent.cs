@@ -11,7 +11,7 @@ namespace MyComponents
         {
         }
 
-        public override void TriggerExec(GameObject enemyObj)
+        public override void Exec(GameObject enemyObj)
         {
             EnemyBase enemyBase = enemyObj.GetComponent<EnemyBase>();
             enemyBase.AddBuff("冰冻", SelfObj, Duration);

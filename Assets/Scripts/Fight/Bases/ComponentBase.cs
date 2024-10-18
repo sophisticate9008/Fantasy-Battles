@@ -26,7 +26,7 @@ namespace MyBase
 
         }
 
-        public abstract void TriggerExec(GameObject enemyObj);
+        public abstract void Exec(GameObject enemyObj);
 
     }
 }

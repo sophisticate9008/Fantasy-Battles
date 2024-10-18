@@ -17,7 +17,7 @@ public class FissionableComponent : ComponentBase
         findType = FissionableConfig.FindType;
     }
 
-    public override void TriggerExec(GameObject enemyObj)
+    public override void Exec(GameObject enemyObj)
     {
         GameObject targetEnemy;
         ArmChildBase armChildPrefab = prefab.GetComponent<ArmChildBase>();
