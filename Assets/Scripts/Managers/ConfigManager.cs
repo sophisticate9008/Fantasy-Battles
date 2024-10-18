@@ -45,7 +45,7 @@ public class ConfigManager : MonoBehaviour
         if (pools.IndexOf(configName) == -1)
         {
             pools.Add(configName);
-            ObjectPoolManager.Instance.CreatePool(configName + "Pool", config.Prefab, 5, 150);
+            ObjectPoolManager.Instance.CreatePool(configName + "Pool", config.Prefab, 1, 500);
             
         }
     }

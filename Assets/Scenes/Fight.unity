@@ -1627,6 +1627,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8232431674389665459, guid: f31c554b8f9292e499144c96dbc91d08, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8305771234535691125, guid: f31c554b8f9292e499144c96dbc91d08, type: 3}
       propertyPath: m_Name
       value: Tornado

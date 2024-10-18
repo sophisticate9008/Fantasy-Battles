@@ -83,7 +83,7 @@ namespace MyBase
 
             }
         }
-        private void OnTriggerExit2D(Collider2D collision)
+        public virtual void OnTriggerExit2D(Collider2D collision)
         {
             OnExit2D(collision);
         }
@@ -101,13 +101,13 @@ namespace MyBase
 
             }            
         }
-        private void OnTriggerStay2D(Collider2D collision)
+        public virtual void OnTriggerStay2D(Collider2D collision)
         {
             OnStay2D(collision);
-
         }
         
         public virtual void  OnCollisionStayr2D(Collision2D collision) {
+            Debug.Log("stay");
             OnStay2D(collision.collider);
         }
         public void OnByType(string type, GameObject obj)
@@ -128,7 +128,7 @@ namespace MyBase
         {
 
         }
-        private void OnByQueue()
+        public virtual void OnByQueue()
         {
             OnByType("update", null);
             foreach (var kvp in collideObjs)

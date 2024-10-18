@@ -4,6 +4,8 @@ namespace ArmConfigs
 {
     public class TornadoConfig : ArmConfigBase
     {
+        public float DragDegree{get;set;} = 1f;
+        
         public override void Init()
         {
             Tlc = 0.1f;
@@ -17,7 +19,7 @@ namespace ArmConfigs
             OnType = "stay";
             DamageType = "wind";
             ScopeRadius = 15f;
-
+            
         }
     }
 }
