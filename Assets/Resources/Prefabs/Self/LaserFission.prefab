@@ -160,6 +160,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.012372911
       objectReference: {fileID: 0}
+    - target: {fileID: 1946065067086821811, guid: 1fcd0b991132ffc49ad0b4ca3989a72f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5971127640500205525, guid: 1fcd0b991132ffc49ad0b4ca3989a72f, type: 3}
       propertyPath: m_Name
       value: LaserFission

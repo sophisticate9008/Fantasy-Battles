@@ -266,7 +266,7 @@ public class JewelHandleUIBase : TheUIBase
         JewelInfo.SubtractCount(1);
         PlaceJewels[index] = JewelInfo.Clone();
         PlayerDataConfig.UpdateValueAdd("jewelChange", 1);
-        UIManager.Instance.SetTimeout(() => UIManager.Instance.CloseUI(), 1f);
+        ToolManager.Instance.SetTimeout(() => UIManager.Instance.CloseUI(), 1f);
     }
 
     private void OnLock()

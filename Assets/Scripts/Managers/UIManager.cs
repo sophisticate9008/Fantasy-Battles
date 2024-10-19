@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
             {
                 enableClick = false;
                 OnListenedclose();
-                SetTimeout(() => enableClick = true, 0.3f);
+                ToolManager.Instance.SetTimeout(() => enableClick = true, 0.3f);
             }
             //否则关闭
 
@@ -244,17 +244,6 @@ public class UIManager : MonoBehaviour
         {
             action?.Invoke();
         });
-    }
-    public Coroutine SetTimeout(Action action, float delay)
-    {
-        return StartCoroutine(TimeoutCoroutine(action, delay));
-    }
-
-    // 协程，处理延迟
-    private IEnumerator TimeoutCoroutine(Action action, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        action?.Invoke();
     }
 }
 

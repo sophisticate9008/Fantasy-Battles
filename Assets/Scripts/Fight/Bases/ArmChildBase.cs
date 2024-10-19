@@ -21,7 +21,7 @@ namespace MyBase
         public bool IsInit { get; set; }
         public Dictionary<string, IComponent> InstalledComponents { get; set; } = new();
         private Vector3 direction;
-        public Vector3 Direction
+        public virtual Vector3 Direction
         {
             get { return direction; }
             set
@@ -61,11 +61,12 @@ namespace MyBase
 
             }
         }
-        public virtual void  OnCollisionEnter2D(Collision2D collision) {
+        public virtual void OnCollisionEnter2D(Collision2D collision)
+        {
             OnEnter2D(collision.collider);
 
         }
-        public void OnTriggerEnter2D(Collider2D collision)
+        public virtual void OnTriggerEnter2D(Collider2D collision)
         {
             OnEnter2D(collision);
         }
@@ -87,10 +88,12 @@ namespace MyBase
         {
             OnExit2D(collision);
         }
-        public virtual void OnCollisionExit2D(Collision2D collision) {
+        public virtual void OnCollisionExit2D(Collision2D collision)
+        {
             OnExit2D(collision.collider);
         }
-        public virtual void OnStay2D(Collider2D collision) {
+        public virtual void OnStay2D(Collider2D collision)
+        {
             if (IsNotSelf(collision))
             {
                 if (Time.time - stayTime > Config.AttackCd)
@@ -99,14 +102,15 @@ namespace MyBase
                     CollideObjs["stay"].Enqueue(collision.gameObject);
                 }
 
-            }            
+            }
         }
         public virtual void OnTriggerStay2D(Collider2D collision)
         {
             OnStay2D(collision);
         }
-        
-        public virtual void  OnCollisionStayr2D(Collision2D collision) {
+
+        public virtual void OnCollisionStayr2D(Collision2D collision)
+        {
             Debug.Log("stay");
             OnStay2D(collision.collider);
         }
@@ -192,7 +196,6 @@ namespace MyBase
             {
                 ReturnToPool();
             }
-
         }
         public void ChangeRotation()
         {
@@ -249,8 +252,8 @@ namespace MyBase
             }
             return randomEnemy;
         }
-        public List<GameObject> FindTargetInScope(int num = 1, GameObject expectObj = null,
-           bool setTargetEnemy = true, float scopeRadius = -1, bool isRandom = false)
+        public List<GameObject> FindTargetInScope(int num = 1, GameObject centerObj = null,
+           bool setTargetEnemy = true, float scopeRadius = -1, bool isRandom = false, List<GameObject> exceptObjs = null)
         {
             if (num == 0)
             {
@@ -263,10 +266,10 @@ namespace MyBase
                 scopeRadius = Config.ScopeRadius;
             }
 
-            // 如果 expectObj 不为空，使用其位置作为检测中心，否则使用当前物体的碰撞体中心
-            if (expectObj != null && expectObj.activeSelf)
+            // 如果 centerObj 不为空，使用其位置作为检测中心，否则使用当前物体的碰撞体中心
+            if (centerObj != null && centerObj.activeSelf)
             {
-                detectionCenter = expectObj.transform.position;
+                detectionCenter = centerObj.transform.position;
             }
             else
             {
@@ -277,10 +280,15 @@ namespace MyBase
             // 获取范围内的所有碰撞体，按离底部远近排序
             Collider2D[] collidersInRange = Physics2D.OverlapCircleAll(detectionCenter, scopeRadius);
 
-            // 排除 expectObj 本身
-            if (expectObj != null)
+            // 排除 centerObj 本身
+            if (centerObj != null)
             {
-                collidersInRange = collidersInRange.Where(collider => collider.gameObject != expectObj).ToArray();
+                collidersInRange = collidersInRange.Where(collider => collider.gameObject != centerObj).ToArray();
+            }
+            //排除exceptObjs
+            if (exceptObjs != null)
+            {
+                collidersInRange = collidersInRange.Where(collider => !exceptObjs.Contains(collider.gameObject)).ToArray();
             }
 
             // 筛选出所有包含 EnemyBase 组件的敌人
@@ -293,7 +301,12 @@ namespace MyBase
             // 如果没有敌人，则返回空列表
             if (enemiesInRange.Count == 0)
             {
+                if (setTargetEnemy)
+                {
+                    TargetEnemy = null;
+                }
                 return new List<GameObject>();
+
             }
 
             // 如果 isRandom 为 true，随机选择 num 个敌人
@@ -372,6 +385,7 @@ namespace MyBase
                 temp.Value.Clear();
             }
             CancelInvoke();
+            TargetEnemy = null;
         }
         public virtual void OnEnable()
         {
@@ -380,6 +394,14 @@ namespace MyBase
             Invoke(nameof(ReturnToPool), Config.Duration);
         }
         //路径伤害
+        public virtual void SetDirectionToTarget()
+        {
+            if (TargetEnemy != null)
+            {
+                Direction = (TargetEnemy.transform.position - transform.position).normalized;
+
+            }
+        }
 
     }
 }

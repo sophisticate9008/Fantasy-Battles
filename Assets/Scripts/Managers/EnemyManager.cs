@@ -17,7 +17,7 @@ public class EnemyManager : MonoBehaviour
     public float noiseScale = 0.8f; // 噪声比例
     [SerializeField]
     private float ViewportXCoordinate = 0.8f; // 视口生成的y坐标
-
+    public int liveCount = 0;//存活数量
     private Camera mainCamera;
 
     private void Awake()
@@ -71,7 +71,7 @@ public class EnemyManager : MonoBehaviour
     void SpawnMonster()
     {
         currentCount++; // 增加共享数量
-
+        liveCount++;
         // 随机生成视口坐标中的x坐标（0到设置之间）
         float viewportXCoordinate = Random.Range(0f, ViewportXCoordinate);
 

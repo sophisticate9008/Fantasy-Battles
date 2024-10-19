@@ -8,7 +8,7 @@ namespace ArmConfigs
     public class BulletConfig : ArmConfigBase, IMultipleable, IFissionable
     {
         // 新增属性
-        public int BulletPenetrationLevel { get; set; } = 0;
+        public int BulletPenetrationLevel { get; set; } = 1;
         public int ReboundCount { get; set; } = 1;
         public BulletFissionConfig BulletFissionConfig => ConfigManager.Instance.GetConfigByClassName("BulletFission") as BulletFissionConfig;
         public int BulletFissionCount { get; set; } = 2;

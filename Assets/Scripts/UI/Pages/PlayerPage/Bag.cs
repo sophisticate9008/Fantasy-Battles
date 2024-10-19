@@ -245,7 +245,7 @@ public class Bag : TheUIBase
             }
             else
             {
-                UIManager.Instance.SetTimeout(action, delay * idx++);
+                ToolManager.Instance.SetTimeout(action, delay * idx++);
             }
         }
         if (mode == 0)

@@ -193,6 +193,8 @@ namespace MyBase
 
         public void ReturnToPool()
         {
+            //存活数量-1
+            EnemyManager.Instance.liveCount--;
             ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
         }
 
