@@ -11,19 +11,11 @@ namespace Factorys
 {
     public class ConfigFactory
     {
-        private static Type GetType(string configName)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var type = assembly.GetTypes()
-                .FirstOrDefault(t => t.Name.Equals(configName + "Config", StringComparison.OrdinalIgnoreCase));
-
-            return type ?? throw new NotImplementedException();
-        }
 
         public static IConfig CreateInjectedConfig(string configName)
         {
             string fileStr = Path.Combine(Constant.ConfigsPath, $"{configName}.json");
-            Type type = GetType(configName);
+            Type type = CommonUtil.GetTypeByName(configName, "Config");
 
             if (File.Exists(fileStr))
             {

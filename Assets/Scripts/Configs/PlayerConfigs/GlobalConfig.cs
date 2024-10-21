@@ -30,7 +30,7 @@ public class GlobalConfig : ConfigBase
     protected virtual void Init()
     {
         // 可以在这里添加初始化逻辑
-        AttackValue = 100;
+        AttackValue = 10;
         CritRate = 0.1f;
         CritDamage = 0;
     }
