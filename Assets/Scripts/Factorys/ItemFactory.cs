@@ -1,3 +1,4 @@
+using System;
 using FightBases;
 
 namespace Factorys
@@ -33,9 +34,9 @@ namespace Factorys
         }
         public static JewelBase Create(int id, int level, int placeId)
         {
-            return new JewelBase(id, level, placeId, IdToJewelDesc(id, level));
+            return new JewelBase(id, level, placeId, IdLevelToJewelDesc(id, level));
         }
-        private static string IdToJewelDesc(int id, int level)
+        private static string IdLevelToJewelDesc(int id, int level)
         {
             return id switch
             {

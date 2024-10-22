@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: DefaultPackage
-  PackageVersion: 2024-10-22-665
+  PackageVersion: 2024-10-22-815
   Wrappers:
   - BundleGUID: 235a3efeb6bdf896c9c8f1ef91576bf5
     FileName: 235a3efeb6bdf896c9c8f1ef91576bf5.bundle

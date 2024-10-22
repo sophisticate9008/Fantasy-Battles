@@ -33,10 +33,12 @@ namespace FightBases
             TransmitBack(y: 0, returnSpawn: true);
             CanAction = true;
             IsInit = true;
-            try {
+            try
+            {
                 animatorManager.SetAnimParameter(animator, "isRunning", true);
-            }catch {}
-            
+            }
+            catch { }
+
 
         }
         public virtual void TransmitBack(float y, bool returnSpawn = false)
@@ -195,10 +197,15 @@ namespace FightBases
         {
             //存活数量-1
             EnemyManager.Instance.liveCount--;
+            //移除所有buff
             ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
+            //移除子特效
+
+
         }
 
-        public void RelaseExp() {
+        public void RelaseExp()
+        {
 
         }
 

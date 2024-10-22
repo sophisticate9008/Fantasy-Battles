@@ -27,4 +27,5 @@ public class ToolManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
+
 }

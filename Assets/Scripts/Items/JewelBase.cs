@@ -4,8 +4,7 @@ using System;
 [Serializable]
 public class JewelBase : ItemBase
 {
-    // public Action action;
-    public JewelBase(int id, int level, int placeId, string description, int count = 1, Action action = null)
+    public JewelBase(int id, int level, int placeId, string description, int count = 1)
     {
         this.id = id;
         this.level = level;
@@ -14,7 +13,6 @@ public class JewelBase : ItemBase
         simpleName = ItemUtil.LevelToJewelSimpleName(level);
         resName = ItemUtil.LevelToJewelResName(level);
         this.count = count;
-        
     }
     public JewelBase Clone()
     {

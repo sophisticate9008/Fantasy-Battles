@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Factorys;
 using FightBases;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,7 @@ using UnityEngine;
 //管理战斗逻辑，伤害等
 public class FighteManager : MonoBehaviour
 {
+    public PlayerDataConfig playerDataConfig = ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     public AnimationCurve spawnRateCurve;
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
@@ -33,7 +35,7 @@ public class FighteManager : MonoBehaviour
     }
     public static FighteManager Instance;
     public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
-    private Dictionary<string, string> colorDict = new() {
+    private static readonly Dictionary<string, string> colorDict = new() {
         {"ice", "blue"},
         {"fire", "red"},
         {"ad", "white"},
@@ -51,7 +53,16 @@ public class FighteManager : MonoBehaviour
     {
 
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
-
+        LoadJewel();
+    }
+    private void LoadJewel() {
+        for(int i = 1; i <= 6; i++) {
+            
+            var jewels = playerDataConfig.GetValue("place" + i) as List<JewelBase>;
+            foreach(var jewel in jewels) {
+                ActionFactory.CreateJewelAction(jewel.id, jewel.level).Invoke();
+            }
+        }
     }
     public void CreateDamageText(GameObject enemyObj, float damage, string type, bool isCritical)
     {

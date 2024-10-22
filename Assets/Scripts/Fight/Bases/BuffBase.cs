@@ -17,13 +17,14 @@ namespace FightBases
 
         public string BuffName { get; set; }
 
-        public GameObject SelfObj { get ; set ; }
+        public GameObject SelfObj { get; set; }
 
-        public BuffBase(string buffName, float duration,GameObject selfObj, GameObject enemyObj)
+        public BuffBase(string buffName, float duration, GameObject selfObj, GameObject enemyObj)
         {
             BuffName = buffName;
             Duration = duration;
             EnemyObj = enemyObj;
+            SelfObj = selfObj;
         }
         public abstract void Effect();  // 留给子类实现具体效果
         public abstract void Remove();  // 留给子类实现具体移除逻辑
@@ -31,7 +32,7 @@ namespace FightBases
         {
             Effect();
             UpdateEndtimes();
-            EnemyObj.GetComponent<MonoBehaviour>().StartCoroutine(AutoRemove());
+            ToolManager.Instance.StartCoroutine(AutoRemove());
         }
         private void UpdateEndtimes()
         {
@@ -52,8 +53,14 @@ namespace FightBases
             {
                 float now = Time.time;
                 yield return new WaitForSeconds(0.1f);
-                
+
                 if (now >= EnemyBase.BuffEndTimes[BuffName])
+                {
+                    Remove();
+                    break;
+                }
+                
+                if (EnemyObj == null || EnemyObj.activeSelf == false)
                 {
                     Remove();
                     break;
@@ -63,10 +70,11 @@ namespace FightBases
         public virtual void RemoveControl()
         {
             float now = Time.time;
-            if(now >= EnemyBase.HardControlEndTime) {
+            if (now >= EnemyBase.HardControlEndTime)
+            {
                 EnemyBase.CanAction = true;
             }
-            
+
 
         }
     }
