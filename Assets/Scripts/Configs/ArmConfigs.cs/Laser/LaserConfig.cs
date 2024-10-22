@@ -1,5 +1,5 @@
 
-using MyBase;
+using FightBases;
 using UnityEngine;
 
 namespace ArmConfigs

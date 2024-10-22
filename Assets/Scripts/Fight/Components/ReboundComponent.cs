@@ -1,5 +1,5 @@
 using ArmConfigs;
-using MyBase;
+using FightBases;
 using UnityEngine;
 
 public class ReboundComponent : ComponentBase, IReboundable

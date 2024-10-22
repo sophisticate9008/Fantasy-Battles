@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace MyBase
+namespace FightBases
 {
     [System.Serializable] // 标记为可序列化
     public class ArmConfigBase: ConfigBase

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using ArmConfigs;
-using MyBase;
+using FightBases;
 using Prefabs.Enemy;
 using UnityEngine;
 
@@ -14,8 +14,11 @@ namespace Factorys
 
         public static IConfig CreateInjectedConfig(string configName)
         {
+            if(!configName.Contains("Config")) {
+                configName += "Config";
+            }
             string fileStr = Path.Combine(Constant.ConfigsPath, $"{configName}.json");
-            Type type = CommonUtil.GetTypeByName(configName, "Config");
+            Type type = CommonUtil.GetTypeByName(configName);
 
             if (File.Exists(fileStr))
             {

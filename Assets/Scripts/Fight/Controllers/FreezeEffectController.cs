@@ -1,7 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using MyBase;
+using FightBases;
 using UnityEngine;
 
 public class FreezeEffectController : EffectControllerBase
@@ -44,7 +44,11 @@ public class FreezeEffectController : EffectControllerBase
     {
         if (Enemy)
         {
-            spriteMask.sprite = enemySr.sprite;
+            //不同时再更新
+            if(enemySr.sprite != spriteMask.sprite) {
+                spriteMask.sprite = enemySr.sprite;
+            }
+            
             int n = Mathf.FloorToInt(percent * sprites.Length);
             if (n > 0)
             {

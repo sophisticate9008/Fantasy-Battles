@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace MyBase
+namespace FightBases
 {
     public class ConfigBase : IConfig
     {

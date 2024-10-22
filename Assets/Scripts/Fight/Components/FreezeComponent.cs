@@ -1,5 +1,5 @@
 using Factorys;
-using MyBase;
+using FightBases;
 using UnityEngine;
 
 namespace MyComponents

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using MyBase;
+using FightBases;
 using UnityEngine;
 
 // 管理怪物生成

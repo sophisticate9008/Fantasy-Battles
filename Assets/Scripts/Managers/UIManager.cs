@@ -19,9 +19,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject maskPrefab; // 遮罩预制体
     public GameObject MessagePrefab;
-    public GameObject listenedToClose;
-    public string[] excluedTypes;
-    public bool enableClick = true;
+    private GameObject listenedToClose;
+    private string[] excluedTypes = new string[0];
+    private bool enableClick = true;
     private void Awake()
     {
         if (_instance == null)

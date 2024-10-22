@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Factorys;
 using UnityEngine;
 
-namespace MyBase
+namespace FightBases
 {
-    public class EnemyBase : MonoBehaviour, IEnemy, IClone
+    public class EnemyBase : MonoBehaviour, IEnemy
     {
         public AnimatorManager animatorManager;
         public Animator animator;
@@ -196,6 +196,10 @@ namespace MyBase
             //存活数量-1
             EnemyManager.Instance.liveCount--;
             ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
+        }
+
+        public void RelaseExp() {
+
         }
 
         public void AddBuff(string buffName, GameObject selfObj, float duration)

@@ -1,7 +1,7 @@
 using System.Collections;
 using ArmConfigs;
 using Factorys;
-using MyBase;
+using FightBases;
 using UnityEngine;
 using YooAsset;
 namespace Arms

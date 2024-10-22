@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Factorys;
 using UnityEngine;
-namespace MyBase
+namespace FightBases
 {
 
 

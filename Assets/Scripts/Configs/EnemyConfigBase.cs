@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyBase
+namespace FightBases
 {
     [System.Serializable]
     public class EnemyConfigBase : ConfigBase

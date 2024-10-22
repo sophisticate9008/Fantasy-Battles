@@ -1,14 +1,10 @@
 
 using System;
 
-
-
-
-
     [Serializable]
     public class ItemBase
     {
-        public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerDataConfig") as PlayerDataConfig;
+        public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
         //资源名字
         public string resName;
         //中文名字

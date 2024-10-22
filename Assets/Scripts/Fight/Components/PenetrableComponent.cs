@@ -1,7 +1,7 @@
 using System;
 using ArmsChild;
 using ArmConfigs;
-using MyBase;
+using FightBases;
 using R3;
 using UnityEngine;
 namespace MyComponents

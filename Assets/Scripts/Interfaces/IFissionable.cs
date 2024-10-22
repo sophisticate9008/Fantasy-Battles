@@ -1,4 +1,4 @@
-using MyBase;
+using FightBases;
 
 public interface IFissionable {
     public ArmConfigBase ChildConfig { get; }

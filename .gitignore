@@ -18,6 +18,8 @@ logs
 **/assets/assetstoretools
 /Assets/Plugins/PlasticSCM*
 /assets/plugins/PlasticSCM*
+/Bundles/StandaloneWindows64/DefaultPackage/
+/Assets/StreamingAssets/yoo/DefaultPackage/
 *.private
 *.private.meta
 ^*.private.[0-9]+$

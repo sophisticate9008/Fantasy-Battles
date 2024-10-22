@@ -16,7 +16,7 @@ public class TheUIBase : MonoBehaviour
         set { }
     }
 
-    public PlayerDataConfig PlayerDataConfig { get => ConfigManager.Instance.GetConfigByClassName("PlayerDataConfig") as PlayerDataConfig; set { } }
+    public PlayerDataConfig PlayerDataConfig { get => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig; set { } }
 
     public virtual void Init()
     {

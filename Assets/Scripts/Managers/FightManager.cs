@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using MyBase;
+using FightBases;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +12,11 @@ public class FighteManager : MonoBehaviour
     public AnimationCurve spawnRateCurve;
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
+
+    private int exp = 0;
+    private int level = 0;
+    public int CurrentNeedExp => level * 5;
+
     GameObject DamageTextPrefab
     {
         get
@@ -234,5 +239,18 @@ public class FighteManager : MonoBehaviour
         enemyBase.CalLife((int)baseDamage);
     }
 
+    public void AddExp(int val) {
+        exp += val;
+        if(exp / CurrentNeedExp > 0) {
+            exp %= CurrentNeedExp;
+            level++;
+            AwakeSelectPanel();
+        }
+    }
+    public void AwakeSelectPanel() {
+        GenerateOptions();
+    }
+    private void GenerateOptions() {
 
+    }
 }

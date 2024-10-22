@@ -1,4 +1,4 @@
-using MyBase;
+using FightBases;
 
 public class NormalZombieConfig: EnemyConfigBase{
     

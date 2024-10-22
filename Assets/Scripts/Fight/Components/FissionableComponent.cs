@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using ArmConfigs;
 using Factorys;
-using MyBase;
+using FightBases;
 using UnityEngine;
 
 public class FissionableComponent : ComponentBase

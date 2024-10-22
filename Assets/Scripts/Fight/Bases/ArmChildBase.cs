@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Factorys;
-using MyBase;
+using FightBases;
 using UnityEngine;
 
-namespace MyBase
+namespace FightBases
 {
 
 
-    public class ArmChildBase : MonoBehaviour, IClone, IArmChild
+    public class ArmChildBase : MonoBehaviour, IArmChild
     {
         private float stayTime;
         public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as ArmConfigBase;

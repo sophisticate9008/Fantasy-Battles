@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using R3;
 using UnityEngine;
 
-namespace MyBase
+namespace FightBases
 {
     public abstract class BuffBase : IBuff
     {

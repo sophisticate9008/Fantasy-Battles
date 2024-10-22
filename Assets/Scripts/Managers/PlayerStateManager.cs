@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using ArmConfigs;
 using Factorys;
-using MyBase;
+using FightBases;
 using UnityEngine;
 
 //管理玩家选择，buff等
