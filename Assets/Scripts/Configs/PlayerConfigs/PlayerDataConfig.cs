@@ -22,6 +22,9 @@ public class PlayerDataConfig : ConfigBase
     public List<ItemBase> items = new();
     public List<JewelBase> jewels = new();
 
+
+
+
     //该字段用来手动通知宝石变动更新
     public int jewelChange = 0;
     // 事件，用于通知外部某个字段已更新

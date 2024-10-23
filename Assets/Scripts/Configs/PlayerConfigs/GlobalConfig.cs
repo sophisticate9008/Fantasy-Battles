@@ -18,7 +18,7 @@ public class GlobalConfig : ConfigBase
     [SerializeField] private float allAddition;
     [SerializeField] private float boomAddition;
     [SerializeField] private float adAddition;
-    
+
     // 构造函数
     public GlobalConfig()
     {
@@ -34,7 +34,7 @@ public class GlobalConfig : ConfigBase
         CritRate = 0.1f;
         CritDamage = 0;
     }
-    public float TransmitRate {get; set;}
+    public float TransmitRate { get; set; }
     // 公共属性
     public virtual float CritRate
     {
@@ -113,12 +113,12 @@ public class GlobalConfig : ConfigBase
         get => adAddition;
         set => adAddition = value;
     }
-    public virtual float RandomAdditonMin {get;set;} = 0;
-    public virtual float RandomAdditonMax {get; set;} = 0;
-    public virtual float AdditionToEliteOrBoss {get; set;} = 0;
-    
-    public virtual float[] CritWithPersentageAndMax {get; set;} = new float[2] {0, 0};
-    public virtual float[] DamageWithPersentageAndMax {get; set;} = new float[2] {0, 0};
+    public virtual float RandomAdditonMin { get; set; } = 0;
+    public virtual float RandomAdditonMax { get; set; } = 0;
+    public virtual float AdditionToEliteOrBoss { get; set; } = 0;
+
+    public virtual float[] CritWithPersentageAndMax { get; set; } = new float[2] { 0, 0 };
+    public virtual float[] DamageWithPersentageAndMax { get; set; } = new float[2] { 0, 0 };
     // 获取伤害加成的字典
     public virtual Dictionary<string, float> GetDamageAddition()
     {

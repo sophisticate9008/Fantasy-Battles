@@ -18,13 +18,14 @@ namespace ArmConfigs
         public float RepeatCd { get; set; } = 0.1f;
         public ArmConfigBase ChildConfig => BulletFissionConfig;
 
+
         public string FindType { get ; set ; } = "random";
 
         // 构造函数
         public BulletConfig() : base()
         {
             // 延迟初始化 BulletFissionConfig，并传递当前 BulletConfig 实例
-
+            
         }
 
         // 重写父类的 Init 方法

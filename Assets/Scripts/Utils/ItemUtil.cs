@@ -1,5 +1,6 @@
+
 using System.Collections.Generic;
-using System.Linq;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -98,7 +99,8 @@ public class ItemUtil
             _ => throw new System.NotImplementedException(),
         };
     }
-    public static string VarNameToSipleName(string varName) {
+    public static string VarNameToSipleName(string varName)
+    {
         return varName switch
         {
             "keyPurple" => "紫钥匙",
@@ -167,9 +169,8 @@ public class ItemUtil
         }
 
         // 随机值并累积概率找到对应的等级
-        float randomValue = Random.value;
+        float randomValue = UnityEngine.Random.value;
         float cumulativeWeight = 0f;
-
         foreach (var kvp in adjustedDict)
         {
             cumulativeWeight += kvp.Value;

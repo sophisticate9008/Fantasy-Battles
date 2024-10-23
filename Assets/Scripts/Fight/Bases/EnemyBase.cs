@@ -162,7 +162,9 @@ namespace FightBases
             {
                 isDead = true;
                 OnByType("die", gameObject);
+                FighteManager.Instance.AddExp(1);
                 animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
+                
             }
 
 

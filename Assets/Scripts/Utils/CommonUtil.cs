@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -11,8 +12,11 @@ public class CommonUtil
         var assembly = Assembly.GetExecutingAssembly();
         var type = assembly.GetTypes()
             .FirstOrDefault(t => t.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase));
-        
+
         return type ?? throw new NotImplementedException();
     }
-
+    public static List<T> AsList<T>(params T[] items)
+    {
+        return new List<T>(items);
+    }
 }

@@ -44,8 +44,6 @@ namespace FightBases
             EnemyBase.CanAction = false;
             float now = Time.time;
             EnemyBase.HardControlEndTime = Mathf.Max(now + Duration, EnemyBase.HardControlEndTime);
-
-
         }
         private IEnumerator AutoRemove()
         {
@@ -74,8 +72,6 @@ namespace FightBases
             {
                 EnemyBase.CanAction = true;
             }
-
-
         }
     }
 }

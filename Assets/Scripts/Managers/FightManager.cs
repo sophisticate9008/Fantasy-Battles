@@ -10,14 +10,14 @@ using UnityEngine;
 //管理战斗逻辑，伤害等
 public class FighteManager : MonoBehaviour
 {
-    public PlayerDataConfig playerDataConfig = ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
+    public PlayerDataConfig playerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     public AnimationCurve spawnRateCurve;
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
 
     private int exp = 0;
-    private int level = 0;
-    public int CurrentNeedExp => level * 5;
+    private int level = 1;
+    public int CurrentNeedExp => 1;
 
     GameObject DamageTextPrefab
     {
@@ -55,12 +55,15 @@ public class FighteManager : MonoBehaviour
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
         LoadJewel();
     }
-    private void LoadJewel() {
-        for(int i = 1; i <= 6; i++) {
-            
+    private void LoadJewel()
+    {
+        for (int i = 1; i <= 6; i++)
+        {
+
             var jewels = playerDataConfig.GetValue("place" + i) as List<JewelBase>;
-            foreach(var jewel in jewels) {
-                ActionFactory.CreateJewelAction(jewel.id, jewel.level).Invoke();
+            foreach (var jewel in jewels)
+            {
+                ItemFactory.CreateJewelAction(jewel.id, jewel.level).Invoke();
             }
         }
     }
@@ -121,7 +124,9 @@ public class FighteManager : MonoBehaviour
         if (damage < 0)
         {
             return "Miss";
-        }else if(damage == 0) {
+        }
+        else if (damage == 0)
+        {
             return "Immunity";
         }
         else if (damage >= 1000000)
@@ -181,12 +186,15 @@ public class FighteManager : MonoBehaviour
         }
         else
         {
-            if(tlc == 0) {
+            if (tlc == 0)
+            {
                 baseDamage = GlobalConfig.AttackValue * armConfig.Tlc;
-            }else {
-                 baseDamage = GlobalConfig.AttackValue * tlc;
             }
-            
+            else
+            {
+                baseDamage = GlobalConfig.AttackValue * tlc;
+            }
+
         }
         //基础伤害通过伤害加成
         float addtion = GlobalConfig.AllAddition;
@@ -250,18 +258,42 @@ public class FighteManager : MonoBehaviour
         enemyBase.CalLife((int)baseDamage);
     }
 
-    public void AddExp(int val) {
+    public void AddExp(int val)
+    {
         exp += val;
-        if(exp / CurrentNeedExp > 0) {
+        if (exp / CurrentNeedExp > 0)
+        {
             exp %= CurrentNeedExp;
             level++;
             AwakeSelectPanel();
         }
     }
-    public void AwakeSelectPanel() {
-        GenerateOptions();
+    public void AwakeSelectPanel()
+    {
+        SkillConfig skillConfig = ConfigManager.Instance.GetConfigByClassName("Skill") as SkillConfig;
+        GameObject canvas = GameObject.Find("UICanvas");
+        GameObject panel = canvas.transform.RecursiveFind("SelectPanelThree").gameObject;
+        GameObject panelBackup = Instantiate(panel, panel.transform.parent);
+        panelBackup.SetActive(true);
+        SkillSelectPanel panelBackupUI = panelBackup.GetComponent<SkillSelectPanel>();
+        List<SkillNode> availableSkills = skillConfig.GetAvailableSkills();
+        panelBackupUI.skills = availableSkills.RandomChoices(3);
+        Debug.Log("可选技能数量" + availableSkills.Count);
+        panelBackupUI.Init();
+        ControlGame(false);
     }
-    private void GenerateOptions() {
+    public void ControlGame(bool isContinue)
+    {
+        if (isContinue)
+        {
+            Time.timeScale = 1;
+        }
+        else
+        {
+            Time.timeScale = 0;
+        }
+    }
 
-    }
+
+
 }
