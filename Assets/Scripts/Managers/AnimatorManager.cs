@@ -3,33 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorManager : MonoBehaviour
+public class AnimatorManager : ManagerBase<AnimatorManager>
 {
     private static AnimatorManager _instance;
-    private Dictionary<int, string> animationNames = new();
-    public static AnimatorManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("AnimatorManager instance is null!");
-            }
-            return _instance;
-        }
-    }
-
-    void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);  // 保证单例
-        }
-    }
+    private readonly Dictionary<int, string> animationNames = new();
 
     private void LoadAnimationNames(Animator animator)
     {

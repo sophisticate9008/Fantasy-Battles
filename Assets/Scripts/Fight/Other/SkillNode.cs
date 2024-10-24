@@ -12,8 +12,9 @@ public class SkillNode
     public string desc;//描述
     public string skillName;
     public string resName;
+    public string ownerType;
     
-    public SkillNode(int id, List<int> prerequisiteIds, List<int> conflictIds, string name, string desc, int maxSelCount, string resName, bool isUnlocked = false, bool isSatisfied = false)
+    public SkillNode(int id, List<int> prerequisiteIds, List<int> conflictIds, string name, string desc, int maxSelCount, string resName, bool isUnlocked = false, bool isSatisfied = false,string ownerType = "bullet")
     {
         this.conflictIds = conflictIds;
         this.id = id;
@@ -24,5 +25,6 @@ public class SkillNode
         this.maxSelCount = maxSelCount;
         skillName = name;
         this.resName = resName;
+        this.ownerType = ownerType;
     }
 }

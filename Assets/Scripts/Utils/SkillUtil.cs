@@ -25,6 +25,22 @@ public class SkillUtil
         {"icon_keji_qiang", CommonUtil.AsList(13,14,15,16,17)}
 
     };
+    public static Dictionary<int, string> ownerTypeDict = new() {
+        {1, "Tnt"},
+        {2, "IceBomb"},
+        {3, "ElecPenetrate"},
+        {4, "EnergyRay"},
+        {5, "Laser"},
+        {6, "IceGenerator"},
+        {7, "JumpElectro"},
+        {8, "Tornado"},
+        {9, "AirDropBomb"},
+        {10, "PressureCutter"},
+        {11, "FuelBullet"},
+        {12, "UAV"},
+    };
+
+    
     public static Action IdToUseAction(int id)
     {
         return null;
@@ -160,12 +176,20 @@ public class SkillUtil
             _ => false,
         };
     }
+    public static string IdToOwnerType(int id)
+    {
+        if (ownerTypeDict.TryGetValue(id, out var ownerType))
+        {
+            return ownerType;
+        }
+        else
+        {
+            return "bullet";
+        }
+    }
     public static SkillNode CreateSkillNode(int id)
     {
         return new SkillNode(id, IdToPreList(id), IdToConflictIds(id), IdToName(id), IdToDesc(id),
-                    IdToMaxSelCount(id), IdToResName(id), IdToIsUnlocked(id), IdToIsSatisfied(id));
+                    IdToMaxSelCount(id), IdToResName(id), IdToIsUnlocked(id), IdToIsSatisfied(id), IdToOwnerType(id));
     }
-
-
-
 }

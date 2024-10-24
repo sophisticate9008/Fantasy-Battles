@@ -8,16 +8,17 @@ using TMPro;
 using UnityEngine;
 
 //管理战斗逻辑，伤害等
-public class FighteManager : MonoBehaviour
+public class FighteManager : ManagerBase<FighteManager>
 {
+
     public PlayerDataConfig playerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     public AnimationCurve spawnRateCurve;
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
-
-    private int exp = 0;
-    private int level = 1;
-    public int CurrentNeedExp => 1;
+    public Dictionary<string, float> cdDict = new();
+    public int exp = 0;
+    public int level = 1;
+    public int CurrentNeedExp => level * 1;
 
     GameObject DamageTextPrefab
     {
@@ -33,7 +34,6 @@ public class FighteManager : MonoBehaviour
             }
         }
     }
-    public static FighteManager Instance;
     public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
     private static readonly Dictionary<string, string> colorDict = new() {
         {"ice", "blue"},
@@ -42,13 +42,7 @@ public class FighteManager : MonoBehaviour
         {"energy", "#B0D3B5"}
     };
     public Dictionary<string, float> statistics = new();
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
+
     private void Start()
     {
 
@@ -270,13 +264,12 @@ public class FighteManager : MonoBehaviour
     }
     public void AwakeSelectPanel()
     {
-        SkillConfig skillConfig = ConfigManager.Instance.GetConfigByClassName("Skill") as SkillConfig;
         GameObject canvas = GameObject.Find("UICanvas");
         GameObject panel = canvas.transform.RecursiveFind("SelectPanelThree").gameObject;
         GameObject panelBackup = Instantiate(panel, panel.transform.parent);
         panelBackup.SetActive(true);
         SkillSelectPanel panelBackupUI = panelBackup.GetComponent<SkillSelectPanel>();
-        List<SkillNode> availableSkills = skillConfig.GetAvailableSkills();
+        List<SkillNode> availableSkills = SkillManager.Instance.GetAvailableSkills();
         panelBackupUI.skills = availableSkills.RandomChoices(3);
         Debug.Log("可选技能数量" + availableSkills.Count);
         panelBackupUI.Init();

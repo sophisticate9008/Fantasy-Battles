@@ -4,10 +4,9 @@ using FightBases;
 using UnityEngine;
 
 // 管理怪物生成
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : ManagerBase<EnemyManager>
 {
     public List<AnimationCurve> spawnRateCurves; // 每种怪物的生成速率曲线
-    public static EnemyManager Instance { get; private set; }
     public List<string> enemyTypes = new() { "NormalZombie" }; // 支持的怪物类型
     private List<EnemyConfigBase> enemyConfigBases = new(); // 怪物配置
     private List<GameObject> monsterPrefabs = new(); // 怪物预制体
@@ -20,24 +19,10 @@ public class EnemyManager : MonoBehaviour
     public int liveCount = 0;//存活数量
     private Camera mainCamera;
 
-    private void Awake()
-    {
-        // 检查是否已经有实例存在
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // 防止创建多个实例
-        }
-        else
-        {
-            Instance = this;
-        }
-
-        // 获取主摄像机
-        mainCamera = Camera.main;
-    }
 
     private void Start()
     {
+        mainCamera = Camera.main;
         foreach (string item in enemyTypes)
         {
             EnemyConfigBase configBase = ConfigManager.Instance.GetConfigByClassName(item) as EnemyConfigBase;

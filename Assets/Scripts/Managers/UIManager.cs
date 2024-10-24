@@ -7,10 +7,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using YooAsset;
 
-public class UIManager : MonoBehaviour
+public class UIManager : ManagerBase<UIManager>
 {
     private static UIManager _instance;
-    public static UIManager Instance => _instance;
+
 
     private Stack<TheUIBase> uiStack = new Stack<TheUIBase>();
     private Stack<TheUIBase> maskStack = new Stack<TheUIBase>();
@@ -22,24 +22,14 @@ public class UIManager : MonoBehaviour
     private GameObject listenedToClose;
     private string[] excluedTypes = new string[0];
     private bool enableClick = true;
-    private void Awake()
+    protected override void AwakeCallBack()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            //拦截鼠标点击事件
-            typeof(ExecuteEvents).GetField("s_PointerClickHandler", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, new ExecuteEvents.EventFunction<IPointerClickHandler>(OnPointerClick));
-            // 拦截鼠标按下事件
-            // typeof(ExecuteEvents).GetField("s_PointerDownHandler", BindingFlags.NonPublic | BindingFlags.Static)
-            //     .SetValue(null, new ExecuteEvents.EventFunction<IPointerDownHandler>(OnPointerDown));
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        base.AwakeCallBack();
+        typeof(ExecuteEvents).GetField("s_PointerClickHandler", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, new ExecuteEvents.EventFunction<IPointerClickHandler>(OnPointerClick));
+        // 拦截鼠标按下事件
+        // typeof(ExecuteEvents).GetField("s_PointerDownHandler", BindingFlags.NonPublic | BindingFlags.Static)
+        //     .SetValue(null, new ExecuteEvents.EventFunction<IPointerDownHandler>(OnPointerDown));
+        DontDestroyOnLoad(gameObject);
         uiCanvas = GameObject.Find("UICanvas");
         if (uiCanvas == null)
         {

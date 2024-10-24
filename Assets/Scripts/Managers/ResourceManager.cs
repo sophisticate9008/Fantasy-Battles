@@ -2,26 +2,18 @@ using System.Collections;
 using UnityEngine;
 using YooAsset;
 
-public class ResourceManager : MonoBehaviour
+public class ResourceManager : ManagerBase<ResourceManager>
 {
     public EPlayMode PlayMode = EPlayMode.OfflinePlayMode;
-    public static ResourceManager Instance { get; private set; }
+
     private ResourcePackage package;
     private string packageName = "DefaultPackage";
     private string packageVersion;
     private ResourceDownloaderOperation downloader;
-
-    private void Awake()
+    protected override void AwakeCallBack()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject); // 如果已经存在，销毁这个实例
-        }
+        base.AwakeCallBack();
+        DontDestroyOnLoad(gameObject);
     }
     private void Start()
     {

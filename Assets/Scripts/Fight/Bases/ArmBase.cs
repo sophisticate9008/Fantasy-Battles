@@ -13,7 +13,7 @@ namespace FightBases
         private float lastFireTime = -10000f;
         public GameObject TargetEnemy { get; set; }
 
-
+        
         public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name.Replace("Arm", "")) as ArmConfigBase;
 
         public void FindTargetNearestOrElite()

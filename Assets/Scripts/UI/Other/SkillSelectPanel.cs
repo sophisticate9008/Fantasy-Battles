@@ -6,7 +6,6 @@ using YooAsset;
 
 public class SkillSelectPanel : TheUIBase
 {
-    SkillConfig SkillConfig => ConfigManager.Instance.GetConfigByClassName("Skill") as SkillConfig;
     List<Button> Buttons => transform.GetChild(0).GetComponentsInDirectChildren<Button>();
     public List<SkillNode> skills;
 
@@ -20,7 +19,7 @@ public class SkillSelectPanel : TheUIBase
         ChangeCard();
     }
     private void SelectSkill(SkillNode skill) {
-        SkillConfig.SelectSkill(skill);
+        SkillManager.Instance.SelectSkill(skill);
         FighteManager.Instance.ControlGame(true);
         Destroy(gameObject);
     }

@@ -3,27 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using YooAsset;
 
-public class EffectManager : MonoBehaviour
+public class EffectManager : ManagerBase<EffectManager>
 {
     // Start is called before the first frame update
     //防止重新创建特效池子
     private HashSet<string> effectsName = new();
-    public static EffectManager Instance
-    { get; private set; }
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-
-    }
-    
     public GameObject GetoneFromPool(string effectName) {
         GameObject prefab = YooAssets.LoadAssetSync(effectName).AssetObject as GameObject;
         if(!effectsName.Contains(effectName)) {

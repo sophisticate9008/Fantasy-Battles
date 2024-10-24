@@ -1,42 +1,37 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ObjectPoolManager : MonoBehaviour
+public class ObjectPoolManager : ManagerBase<ObjectPoolManager>
 {
-    public static ObjectPoolManager Instance { get; private set; }
+
 
     // 字典存储多个对象池，key为池的名字，值为对象池队列
     private Dictionary<string, Queue<GameObject>> poolDictionary;
-    
+
     // 字典存储每个池的最大长度，key为池的名字，值为池的最大长度
     private Dictionary<string, int> poolMaxSizeDictionary;
-    
+
     // 字典存储每个对象池的父对象
     private Dictionary<string, Transform> poolParentDictionary;
-
-    private void Awake()
+    protected override void AwakeCallBack()
     {
-        // 确保这是单例
-        if (Instance == null)
+        base.AwakeCallBack();
+        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolMaxSizeDictionary = new Dictionary<string, int>();
+        poolParentDictionary = new Dictionary<string, Transform>();
+
+    }
+
+    // 创建对象池，并设置池的最大长度和父对象
+    public GameObject CreatePool(string poolName, GameObject prefab, int initialPoolSize, int maxPoolSize)
+    {
+        GameObject grandParent;
+        if (poolName.Contains("UI"))
         {
-            Instance = this;
-            poolDictionary = new Dictionary<string, Queue<GameObject>>();
-            poolMaxSizeDictionary = new Dictionary<string, int>();
-            poolParentDictionary = new Dictionary<string, Transform>();
+            grandParent = GameObject.Find("UIPools");
         }
         else
         {
-            Destroy(gameObject);
-        }
-    }
-    
-    // 创建对象池，并设置池的最大长度和父对象
-    public GameObject CreatePool(string poolName,  GameObject prefab, int initialPoolSize, int maxPoolSize)
-    {
-        GameObject grandParent;
-        if(poolName.Contains("UI")) {
-            grandParent = GameObject.Find("UIPools");
-        }else {
             grandParent = GameObject.Find("ObjectPools");
         }
         GameObject poolObject = new GameObject(poolName);
@@ -63,7 +58,7 @@ public class ObjectPoolManager : MonoBehaviour
     // 从对象池中获取对象，如果没有可用对象则创建一个新的
     public GameObject GetFromPool(string poolName, GameObject prefab)
     {
-        
+
         if (poolDictionary.ContainsKey(poolName))
         {
             // 如果对象池中有对象，取出一个对象

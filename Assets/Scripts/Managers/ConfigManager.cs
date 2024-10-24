@@ -4,22 +4,12 @@ using Factorys;
 
 using UnityEngine;
 
-public class ConfigManager : MonoBehaviour
+public class ConfigManager : ManagerBase<ConfigManager>
 {
-    public static ConfigManager Instance { get; private set; }
+
     private readonly List<string> pools = new();
     private Dictionary<string, IConfig> configCache = new();
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject); // 如果已经存在，销毁这个实例
-        }
-    }
+
 
     public IConfig GetConfigByClassName(string className)
     {
