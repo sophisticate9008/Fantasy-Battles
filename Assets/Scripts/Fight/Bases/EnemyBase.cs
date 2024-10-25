@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using Factorys;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FightBases
@@ -10,7 +11,8 @@ namespace FightBases
         public AnimatorManager animatorManager;
         public Animator animator;
         public bool CanAction { get; set; } = true;
-        public EnemyConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as EnemyConfigBase;
+        public EnemyConfigBase ConstConfig => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as EnemyConfigBase;
+        public EnemyConfigBase Config { get; set; }
         public bool IsInit { get; set; }
         public Queue<IBuff> Buffs { get; } = new();
         public Dictionary<string, IComponent> InstalledComponents { get; } = new();
@@ -26,6 +28,7 @@ namespace FightBases
         public bool isDead;
         public virtual void Init()
         {
+            Config = ConstConfig.Clone() as EnemyConfigBase;
             isDead = false;
             NowLife = Config.Life;
             MaxLife = Config.Life;
@@ -164,7 +167,7 @@ namespace FightBases
                 OnByType("die", gameObject);
                 FighteManager.Instance.AddExp(1);
                 animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
-                
+
             }
 
 

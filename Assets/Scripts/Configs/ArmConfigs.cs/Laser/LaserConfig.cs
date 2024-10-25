@@ -1,5 +1,6 @@
 
 using FightBases;
+using MyEnums;
 using UnityEngine;
 
 namespace ArmConfigs
@@ -19,14 +20,15 @@ namespace ArmConfigs
             RangeFire = 10;
             Cd = 4f;
             AttackCd = 0.2f;
-            AttackCount = 1;
-            Duration = 3f;
+            AttackCount = 2;
+            Duration = 4f;
             OnType = "stay";
             DamageType = "energy";
             CritRate = 0.5f;
             ScopeRadius = 12f;
             IsLineCast = true;
-
+            CdType = CdTypes.WaitLast;
+            ControlBy = ControlBy.Arm;
         }
     }
 }

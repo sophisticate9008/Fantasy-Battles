@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using MyEnums;
 using UnityEngine;
 
 
@@ -115,7 +116,10 @@ public class ArmConfigBase : ConfigBase
         get => componentStrs;
         set => componentStrs = value;
     }
+    //技能最大持续时间
     public virtual float Duration { get => duration; set => duration = value; }
+    //技能当前剩余时间,因为持续时间的武器都是同一时间同时释放,所以全局配置即可
+    public virtual float RestDuration{get; set;} = 0;
     public virtual string Owner { get; set; }
     //伤害类型 
     public virtual string DamageType { get; set; }
@@ -125,13 +129,18 @@ public class ArmConfigBase : ConfigBase
     // 触发类型
     public virtual string OnType { get; set; }
 
-    public virtual string DamageExtraType { get => ""; set { } }
+    public virtual string DamageExtraType { get ; set ; } = "";
     //自身索敌半径
     public virtual float ScopeRadius { get; set; } = 3f;
     //线段路径伤害
     public virtual bool IsLineCast { get; set; } = false;
     //射线路径伤害
     public virtual bool IsRayCast { get; set; } = false;
+    public virtual int CurrentAttackedNum {get;set;} = 0;
+    public virtual float CurrentCd { get; set; } = 0;
+
+    public CdTypes CdType { get; set; } = CdTypes.AtOnce;
+    public ControlBy ControlBy{ get; set; } = ControlBy.Self;
     // 构造函数
     public ArmConfigBase()
     {

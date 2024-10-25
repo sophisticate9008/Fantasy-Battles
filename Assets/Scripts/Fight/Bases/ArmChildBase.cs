@@ -172,7 +172,6 @@ namespace FightBases
         {
             if (IsInit)
             {
-
                 Move();
                 OnByQueue();
             }
@@ -205,7 +204,10 @@ namespace FightBases
         }
         public virtual void Init()
         {
-
+            if (Config.ControlBy == MyEnums.ControlBy.Arm)
+            {
+                StartCoroutine(BeginCuntDown());
+            }
             CreateComponents();
             foreach (var component in InstalledComponents)
             {
@@ -342,7 +344,6 @@ namespace FightBases
 
         public void ReturnToPool()
         {
-
             ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
         }
 
@@ -391,8 +392,14 @@ namespace FightBases
         {
 
             stayTime = -10;
-            Invoke(nameof(ReturnToPool), Config.Duration);
+            if (Config.ControlBy == MyEnums.ControlBy.Self)
+            {
+                Invoke(nameof(ReturnToPool), Config.Duration);
+            }
+
         }
+        //技能持续时间结束后销毁
+
         //路径伤害
         public virtual void SetDirectionToTarget()
         {
@@ -401,6 +408,17 @@ namespace FightBases
                 Direction = (TargetEnemy.transform.position - transform.position).normalized;
 
             }
+        }
+        public IEnumerator BeginCuntDown()
+        {
+            Config.RestDuration = Config.Duration;
+            while (Config.RestDuration > 0)
+            {
+                Config.RestDuration -= Time.deltaTime;
+                yield return null;
+            }
+            ReturnToPool();
+
         }
 
     }

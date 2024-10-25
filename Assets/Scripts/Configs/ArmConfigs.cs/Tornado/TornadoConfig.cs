@@ -1,4 +1,5 @@
 using FightBases;
+using MyEnums;
 
 namespace ArmConfigs
 {
@@ -12,15 +13,17 @@ namespace ArmConfigs
             Name = "龙卷";
             Description = "龙卷攻击";
             RangeFire = 8;
-            Cd = 30f;
-            Duration = 20f;
-            AttackCount = 1;
+            Cd = 10f;
+            Duration = 15f;
+            AttackCount = 2;
             AttackCd = 0.2f;
             OnType = "stay";
             DamageType = "wind";
             ScopeRadius = 15f;
             Speed = 2f;
             SelfScale = 10f;
+            CdType = CdTypes.WaitLast;
+            ControlBy = ControlBy.Arm;
         }
     }
 }

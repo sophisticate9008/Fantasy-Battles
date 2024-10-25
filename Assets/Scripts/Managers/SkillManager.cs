@@ -5,10 +5,13 @@ using UnityEngine;
 public class SkillManager : ManagerBase<SkillManager>
 {
     public SkillConfig SkillConfig => ConfigManager.Instance.GetConfigByClassName("Skill") as SkillConfig;
-    private List<SkillNode> selectedSkills = new();
+    private readonly List<SkillNode> selectedSkills = new();
     private readonly List<int> initialSkillIds = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
     public List<SkillNode> Skills => SkillConfig.skills;
     private int initialSkillCount = 0;
+
+    
+    public readonly List<string> SelectedArmTypes = new();
     public void UnlockSkill(int id)
     {
         SkillNode skill = Skills.Find(s => s.id == id);
@@ -37,6 +40,7 @@ public class SkillManager : ManagerBase<SkillManager>
     public void SelectSkill(SkillNode skill)
     {
         int id = skill.id;
+        SkillUtil.IdToUseAction(id).Invoke();
         if (skill != null)
         {
             if (initialSkillIds.Contains(id))
@@ -91,5 +95,7 @@ public class SkillManager : ManagerBase<SkillManager>
         UpdateSatisfiedStatus();
         return Skills.FindAll(s => s.isSatisfied && s.isUnlocked);
     }
+    //给某些减cd的技能特性用
+    
 }
 

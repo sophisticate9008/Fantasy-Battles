@@ -14,6 +14,7 @@ public class Tornado : ArmChildBase
     {
         base.Init();
         exceptObjs.Clear();
+        Debug.Log("Tornado Init" + Config.SelfScale);
         ChangeScale(Config.SelfScale);
         ChangeParticalSpeed();
     }

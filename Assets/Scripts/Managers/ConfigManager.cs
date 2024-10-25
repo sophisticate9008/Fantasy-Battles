@@ -35,7 +35,7 @@ public class ConfigManager : ManagerBase<ConfigManager>
         if (pools.IndexOf(configName) == -1)
         {
             pools.Add(configName);
-            ObjectPoolManager.Instance.CreatePool(configName + "Pool", config.Prefab, 1, 500);
+            ObjectPoolManager.Instance.CreatePool(configName + "Pool", config.Prefab, 5, 500);
             
         }
     }

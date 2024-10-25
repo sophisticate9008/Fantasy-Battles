@@ -18,7 +18,7 @@ public class FighteManager : ManagerBase<FighteManager>
     public Dictionary<string, float> cdDict = new();
     public int exp = 0;
     public int level = 1;
-    public int CurrentNeedExp => level * 1;
+    public int CurrentNeedExp => level * 1000;
 
     GameObject DamageTextPrefab
     {

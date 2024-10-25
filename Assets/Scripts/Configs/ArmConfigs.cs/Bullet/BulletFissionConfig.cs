@@ -2,7 +2,7 @@ using FightBases;
 
 namespace ArmConfigs
 {
-    public class BulletFissionConfig : ArmConfigBase, IMultipleable
+    public class BulletFissionConfig : ArmConfigBase, IMultipleable,IPenetrable
     {
         public BulletConfig BulletConfig => ConfigManager.Instance.GetConfigByClassName("Bullet") as BulletConfig;
 
@@ -16,6 +16,9 @@ namespace ArmConfigs
         public float AngleDifference { get; set; } = 15f;
         public override float CritRate => BulletConfig.CritRate;
         public override string Owner => BulletConfig.Name;
+
+        public int PenetrationLevel { get => BulletConfig.PenetrationLevel; set {} }
+
         // 构造函数
         public BulletFissionConfig() : base()
         {

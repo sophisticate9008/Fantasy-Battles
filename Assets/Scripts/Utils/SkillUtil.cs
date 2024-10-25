@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class SkillUtil
 {
@@ -25,10 +26,11 @@ public class SkillUtil
         {"icon_keji_qiang", CommonUtil.AsList(13,14,15,16,17)}
 
     };
-    public static Dictionary<int, string> ownerTypeDict = new() {
-        {1, "Tnt"},
-        {2, "IceBomb"},
-        {3, "ElecPenetrate"},
+    public static Dictionary<int, string> armTypeDict = new() {
+        {0, "Tnt"},
+        {1, "IceBomb"},
+        {2, "ElectroPenetrate"},
+        {3, "Car"},
         {4, "EnergyRay"},
         {5, "Laser"},
         {6, "IceGenerator"},
@@ -40,11 +42,18 @@ public class SkillUtil
         {12, "UAV"},
     };
 
-    
-    public static Action IdToUseAction(int id)
+    public static string ArmTypeToResName(string armType)
     {
+        foreach (var armTypeItem in armTypeDict)
+        {
+            if (armTypeItem.Value.Equals(armType))
+            {
+                return IdToResName(armTypeItem.Key);
+            }
+        }
         return null;
     }
+
     public static List<int> IdToConflictIds(int id)
     {
         foreach (var list in conflictLists)
@@ -176,20 +185,37 @@ public class SkillUtil
             _ => false,
         };
     }
-    public static string IdToOwnerType(int id)
+    public static string IdToArmType(int id)
     {
-        if (ownerTypeDict.TryGetValue(id, out var ownerType))
+        if (armTypeDict.TryGetValue(id, out var armType))
         {
-            return ownerType;
+            return armType;
         }
         else
         {
-            return "bullet";
+            return "Bullet";
         }
     }
     public static SkillNode CreateSkillNode(int id)
     {
         return new SkillNode(id, IdToPreList(id), IdToConflictIds(id), IdToName(id), IdToDesc(id),
-                    IdToMaxSelCount(id), IdToResName(id), IdToIsUnlocked(id), IdToIsSatisfied(id), IdToOwnerType(id));
+                    IdToMaxSelCount(id), IdToResName(id), IdToIsUnlocked(id), IdToIsSatisfied(id), IdToArmType(id));
+    }
+
+    public static Action IdToUseAction(int id)
+    {
+        if (id <= 12)
+        {
+            GameObject ArmsParent = GameObject.Find("Arms");
+            string armType = IdToArmType(id);
+            Debug.Log("armtype" + armType);
+            GameObject arm = ArmsParent.transform.RecursiveFind(armType + "Arm").gameObject;
+            return () => { arm.SetActive(true); };
+        }
+        return id switch
+        {
+            _ => () => { }
+            ,
+        };
     }
 }

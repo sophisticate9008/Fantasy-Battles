@@ -18,10 +18,8 @@ namespace MyComponents
         {
             base.Init();
             PenetrationLevel = (ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig).AllPenetrationLevel;
-            if (SelfObj.GetComponent<Bullet>() != null)
-            {
-                PenetrationLevel += (ConfigManager.Instance.GetConfigByClassName("Bullet") as BulletConfig).BulletPenetrationLevel;
-            }
+            PenetrationLevel += (SelfObj.GetComponent<ArmChildBase>().Config as IPenetrable).PenetrationLevel;
+
         }
         public int PenetrationLevel
         {

@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace ArmConfigs
 {
-    public class BulletConfig : ArmConfigBase, IMultipleable, IFissionable
+    public class BulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPenetrable
     {
         // 新增属性
-        public int BulletPenetrationLevel { get; set; } = 1;
+        public int PenetrationLevel { get; set; } = 1;
         public int ReboundCount { get; set; } = 1;
         public BulletFissionConfig BulletFissionConfig => ConfigManager.Instance.GetConfigByClassName("BulletFission") as BulletFissionConfig;
         public int BulletFissionCount { get; set; } = 2;
@@ -51,6 +51,7 @@ namespace ArmConfigs
             DamageExtraType = "penetrable";
             OnType = "enter";
             BuffDamageTlc = 0.1f;
+            CdType = MyEnums.CdTypes.Exhaust;
         }
     }
 }

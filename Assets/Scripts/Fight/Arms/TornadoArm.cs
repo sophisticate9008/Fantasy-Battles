@@ -9,7 +9,7 @@ public class TornadoArm : ArmBase
     }
     public override void OtherFindTarget()
     {
-        FindTargetNearestOrElite();
+        FindRandomTarget();
 
     }
     public override void Attack()

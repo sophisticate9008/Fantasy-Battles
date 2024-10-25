@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Factorys;
+using MyEnums;
+using Unity.VisualScripting;
 using UnityEngine;
 namespace FightBases
 {
@@ -13,7 +15,6 @@ namespace FightBases
         private float lastFireTime = -10000f;
         public GameObject TargetEnemy { get; set; }
 
-        
         public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name.Replace("Arm", "")) as ArmConfigBase;
 
         public void FindTargetNearestOrElite()
@@ -32,7 +33,7 @@ namespace FightBases
                 }
             }
 
-            if (nearestEnemy != null)
+            if (nearestEnemy != null && nearestEnemy.activeSelf)
             {
                 TargetEnemy = nearestEnemy;
             }
@@ -43,6 +44,7 @@ namespace FightBases
         }
         protected virtual void Start()
         {
+            SkillManager.Instance.SelectedArmTypes.Add(GetType().Name.Replace("Arm", ""));
         }
         public virtual void Update()
         {
@@ -50,24 +52,34 @@ namespace FightBases
         }
         public virtual void AttackLogic()
         {
-            if (TargetEnemy == null)
+            if (TargetEnemy == null || !TargetEnemy.activeSelf)
             {
                 FindTargetNearestOrElite();
             }
 
-            if (TargetEnemy != null && Time.time - lastFireTime > Config.Cd)
+            if (Time.time - lastFireTime < 0)
             {
-                lastFireTime = Time.time + 100000;//设为较大值，避免再次进入
+                Config.CurrentCd = 0;
+            }
+            else
+            {
+                Config.CurrentCd = Mathf.Max(0, Config.Cd - (Time.time - lastFireTime));
+            }
+
+            if (TargetEnemy != null && TargetEnemy.activeSelf && Time.time - lastFireTime > Config.Cd)
+            {
+                lastFireTime = Time.time + 10000000000;//设为较大值，避免再次进入
                 StartCoroutine(AttackSequence()); // 发射
             }
         }
 
         public virtual IEnumerator AttackSequence()
         {
-
-            for (int i = 0; i < Config.AttackCount; i++)
+            Config.CurrentAttackedNum = 0;
+            while (Config.CurrentAttackedNum < Config.AttackCount)
             {
-                if (i == 0)
+                AddAttackedNum();
+                if (Config.CurrentAttackedNum == 0)
                 {
                     FisrtFindTarget();
                 }
@@ -75,17 +87,37 @@ namespace FightBases
                 {
                     OtherFindTarget();
                 }
-                lastFireTime = Time.time;
-                if (TargetEnemy != null)
+                if (TargetEnemy != null && TargetEnemy.activeSelf)
                 {
+                    if(Config.CdType == CdTypes.Exhaust) {
+                        Config.CurrentAttackedNum++;
+                    }
                     Attack();
                 }
-
-
                 yield return new WaitForSeconds(Config.AttackCd);
-
             }
+            //如果是立刻进入冷却, 否则等持续时间结束
+            if (Config.CdType == CdTypes.AtOnce)
+            {
+                lastFireTime = Time.time;
+                TargetEnemy = null;
+            }
+
+            StartCoroutine(WaitEnd());
+        }
+        private IEnumerator WaitEnd() {
+            while(Config.RestDuration > 0) {
+                yield return null;
+            }
+            lastFireTime = Time.time;
             TargetEnemy = null;
+        }
+        public virtual void AddAttackedNum()
+        {
+            if(Config.CdType != CdTypes.Exhaust) {
+                Config.CurrentAttackedNum++;
+            }
+            
         }
         public virtual void Attack()
         {
@@ -96,10 +128,13 @@ namespace FightBases
             EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
             List<GameObject> selectedEnemies = new();
             int length = enemies.Length;
+            if (length == 0)
+            {
+                return null;
+            }
             for (int i = 0; i < count; i++)
             {
                 int _ = Random.Range(0, length);
-
                 selectedEnemies.Add(enemies[_].gameObject);
             }
             if (count == 1)

@@ -12,8 +12,8 @@ public class UIManager : ManagerBase<UIManager>
     private static UIManager _instance;
 
 
-    private Stack<TheUIBase> uiStack = new Stack<TheUIBase>();
-    private Stack<TheUIBase> maskStack = new Stack<TheUIBase>();
+    private readonly Stack<TheUIBase> uiStack = new();
+    private readonly Stack<TheUIBase> maskStack = new();
     private GameObject uiCanvas;
     private GameObject currentMask; // 当前遮罩
 

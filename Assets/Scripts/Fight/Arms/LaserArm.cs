@@ -13,7 +13,7 @@ public class LaserArm : ArmBase
     }
     public override void OtherFindTarget()
     {
-        FindTargetNearestOrElite();
+        FindRandomTarget();
 
     }
     public override void Attack()
