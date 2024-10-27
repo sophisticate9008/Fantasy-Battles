@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace TheBuffs
 {
-    public class DebuffFreeze : BuffBase
+    public class Freeze : BuffBase
     {
         //特效控制器
         IEffectController controller;
-        public DebuffFreeze(string buffName, float duration,GameObject selfObj, GameObject enemyObj) : base(buffName, duration,selfObj, enemyObj)
+        public Freeze(string buffName, float duration,GameObject selfObj, GameObject enemyObj) : base(buffName, duration,selfObj, enemyObj)
         {
         }
         public override void Effect()

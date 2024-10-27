@@ -44,7 +44,7 @@ namespace ArmConfigs
             ComponentStrs.Add("穿透");
             ComponentStrs.Add("反弹");
             ComponentStrs.Add("分裂");
-            ComponentStrs.Add("冰冻");
+            ComponentStrs.Add("减速");
             ComponentStrs.Add("爆炸");
             AttackCd = 1f;
             AttackCount = 30;

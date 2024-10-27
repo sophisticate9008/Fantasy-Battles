@@ -21,7 +21,7 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float attackCd;
     [SerializeField] private int attackCount = 1;
     [SerializeField] private List<string> componentStrs = new();
-    [SerializeField] private float buffDamageTlc;
+    [SerializeField] private float buffDamageTlc;//待定
     [SerializeField] private float selfScale = 1;
     //持续时间
     [SerializeField] private float duration = 20f;
@@ -39,6 +39,19 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float forceBaseDistance = 5; // 影响距离
     [SerializeField] private CdTypes cdType = CdTypes.AtOnce;
     [SerializeField] private ControlBy controlBy = ControlBy.Self;
+    [SerializeField] private float freezeTime = 1;
+    [SerializeField] private float slowTime = 1;
+    [SerializeField] private float slowDegree = 0.3f;
+    [SerializeField] private float palsyTime = 1;
+    [SerializeField] private float dizzyTime = 1;
+    [SerializeField] private float fireTime = 1;//点燃
+    
+    public virtual float FreezeTime {get => freezeTime; set => freezeTime = value; }
+    public virtual float SlowTime{get => slowTime; set => slowTime = value; }
+    public virtual float SlowDegree{get => slowDegree; set => slowDegree = value; }
+    public virtual float PalsyTime{get => palsyTime; set => palsyTime = value; }
+    public virtual float DizzyTime{get => dizzyTime; set => dizzyTime = value; }
+    public virtual float FireTime{get => fireTime; set => fireTime = value; }
 
     // Prefab 属性
     public override GameObject Prefab

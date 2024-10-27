@@ -18,5 +18,5 @@ public interface IEnemy {
     //死亡火花，弹坑，追击，  
     void Die();
     void BuffEffect();
-    void AddBuff(string buffname, GameObject selfObj, float duration);
+    void AddBuff(string buffname, GameObject selfObj, float duration, params object[] args);
 }

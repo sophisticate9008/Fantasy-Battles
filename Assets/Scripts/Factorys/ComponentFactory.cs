@@ -17,6 +17,7 @@ namespace Factorys
                 "分裂" => new FissionableComponent(componentName, "enter", selfObj),
                 "冰冻" => new FreezeComponent(componentName, "enter|stay", selfObj),
                 "爆炸" => new BoomComponent(componentName, "enter", selfObj),
+                "减速" => new SlowComponent(componentName, "enter", selfObj),
                 _ => throw new ArgumentException($"Unknown component: {componentName}")
             };
         }

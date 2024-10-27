@@ -16,6 +16,7 @@ namespace FightBases
         public bool CanAction { get; set; } = true;
         public EnemyConfigBase ConstConfig => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as EnemyConfigBase;
         public EnemyConfigBase Config { get; set; }
+        public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
         public bool IsInit { get; set; }
         public Queue<IBuff> Buffs { get; } = new();
         public Dictionary<string, IComponent> InstalledComponents { get; } = new();
@@ -233,8 +234,11 @@ namespace FightBases
 
         }
 
-        public void AddBuff(string buffName, GameObject selfObj, float duration)
+        public void AddBuff(string buffName, GameObject selfObj, float duration, params object[] args)
         {
+            //全局异常状态增强
+            duration *= GlobalConfig.EnemyBuffTimeAddition;
+
             //免疫指定控制buff
             if (Config.ControlImmunityList.IndexOf(buffName) != -1)
             {
@@ -247,7 +251,7 @@ namespace FightBases
             }
             if (!BuffEndTimes.ContainsKey(buffName))
             {
-                Buffs.Enqueue(BuffFactory.Create(buffName, duration, selfObj, gameObject));
+                Buffs.Enqueue(BuffFactory.Create(buffName, duration, selfObj, gameObject,args));
             }
             else
             {
@@ -256,7 +260,7 @@ namespace FightBases
                 //buff已经结束
                 if (now > endTime)
                 {
-                    Buffs.Enqueue(BuffFactory.Create(buffName, duration, selfObj, gameObject));
+                    Buffs.Enqueue(BuffFactory.Create(buffName, duration, selfObj, gameObject, args));
                 }
                 else
                 {

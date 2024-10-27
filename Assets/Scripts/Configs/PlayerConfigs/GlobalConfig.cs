@@ -119,6 +119,8 @@ public class GlobalConfig : ConfigBase
 
     public virtual float[] CritWithPersentageAndMax { get; set; } = new float[2] { 0, 0 };
     public virtual float[] DamageWithPersentageAndMax { get; set; } = new float[2] { 0, 0 };
+
+    public virtual float EnemyBuffTimeAddition { get; set; } = 1;
     // 获取伤害加成的字典
     public virtual Dictionary<string, float> GetDamageAddition()
     {

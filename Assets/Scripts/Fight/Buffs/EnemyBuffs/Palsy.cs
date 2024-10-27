@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace TheBuffs
 {
-    public class DebuffPalsy : BuffBase
+    public class Palsy : BuffBase
     {
 
-        public DebuffPalsy(string buffName, float duration,GameObject selfObj, GameObject enemyObj) : base(buffName, duration,selfObj, enemyObj)
+        public Palsy(string buffName, float duration,GameObject selfObj, GameObject enemyObj) : base(buffName, duration,selfObj, enemyObj)
         {
 
         }
