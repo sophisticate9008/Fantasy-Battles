@@ -14,7 +14,7 @@ public class ReboundComponent : ComponentBase, IReboundable
     public override void Init()
     {
         base.Init();
-        ReboundCount = (ConfigManager.Instance.GetConfigByClassName("Bullet") as BulletConfig).ReboundCount;
+        ReboundCount = (Config as IReboundable).ReboundCount;
     }
     public void Rebound()
     {

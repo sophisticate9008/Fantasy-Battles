@@ -1,5 +1,4 @@
 using FightBases;
-using UnityEngine;
 namespace Arms
 {
     public class ElectroPenetrateArm : ArmBase

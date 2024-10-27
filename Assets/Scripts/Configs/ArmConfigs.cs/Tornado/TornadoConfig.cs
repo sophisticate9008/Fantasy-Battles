@@ -4,9 +4,7 @@ using MyEnums;
 namespace ArmConfigs
 {
     public class TornadoConfig : ArmConfigBase
-    {
-        public float DragDegree{get;set;} = 1f;
-        
+    {   
         public override void Init()
         {
             Tlc = 0.1f;
@@ -21,9 +19,10 @@ namespace ArmConfigs
             DamageType = "wind";
             ScopeRadius = 15f;
             Speed = 2f;
-            SelfScale = 10f;
+            SelfScale = 1f;
             CdType = CdTypes.WaitLast;
             ControlBy = ControlBy.Arm;
+            ForceDegree = 1f;
         }
     }
 }

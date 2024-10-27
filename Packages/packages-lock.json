@@ -376,6 +376,13 @@
       },
       "url": "https://packages.unity.cn"
     },
+    "com.zeroultra.manuallyreloaddomain": {
+      "version": "https://github.com/ZeroUltra/UnityManuallyReload.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2ca32138ce409a1f00b000b39bc4415a7a29b7a5"
+    },
     "jp.hadashikick.vcontainer": {
       "version": "1.16.3",
       "depth": 0,

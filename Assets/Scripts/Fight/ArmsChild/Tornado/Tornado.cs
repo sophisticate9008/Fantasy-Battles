@@ -6,43 +6,15 @@ using UnityEngine;
 
 public class Tornado : ArmChildBase
 {
-    private float smoothDamp = 1f; 
+    private readonly float smoothDamp = 1f; 
     private Vector3 velocity = Vector3.zero;
-    public TornadoConfig tornadoConfig => Config as TornadoConfig;
+    public TornadoConfig TornadoConfig => Config as TornadoConfig;
     public List<GameObject> exceptObjs = new();
     public override void Init()
     {
         base.Init();
         exceptObjs.Clear();
-        Debug.Log("Tornado Init" + Config.SelfScale);
-        ChangeScale(Config.SelfScale);
-        ChangeParticalSpeed();
     }
-    public override void OnDisable()
-    {
-        ChangeScale(1 / Config.SelfScale);
-        base.OnDisable();
-
-    }
-    void ChangeScale(float scaleFactor)
-    {
-        gameObject.transform.localScale *= scaleFactor;
-        foreach (Transform child in gameObject.transform)
-        {
-            child.localScale *= scaleFactor;
-        }
-    }
-
-    void ChangeParticalSpeed()
-    {
-        foreach (Transform child in gameObject.transform)
-        {
-            ParticleSystem particleSystem = child.GetComponent<ParticleSystem>();
-            var main = particleSystem.main;
-            main.simulationSpeed = 3;
-        }
-    }
-
     public override void Move()
     {
         int maxExcept = (EnemyManager.Instance.liveCount + 100) / 4;
@@ -74,7 +46,7 @@ public class Tornado : ArmChildBase
     public override void OnTriggerStay2D(Collider2D collider)
     {
 
-        OnDrag(collider);
+        ApplyForce(collider, -1);
         base.OnTriggerStay2D(collider);
         if (TargetEnemy == collider.gameObject)
         {
@@ -92,42 +64,6 @@ public class Tornado : ArmChildBase
         }
 
     }
-    private void OnDrag(Collider2D collider)
-    {
-        Vector2 tornadoCenter = transform.position; // 龙卷风中心
-        float maxForce = 10f; // 最大施加力
-        float maxDistance = 5f * Config.SelfScale; // 最大影响距离
-        Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
-
-        if (rb != null)
-        {
-            // 保存原始速度和旋转角度
-            Vector2 originalVelocity = rb.velocity;
-            float originalAngularVelocity = rb.angularVelocity;
-
-            // 锁定物体的旋转
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-            float distance = Vector2.Distance(tornadoCenter, rb.position);
-            float forceMagnitude = Mathf.Lerp(maxForce, 0, distance / maxDistance);
-            Vector2 direction = (rb.position - tornadoCenter).normalized;
-
-            // 施加龙卷风力
-            rb.AddForce(direction * -forceMagnitude * tornadoConfig.DragDegree);
-
-            // 启动协程来恢复状态
-            StartCoroutine(ResetStateAfterDelay(rb, originalVelocity, originalAngularVelocity, 0.5f)); // 0.5秒后恢复状态
-        }
-    }
-
-    private IEnumerator ResetStateAfterDelay(Rigidbody2D rb, Vector2 originalVelocity, float originalAngularVelocity, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        // 恢复速度和旋转角速度
-        rb.velocity = originalVelocity; // 恢复原始速度
-        rb.angularVelocity = originalAngularVelocity; // 恢复原始旋转角速度
-    }
-
 }
 
 

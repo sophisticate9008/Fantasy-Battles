@@ -9,7 +9,7 @@ public class GlobalConfig : ConfigBase
     [SerializeField] private float critDamage;
     [SerializeField] private int attackValue;
     [SerializeField] private int life;
-    [SerializeField] private int allPenetrationLevel;
+    [SerializeField] private int allPenetrationLevel = 5;
     [SerializeField] private float fireAddition;
     [SerializeField] private float iceAddition;
     [SerializeField] private float elecAddition;

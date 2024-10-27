@@ -17,7 +17,23 @@ namespace FightBases
         public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
         // public Dictionary<string, float> DamageAddition => GlobalConfig.GetDamageAddition();
         public virtual GameObject TargetEnemyByArm { get; set; }
-        public virtual GameObject TargetEnemy { get; set; }
+        private GameObject targetEnemy;
+        public virtual GameObject TargetEnemy
+        {
+            get
+            {
+                if (targetEnemy == null)
+                {
+                    targetEnemy = TargetEnemyByArm;
+                    return targetEnemy;
+                }
+                else
+                {
+                    return targetEnemy;
+                }
+            }
+            set => targetEnemy = value;
+        }
         public bool IsInit { get; set; }
         public Dictionary<string, IComponent> InstalledComponents { get; set; } = new();
         private Vector3 direction;
@@ -61,11 +77,11 @@ namespace FightBases
 
             }
         }
-        public virtual void OnCollisionEnter2D(Collision2D collision)
-        {
-            OnEnter2D(collision.collider);
+        // public virtual void OnCollisionEnter2D(Collision2D collision)
+        // {
+        //     OnEnter2D(collision.collider);
 
-        }
+        // }
         public virtual void OnTriggerEnter2D(Collider2D collision)
         {
             OnEnter2D(collision);
@@ -88,10 +104,10 @@ namespace FightBases
         {
             OnExit2D(collision);
         }
-        public virtual void OnCollisionExit2D(Collision2D collision)
-        {
-            OnExit2D(collision.collider);
-        }
+        // public virtual void OnCollisionExit2D(Collision2D collision)
+        // {
+        //     OnExit2D(collision.collider);
+        // }
         public virtual void OnStay2D(Collider2D collision)
         {
             if (IsNotSelf(collision))
@@ -109,11 +125,11 @@ namespace FightBases
             OnStay2D(collision);
         }
 
-        public virtual void OnCollisionStayr2D(Collision2D collision)
-        {
-            Debug.Log("stay");
-            OnStay2D(collision.collider);
-        }
+        // public virtual void OnCollisionStayr2D(Collision2D collision)
+        // {
+        //     Debug.Log("stay");
+        //     OnStay2D(collision.collider);
+        // }
         public void OnByType(string type, GameObject obj)
         {
             OnByTypeCallBack(type);
@@ -172,6 +188,7 @@ namespace FightBases
         {
             if (IsInit)
             {
+
                 Move();
                 OnByQueue();
             }
@@ -200,10 +217,19 @@ namespace FightBases
         {
             float rotateZ = Mathf.Atan2(Direction.y, Direction.x);
             transform.rotation = Quaternion.Euler(0, 0, rotateZ * Mathf.Rad2Deg);
+            foreach (Transform child in transform)
+            {
+                if (child.TryGetComponent<ParticleSystem>(out ParticleSystem ps))
+                {
+                    var main = ps.main;  
 
+                    main.startRotation = -rotateZ;
+                }
+            }
         }
         public virtual void Init()
         {
+            ChangeScale(Config.SelfScale);
             if (Config.ControlBy == MyEnums.ControlBy.Arm)
             {
                 StartCoroutine(BeginCuntDown());
@@ -344,6 +370,7 @@ namespace FightBases
 
         public void ReturnToPool()
         {
+            ChangeScale(1 / Config.SelfScale);
             ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
         }
 
@@ -398,6 +425,14 @@ namespace FightBases
             }
 
         }
+        void ChangeScale(float scaleFactor)
+        {
+            gameObject.transform.localScale *= scaleFactor;
+            foreach (Transform child in gameObject.transform)
+            {
+                child.localScale *= scaleFactor;
+            }
+        }
         //技能持续时间结束后销毁
 
         //路径伤害
@@ -419,6 +454,45 @@ namespace FightBases
             }
             ReturnToPool();
 
+        }
+        public virtual ArmChildBase GetOneFromPool()
+        {
+            ArmChildBase obj = ObjectPoolManager.Instance.GetFromPool(GetType().Name + "Pool", Config.Prefab).GetComponent<ArmChildBase>();
+            return obj;
+        }
+        public void ApplyForce(Collider2D collider, int forceDirction)
+        {
+            Vector2 center = transform.position; // 龙卷风中心
+            float maxForce = Config.MaxForce; // 最大施加力
+            float maxDistance = Config.ForceBaseDistance * Config.SelfScale; // 最大影响距离
+            Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                // 保存原始速度和旋转角度
+                Vector2 originalVelocity = rb.velocity;
+                float originalAngularVelocity = rb.angularVelocity;
+
+                // 锁定物体的旋转
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                float distance = Vector2.Distance(center, rb.position);
+                float forceMagnitude = Mathf.Lerp(maxForce, 0, distance / maxDistance);
+                Vector2 direction = (rb.position - center).normalized;
+
+                // 施加龙卷风力
+                rb.AddForce(forceDirction * forceMagnitude * Config.ForceDegree * direction);
+
+                // 启动协程来恢复状态
+                StartCoroutine(ResetStateAfterDelay(rb, originalVelocity, originalAngularVelocity, 0.5f)); // 0.5秒后恢复状态
+            }
+        }
+        private IEnumerator ResetStateAfterDelay(Rigidbody2D rb, Vector2 originalVelocity, float originalAngularVelocity, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            // 恢复速度和旋转角速度
+            rb.velocity = originalVelocity; // 恢复原始速度
+            rb.angularVelocity = originalAngularVelocity; // 恢复原始旋转角速度
         }
 
     }

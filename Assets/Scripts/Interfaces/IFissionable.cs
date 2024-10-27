@@ -1,6 +1,6 @@
 using FightBases;
 
 public interface IFissionable {
-    public ArmConfigBase ChildConfig { get; }
+    public ArmConfigBase FissionableChildConfig { get; }
     public string FindType{get;set;}
 }

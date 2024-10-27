@@ -19,10 +19,10 @@ public class LaserArm : ArmBase
     public override void Attack()
     {
 
-        Vector3 baseDirection = (TargetEnemy.transform.position - transform.position).normalized;
+        
         ArmChildBase obj = GetOneFromPool();
         obj.transform.position = transform.position;
-        obj.Direction = baseDirection;
+        obj.SetDirectionToTarget();
         obj.TargetEnemyByArm = TargetEnemy;
         obj.Init();
     }

@@ -19,7 +19,6 @@ namespace MyComponents
             base.Init();
             PenetrationLevel = (ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig).AllPenetrationLevel;
             PenetrationLevel += (SelfObj.GetComponent<ArmChildBase>().Config as IPenetrable).PenetrationLevel;
-
         }
         public int PenetrationLevel
         {
@@ -36,7 +35,7 @@ namespace MyComponents
 
         public override void Exec(GameObject enemyObj)
         {
-            // PenetrationLevel -= enemyObj.GetComponent<EnemyBase>().Config.blocks;
+            PenetrationLevel -= enemyObj.GetComponent<EnemyBase>().Config.Blocks;
             if (PenetrationLevel <= 0)
             {
                 HandleDestruction();

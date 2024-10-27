@@ -20,7 +20,7 @@ namespace ArmConfigs
             RangeFire = 10;
             Cd = 4f;
             AttackCd = 0.2f;
-            AttackCount = 2;
+            AttackCount = 1;
             Duration = 4f;
             OnType = "stay";
             DamageType = "energy";

@@ -1,11 +1,9 @@
 
 
-using FightBases;
-using UnityEngine;
 
 namespace ArmConfigs
 {
-    public class BulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPenetrable
+    public class BulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPenetrable,IReboundable, IBoomable
     {
         // 新增属性
         public int PenetrationLevel { get; set; } = 1;
@@ -16,10 +14,12 @@ namespace ArmConfigs
         public int RepeatLevel { get; set; } = 2;
         public float AngleDifference { get; set ; } = 5f;
         public float RepeatCd { get; set; } = 0.1f;
-        public ArmConfigBase ChildConfig => BulletFissionConfig;
+        public ArmConfigBase FissionableChildConfig => BulletFissionConfig;
 
 
         public string FindType { get ; set ; } = "random";
+
+        public ArmConfigBase BoomChildConfig => ConfigManager.Instance.GetConfigByClassName("BulletBoom") as BulletBoomConfig;
 
         // 构造函数
         public BulletConfig() : base()
@@ -45,6 +45,7 @@ namespace ArmConfigs
             ComponentStrs.Add("反弹");
             ComponentStrs.Add("分裂");
             ComponentStrs.Add("冰冻");
+            ComponentStrs.Add("爆炸");
             AttackCd = 1f;
             AttackCount = 30;
             DamageType = "ad";

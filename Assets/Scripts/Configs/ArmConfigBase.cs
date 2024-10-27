@@ -13,18 +13,32 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float critRate;
     [SerializeField] private string name;
     [SerializeField] private string description;
-    [SerializeField] private int level;
+    [SerializeField] private int level = 1;
     [SerializeField] private float tlc;
     [SerializeField] private float speed;
     [SerializeField] private int rangeFire;
     [SerializeField] private float cd;
     [SerializeField] private float attackCd;
-    [SerializeField] private int attackCount;
-    [SerializeField] private List<string> componentStrs = new List<string>();
+    [SerializeField] private int attackCount = 1;
+    [SerializeField] private List<string> componentStrs = new();
     [SerializeField] private float buffDamageTlc;
     [SerializeField] private float selfScale = 1;
     //持续时间
     [SerializeField] private float duration = 20f;
+    //力的程度
+    [SerializeField] private float forceDegree = 1f;
+    [SerializeField] private string owner;
+    [SerializeField] private string damageType;
+    [SerializeField] private string damagePos = "all";
+    [SerializeField] private string onType;
+    [SerializeField] private string damageExtraType = "";
+    [SerializeField] private float scopeRadius = 3f;
+    [SerializeField] private bool isLineCast = false;
+    [SerializeField] private bool isRayCast = false;
+    [SerializeField] private float maxForce = 10; // 最大力
+    [SerializeField] private float forceBaseDistance = 5; // 影响距离
+    [SerializeField] private CdTypes cdType = CdTypes.AtOnce;
+    [SerializeField] private ControlBy controlBy = ControlBy.Self;
 
     // Prefab 属性
     public override GameObject Prefab
@@ -116,31 +130,83 @@ public class ArmConfigBase : ConfigBase
         get => componentStrs;
         set => componentStrs = value;
     }
+    public virtual float ForceDegree
+    {
+        get => forceDegree;
+        set => forceDegree = value;
+    }
     //技能最大持续时间
     public virtual float Duration { get => duration; set => duration = value; }
-    //技能当前剩余时间,因为持续时间的武器都是同一时间同时释放,所以全局配置即可
-    public virtual float RestDuration{get; set;} = 0;
-    public virtual string Owner { get; set; }
-    //伤害类型 
-    public virtual string DamageType { get; set; }
+    public virtual float RestDuration { get; set; } = 0;
 
-    //伤害位置 all / land
-    public virtual string DamagePos { get; set; } = "all";
-    // 触发类型
-    public virtual string OnType { get; set; }
+    public virtual string Owner
+    {
+        get => owner;
+        set => owner = value;
+    }
 
-    public virtual string DamageExtraType { get ; set ; } = "";
-    //自身索敌半径
-    public virtual float ScopeRadius { get; set; } = 3f;
-    //线段路径伤害
-    public virtual bool IsLineCast { get; set; } = false;
-    //射线路径伤害
-    public virtual bool IsRayCast { get; set; } = false;
-    public virtual int CurrentAttackedNum {get;set;} = 0;
+    public virtual string DamageType
+    {
+        get => damageType;
+        set => damageType = value;
+    }
+
+    public virtual string DamagePos
+    {
+        get => damagePos;
+        set => damagePos = value;
+    }
+
+    public virtual string OnType
+    {
+        get => onType;
+        set => onType = value;
+    }
+
+    public virtual string DamageExtraType
+    {
+        get => damageExtraType;
+        set => damageExtraType = value;
+    }
+
+    public virtual float ScopeRadius
+    {
+        get => scopeRadius;
+        set => scopeRadius = value;
+    }
+
+    public virtual bool IsLineCast
+    {
+        get => isLineCast;
+        set => isLineCast = value;
+    }
+
+    public virtual bool IsRayCast
+    {
+        get => isRayCast;
+        set => isRayCast = value;
+    }
+
+    public virtual int CurrentAttackedNum { get; set; } = 0;
+
     public virtual float CurrentCd { get; set; } = 0;
 
-    public CdTypes CdType { get; set; } = CdTypes.AtOnce;
-    public ControlBy ControlBy{ get; set; } = ControlBy.Self;
+    public virtual float MaxForce
+    {
+        get => maxForce;
+        set => maxForce = value;
+    }
+
+    public virtual float ForceBaseDistance
+    {
+        get => forceBaseDistance;
+        set => forceBaseDistance = value;
+    }
+
+    // 计算最大影响距离
+
+    public CdTypes CdType { get => cdType; set => cdType = value; }
+    public ControlBy ControlBy { get => controlBy; set => controlBy = value; }
     // 构造函数
     public ArmConfigBase()
     {

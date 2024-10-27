@@ -1,14 +1,16 @@
-using FightBases;
 
 namespace ArmConfigs
 {
-    public class ElectroPenetrateConfig : ArmConfigBase{
-
+    public class ElectroPenetrateConfig : ArmConfigBase, IBoomable
+    {
+        public ArmConfigBase BoomChildConfig =>
+            ConfigManager.Instance.GetConfigByClassName("ElectroPenetrateBoom") as ElectroPenetrateBoomConfig;
         public override void Init()
         {
             base.Init();
             Name = "电磁穿透";
             Description = "电磁穿透";
+            ComponentStrs.Add("爆炸");
             ScopeRadius = 2;
             OnType = "enter";
             DamageType = "elec";

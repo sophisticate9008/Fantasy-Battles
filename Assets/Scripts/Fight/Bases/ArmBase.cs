@@ -78,7 +78,7 @@ namespace FightBases
             Config.CurrentAttackedNum = 0;
             while (Config.CurrentAttackedNum < Config.AttackCount)
             {
-                AddAttackedNum();
+
                 if (Config.CurrentAttackedNum == 0)
                 {
                     FisrtFindTarget();
@@ -89,11 +89,13 @@ namespace FightBases
                 }
                 if (TargetEnemy != null && TargetEnemy.activeSelf)
                 {
-                    if(Config.CdType == CdTypes.Exhaust) {
+                    if (Config.CdType == CdTypes.Exhaust)
+                    {
                         Config.CurrentAttackedNum++;
                     }
                     Attack();
                 }
+                AddAttackedNum();
                 yield return new WaitForSeconds(Config.AttackCd);
             }
             //如果是立刻进入冷却, 否则等持续时间结束
@@ -105,8 +107,10 @@ namespace FightBases
 
             StartCoroutine(WaitEnd());
         }
-        private IEnumerator WaitEnd() {
-            while(Config.RestDuration > 0) {
+        private IEnumerator WaitEnd()
+        {
+            while (Config.RestDuration > 0)
+            {
                 yield return null;
             }
             lastFireTime = Time.time;
@@ -114,10 +118,11 @@ namespace FightBases
         }
         public virtual void AddAttackedNum()
         {
-            if(Config.CdType != CdTypes.Exhaust) {
+            if (Config.CdType != CdTypes.Exhaust)
+            {
                 Config.CurrentAttackedNum++;
             }
-            
+
         }
         public virtual void Attack()
         {
@@ -157,6 +162,16 @@ namespace FightBases
         {
             ArmChildBase obj = ObjectPoolManager.Instance.GetFromPool(GetType().Name.Replace("Arm", "") + "Pool", Config.Prefab).GetComponent<ArmChildBase>();
             return obj;
+        }
+        public void AttackMultipleOnce()
+        {
+            if (TargetEnemy == null) return;
+
+            // 计算从枪口指向敌人的方向向量
+            Vector3 baseDirection = (TargetEnemy.transform.position - transform.position).normalized;
+            // 发射 MultipleLevel 数量的子弹
+            var objs = IMultipleable.MutiInstantiate(Config.Prefab, transform.position, baseDirection);
+            IMultipleable.InitObjs(objs);
         }
     }
 }

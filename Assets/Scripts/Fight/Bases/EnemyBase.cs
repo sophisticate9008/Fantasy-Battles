@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using Factorys;
 using Unity.VisualScripting;
@@ -8,6 +9,8 @@ namespace FightBases
 {
     public class EnemyBase : MonoBehaviour, IEnemy
     {
+        public Vector2 minBoundary; // 设定左下角的边界
+        public Vector2 maxBoundary; // 设定右上角的边界
         public AnimatorManager animatorManager;
         public Animator animator;
         public bool CanAction { get; set; } = true;
@@ -28,6 +31,9 @@ namespace FightBases
         public bool isDead;
         public virtual void Init()
         {
+            minBoundary = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
+            maxBoundary = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+
             Config = ConstConfig.Clone() as EnemyConfigBase;
             isDead = false;
             NowLife = Config.Life;
@@ -65,7 +71,7 @@ namespace FightBases
                     // 更新物体的位置
                     Vector3 newPosition = transform.position;
                     newPosition.y = worldPos.y;  // 将物体的 y 坐标设为视口顶部
-                    transform.position = newPosition;
+                    StartCoroutine(TransmitBackByStep(0.5f,newPosition));
                 }
             }
             else
@@ -73,7 +79,19 @@ namespace FightBases
                 // 正常情况下，只减少 y 坐标
                 Vector3 newPosition = transform.position;
                 newPosition.y += y;
-                transform.position = newPosition;
+                StartCoroutine(TransmitBackByStep(0.5f,newPosition));
+            }
+        }
+
+        private IEnumerator TransmitBackByStep(float t,Vector3 targetPosition) {
+            float elapsed = 0;
+            float totalDistance = Vector3.Distance(transform.position, targetPosition);
+            float speed = totalDistance / t; 
+            float step = speed * Time.deltaTime;
+            while(elapsed < t) {
+                elapsed += Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+                yield return null;
             }
         }
         protected virtual void Start()
@@ -118,7 +136,6 @@ namespace FightBases
 
             Vector3 position = transform.position;
             float bottomEdge = -Camera.main.orthographicSize;
-
             if (position.y > bottomEdge + Config.RangeFire)
             {
                 transform.Translate(Config.Speed * Time.deltaTime * Vector3.down);
@@ -127,6 +144,8 @@ namespace FightBases
             {
                 PreventSleep();
             }
+            //限定在盒子内
+            ClampMonsterPosition(transform);
 
         }
         private void PreventSleep()
@@ -249,6 +268,13 @@ namespace FightBases
                 }
 
             }
+        }
+        private void ClampMonsterPosition(Transform monsterTransform)
+        {
+            Vector3 position = monsterTransform.position;
+            position.x = Mathf.Clamp(position.x, minBoundary.x, maxBoundary.x);
+            position.y = Mathf.Clamp(position.y, minBoundary.y, maxBoundary.y);
+            monsterTransform.position = position;
         }
     }
 }

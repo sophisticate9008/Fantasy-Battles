@@ -7,7 +7,8 @@ namespace FightBases
 
     public abstract class ComponentBase : IComponent
     {
-        public ArmConfigBase Config { get; set; }
+        public GameObject Prefab { get; set; }
+        public ArmConfigBase Config => SelfObj.GetComponent<ArmChildBase>().Config;
 
         public ComponentBase(string componentName, string type, GameObject selfObj)
         {
@@ -27,6 +28,11 @@ namespace FightBases
         }
 
         public abstract void Exec(GameObject enemyObj);
-
+        public virtual void GetObjAndInit()
+        {
+            ArmChildBase obj = Prefab.GetComponent<ArmChildBase>().GetOneFromPool();
+            obj.transform.position = SelfObj.transform.position;
+            obj.Init();
+        }
     }
 }

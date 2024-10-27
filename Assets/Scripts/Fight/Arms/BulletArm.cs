@@ -47,21 +47,11 @@ namespace Arms
         {
             for (int i = 0; i < RepeatLevel; i++) // 连发逻辑
             {
-                ShootMultipleBullets(); // 多条弹道发射
+                AttackMultipleOnce(); // 多条弹道发射
                 yield return new WaitForSeconds(ConcreteConfig.RepeatCd); // 每次连发之间的间隔
             }
         }
 
-        private void ShootMultipleBullets()
-        {
-            if (TargetEnemy == null) return;
-
-            // 计算从枪口指向敌人的方向向量
-            Vector3 baseDirection = (TargetEnemy.transform.position - transform.position).normalized;
-            // 发射 MultipleLevel 数量的子弹
-            var objs = IMultipleable.MutiInstantiate(Config.Prefab, transform.position, baseDirection);
-            IMultipleable.InitObjs(objs);
-        }
 
     }
 }
