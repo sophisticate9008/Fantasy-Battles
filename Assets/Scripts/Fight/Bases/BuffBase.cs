@@ -73,5 +73,7 @@ namespace FightBases
                 EnemyBase.CanAction = true;
             }
         }
+
+        
     }
 }

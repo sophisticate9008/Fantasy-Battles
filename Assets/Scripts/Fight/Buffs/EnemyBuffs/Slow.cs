@@ -15,13 +15,16 @@ namespace TheBuffs
         public override void Effect()
         {
             originSpeed = EnemyBase.Config.Speed;
-            EnemyBase.Config.Speed = originSpeed * slowRate;
+            EnemyBase.Config.MaxSlowRate = Mathf.Max(EnemyBase.Config.MaxSlowRate, slowRate);
+
+            EnemyBase.Config.Speed = originSpeed * EnemyBase.Config.MaxSlowRate;
             AnimatorManager.Instance.PlayAnim(EnemyBase.animator, 1 - slowRate);
         }
 
         public override void Remove()
         {
             EnemyBase.Config.Speed = originSpeed;
+            EnemyBase.Config.MaxSlowRate = 0;
             AnimatorManager.Instance.PlayAnim(EnemyBase.animator, 1);
         }
     }

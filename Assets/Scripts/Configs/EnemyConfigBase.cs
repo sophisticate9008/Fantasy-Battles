@@ -174,6 +174,7 @@ public class EnemyConfigBase : ConfigBase
         get => deratePenetrate;
         set => deratePenetrate = value;
     }
+    public virtual float MaxSlowRate{get;set;} = 0;
 
     // 获取伤害减免的字典
     public virtual Dictionary<string, float> GetDamageReduction()
