@@ -8,20 +8,24 @@ namespace FightBases
         public string EffectName { get; set; }
         public bool IsPlaying { get; set; } = false;
         public GameObject Enemy { get; set; }
-
+        public virtual float BaseHeight { get; set; } = 5;
         public virtual void Init()
         {
-            ClearSameEffect();
+            transform.SetParent(Enemy.transform);
+            transform.position = Enemy.transform.position + new Vector3(0, 0, -0.01f);
+            ChangeScale();
         }
-
+        public virtual void ChangeScale()
+        {
+            transform.localScale = Enemy.transform.localScale;
+        }
         public virtual void Play()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public virtual void Stop()
         {
-            throw new System.NotImplementedException();
         }
         private void ClearSameEffect()
         {

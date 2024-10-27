@@ -9,6 +9,7 @@ namespace ArmConfigs
             OnType = "enter";
             Tlc = 0.5f;
             DamageType = "elec";
+            ComponentStrs.Add("麻痹");
         }
     }
 }

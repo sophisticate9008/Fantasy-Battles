@@ -11,6 +11,7 @@ namespace ArmConfigs
             Name = "电磁穿透";
             Description = "电磁穿透";
             ComponentStrs.Add("爆炸");
+            ComponentStrs.Add("麻痹");
             ScopeRadius = 2;
             OnType = "enter";
             DamageType = "elec";

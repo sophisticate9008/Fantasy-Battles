@@ -8,7 +8,6 @@ public class FreezeEffectController : EffectControllerBase
 {
     public Sprite[] sprites;
     public SpriteRenderer bulkSr;
-    public float baseHeight;
     private SpriteRenderer enemySr;
     public SpriteRenderer iceSr;
     private SpriteMask spriteMask;
@@ -17,19 +16,18 @@ public class FreezeEffectController : EffectControllerBase
 
     public override void Init()
     {
-        base.Init();
         transform.SetParent(Enemy.transform);
         transform.position = Enemy.transform.position + new Vector3(0, 0, -0.01f);
         bulkSr.transform.position = Enemy.transform.position;
         enemySr = Enemy.GetComponent<SpriteRenderer>();
         spriteMask = GetComponent<SpriteMask>();
-        ChangeScale();
         Align();
+        ChangeScale();
     }
-    private void ChangeScale()
+    public override void ChangeScale()
     {
         float srHeight = enemySr.sprite.bounds.size.y;
-        float s = srHeight / baseHeight;
+        float s = srHeight / BaseHeight;
         iceSr.transform.localScale = Vector3.one * s;
         bulkSr.transform.localScale = Vector3.one * s;
     }
@@ -45,10 +43,11 @@ public class FreezeEffectController : EffectControllerBase
         if (Enemy)
         {
             //不同时再更新
-            if(enemySr.sprite != spriteMask.sprite) {
+            if (enemySr.sprite != spriteMask.sprite)
+            {
                 spriteMask.sprite = enemySr.sprite;
             }
-            
+
             int n = Mathf.FloorToInt(percent * sprites.Length);
             if (n > 0)
             {

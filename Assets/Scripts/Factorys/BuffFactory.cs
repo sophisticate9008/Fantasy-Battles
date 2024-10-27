@@ -16,7 +16,6 @@ namespace Factorys
                 "眩晕" => new Dizzy(buffName, duration, selfObj, enemyObj),
                 "冰冻" => new Freeze(buffName, duration, selfObj, enemyObj),
                 "麻痹" => new Palsy(buffName, duration, selfObj, enemyObj),
-
                 // 需要自定义参数的 Buffs
                 "减速" => new Slow(buffName, duration, selfObj, enemyObj, (float) args[0]),
 

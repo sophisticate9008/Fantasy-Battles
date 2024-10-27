@@ -3,7 +3,7 @@
 
 namespace ArmConfigs
 {
-    public class BulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPenetrable,IReboundable, IBoomable
+    public class BulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPenetrable, IReboundable, IBoomable
     {
         // 新增属性
         public int PenetrationLevel { get; set; } = 1;
@@ -12,12 +12,12 @@ namespace ArmConfigs
         public int BulletFissionCount { get; set; } = 2;
         public int MultipleLevel { get; set; } = 2;
         public int RepeatLevel { get; set; } = 2;
-        public float AngleDifference { get; set ; } = 5f;
+        public float AngleDifference { get; set; } = 5f;
         public float RepeatCd { get; set; } = 0.1f;
         public ArmConfigBase FissionableChildConfig => BulletFissionConfig;
 
 
-        public string FindType { get ; set ; } = "random";
+        public string FindType { get; set; } = "random";
 
         public ArmConfigBase BoomChildConfig => ConfigManager.Instance.GetConfigByClassName("BulletBoom") as BulletBoomConfig;
 
@@ -25,11 +25,11 @@ namespace ArmConfigs
         public BulletConfig() : base()
         {
             // 延迟初始化 BulletFissionConfig，并传递当前 BulletConfig 实例
-            
+
         }
 
         // 重写父类的 Init 方法
-        public override void Init() 
+        public override void Init()
         {
             // 初始化 BulletConfig 的属性
             Name = "bullet";
@@ -46,6 +46,7 @@ namespace ArmConfigs
             ComponentStrs.Add("分裂");
             ComponentStrs.Add("减速");
             ComponentStrs.Add("爆炸");
+            ComponentStrs.Add("眩晕");
             AttackCd = 1f;
             AttackCount = 30;
             DamageType = "ad";

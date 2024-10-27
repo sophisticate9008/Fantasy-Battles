@@ -9,6 +9,7 @@ namespace TheBuffs
         IEffectController controller;
         public Freeze(string buffName, float duration,GameObject selfObj, GameObject enemyObj) : base(buffName, duration,selfObj, enemyObj)
         {
+            
         }
         public override void Effect()
         {
