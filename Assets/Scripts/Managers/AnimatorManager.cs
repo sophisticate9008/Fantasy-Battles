@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AnimatorManager : ManagerBase<AnimatorManager>
 {
+    public float maxWaitTime = 2f;
     private static AnimatorManager _instance;
     private readonly Dictionary<int, string> animationNames = new();
 
@@ -106,12 +107,30 @@ public class AnimatorManager : ManagerBase<AnimatorManager>
             StartCoroutine(WaitForAnimation(anim, animName, callback)); // 等待动画播放完毕
         }
     }
+    public string GetCurrentAnimName(Animator anim)
+    {
+        LoadAnimationNames(anim);
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if (animationNames.TryGetValue(stateInfo.shortNameHash, out string tanimName))
+        {
+
+            return tanimName;
+        }
+        return "";
+    }
 
     // 协程等待动画播放完成
-    private IEnumerator WaitForAnimation(Animator anim, string animName, Action callback)
+    public IEnumerator WaitForAnimation(Animator anim, string animName, Action callback)
     {
+        float startTime = Time.time;
+        float endTime;
         while (true)
         {
+            endTime = Time.time;
+            if (endTime - startTime > maxWaitTime)
+            {
+                yield break;
+            }
             AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
             // 打印当前播放的动画名称
@@ -130,8 +149,6 @@ public class AnimatorManager : ManagerBase<AnimatorManager>
                     yield break; // 退出协程
                 }
             }
-
-
             yield return null; // 等待一帧
         }
     }

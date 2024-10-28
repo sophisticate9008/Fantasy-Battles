@@ -10,8 +10,8 @@ namespace ArmConfigs
         public int ReboundCount { get; set; } = 1;
         public BulletFissionConfig BulletFissionConfig => ConfigManager.Instance.GetConfigByClassName("BulletFission") as BulletFissionConfig;
         public int BulletFissionCount { get; set; } = 2;
-        public int MultipleLevel { get; set; } = 2;
-        public int RepeatLevel { get; set; } = 2;
+        public int MultipleLevel { get; set; } = 1;
+        public int RepeatLevel { get; set; } = 1;
         public float AngleDifference { get; set; } = 5f;
         public float RepeatCd { get; set; } = 0.1f;
         public ArmConfigBase FissionableChildConfig => BulletFissionConfig;
@@ -43,8 +43,10 @@ namespace ArmConfigs
             Owner = Name;
             ComponentStrs.Add("穿透");
             ComponentStrs.Add("减速");
+            ComponentStrs.Add("冰冻");
             AttackCd = 1f;
             AttackCount = 30;
+            
             DamageType = "ad";
             DamageExtraType = "penetrable";
             OnType = "enter";

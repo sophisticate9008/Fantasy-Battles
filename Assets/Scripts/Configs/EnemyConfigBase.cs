@@ -45,13 +45,18 @@ public class EnemyConfigBase : ConfigBase
     [SerializeField] private List<string> controlImmunityList = new();
     [SerializeField] private List<string> damageTypeImmunityList = new();
     [SerializeField] private string attackType;//攻击类型 远程 进程
-    [SerializeField] private string actionType;// 行动类型 飞行 地面
+    [SerializeField] private string actionType = "land";// 行动类型 飞行 地面
     [SerializeField] private string characterType;// 角色类型 精英 普通
-    [SerializeField] private int attackCount; //每次攻击的段数
-
+    [SerializeField] private int attackCount = 1; //每次攻击的段数
+    [SerializeField] private float attackCd = 2;
 
     // 公共属性，允许重写
-    public int Life
+    public virtual float AttackCd
+    {
+        get { return attackCd; }
+        set { attackCd = value; }
+    }
+    public virtual int Life
     {
         get => life;
         set => life = value;
@@ -176,13 +181,17 @@ public class EnemyConfigBase : ConfigBase
     }
     private List<float> slowRates = new();
     public virtual List<float> SlowRates => slowRates;
-    public virtual float MaxSlowRate {
-        get {
+    public virtual float MaxSlowRate
+    {
+        get
+        {
             float max = 0;
-            if(SlowRates.Count == 0) {
+            if (SlowRates.Count == 0)
+            {
                 return max;
             }
-            foreach(var _ in SlowRates) {
+            foreach (var _ in SlowRates)
+            {
                 max = Math.Max(max, _);
             }
             return max;

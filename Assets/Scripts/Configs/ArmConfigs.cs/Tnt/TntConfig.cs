@@ -22,6 +22,7 @@ namespace ArmConfigs
             Tlc = 1;
             ComponentStrs.Add("穿透");
             ComponentStrs.Add("爆炸");
+        
             AttackCount = 5;
             AttackCd = 0.5f;
         }

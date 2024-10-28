@@ -16,7 +16,6 @@ namespace TheBuffs
         public override void Effect()
         {
             originSpeed = EnemyBase.Config.Speed;
-            Debug.Log("当前减速值为" +  MaxSlowRate);
             EnemyBase.Config.Speed = originSpeed * (1 - MaxSlowRate);
             AnimatorManager.Instance.PlayAnim(EnemyBase.animator, 1 - MaxSlowRate);
         }

@@ -1,14 +1,15 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Factorys;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FightBases
 {
     public class EnemyBase : MonoBehaviour, IEnemy
     {
+        private bool isIdle = false;
         public Vector2 minBoundary; // 设定左下角的边界
         public Vector2 maxBoundary; // 设定右上角的边界
         public AnimatorManager animatorManager;
@@ -73,7 +74,7 @@ namespace FightBases
                     // 更新物体的位置
                     Vector3 newPosition = transform.position;
                     newPosition.y = worldPos.y;  // 将物体的 y 坐标设为视口顶部
-                    StartCoroutine(TransmitBackByStep(0.5f,newPosition));
+                    StartCoroutine(TransmitBackByStep(0.5f, newPosition));
                 }
             }
             else
@@ -81,16 +82,18 @@ namespace FightBases
                 // 正常情况下，只减少 y 坐标
                 Vector3 newPosition = transform.position;
                 newPosition.y += y;
-                StartCoroutine(TransmitBackByStep(0.5f,newPosition));
+                StartCoroutine(TransmitBackByStep(0.5f, newPosition));
             }
         }
 
-        private IEnumerator TransmitBackByStep(float t,Vector3 targetPosition) {
+        private IEnumerator TransmitBackByStep(float t, Vector3 targetPosition)
+        {
             float elapsed = 0;
             float totalDistance = Vector3.Distance(transform.position, targetPosition);
-            float speed = totalDistance / t; 
+            float speed = totalDistance / t;
             float step = speed * Time.deltaTime;
-            while(elapsed < t) {
+            while (elapsed < t)
+            {
                 elapsed += Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
                 yield return null;
@@ -102,12 +105,23 @@ namespace FightBases
             animator = GetComponent<Animator>();
             Init();
         }
-
+        private void RunningAnim()
+        {
+            animatorManager.SetAnimParameter(animator, "isSkill", false);
+            animatorManager.SetAnimParameter(animator, "isRunning", true);//一直播放跑动动画
+            if (!isDead)
+            {
+                animatorManager.PlaySpecificAnim(animator, "Run");
+            }
+            isIdle = false;
+        }
         public void FixedUpdate()
         {
             if (!CanAction && !isDead)
             {
+                RunningAnim();
                 animatorManager.StopAnim(animator);
+
             }
             // else
             // {
@@ -141,10 +155,35 @@ namespace FightBases
             if (position.y > bottomEdge + Config.RangeFire)
             {
                 transform.Translate(Config.Speed * Time.deltaTime * Vector3.down);
+                RunningAnim();
             }
-            else
+            else //到达射程内
             {
                 PreventSleep();
+                string currentName = animatorManager.GetCurrentAnimName(animator);
+                if (currentName == "Skill" || isIdle)
+                {
+                    return;
+                }
+                isIdle = true;
+                animatorManager.SetAnimParameter(animator, "isRunning", false);//回归idle
+                animatorManager.PlayAnimWithCallback(animator, "Idle", () =>
+                {
+                    Action _ = () =>
+                    {
+                        animatorManager.SetAnimParameter(animator, "isSkill", true);//开启技能动画
+                        animatorManager.PlayAnimWithCallback(animator, "Skill", () =>
+                        {
+                            isIdle = false;
+                            Attack();
+                            animatorManager.SetAnimParameter(animator, "isSkill", false);//关闭技能动画
+                            animatorManager.PlaySpecificAnim(animator, "Idle");
+                        });
+                    };
+                    ToolManager.Instance.SetTimeout(_, Config.AttackCd);
+                });
+
+
             }
             //限定在盒子内
             ClampMonsterPosition(transform);
@@ -162,7 +201,7 @@ namespace FightBases
         }
         public virtual void Attack()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public virtual void Skill()
@@ -245,14 +284,14 @@ namespace FightBases
             {
                 return;
             }
-            //伤害位置对不上不能上buff
-            if (Config.ActionType == "land" && selfObj.GetComponent<ArmChildBase>().Config.DamageType != "all")
-            {
-                return;
-            }
+            // //伤害位置对不上不能上buff,移到碰撞开始判断
+            // if (Config.ActionType == "land" && selfObj.GetComponent<ArmChildBase>().Config.DamagePos != "all")
+            // {
+            //     return;
+            // }
             if (!BuffEndTimes.ContainsKey(buffName))
             {
-                Buffs.Enqueue(BuffFactory.Create(buffName, duration, selfObj, gameObject,args));
+                Buffs.Enqueue(BuffFactory.Create(buffName, duration, selfObj, gameObject, args));
             }
             else
             {

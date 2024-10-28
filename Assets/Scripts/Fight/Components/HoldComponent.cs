@@ -1,9 +1,9 @@
 using FightBases;
 using UnityEngine;
 
-public class HoldComponent : ComponentBase
+public class LeaveComponent : ComponentBase
 {
-    public HoldComponent(string componentName, string type, GameObject selfObj) : base(componentName, type, selfObj)
+    public LeaveComponent(string componentName, string type, GameObject selfObj) : base(componentName, type, selfObj)
     {
     }
 

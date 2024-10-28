@@ -21,7 +21,7 @@ namespace FightBases
         }
         public virtual void Play()
         {
-
+            ClearSameEffect();
         }
 
         public virtual void Stop()
@@ -39,7 +39,9 @@ namespace FightBases
                     toRemove.Add(controller);
                 }
             }
-
+            if(toRemove.Count <= 1) {
+                return;
+            }
             // 遍历完成后，再执行移除操作
             foreach (var controller in toRemove)
             {
