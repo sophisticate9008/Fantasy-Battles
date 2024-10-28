@@ -42,11 +42,7 @@ namespace ArmConfigs
             CritRate = 0.1f;
             Owner = Name;
             ComponentStrs.Add("穿透");
-            ComponentStrs.Add("反弹");
-            ComponentStrs.Add("分裂");
             ComponentStrs.Add("减速");
-            ComponentStrs.Add("爆炸");
-            ComponentStrs.Add("眩晕");
             AttackCd = 1f;
             AttackCount = 30;
             DamageType = "ad";

@@ -63,19 +63,38 @@ namespace FightBases
         }
         public virtual void OnEnter2D(Collider2D collision)
         {
-            if (IsNotSelf(collision))
+            if (!IsNotSelf(collision))
             {
-                while (FirstExceptQueue.Count > 0)
-                {
-                    var obj = FirstExceptQueue.Dequeue();
-                    if (obj == collision.gameObject)
-                    {
-                        return;
-                    }
-                }
-                CollideObjs["enter"].Enqueue(collision.gameObject);
-
+                return;
             }
+            if (!PlaceMatch(collision))
+            {
+                return;
+            }
+
+            while (FirstExceptQueue.Count > 0)
+            {
+                var obj = FirstExceptQueue.Dequeue();
+                if (obj == collision.gameObject)
+                {
+                    return;
+                }
+            }
+            CollideObjs["enter"].Enqueue(collision.gameObject);
+
+
+        }
+        public bool PlaceMatch(Collider2D collision)
+        {
+            if (Config.DamagePos == "all")
+            {
+                return true;
+            }
+            if (Config.DamagePos == "land" && collision.gameObject.GetComponent<EnemyBase>().Config.ActionType == "sky")
+            {
+                return false;
+            }
+            return true;
         }
         // public virtual void OnCollisionEnter2D(Collision2D collision)
         // {
@@ -94,11 +113,15 @@ namespace FightBases
         }
         public virtual void OnExit2D(Collider2D collision)
         {
-            if (IsNotSelf(collision))
+            if (!IsNotSelf(collision))
             {
-                CollideObjs["exit"].Enqueue(collision.gameObject);
-
+                return;
             }
+            if (!PlaceMatch(collision))
+            {
+                return;
+            }
+            CollideObjs["exit"].Enqueue(collision.gameObject);
         }
         public virtual void OnTriggerExit2D(Collider2D collision)
         {
@@ -110,14 +133,18 @@ namespace FightBases
         // }
         public virtual void OnStay2D(Collider2D collision)
         {
-            if (IsNotSelf(collision))
+            if (!IsNotSelf(collision))
             {
-                if (Time.time - stayTime > Config.AttackCd)
-                {
-                    stayTime = Time.time;
-                    CollideObjs["stay"].Enqueue(collision.gameObject);
-                }
-
+                return;
+            }
+            if (!PlaceMatch(collision))
+            {
+                return;
+            }
+            if (Time.time - stayTime > Config.AttackCd)
+            {
+                stayTime = Time.time;
+                CollideObjs["stay"].Enqueue(collision.gameObject);
             }
         }
         public virtual void OnTriggerStay2D(Collider2D collision)
@@ -221,7 +248,7 @@ namespace FightBases
             {
                 if (child.TryGetComponent<ParticleSystem>(out ParticleSystem ps))
                 {
-                    var main = ps.main;  
+                    var main = ps.main;
 
                     main.startRotation = -rotateZ;
                 }

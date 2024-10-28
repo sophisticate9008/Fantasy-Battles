@@ -46,6 +46,7 @@ namespace FightBases
             try
             {
                 animatorManager.SetAnimParameter(animator, "isRunning", true);
+                animatorManager.PlayAnim(animator, 1f);
             }
             catch { }
 
@@ -108,10 +109,10 @@ namespace FightBases
             {
                 animatorManager.StopAnim(animator);
             }
-            else
-            {
-                animatorManager.PlayAnim(animator, 1f);
-            }
+            // else
+            // {
+            //     animatorManager.PlayAnim(animator, 1f);
+            // }
         }
         public void Update()
         {
