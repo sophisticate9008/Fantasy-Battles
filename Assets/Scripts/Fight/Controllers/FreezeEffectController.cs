@@ -70,6 +70,7 @@ public class FreezeEffectController : EffectControllerBase
 
     public override void Play()
     {
+        base.Play();
         if (!gameObject.activeSelf)
         {
             return;

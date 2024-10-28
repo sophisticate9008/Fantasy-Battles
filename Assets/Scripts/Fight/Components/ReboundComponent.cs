@@ -28,14 +28,18 @@ public class ReboundComponent : ComponentBase, IReboundable
 
         // 检查是否接近屏幕边缘并反转方向
         bool rebounded = false;
+        Vector2 lbvb = Constant.leftBottomViewBoundary;
+        Vector2 rtvb = Constant.rightTopViewBoundary;
+        if ((viewportPos.x > lbvb.x && viewportPos.x < lbvb.x + edgeBuffer && direction.x < 0)
+            || (viewportPos.x < rtvb.x && viewportPos.x > rtvb.x - edgeBuffer && direction.x > 0))
 
-        if (viewportPos.x < edgeBuffer || viewportPos.x > (1 - edgeBuffer))
         {
             direction.x = -direction.x; // 反转 x 方向
             rebounded = true;
         }
 
-        if (viewportPos.y < edgeBuffer || viewportPos.y > (1 - edgeBuffer))
+        if ((viewportPos.y > lbvb.y && viewportPos.y < lbvb.y + edgeBuffer && direction.y < 0)
+            || (viewportPos.y < rtvb.y && viewportPos.y > rtvb.y - edgeBuffer && direction.y > 0))
         {
             direction.y = -direction.y; // 反转 y 方向
             rebounded = true;

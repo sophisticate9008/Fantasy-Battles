@@ -53,7 +53,7 @@ namespace FightBases
             {"exit", new()}
         };
         public Dictionary<string, Queue<GameObject>> CollideObjs => collideObjs;
-        public bool IsOutOfBounds()
+        public bool IsOutOfScreen()
         {
             // 获取子弹在屏幕上的位置
             Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
@@ -235,7 +235,7 @@ namespace FightBases
             transform.Translate(Config.Speed * Time.deltaTime, 0, 0);
 
             // 超出屏幕范围时销毁
-            if (IsOutOfBounds())
+            if (IsOutOfScreen())
             {
                 ReturnToPool();
             }

@@ -42,11 +42,10 @@ namespace FightBases
             if(toRemove.Count <= 1) {
                 return;
             }
-            // 遍历完成后，再执行移除操作
-            foreach (var controller in toRemove)
-            {
-                ObjectPoolManager.Instance.ReturnToPool(EffectName + "Pool", controller.gameObject);
+            for(int i = 1; i < toRemove.Count; i++) {
+                ObjectPoolManager.Instance.ReturnToPool(EffectName + "Pool", toRemove[i].gameObject);
             }
+            // 遍历完成后，再执行移除操作
         }
     }
 }

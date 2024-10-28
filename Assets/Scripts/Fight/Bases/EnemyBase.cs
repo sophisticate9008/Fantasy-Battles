@@ -10,8 +10,6 @@ namespace FightBases
     public class EnemyBase : MonoBehaviour, IEnemy
     {
         private bool isIdle = false;
-        public Vector2 minBoundary; // 设定左下角的边界
-        public Vector2 maxBoundary; // 设定右上角的边界
         public AnimatorManager animatorManager;
         public Animator animator;
         public bool CanAction { get; set; } = true;
@@ -33,9 +31,6 @@ namespace FightBases
         public bool isDead;
         public virtual void Init()
         {
-            minBoundary = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
-            maxBoundary = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
-
             Config = ConstConfig.Clone() as EnemyConfigBase;
             isDead = false;
             NowLife = Config.Life;
@@ -130,6 +125,7 @@ namespace FightBases
         }
         public void Update()
         {
+            ClampMonsterPosition(transform);
             if (!IsInit)
             {
                 return;
@@ -152,7 +148,7 @@ namespace FightBases
 
             Vector3 position = transform.position;
             float bottomEdge = -Camera.main.orthographicSize;
-            if (position.y > bottomEdge + Config.RangeFire)
+            if (position.y > Constant.leftBottomBoundary.y + Config.RangeFire)
             {
                 transform.Translate(Config.Speed * Time.deltaTime * Vector3.down);
                 RunningAnim();
@@ -186,7 +182,7 @@ namespace FightBases
 
             }
             //限定在盒子内
-            ClampMonsterPosition(transform);
+            
 
         }
         private void PreventSleep()
@@ -316,8 +312,8 @@ namespace FightBases
         private void ClampMonsterPosition(Transform monsterTransform)
         {
             Vector3 position = monsterTransform.position;
-            position.x = Mathf.Clamp(position.x, minBoundary.x, maxBoundary.x);
-            position.y = Mathf.Clamp(position.y, minBoundary.y, maxBoundary.y);
+            position.x = Mathf.Clamp(position.x, Constant.leftBottomBoundary.x, Constant.rightTopBoundary.x);
+            position.y = Mathf.Clamp(position.y, Constant.leftBottomBoundary.y, Constant.rightTopBoundary.y);
             monsterTransform.position = position;
         }
     }
