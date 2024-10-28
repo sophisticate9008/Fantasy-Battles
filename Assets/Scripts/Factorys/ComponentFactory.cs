@@ -20,6 +20,7 @@ namespace Factorys
                 "减速" => new SlowComponent(componentName, "enter", selfObj),
                 "麻痹" => new PalsyComponent(componentName, "enter", selfObj),
                 "眩晕" => new DizzyComponent(componentName, "enter", selfObj),
+                "阻尼" => new DampComponent(componentName, "enter", selfObj),
                 _ => throw new ArgumentException($"Unknown component: {componentName}")
             };
         }

@@ -39,7 +39,7 @@ public class SkillUtil
         {9, "AirDropBomb"},
         {10, "PressureCutter"},
         {11, "FuelBullet"},
-        {12, "UAV"},
+        {12, "Uav"},
     };
 
     public static string ArmTypeToResName(string armType)

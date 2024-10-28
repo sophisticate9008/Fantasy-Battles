@@ -22,8 +22,8 @@ public class LaserArm : ArmBase
         
         ArmChildBase obj = GetOneFromPool();
         obj.transform.position = transform.position;
-        obj.SetDirectionToTarget();
         obj.TargetEnemyByArm = TargetEnemy;
+        obj.SetDirectionToTarget();
         obj.Init();
     }
 }

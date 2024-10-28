@@ -1,8 +1,12 @@
+using FightBases;
 using MyEnums;
 
 namespace ArmConfigs
 {
-    public class EnergyRayConfig :ArmConfigBase {
+    public class UavConfig : ArmConfigBase, IReboundable 
+    {
+        public int ReboundCount { get; set ; } = 999;
+
         public override void Init()
         {
             base.Init();
@@ -16,7 +20,11 @@ namespace ArmConfigs
             RangeFire = 10;
             CdType = CdTypes.WaitLast;
             ControlBy = ControlBy.Arm;
-            Duration = 3;
+            Duration = 10;
+            ComponentStrs.Add("反弹");
+            ComponentStrs.Add("阻尼");
+            Speed = 3;
+            ScopeRadius = 6;
         }
     }
 }
