@@ -35,7 +35,7 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float scopeRadius = 3f;
     [SerializeField] private bool isLineCast = false;
     [SerializeField] private bool isRayCast = false;
-    [SerializeField] private float maxForce = 10; // 最大力
+    [SerializeField] private float maxForce = 0; // 最大力
     [SerializeField] private float forceBaseDistance = 5; // 影响距离
     [SerializeField] private CdTypes cdType = CdTypes.AtOnce;
     [SerializeField] private ControlBy controlBy = ControlBy.Self;

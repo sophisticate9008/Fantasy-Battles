@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class Tornado : ArmChildBase
 {
-    private readonly float smoothDamp = 1f; 
-    private Vector3 velocity = Vector3.zero;
-    public TornadoConfig TornadoConfig => Config as TornadoConfig;
+    private float smoothDamp = 1f; 
+    public TornadoConfig tornadoConfig => Config as TornadoConfig;
     public List<GameObject> exceptObjs = new();
     public override void Init()
     {
         base.Init();
         exceptObjs.Clear();
     }
+
     public override void Move()
     {
         int maxExcept = (EnemyManager.Instance.liveCount + 100) / 4;
@@ -46,10 +46,11 @@ public class Tornado : ArmChildBase
     public override void OnTriggerStay2D(Collider2D collider)
     {
 
-        ApplyForce(collider, -1);
+        ApplyForce(collider);
         base.OnTriggerStay2D(collider);
         if (TargetEnemy == collider.gameObject)
         {
+            ToolManager.Instance.SetTimeout(() => TargetEnemy = null,  0.05f);
             TargetEnemy = null;
 
         }
@@ -64,6 +65,8 @@ public class Tornado : ArmChildBase
         }
 
     }
+
+
 }
 
 

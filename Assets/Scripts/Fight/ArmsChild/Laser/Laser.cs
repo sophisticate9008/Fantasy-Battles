@@ -112,6 +112,14 @@ namespace ArmsChild
 
             }
         }
+        public override void OnTriggerStay2D(Collider2D collider)
+        {
+
+            base.OnTriggerStay2D(collider);
+            ApplyForce(collider);
+            
+
+        }
         public override sealed void CreateDamage(GameObject enemyObj)
         {
             float tlc = Config.Tlc;

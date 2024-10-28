@@ -22,6 +22,7 @@ namespace ArmConfigs
             SelfScale = 1f;
             CdType = CdTypes.WaitLast;
             ControlBy = ControlBy.Arm;
+            MaxForce = -10;
             ForceDegree = 1f;
         }
     }

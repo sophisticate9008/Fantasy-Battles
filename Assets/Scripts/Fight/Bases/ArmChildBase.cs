@@ -71,7 +71,7 @@ namespace FightBases
             {
                 return;
             }
-
+            ApplyForce(collision);
             while (FirstExceptQueue.Count > 0)
             {
                 var obj = FirstExceptQueue.Dequeue();
@@ -487,7 +487,7 @@ namespace FightBases
             ArmChildBase obj = ObjectPoolManager.Instance.GetFromPool(GetType().Name + "Pool", Config.Prefab).GetComponent<ArmChildBase>();
             return obj;
         }
-        public void ApplyForce(Collider2D collider, int forceDirction)
+        public void ApplyForce(Collider2D collider)
         {
             Vector2 center = transform.position; // 龙卷风中心
             float maxForce = Config.MaxForce; // 最大施加力
@@ -508,7 +508,7 @@ namespace FightBases
                 Vector2 direction = (rb.position - center).normalized;
 
                 // 施加龙卷风力
-                rb.AddForce(forceDirction * forceMagnitude * Config.ForceDegree * direction);
+                rb.AddForce(forceMagnitude * Config.ForceDegree * direction);
 
                 // 启动协程来恢复状态
                 StartCoroutine(ResetStateAfterDelay(rb, originalVelocity, originalAngularVelocity, 0.5f)); // 0.5秒后恢复状态

@@ -29,6 +29,7 @@ namespace ArmConfigs
             IsLineCast = true;
             CdType = CdTypes.WaitLast;
             ControlBy = ControlBy.Arm;
+            MaxForce = 10;
         }
     }
 }
