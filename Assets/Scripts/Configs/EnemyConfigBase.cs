@@ -174,7 +174,20 @@ public class EnemyConfigBase : ConfigBase
         get => deratePenetrate;
         set => deratePenetrate = value;
     }
-    public virtual float MaxSlowRate{get;set;} = 0;
+    private List<float> slowRates = new();
+    public virtual List<float> SlowRates => slowRates;
+    public virtual float MaxSlowRate {
+        get {
+            float max = 0;
+            if(SlowRates.Count == 0) {
+                return max;
+            }
+            foreach(var _ in SlowRates) {
+                max = Math.Max(max, _);
+            }
+            return max;
+        }
+    }
 
     // 获取伤害减免的字典
     public virtual Dictionary<string, float> GetDamageReduction()
