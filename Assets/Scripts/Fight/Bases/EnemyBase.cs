@@ -197,7 +197,7 @@ namespace FightBases
         }
         public virtual void Attack()
         {
-
+            FighteManager.Instance.EnemyDamegeFilter(Config.Damage, Config.AttackCount);
         }
 
         public virtual void Skill()

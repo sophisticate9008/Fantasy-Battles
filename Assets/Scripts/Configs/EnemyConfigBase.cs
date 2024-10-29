@@ -27,7 +27,7 @@ public class EnemyConfigBase : ConfigBase
     }
     [SerializeField] private int life;
     [SerializeField] private float speed;
-    [SerializeField] private int damage;
+    [SerializeField] private int damage = 5;
     //免疫数
     [SerializeField] private int immunityCount;
     // 格挡数

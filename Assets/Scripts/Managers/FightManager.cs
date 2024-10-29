@@ -12,6 +12,7 @@ public class FighteManager : ManagerBase<FighteManager>
 {
 
     public PlayerDataConfig playerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
+    public WallConfig WallConfig => ConfigManager.Instance.GetConfigByClassName("Wall") as WallConfig;
     public AnimationCurve spawnRateCurve;
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
@@ -19,6 +20,7 @@ public class FighteManager : ManagerBase<FighteManager>
     public int exp = 0;
     public int level = 1;
     public int CurrentNeedExp => level * 1000;
+    public Queue<string> bloodMsgs = new();
 
     GameObject DamageTextPrefab
     {
@@ -48,6 +50,10 @@ public class FighteManager : ManagerBase<FighteManager>
 
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
         LoadJewel();
+        InitWallBlood();
+    }
+    public void InitWallBlood() {
+        WallConfig.CurrentLife = WallConfig.LifeMax;
     }
     private void LoadJewel()
     {
@@ -288,5 +294,34 @@ public class FighteManager : ManagerBase<FighteManager>
     }
 
 
+    public void EnemyDamegeFilter(int harm, int count = 1)
+    {
+        int indeedHarm = harm - WallConfig.DamageReduction;
+        if (indeedHarm <= 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                bloodMsgs.Enqueue("格挡");
+            }
+            return;
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            if(WallConfig.ImmunityCount > 0) {
+                bloodMsgs.Enqueue("免疫");
+                WallConfig.ImmunityCount--;
+                continue;
+            }
+            WallConfig.CurrentLife -= indeedHarm;
+            WallConfig.CurrentLife = Mathf.Clamp(WallConfig.CurrentLife, 0, WallConfig.LifeMax);
+            bloodMsgs.Enqueue($"<color=#D72D2D> -{indeedHarm} </color>");
+        }
+    }
+    public void AddBlood(int val) {
+        WallConfig.CurrentLife += val;
+        WallConfig.CurrentLife = Mathf.Clamp(WallConfig.CurrentLife, 0, WallConfig.LifeMax);
+        bloodMsgs.Enqueue($"<color=#27DE1F> +{val} </color>");
+    }
 
 }

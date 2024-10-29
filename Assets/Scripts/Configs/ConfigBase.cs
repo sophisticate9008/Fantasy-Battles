@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 
-
+[System.Serializable]
 public class ConfigBase : IConfig
 {
     public virtual GameObject Prefab { get; set; }
