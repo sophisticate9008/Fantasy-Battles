@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Ignore
-  - 
+  - Self
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 1591010329
+    locked: 0
+  - name: Self
+    uniqueID: 2985816085
     locked: 0
