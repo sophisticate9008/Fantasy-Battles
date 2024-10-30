@@ -1,9 +1,10 @@
+
 using FightBases;
+
 namespace Arms
 {
-    public class ElectroPenetrateArm : ArmBase
+    public class JumpElectroArm : ArmBase
     {
-
         public override void Attack()
         {
 

@@ -151,12 +151,12 @@ namespace FightBases
 
         public virtual void FisrtFindTarget()
         {
-            throw new System.NotImplementedException();
+            FindTargetNearestOrElite();
         }
 
         public virtual void OtherFindTarget()
         {
-            throw new System.NotImplementedException();
+            FindRandomTarget();
         }
         public virtual ArmChildBase GetOneFromPool()
         {

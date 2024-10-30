@@ -4,14 +4,6 @@ namespace Arms
 {
     public class TntArm : ArmBase
     {
-        public override void FisrtFindTarget()
-        {
-            FindTargetNearestOrElite();
-        }
-        public override void OtherFindTarget()
-        {
-            FindRandomTarget();
-        }
         public override void Attack()
         {
             

@@ -15,10 +15,8 @@ namespace ArmConfigs
             Speed = 8;
             OnType = "enter";
             DamageType = "ice";
-            DamagePos = "all";
             Cd = 3;
             ScopeRadius = 10f;
-            SelfScale = 1;
             Tlc = 1;
             MaxForce = 100;
         }

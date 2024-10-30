@@ -63,12 +63,7 @@ namespace FightBases
         }
         public virtual void OnEnter2D(Collider2D collision)
         {
-            if (!IsNotSelf(collision))
-            {
-                return;
-            }
-            if (!PlaceMatch(collision))
-            {
+            if(!BeforeTirgger(collision)) {
                 return;
             }
             ApplyForce(collision);
@@ -101,8 +96,23 @@ namespace FightBases
         //     OnEnter2D(collision.collider);
 
         // }
+        public virtual bool BeforeTirgger(Collider2D collision)
+        {
+            if (!IsNotSelf(collision))
+            {
+                return false;
+            }
+            if (!PlaceMatch(collision))
+            {
+                return false;
+            }
+            return true;
+        }
         public virtual void OnTriggerEnter2D(Collider2D collision)
         {
+            if(!BeforeTirgger(collision)) {
+                return;
+            }
             OnEnter2D(collision);
         }
         //排除自身
@@ -113,14 +123,6 @@ namespace FightBases
         }
         public virtual void OnExit2D(Collider2D collision)
         {
-            if (!IsNotSelf(collision))
-            {
-                return;
-            }
-            if (!PlaceMatch(collision))
-            {
-                return;
-            }
             CollideObjs["exit"].Enqueue(collision.gameObject);
         }
         public virtual void OnTriggerExit2D(Collider2D collision)
@@ -133,13 +135,8 @@ namespace FightBases
         // }
         public virtual void OnStay2D(Collider2D collision)
         {
-            if (!IsNotSelf(collision))
-            {
-                return;
-            }
-            if (!PlaceMatch(collision))
-            {
-                return;
+            if(!BeforeTirgger(collision)) {
+                return ;
             }
             if (Time.time - stayTime > Config.AttackCd)
             {
@@ -215,7 +212,6 @@ namespace FightBases
         {
             if (IsInit)
             {
-
                 Move();
                 OnByQueue();
             }
@@ -417,6 +413,7 @@ namespace FightBases
         }
         public List<GameObject> LineCastAll(Vector3 startPoint, Vector3 endPoint)
         {
+            // Debug.DrawLine(startPoint, endPoint, Color.red, 1.0f); 
             List<GameObject> list = new();
             if (Config.IsLineCast)
             {
@@ -433,6 +430,7 @@ namespace FightBases
             return list;
 
         }
+
         public virtual void OnDisable()
         {
             foreach (var temp in collideObjs)

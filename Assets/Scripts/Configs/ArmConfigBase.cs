@@ -34,7 +34,6 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private string damageExtraType = "";
     [SerializeField] private float scopeRadius = 3f;
     [SerializeField] private bool isLineCast = false;
-    [SerializeField] private bool isRayCast = false;
     [SerializeField] private float maxForce = 0; // 最大力
     [SerializeField] private float forceBaseDistance = 5; // 影响距离
     [SerializeField] private CdTypes cdType = CdTypes.AtOnce;
@@ -194,11 +193,6 @@ public class ArmConfigBase : ConfigBase
         set => isLineCast = value;
     }
 
-    public virtual bool IsRayCast
-    {
-        get => isRayCast;
-        set => isRayCast = value;
-    }
 
     public virtual int CurrentAttackedNum { get; set; } = 0;
 

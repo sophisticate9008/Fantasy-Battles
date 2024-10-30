@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Factorys;
 using UnityEngine;
 
@@ -69,7 +70,7 @@ namespace FightBases
                     // 更新物体的位置
                     Vector3 newPosition = transform.position;
                     newPosition.y = worldPos.y;  // 将物体的 y 坐标设为视口顶部
-                    StartCoroutine(TransmitBackByStep(0.5f, newPosition));
+                    StartCoroutine(ToolManager.Instance.TransmitByStep(0.5f, newPosition,gameObject));
                 }
             }
             else
@@ -77,23 +78,11 @@ namespace FightBases
                 // 正常情况下，只减少 y 坐标
                 Vector3 newPosition = transform.position;
                 newPosition.y += y;
-                StartCoroutine(TransmitBackByStep(0.5f, newPosition));
+                StartCoroutine(ToolManager.Instance.TransmitByStep(0.5f, newPosition,gameObject));
             }
         }
 
-        private IEnumerator TransmitBackByStep(float t, Vector3 targetPosition)
-        {
-            float elapsed = 0;
-            float totalDistance = Vector3.Distance(transform.position, targetPosition);
-            float speed = totalDistance / t;
-            float step = speed * Time.deltaTime;
-            while (elapsed < t)
-            {
-                elapsed += Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-                yield return null;
-            }
-        }
+
         protected virtual void Start()
         {
             animatorManager = AnimatorManager.Instance;
@@ -182,7 +171,7 @@ namespace FightBases
 
             }
             //限定在盒子内
-            
+
 
         }
         private void PreventSleep()
@@ -276,7 +265,7 @@ namespace FightBases
             duration *= GlobalConfig.EnemyBuffTimeAddition;
 
             //免疫指定控制buff
-            if (Config.ControlImmunityList.IndexOf(buffName) != -1)
+            if (Config.ControlImmunityList.Any(immunity => buffName.Contains(immunity)))
             {
                 return;
             }

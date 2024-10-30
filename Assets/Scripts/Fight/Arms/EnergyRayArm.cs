@@ -4,16 +4,7 @@ namespace Arms
 {
     public class EnergyRayArm : ArmBase
     {
-        public override void FisrtFindTarget()
-        {
 
-            FindTargetNearestOrElite();
-        }
-        public override void OtherFindTarget()
-        {
-            FindRandomTarget();
-
-        }
         public override void Attack()
         {
             ArmChildBase obj = GetOneFromPool();
