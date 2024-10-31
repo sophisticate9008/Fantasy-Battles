@@ -9,7 +9,7 @@ public class BoomComponent : ComponentBase
 
     }
 
-    public override void GetObjAndInit()
+    public override void GetObjAndInitOnSelf()
     {
         ArmChildBase selfArmchild = SelfObj.GetComponent<ArmChildBase>();
         ArmChildBase obj = Prefab.GetComponent<ArmChildBase>().GetOneFromPool();
@@ -19,6 +19,6 @@ public class BoomComponent : ComponentBase
     }
     public override void Exec(GameObject enemyObj)
     {
-        GetObjAndInit();
+        GetObjAndInitOnSelf();
     }
 }

@@ -70,7 +70,7 @@ namespace FightBases
                     // 更新物体的位置
                     Vector3 newPosition = transform.position;
                     newPosition.y = worldPos.y;  // 将物体的 y 坐标设为视口顶部
-                    StartCoroutine(ToolManager.Instance.TransmitByStep(0.5f, newPosition,gameObject));
+                    ToolManager.Instance.TransmitByStep(y, newPosition, gameObject);
                 }
             }
             else
@@ -78,7 +78,7 @@ namespace FightBases
                 // 正常情况下，只减少 y 坐标
                 Vector3 newPosition = transform.position;
                 newPosition.y += y;
-                StartCoroutine(ToolManager.Instance.TransmitByStep(0.5f, newPosition,gameObject));
+                ToolManager.Instance.TransmitByStep(0.5f, newPosition, gameObject);
             }
         }
 
@@ -134,7 +134,10 @@ namespace FightBases
 
         public virtual void Move()
         {
-
+            if (isDead)
+            {
+                return;
+            }
             Vector3 position = transform.position;
             float bottomEdge = -Camera.main.orthographicSize;
             if (position.y > Constant.leftBottomBoundary.y + Config.RangeFire)
@@ -152,22 +155,34 @@ namespace FightBases
                 }
                 isIdle = true;
                 animatorManager.SetAnimParameter(animator, "isRunning", false);//回归idle
+                animatorManager.SetAnimParameter(animator, "isSkill", false);
                 animatorManager.PlayAnimWithCallback(animator, "Idle", () =>
                 {
+                    if (isDead)
+                    {
+                        animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
+                        return;
+                    }
                     Action _ = () =>
                     {
                         animatorManager.SetAnimParameter(animator, "isSkill", true);//开启技能动画
                         animatorManager.PlayAnimWithCallback(animator, "Skill", () =>
                         {
                             isIdle = false;
-                            Attack();
                             animatorManager.SetAnimParameter(animator, "isSkill", false);//关闭技能动画
                             animatorManager.PlaySpecificAnim(animator, "Idle");
+                            Attack();
+
+                            if (isDead)
+                            {
+                                animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
+                                return;
+                            }
+
                         });
                     };
                     ToolManager.Instance.SetTimeout(_, Config.AttackCd);
                 });
-
 
             }
             //限定在盒子内
@@ -224,7 +239,7 @@ namespace FightBases
         {
             foreach (var component in InstalledComponents)
             {
-                foreach (var _ in component.Value.Type)
+                foreach (var _ in component.Value.Types)
                 {
                     if (_ == type)
                     {

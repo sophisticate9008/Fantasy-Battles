@@ -179,8 +179,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5797953814350711899}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1309151211
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!114 &4194367304546662297
@@ -200,7 +200,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e426255f015ea0b47840ca75e69b675c, type: 3}
   - {fileID: 21300000, guid: d7d00c65eabb264449fa547b9f042da7, type: 3}
   bulkSr: {fileID: 5478392713829263823}
-  baseHeight: 5
   iceSr: {fileID: 7026307030235609007}
   animeTime: 0.5
 --- !u!1 &7438009328183946486

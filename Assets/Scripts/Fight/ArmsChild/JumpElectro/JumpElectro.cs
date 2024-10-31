@@ -27,7 +27,7 @@ namespace ArmsChild
                     yield break;
                 }
                 PathDamage();
-                StartCoroutine(ToolManager.Instance.TransmitByStep(stayTime, TargetEnemy.transform.position, gameObject));
+                ToolManager.Instance.TransmitByStep(stayTime, TargetEnemy.transform.position, gameObject);
 
             }
             ReturnToPool();

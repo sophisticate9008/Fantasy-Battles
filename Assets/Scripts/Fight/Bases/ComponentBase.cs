@@ -12,7 +12,7 @@ namespace FightBases
 
         public ComponentBase(string componentName, string type, GameObject selfObj)
         {
-            Type = type.Split('|');
+            Types = type.Split('|');
             ComponentName = componentName;
             SelfObj = selfObj;
 
@@ -20,7 +20,7 @@ namespace FightBases
 
         public GameObject SelfObj { get; set; }
         public string ComponentName { get; set; }
-        public string[] Type { get; set; }
+        public string[] Types { get; set; }
 
         public virtual void Init()
         {
@@ -28,10 +28,16 @@ namespace FightBases
         }
 
         public abstract void Exec(GameObject enemyObj);
-        public virtual void GetObjAndInit()
+        public virtual void GetObjAndInitOnSelf()
         {
             ArmChildBase obj = Prefab.GetComponent<ArmChildBase>().GetOneFromPool();
             obj.transform.position = SelfObj.transform.position;
+            obj.Init();
+        }
+        public virtual void GetObjAndInitOnEnemy(GameObject enemyObj)
+        {
+            ArmChildBase obj = Prefab.GetComponent<ArmChildBase>().GetOneFromPool();
+            obj.transform.position = enemyObj.transform.position + 0.2f * Vector3.down;
             obj.Init();
         }
     }

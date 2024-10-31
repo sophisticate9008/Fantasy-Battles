@@ -59,13 +59,10 @@ namespace FightBases
             Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
 
             // 如果子弹超出屏幕边界，返回 true
-            return viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0 || viewportPosition.y > 1;
+            return viewportPosition.x < -0.1 || viewportPosition.x > 1.1 || viewportPosition.y < -0.1 || viewportPosition.y > 1.1;
         }
         public virtual void OnEnter2D(Collider2D collision)
         {
-            if(!BeforeTirgger(collision)) {
-                return;
-            }
             ApplyForce(collision);
             while (FirstExceptQueue.Count > 0)
             {
@@ -159,8 +156,10 @@ namespace FightBases
             OnByTypeCallBack(type);
             foreach (var component in InstalledComponents)
             {
-                foreach (var _ in component.Value.Type)
+
+                foreach (var _ in component.Value.Types)
                 {
+                    
                     if (_ == type)
                     {
                         component.Value.Exec(obj);

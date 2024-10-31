@@ -1,14 +1,15 @@
 using FightBases;
 using UnityEngine;
 
-public class LeaveComponent : ComponentBase
+public class HoldComponent : ComponentBase
 {
-    public LeaveComponent(string componentName, string type, GameObject selfObj) : base(componentName, type, selfObj)
+    public HoldComponent(string componentName, string type, GameObject selfObj) : base(componentName, type, selfObj)
     {
+        Prefab = (Config as IHoldable).HoldChildConfig.Prefab;
     }
-
     public override void Exec(GameObject enemyObj)
     {
-        throw new System.NotImplementedException();
+        GetObjAndInitOnEnemy(enemyObj);
     }
+    
 }
