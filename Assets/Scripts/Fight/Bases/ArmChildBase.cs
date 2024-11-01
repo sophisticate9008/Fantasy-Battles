@@ -235,7 +235,7 @@ namespace FightBases
                 ReturnToPool();
             }
         }
-        public void ChangeRotation()
+        public virtual void ChangeRotation()
         {
             float rotateZ = Mathf.Atan2(Direction.y, Direction.x);
             transform.rotation = Quaternion.Euler(0, 0, rotateZ * Mathf.Rad2Deg);
