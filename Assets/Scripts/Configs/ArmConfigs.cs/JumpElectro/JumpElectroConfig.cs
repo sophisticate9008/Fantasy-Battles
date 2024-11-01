@@ -3,7 +3,7 @@ namespace ArmConfigs
 {
     public class JumpElectroConfig : ArmConfigBase
     {
-        
+        public float PathDamageTlc {get; set;} = 0.1f;
         public int JumpCount {get;set;} = 5;
         public override void Init()
         {
@@ -16,7 +16,7 @@ namespace ArmConfigs
             DamageType = "electro";
             Cd = 4;
             IsLineCast = true;
-            
-        }
+            ComponentStrs.Add("麻痹");
+        }   
     }
 }

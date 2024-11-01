@@ -54,7 +54,8 @@ namespace ArmsChild
                 {
                     continue;
                 }
-                CreateDamage(hit);
+                CreateDamage(hit, ConcreteConfig.PathDamageTlc);
+                InstalledComponents["麻痹"].Exec(hit);
             }
         }
 
