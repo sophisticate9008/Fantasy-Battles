@@ -22,7 +22,7 @@ public class ExchangeBase : ConsumeBase
     public Button confirm;
     private ItemBase itemInfo;
     private const int maxBuyCount = 99;
-
+    private int CanBuyMaxCount => (int)PlayerDataConfig.GetValue(currencyName) / price;
     // 初始化方法
     public override void Init()
     {
@@ -103,7 +103,7 @@ public class ExchangeBase : ConsumeBase
     // 增加购买数量
     private void IncreaseCount()
     {
-        buyCount = Mathf.Clamp(buyCount + 1, 0, maxBuyCount);  // 确保不超过上限
+        buyCount = Mathf.Clamp(buyCount + 1, 0, Mathf.Min(CanBuyMaxCount,maxBuyCount));  // 确保不超过上限
         inputField.onValueChanged.RemoveAllListeners();  // 先移除所有监听，避免递归调用
         inputField.text = buyCount.ToString();  // 更新输入框的值
         inputField.onValueChanged.AddListener(OnInputValueChanged);  // 重新绑定监听
@@ -113,7 +113,7 @@ public class ExchangeBase : ConsumeBase
     // 减少购买数量
     private void DecreaseCount()
     {
-        buyCount = Mathf.Clamp(buyCount - 1, 0, maxBuyCount);  // 确保不低于0
+        buyCount = Mathf.Clamp(buyCount - 1, 0, Mathf.Min(CanBuyMaxCount,maxBuyCount));  // 确保不低于0
         inputField.onValueChanged.RemoveAllListeners();  // 先移除所有监听，避免递归调用
         inputField.text = buyCount.ToString();  // 更新输入框的值
         inputField.onValueChanged.AddListener(OnInputValueChanged);  // 重新绑定监听
@@ -126,7 +126,7 @@ public class ExchangeBase : ConsumeBase
         // 尝试解析输入框的值
         if (int.TryParse(value, out int parsedValue))
         {
-            buyCount = Mathf.Clamp(parsedValue, 0, maxBuyCount);  // 限制 buyCount 范围
+            buyCount = Mathf.Clamp(parsedValue, 0, Mathf.Min(CanBuyMaxCount,maxBuyCount));  // 限制 buyCount 范围
         }
         else
         {
@@ -143,7 +143,7 @@ public class ExchangeBase : ConsumeBase
     // 验证并更新输入框和购买数量
     private void ValidateBuyCount()
     {
-        buyCount = Mathf.Clamp(buyCount, 0, maxBuyCount);  // 确保购买数量在合法范围内
+        buyCount = Mathf.Clamp(buyCount, 0, Mathf.Min(CanBuyMaxCount,maxBuyCount));  // 确保购买数量在合法范围内
         inputField.text = buyCount.ToString();  // 更新输入框显示的值
         needNum.text = (price * buyCount).ToString();  // 更新显示的价格
     }
@@ -151,6 +151,7 @@ public class ExchangeBase : ConsumeBase
     public override bool PostConsume()
     {
         PlayerDataConfig.UpdateValueAdd(goodName, buyCount * goodCount);
+        ToolManager.Instance.SetTimeout(ValidateBuyCount, 0.5f);
         UIManager.Instance.OnMessage("购买成功");
         return true;
     }

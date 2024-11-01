@@ -39,11 +39,13 @@ public class PlayerDataConfig : ConfigBase
         {
             // 获取字段当前的值
             Object currentValue = field.GetValue(this); // 这里使用 this
+            
             if (currentValue != newValue)
             {
-                SaveConfig();
+                
                 field.SetValue(this, newValue); // 这里也使用 this
                 OnDataChanged?.Invoke(fieldName); // 触发事件
+                SaveConfig();
             }
 
         }
