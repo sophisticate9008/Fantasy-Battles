@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Factorys;
+using UnityEditor;
 using UnityEngine;
 
 namespace FightBases
@@ -107,6 +108,9 @@ namespace FightBases
                 animatorManager.StopAnim(animator);
 
             }
+            // if(isDead) {
+            //     Invoke(nameof(ReturnToPool), 1f);
+            // }
             // else
             // {
             //     animatorManager.PlayAnim(animator, 1f);

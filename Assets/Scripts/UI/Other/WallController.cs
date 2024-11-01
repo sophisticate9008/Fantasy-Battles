@@ -33,7 +33,7 @@ public class WallController : TheUIBase
     private void CreateMasks()
     {
         flashOverlays = new GameObject[3];
-        for (int i = 0; i < walls.transform.childCount; i++)
+        for (int i = 0; i < walls.transform.childCount / 2; i++)
         {
             GameObject currentWall = walls.transform.GetChild(i).gameObject;
             flashOverlays[i] = Instantiate(currentWall, currentWall.transform.parent);

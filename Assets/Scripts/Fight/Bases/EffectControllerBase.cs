@@ -21,7 +21,7 @@ namespace FightBases
         }
         public virtual void Play()
         {
-            ClearSameEffect();
+            // ClearSameEffect();
         }
 
         public virtual void Stop()
