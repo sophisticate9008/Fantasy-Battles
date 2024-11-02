@@ -3111,25 +3111,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198762743838678835, guid: b4d4b73eecff5af4a8ce3b185eb3ddab, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2511309703175904796, guid: b4d4b73eecff5af4a8ce3b185eb3ddab, type: 3}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3591418015264733749, guid: b4d4b73eecff5af4a8ce3b185eb3ddab, type: 3}
-      propertyPath: m_UsedByEffector
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6829519116288272442, guid: b4d4b73eecff5af4a8ce3b185eb3ddab, type: 3}
       propertyPath: m_Name
       value: NormalZombie
       objectReference: {fileID: 0}
-    - target: {fileID: 6829519116288272442, guid: b4d4b73eecff5af4a8ce3b185eb3ddab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 7106417972946509899, guid: b4d4b73eecff5af4a8ce3b185eb3ddab, type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -12,7 +12,7 @@ namespace FightBases
 
     public class ArmChildBase : MonoBehaviour, IArmChild
     {
-        private float stayTime;
+        private float alreadyStayTime;
         public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as ArmConfigBase;
         public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
         // public Dictionary<string, float> DamageAddition => GlobalConfig.GetDamageAddition();
@@ -135,9 +135,9 @@ namespace FightBases
             if(!BeforeTirgger(collision)) {
                 return ;
             }
-            if (Time.time - stayTime > Config.AttackCd)
+            if (Time.time - alreadyStayTime > Config.AttackCd)
             {
-                stayTime = Time.time;
+                alreadyStayTime = Time.time;
                 CollideObjs["stay"].Enqueue(collision.gameObject);
             }
         }
@@ -442,7 +442,7 @@ namespace FightBases
         public virtual void OnEnable()
         {
 
-            stayTime = -10;
+            alreadyStayTime = -10;
             if (Config.ControlBy == MyEnums.ControlBy.Self)
             {
                 Invoke(nameof(ReturnToPool), Config.Duration);
