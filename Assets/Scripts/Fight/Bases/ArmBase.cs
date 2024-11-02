@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Factorys;
 using MyEnums;
 using Unity.VisualScripting;
@@ -22,7 +23,7 @@ namespace FightBases
             EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
             float shortestDistance = Mathf.Infinity;
             GameObject nearestEnemy = null;
-
+            enemies = enemies.Where(x => Config.DamagePos == "all" || x.Config.ActionType == "land").ToArray();
             foreach (EnemyBase enemy in enemies)
             {
                 float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
@@ -131,6 +132,7 @@ namespace FightBases
         public virtual List<GameObject> FindRandomTarget(int count = 1)
         {
             EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
+            enemies = enemies.Where(x => Config.DamagePos == "all" || x.Config.ActionType == "land").ToArray();
             List<GameObject> selectedEnemies = new();
             int length = enemies.Length;
             if (length == 0)
