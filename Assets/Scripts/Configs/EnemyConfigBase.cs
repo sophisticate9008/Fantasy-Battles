@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Factorys;
 using UnityEngine;
 
 
@@ -16,7 +17,7 @@ public class EnemyConfigBase : ConfigBase
         {
             if (prefab == null)
             {
-                prefab = Resources.Load<GameObject>(Constant.EnemyPrefabResPath + GetType().Name.Replace("Config", ""));
+                prefab = EnemyPrefabFactory.Create(GetType().Name.Replace("Config", ""), characterType);
                 return prefab;
             }
             else

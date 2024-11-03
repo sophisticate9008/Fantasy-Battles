@@ -79,8 +79,8 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/AssetPackage/Enemys/Animator
-        CollectorGUID: 1cbe985fb83ca0342861bdfcca73f714
+      - CollectPath: Assets/AssetPackage/Enemys
+        CollectorGUID: 84306130f0e89cc48b4460b32b358191
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

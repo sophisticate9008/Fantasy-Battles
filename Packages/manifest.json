@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.code-philosophy.hybridclr": "https://gitee.com/focus-creative-games/hybridclr_unity.git",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.gustavopsantos.unitymainthreaddispatcher": "https://github.com/gustavopsantos/unitymainthreaddispatcher.git?path=/Assets/UnityMainThreadDispatcher/#1.0.0",
     "com.tuyoogame.yooasset": "2.2.4-preview",

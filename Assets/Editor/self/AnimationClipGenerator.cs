@@ -72,61 +72,60 @@ public class AnimationClipGenerator : Editor
         return frames;
     }
 
-private static void CreateAnimationClip(string[] frames, string clipName)
-{
-    if (frames.Length == 0) return;
-
-    AnimationClip clip = new AnimationClip
+    private static void CreateAnimationClip(string[] frames, string clipName)
     {
-        wrapMode = WrapMode.Loop // 设置为循环播放
-    };
+        if (frames.Length == 0) return;
 
-    ObjectReferenceKeyframe[] keyframes = new ObjectReferenceKeyframe[frames.Length];
-    EditorCurveBinding curveBinding = new EditorCurveBinding
-    {
-        type = typeof(SpriteRenderer), // 使用 SpriteRenderer 作为动画类型
-        path = "", // 根据需要设置路径
-        propertyName = "m_Sprite" // 确保使用正确的属性名
-    };
-
-    for (int i = 0; i < frames.Length; i++)
-    {
-        string fileName = Path.GetFileName(frames[i]); // 获取文件名
-        string assetPath = Path.Combine(Path.GetDirectoryName(frames[i]), fileName).Replace('\\', '/');
-        
-        // 直接加载 Sprite
-        Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
-        if (sprite == null)
+        AnimationClip clip = new AnimationClip
         {
-            Debug.LogWarning($"Could not load sprite at path: {assetPath}");
-            continue;
+            wrapMode = WrapMode.Loop // 设置为循环播放
+        };
+
+        ObjectReferenceKeyframe[] keyframes = new ObjectReferenceKeyframe[frames.Length];
+        EditorCurveBinding curveBinding = new EditorCurveBinding
+        {
+            type = typeof(SpriteRenderer), // 使用 SpriteRenderer 作为动画类型
+            path = "", // 根据需要设置路径
+            propertyName = "m_Sprite" // 确保使用正确的属性名
+        };
+
+        for (int i = 0; i < frames.Length; i++)
+        {
+            string fileName = Path.GetFileName(frames[i]); // 获取文件名
+            string assetPath = Path.Combine(Path.GetDirectoryName(frames[i]), fileName).Replace('\\', '/');
+
+            // 直接加载 Sprite
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+            if (sprite == null)
+            {
+                Debug.LogWarning($"Could not load sprite at path: {assetPath}");
+                continue;
+            }
+
+            // 将 Sprite 添加到关键帧
+            keyframes[i] = new ObjectReferenceKeyframe { time = i * 0.08f, value = sprite }; // 0.1秒一帧（10fps）
         }
 
-        // 将 Sprite 添加到关键帧
-        keyframes[i] = new ObjectReferenceKeyframe { time = i * 0.08f, value = sprite }; // 0.1秒一帧（10fps）
+        // 检查是否有有效的关键帧
+        if (keyframes.Length == 0)
+        {
+            Debug.LogWarning($"No valid keyframes created for clip: {clipName}");
+            return;
+        }
+
+        // 设置关键帧到动画剪辑
+        AnimationUtility.SetObjectReferenceCurve(clip, curveBinding, keyframes);
+
+        // 保存动画剪辑
+        AssetDatabase.CreateAsset(clip, $"Assets/AssetPackage/Enemys/clips/{clipName}.anim");
+        Debug.Log($"Created clip: {clipName}");
+
+        // 设置循环时间
+        AnimationClipSettings clipSettings = AnimationUtility.GetAnimationClipSettings(clip);
+        clipSettings.loopTime = true; // 设置为循环播放
+        AnimationUtility.SetAnimationClipSettings(clip, clipSettings);
+        AssetDatabase.SaveAssets();
     }
-
-    // 检查是否有有效的关键帧
-    if (keyframes.Length == 0)
-    {
-        Debug.LogWarning($"No valid keyframes created for clip: {clipName}");
-        return;
-    }
-
-    // 设置关键帧到动画剪辑
-    AnimationUtility.SetObjectReferenceCurve(clip, curveBinding, keyframes);
-
-    // 保存动画剪辑
-    AssetDatabase.CreateAsset(clip, $"Assets/AssetPackage/Enemys/clips/{clipName}.anim");
-    Debug.Log($"Created clip: {clipName}");
-
-    // 设置循环时间
-    AnimationClipSettings clipSettings = AnimationUtility.GetAnimationClipSettings(clip);
-    clipSettings.loopTime = true; // 设置为循环播放
-    AnimationUtility.SetAnimationClipSettings(clip, clipSettings);
-
-    AssetDatabase.SaveAssets();
-}
 
 
 }

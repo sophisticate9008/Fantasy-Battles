@@ -19,6 +19,8 @@ logs
 /Assets/Plugins/PlasticSCM*
 /assets/plugins/PlasticSCM*
 /Bundles/StandaloneWindows64/DefaultPackage/
+/HybridCLRData/
+/yoo/
 /Assets/StreamingAssets/yoo/DefaultPackage/
 *.private
 *.private.meta

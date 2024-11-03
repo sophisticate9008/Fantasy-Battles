@@ -13,7 +13,7 @@ public class CommonUtil
         var type = assembly.GetTypes()
             .FirstOrDefault(t => t.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase));
 
-        return type ?? throw new NotImplementedException();
+        return type ?? throw new NotImplementedException($"未找到类型: {typeName}");
     }
     public static List<T> AsList<T>(params T[] items)
     {

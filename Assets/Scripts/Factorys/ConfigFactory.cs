@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using ArmConfigs;
 using FightBases;
-using Prefabs.Enemy;
 using UnityEngine;
 
 namespace Factorys
@@ -18,6 +17,7 @@ namespace Factorys
                 configName += "Config";
             }
             string fileStr = Path.Combine(Constant.ConfigsPath, $"{configName}.json");
+            
             Type type = CommonUtil.GetTypeByName(configName);
 
             if (File.Exists(fileStr))
