@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using YooAsset;
 
 public class ResourceManager : ManagerBase<ResourceManager>
 {
     public EPlayMode PlayMode = EPlayMode.OfflinePlayMode;
-
     private ResourcePackage package;
     private string packageName = "DefaultPackage";
     private string packageVersion;
@@ -169,7 +172,9 @@ public class ResourceManager : ManagerBase<ResourceManager>
                 Debug.Log("更新失败");
             }
             // PatchEventDefine.FoundUpdateFiles.SendEventMessage(totalDownloadCount, totalDownloadBytes);
+
         }
+        LoadHotUpdateDll();
     }
 
 
@@ -240,6 +245,44 @@ public class ResourceManager : ManagerBase<ResourceManager>
         {
             return $"{_fallbackHostServer}/{fileName}";
         }
+
+    }
+    private static Assembly _hotUpdateAss;
+    private static Dictionary<string, TextAsset> s_assetDatas = new Dictionary<string, TextAsset>();
+    public static byte[] ReadBytesFromStreamingAssets(string dllName)
+    {
+        if (s_assetDatas.ContainsKey(dllName))
+        {
+            return s_assetDatas[dllName].bytes;
+        }
+
+        return Array.Empty<byte>();
+    }
+    private void LoadHotUpdateDll()
+    {
+        Debug.Log("加载热更资源");
+        #if !UNITY_EDITOR
+                _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll.bytes"));
+        #else
+                _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
+        #endif
+            StartCoroutine(Run_InstantiateComponentByAsset());
+    }
+
+    IEnumerator Run_InstantiateComponentByAsset()
+    {
+        // 通过实例化assetbundle中的资源，还原资源上的热更新脚本
+        var package = YooAssets.GetPackage("DefaultPackage");
+        var handle = package.LoadAssetAsync<GameObject>("EntryPrefab");
+        yield return handle;
+        handle.Completed += Handle_Completed;
+    }
+
+    private void Handle_Completed(AssetHandle obj)
+    {
+        Debug.Log("准备实例化");
+        GameObject go = obj.InstantiateSync();
+        Debug.Log($"Prefab name is {go.name}");
     }
 
 }
