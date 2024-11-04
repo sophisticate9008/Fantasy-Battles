@@ -31,7 +31,7 @@ MonoBehaviour:
       Collectors:
       - CollectPath: Assets/AssetPackage/Characters
         CollectorGUID: 302b4496d62a2014188a2a75d85996ab
-        CollectorType: 1
+        CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
@@ -44,7 +44,7 @@ MonoBehaviour:
       Collectors:
       - CollectPath: Assets/AssetPackage/UI/ItemBackground
         CollectorGUID: 9171c597ad1b6b545a3f6e3ae7f8eced
-        CollectorType: 1
+        CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
@@ -68,7 +68,7 @@ MonoBehaviour:
         UserData: 
       - CollectPath: Assets/AssetPackage/UI/Other
         CollectorGUID: 986caef2e8b429f4da670ea6a37f1da8
-        CollectorType: 1
+        CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
@@ -81,7 +81,7 @@ MonoBehaviour:
       Collectors:
       - CollectPath: Assets/AssetPackage/Enemys/Animator
         CollectorGUID: 1cbe985fb83ca0342861bdfcca73f714
-        CollectorType: 1
+        CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll

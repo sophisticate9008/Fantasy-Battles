@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using YooAsset;
 
 public class ResourceManager : ManagerBase<ResourceManager>
@@ -187,6 +188,7 @@ public class ResourceManager : ManagerBase<ResourceManager>
     private void OnStartDownloadFileFunction(string fileName, long sizeBytes)
     {
         Debug.Log(string.Format("开始下载：文件名：{0}，文件大小：{1}", fileName, sizeBytes));
+        UpdateUIManager.Instance.UpdateStatus($"开始下载 {fileName}，大小：{sizeBytes / (1024f * 1024f):0.00} MB");
     }
 
     /// <summary>
@@ -196,6 +198,7 @@ public class ResourceManager : ManagerBase<ResourceManager>
     private void OnDownloadOverFunction(bool isSucceed)
     {
         Debug.Log("下载" + (isSucceed ? "成功" : "失败"));
+        UpdateUIManager.Instance.UpdateStatus(isSucceed ? "下载完成！" : "下载失败！");
     }
 
     /// <summary>
@@ -205,11 +208,41 @@ public class ResourceManager : ManagerBase<ResourceManager>
     /// <param name="currentDownloadCount"></param>
     /// <param name="totalDownloadBytes"></param>
     /// <param name="currentDownloadBytes"></param>
+
+    private long lastDownloadedBytes = 0;
+    private float lastUpdateTime = 0f;
     private void OnDownloadProgressUpdateFunction(int totalDownloadCount, int currentDownloadCount, long totalDownloadBytes, long currentDownloadBytes)
     {
-        Debug.Log(string.Format("文件总数：{0}，已下载文件数：{1}，下载总大小：{2}，已下载大小{3}", totalDownloadCount, currentDownloadCount, totalDownloadBytes, currentDownloadBytes));
-    }
 
+        Debug.Log(string.Format("文件总数：{0}，已下载文件数：{1}，下载总大小：{2}，已下载大小{3}", totalDownloadCount, currentDownloadCount, totalDownloadBytes, currentDownloadBytes));
+        float progress = (float)currentDownloadBytes / totalDownloadBytes;
+        float currentTime = Time.time;
+        float deltaTime = currentTime - lastUpdateTime;
+
+        if (deltaTime > 0.5f) // 每 0.5 秒更新一次速度
+        {
+            long bytesDownloadedSinceLastUpdate = currentDownloadBytes - lastDownloadedBytes;
+            float speed = bytesDownloadedSinceLastUpdate / deltaTime; // 每秒下载的字节数
+            string speedText = FormatSpeed(speed);
+            UpdateUIManager.Instance.UpdateSpeed(speedText);
+
+            // 更新上次下载的数据
+            lastDownloadedBytes = currentDownloadBytes;
+            lastUpdateTime = currentTime;
+        }
+
+        // 更新 UI 的进度条和进度信息
+        UpdateUIManager.Instance.UpdateProgress(progress, $"下载进度：{currentDownloadCount}/{totalDownloadCount}");
+    }
+    private string FormatSpeed(float speed)
+    {
+        if (speed > 1024 * 1024)
+            return $"{(speed / (1024 * 1024)):0.00} MB/s";
+        else if (speed > 1024)
+            return $"{(speed / 1024):0.00} KB/s";
+        else
+            return $"{speed:0.00} B/s";
+    }
     /// <summary>
     /// 下载出错
     /// </summary>
@@ -261,12 +294,12 @@ public class ResourceManager : ManagerBase<ResourceManager>
     private void LoadHotUpdateDll()
     {
         Debug.Log("加载热更资源");
-        #if !UNITY_EDITOR
+#if !UNITY_EDITOR
                 _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll.bytes"));
-        #else
-                _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
-        #endif
-            StartCoroutine(Run_InstantiateComponentByAsset());
+#else
+        _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
+#endif
+        StartCoroutine(Run_InstantiateComponentByAsset());
     }
 
     IEnumerator Run_InstantiateComponentByAsset()
@@ -283,6 +316,7 @@ public class ResourceManager : ManagerBase<ResourceManager>
         Debug.Log("准备实例化");
         GameObject go = obj.InstantiateSync();
         Debug.Log($"Prefab name is {go.name}");
+        SceneManager.LoadScene("Main");
     }
 
 }
