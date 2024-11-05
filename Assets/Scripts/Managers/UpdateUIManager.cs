@@ -14,7 +14,7 @@ public class UpdateUIManager : ManagerBase<UpdateUIManager>
         progressBar.fillAmount = progress;
 
         // 更新进度文本内容
-        progressText.text = $"{(progress * 100f):0.0}%";
+        progressText.text = $"{progress * 100f:0.0}%";
         statusMessage.text = message;
 
         // 根据填充度调整文本的位置

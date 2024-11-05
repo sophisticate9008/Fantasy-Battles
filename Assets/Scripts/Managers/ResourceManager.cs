@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using HybridCLR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
@@ -78,8 +79,8 @@ public class ResourceManager : ManagerBase<ResourceManager>
 
     private IEnumerator HostInitPackage()
     {
-        string defaultHostServer = "http://localhost:8800/fire%20at%20zombies/";
-        string fallbackHostServer = "http://localhost:8800/fire%20at%20zombies/";
+        string defaultHostServer = "https://unity.wdyplus.xyz/fire_at_zombies/";
+        string fallbackHostServer = "https://unity.wdyplus.xyz/fire_at_zombies/";
         IRemoteServices remoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
 
         var buildinFileSystem = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
@@ -133,7 +134,8 @@ public class ResourceManager : ManagerBase<ResourceManager>
         }
         else
         {
-            StartCoroutine(CreateDownloader());
+            yield return CreateDownloader();
+            yield return LoadDllBytes();
         }
     }
     IEnumerator CreateDownloader()
@@ -175,10 +177,22 @@ public class ResourceManager : ManagerBase<ResourceManager>
             // PatchEventDefine.FoundUpdateFiles.SendEventMessage(totalDownloadCount, totalDownloadBytes);
 
         }
-        LoadHotUpdateDll();
     }
 
+    IEnumerator LoadDllBytes()
+    {
+        var assets = new List<string> { "HotUpdate.dll" }.Concat(AOTMetaAssemblyFiles);
+        foreach (var asset in assets)
+        {
+            var handle = package.LoadAssetAsync<TextAsset>(asset);
+            yield return handle;
+            var assetObj = handle.AssetObject as TextAsset;
+            s_assetDatas[asset] = assetObj;
+            Debug.Log($"dll:{asset}   {assetObj == null}");
+        }
+        StartGame();
 
+    }
 
     /// <summary>
     /// 开始下载
@@ -280,8 +294,14 @@ public class ResourceManager : ManagerBase<ResourceManager>
         }
 
     }
-    private static Assembly _hotUpdateAss;
+    #region 补充元数据
+
+    //补充元数据dll的列表
+    //通过RuntimeApi.LoadMetadataForAOTAssembly()函数来补充AOT泛型的原始元数据
+    private static List<string> AOTMetaAssemblyFiles { get; } = new() { };
     private static Dictionary<string, TextAsset> s_assetDatas = new Dictionary<string, TextAsset>();
+    private static Assembly _hotUpdateAss;
+
     public static byte[] ReadBytesFromStreamingAssets(string dllName)
     {
         if (s_assetDatas.ContainsKey(dllName))
@@ -291,15 +311,44 @@ public class ResourceManager : ManagerBase<ResourceManager>
 
         return Array.Empty<byte>();
     }
+
+
+
+    /// <summary>
+    /// 为aot assembly加载原始metadata， 这个代码放aot或者热更新都行。
+    /// 一旦加载后，如果AOT泛型函数对应native实现不存在，则自动替换为解释模式执行
+    /// </summary>
+    private static void LoadMetadataForAOTAssemblies()
+    {
+        /// 注意，补充元数据是给AOT dll补充元数据，而不是给热更新dll补充元数据。
+        /// 热更新dll不缺元数据，不需要补充，如果调用LoadMetadataForAOTAssembly会返回错误
+        HomologousImageMode mode = HomologousImageMode.SuperSet;
+        foreach (var aotDllName in AOTMetaAssemblyFiles)
+        {
+            byte[] dllBytes = ReadBytesFromStreamingAssets(aotDllName);
+            // 加载assembly对应的dll，会自动为它hook。一旦aot泛型函数的native函数不存在，用解释器版本代码
+            LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
+            Debug.Log($"LoadMetadataForAOTAssembly:{aotDllName}. mode:{mode} ret:{err}");
+        }
+    }
+    #endregion
+    
+
+    #region  更新完毕
+    void StartGame() {
+        // 加载AOT dll的元数据
+        LoadMetadataForAOTAssemblies();
+        LoadHotUpdateDll();
+    }
     private void LoadHotUpdateDll()
     {
         Debug.Log("加载热更资源");
-#if !UNITY_EDITOR
-                _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll.bytes"));
-#else
-        _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
-#endif
-        StartCoroutine(Run_InstantiateComponentByAsset());
+        #if !UNITY_EDITOR
+                _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll"));
+        #else
+                _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
+        #endif
+                StartCoroutine(Run_InstantiateComponentByAsset());
     }
 
     IEnumerator Run_InstantiateComponentByAsset()
@@ -316,7 +365,16 @@ public class ResourceManager : ManagerBase<ResourceManager>
         Debug.Log("准备实例化");
         GameObject go = obj.InstantiateSync();
         Debug.Log($"Prefab name is {go.name}");
-        SceneManager.LoadScene("Main");
+        // SceneManager.LoadScene("Main");
+        // LoadScene();
     }
-
+    private void LoadScene()
+    {
+        string location = "Main";
+        var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
+        var physicsMode = LocalPhysicsMode.Physics2D;
+        // bool suspendLoad = false;
+        package.LoadSceneSync(location, sceneMode, physicsMode);
+    }
+    #endregion
 }

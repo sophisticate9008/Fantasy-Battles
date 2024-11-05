@@ -8,7 +8,8 @@ public class HotUpdateEntry : MonoBehaviour
     void Start()
     {
         List<string> list = new List<string>();
-        Debug.Log("HotUpdateEntry");
+        
+        Debug.Log("原始代码");
     }
 
     // Update is called once per frame

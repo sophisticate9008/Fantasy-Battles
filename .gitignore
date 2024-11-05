@@ -19,6 +19,7 @@ logs
 /Assets/Plugins/PlasticSCM*
 /assets/plugins/PlasticSCM*
 /Bundles/StandaloneWindows64/DefaultPackage/
+/Bundles/Android/DefaultPackage/
 /HybridCLRData/
 /yoo/
 /Assets/StreamingAssets/yoo/DefaultPackage/
