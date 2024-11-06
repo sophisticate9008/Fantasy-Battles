@@ -7,17 +7,25 @@ using HybridCLR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
-
+using System.Net;
 public class ResourceManager : ManagerBase<ResourceManager>
 {
+    [RuntimeInitializeOnLoadMethod]
+    public static void DisableOldTLS1()
+    {
+        // 禁用 TLS 1.0 和 TLS 1.1，强制使用 TLS 1.2 或更高版本
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+    }
     public EPlayMode PlayMode = EPlayMode.OfflinePlayMode;
     private ResourcePackage package;
     private string packageName = "DefaultPackage";
     private string packageVersion;
     private ResourceDownloaderOperation downloader;
+
     protected override void AwakeCallBack()
     {
         base.AwakeCallBack();
+        DisableOldTLS1();
         DontDestroyOnLoad(gameObject);
     }
     private void Start()
@@ -79,8 +87,10 @@ public class ResourceManager : ManagerBase<ResourceManager>
 
     private IEnumerator HostInitPackage()
     {
-        string defaultHostServer = "https://unity.wdyplus.xyz/fire_at_zombies/";
-        string fallbackHostServer = "https://unity.wdyplus.xyz/fire_at_zombies/";
+        // string defaultHostServer = "https://unity.wdyplus.xyz/fire_at_zombies";
+        // string fallbackHostServer = "https://unity.wdyplus.xyz/fire_at_zombies";
+        string defaultHostServer = "https://unity.wdyplus.xyz/fire_at_zombies";
+        string fallbackHostServer = "https://unity.wdyplus.xyz/fire_at_zombies";
         IRemoteServices remoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
 
         var buildinFileSystem = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
@@ -104,7 +114,7 @@ public class ResourceManager : ManagerBase<ResourceManager>
     private IEnumerator UpdatePackageVersion()
     {
         yield return new WaitForSecondsRealtime(0.5f);
-        var operation = package.RequestPackageVersionAsync();
+        var operation = package.RequestPackageVersionAsync(false);
         yield return operation;
         if (operation.Status != EOperationStatus.Succeed)
         {
@@ -332,10 +342,11 @@ public class ResourceManager : ManagerBase<ResourceManager>
         }
     }
     #endregion
-    
+
 
     #region  更新完毕
-    void StartGame() {
+    void StartGame()
+    {
         // 加载AOT dll的元数据
         LoadMetadataForAOTAssemblies();
         LoadHotUpdateDll();
@@ -343,12 +354,12 @@ public class ResourceManager : ManagerBase<ResourceManager>
     private void LoadHotUpdateDll()
     {
         Debug.Log("加载热更资源");
-        #if !UNITY_EDITOR
+#if !UNITY_EDITOR
                 _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll"));
-        #else
-                _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
-        #endif
-                StartCoroutine(Run_InstantiateComponentByAsset());
+#else
+        _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
+#endif
+        StartCoroutine(Run_InstantiateComponentByAsset());
     }
 
     IEnumerator Run_InstantiateComponentByAsset()
