@@ -964,6 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17def1fd179291f4dbef2a3bde6b6490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logStr: 
   fontSize: 15
 --- !u!1 &1747504855
 GameObject:

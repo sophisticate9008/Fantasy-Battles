@@ -13,6 +13,7 @@ public class ResourceManager : MonoBehaviour
     [RuntimeInitializeOnLoadMethod]
     public static void DisableOldTLS1()
     {
+        Debug.Log("禁用TLS1.0和TLS1.1，强制使用TLS1.2或更高版本");
         // 禁用 TLS 1.0 和 TLS 1.1，强制使用 TLS 1.2 或更高版本
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
     }
@@ -406,11 +407,11 @@ public class ResourceManager : MonoBehaviour
     private void LoadHotUpdateDll()
     {
         Debug.Log("加载热更资源");
-#if !UNITY_EDITOR
-                _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll"));
-#else
-        _hotUpdateAss = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
-#endif
+
+        _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll"));
+
+
+
         StartCoroutine(Run_InstantiateComponentByAsset());
     }
 
@@ -435,7 +436,7 @@ public class ResourceManager : MonoBehaviour
     }
     private void LoadScene()
     {
-        string location = "Main";
+        string location = "Begin";
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         var physicsMode = LocalPhysicsMode.Physics2D;
         // bool suspendLoad = false;

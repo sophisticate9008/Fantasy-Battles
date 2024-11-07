@@ -13,7 +13,6 @@ public class ConsoleToScreen : MonoBehaviour
 
     void OnEnable() { Application.logMessageReceived += Log; }
     void OnDisable() { Application.logMessageReceived -= Log; }
-
     public void Log(string logString, string stackTrace, LogType type)
     {
         foreach (var line in logString.Split('\n'))
