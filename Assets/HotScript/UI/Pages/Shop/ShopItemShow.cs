@@ -1,6 +1,6 @@
-using System;
+
 using TMPro;
-using UnityEngine;
+
 
 public class ShopItemShow : TheUIBase
 {
@@ -8,6 +8,7 @@ public class ShopItemShow : TheUIBase
 
     private void Start()
     {
+
         // 获取 PlayerDataConfig 的实例，假设它是通过某种方式创建或获取的
         PlayerDataConfig.OnDataChanged += UpdateSingleItem;
         UpdateInitialUI();

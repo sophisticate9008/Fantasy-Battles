@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-
 public class ObjectPoolManager : ManagerBase<ObjectPoolManager>
 {
 

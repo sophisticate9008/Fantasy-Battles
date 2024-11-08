@@ -2,7 +2,6 @@ using Factorys;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
-
 public class ExchangeBase : ConsumeBase
 {
     private int buyCount;

@@ -5,7 +5,6 @@ using Factorys;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
-
 public class Bag : TheUIBase
 {
     private readonly List<JewelBase> newJewels = new();

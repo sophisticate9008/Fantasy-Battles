@@ -8,15 +8,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 public class ResourceManager : MonoBehaviour
 {
-    [RuntimeInitializeOnLoadMethod]
-    public static void DisableOldTLS1()
-    {
-        Debug.Log("禁用TLS1.0和TLS1.1，强制使用TLS1.2或更高版本");
-        // 禁用 TLS 1.0 和 TLS 1.1，强制使用 TLS 1.2 或更高版本
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-    }
+
+    // [RuntimeInitializeOnLoadMethod]
+    // public static void DisableOldTLS1()
+    // {
+
+    //     Debug.Log("禁用TLS1.0和TLS1.1，强制使用TLS1.2或更高版本");
+    //     // 禁用 TLS 1.0 和 TLS 1.1，强制使用 TLS 1.2 或更高版本
+    //     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+    //     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
+    // }
+    // private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+    // {
+    //     // 这里返回 true 直接绕过证书验证
+    //     return true;
+    // }
     public EPlayMode PlayMode = EPlayMode.OfflinePlayMode;
     private ResourcePackage package;
     private string packageName = "DefaultPackage";
@@ -40,7 +50,9 @@ public class ResourceManager : MonoBehaviour
     }
     protected void AwakeCallBack()
     {
-        DisableOldTLS1();
+        // DisableOldTLS1();
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        ServicePointManager.ServerCertificateValidationCallback += (p1, p2, p3, p4) => true;
         DontDestroyOnLoad(gameObject);
     }
     private void Start()
@@ -133,7 +145,6 @@ public class ResourceManager : MonoBehaviour
         if (operation.Status != EOperationStatus.Succeed)
         {
             Debug.LogWarning(operation.Error);
-
         }
         else
         {
@@ -143,6 +154,7 @@ public class ResourceManager : MonoBehaviour
             StartCoroutine(UpdateManifest());
         }
     }
+
     private IEnumerator UpdateManifest()
     {
         yield return new WaitForSecondsRealtime(0.5f);
@@ -361,7 +373,7 @@ public class ResourceManager : MonoBehaviour
 
     //补充元数据dll的列表
     //通过RuntimeApi.LoadMetadataForAOTAssembly()函数来补充AOT泛型的原始元数据
-    private static List<string> AOTMetaAssemblyFiles { get; } = new() { };
+    private static List<string> AOTMetaAssemblyFiles { get; } = new() { "mscorlib.dll", "System.dll", "System.Core.dll" };
     private static Dictionary<string, TextAsset> s_assetDatas = new Dictionary<string, TextAsset>();
     private static Assembly _hotUpdateAss;
 
@@ -409,31 +421,27 @@ public class ResourceManager : MonoBehaviour
         Debug.Log("加载热更资源");
 
         _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll"));
-
-
-
-        StartCoroutine(Run_InstantiateComponentByAsset());
-    }
-
-    IEnumerator Run_InstantiateComponentByAsset()
-    {
-        // 通过实例化assetbundle中的资源，还原资源上的热更新脚本
-        var package = YooAssets.GetPackage("DefaultPackage");
-        var handle = package.LoadAssetAsync<GameObject>("EntryPrefab");
-        yield return handle;
-        handle.Completed += Handle_Completed;
-    }
-
-    private void Handle_Completed(AssetHandle obj)
-    {
-        // Debug.Log("准备实例化");
-        // GameObject go = obj.InstantiateSync();
-        // Debug.Log($"Prefab name is {go.name}");
-        // GameObject prefab = YooAssets.LoadAssetSync("ExchangeBase").AssetObject as GameObject;
-        // Instantiate(prefab);
-        // SceneManager.LoadScene("Main");
         LoadScene();
     }
+
+    // IEnumerator Run_InstantiateComponentByAsset()
+    // {
+    //     var package = YooAssets.GetPackage("DefaultPackage");
+    //     var handle = package.LoadAssetAsync<GameObject>("EntryPrefab");
+    //     yield return handle;
+    //     handle.Completed += Handle_Completed;
+    // }
+
+    // private void Handle_Completed(AssetHandle obj)
+    // {
+    //     // Debug.Log("准备实例化");
+    //     // GameObject go = obj.InstantiateSync();
+    //     // Debug.Log($"Prefab name is {go.name}");
+    //     // GameObject prefab = YooAssets.LoadAssetSync("ExchangeBase").AssetObject as GameObject;
+    //     // Instantiate(prefab);
+    //     // SceneManager.LoadScene("Main");
+    //     LoadScene();
+    // }
     private void LoadScene()
     {
         string location = "Begin";

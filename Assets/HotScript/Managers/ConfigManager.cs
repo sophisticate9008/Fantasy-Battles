@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class ConfigManager : ManagerBase<ConfigManager>
 {
-
     private readonly List<string> pools = new();
     private Dictionary<string, IConfig> configCache = new();
 

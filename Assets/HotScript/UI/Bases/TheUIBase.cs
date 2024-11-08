@@ -1,8 +1,5 @@
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using YooAsset;
 
+using UnityEngine;
 public class TheUIBase : MonoBehaviour
 {
     // private void Start()

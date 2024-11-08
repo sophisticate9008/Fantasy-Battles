@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using YooAsset;
-
 public class EffectManager : ManagerBase<EffectManager>
 {
     // Start is called before the first frame update

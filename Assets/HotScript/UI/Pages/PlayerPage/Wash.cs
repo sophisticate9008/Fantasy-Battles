@@ -3,7 +3,6 @@ using Factorys;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
-
 public class Wash : ConsumeBase
 {
     public JewelBase originItem;

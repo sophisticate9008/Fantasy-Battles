@@ -212,7 +212,6 @@ GameObject:
   - component: {fileID: 1685186102116122926}
   - component: {fileID: 5097756828746634347}
   - component: {fileID: 2377663093730301244}
-  - component: {fileID: 8400643924118323990}
   m_Layer: 5
   m_Name: ExchangeBase
   m_TagString: Untagged
@@ -279,26 +278,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8400643924118323990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473641272256768502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 186f5cbcf177a7347a7627d089e42947, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ConsumeCount: 0
-  _itemName: 
-  goodName: 
-  currencyName: 
-  price: 0
-  goodCount: 0
-  good: {fileID: 0}
-  confirm: {fileID: 0}
 --- !u!1 &990738751314774212
 GameObject:
   m_ObjectHideFlags: 0

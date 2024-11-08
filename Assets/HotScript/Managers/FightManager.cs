@@ -6,7 +6,6 @@ using Factorys;
 using FightBases;
 using TMPro;
 using UnityEngine;
-
 //管理战斗逻辑，伤害等
 public class FighteManager : ManagerBase<FighteManager>
 {

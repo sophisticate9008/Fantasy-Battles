@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
 public class ToolManager : ManagerBase<ToolManager>
 {
     public Coroutine SetTimeout(Action action, float delay)

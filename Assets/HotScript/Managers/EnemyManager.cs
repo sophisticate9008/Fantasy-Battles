@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using FightBases;
 using UnityEngine;
-
 // 管理怪物生成
 public class EnemyManager : ManagerBase<EnemyManager>
 {

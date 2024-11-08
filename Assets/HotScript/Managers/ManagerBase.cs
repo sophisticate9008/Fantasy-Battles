@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ManagerBase<T> : MonoBehaviour where T : MonoBehaviour
 {
     public static T Instance { get; private set; }

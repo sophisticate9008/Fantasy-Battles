@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 public class SkillManager : ManagerBase<SkillManager>
 {
     public SkillConfig SkillConfig => ConfigManager.Instance.GetConfigByClassName("Skill") as SkillConfig;

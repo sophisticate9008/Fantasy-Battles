@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class Equipments : TheUIBase
 {
-    public GameObject EquipmentsPanel;
     public List<Button> EquipmentButtons;
     private void Start()
     {
