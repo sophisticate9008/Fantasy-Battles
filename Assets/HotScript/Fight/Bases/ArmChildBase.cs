@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Factorys;
-using FightBases;
 using UnityEngine;
 
 namespace FightBases
@@ -107,7 +106,8 @@ namespace FightBases
         }
         public virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            if(!BeforeTirgger(collision)) {
+            if (!BeforeTirgger(collision))
+            {
                 return;
             }
             OnEnter2D(collision);
@@ -132,8 +132,9 @@ namespace FightBases
         // }
         public virtual void OnStay2D(Collider2D collision)
         {
-            if(!BeforeTirgger(collision)) {
-                return ;
+            if (!BeforeTirgger(collision))
+            {
+                return;
             }
             if (Time.time - alreadyStayTime > Config.AttackCd)
             {
@@ -159,7 +160,7 @@ namespace FightBases
 
                 foreach (var _ in component.Value.Types)
                 {
-                    
+
                     if (_ == type)
                     {
                         component.Value.Exec(obj);

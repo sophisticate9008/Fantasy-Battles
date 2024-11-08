@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using MyEnums;
 using UnityEngine;
+using YooAsset;
 
 
 [System.Serializable] // 标记为可序列化
@@ -59,7 +60,7 @@ public class ArmConfigBase : ConfigBase
         {
             if (prefab == null)
             {
-                prefab = Resources.Load<GameObject>(Constant.SelfPrefabResPath + GetType().Name.Replace("Config", ""));
+                prefab = YooAssets.LoadAssetSync(GetType().Name.Replace("Config", "")).AssetObject as GameObject;
             }
             return prefab;
         }

@@ -14,7 +14,7 @@ namespace Factorys
             {
                 if (normalPrefab == null)
                 {
-                    normalPrefab = Resources.Load<GameObject>(Constant.EnemyPrefabResPath + "NormalZombie");
+                    normalPrefab = YooAssets.LoadAssetSync("NormalZombie").AssetObject as GameObject;
                     Debug.Log("Loaded " + normalPrefab.name);
                     return normalPrefab;
                 }
@@ -31,7 +31,7 @@ namespace Factorys
             {
                 if (elitePrefab == null)
                 {
-                    elitePrefab = Resources.Load<GameObject>(Constant.EnemyPrefabResPath + "EliteZombie");
+                    elitePrefab = YooAssets.LoadAssetSync("EliteZombie").AssetObject as GameObject;
                     return elitePrefab;
                 }
                 else
@@ -42,15 +42,15 @@ namespace Factorys
         }
         public static GameObject Create(string enemyName, string enemyType)
         {
-            
+
             GameObject prefab = enemyType == "normal" ? NormalPrefab : ElitePrefab;
-            GameObject prefabClone = GameObject.Instantiate(prefab);
-            EnemyBase enemyBase = prefabClone.AddComponent(CommonUtil.GetTypeByName(enemyName)) as EnemyBase;
+
+            EnemyBase enemyBase = prefab.AddComponent(CommonUtil.GetTypeByName(enemyName)) as EnemyBase;
             string controllerName = enemyName.ToLower() + "_Controller";
-            RuntimeAnimatorController controller = YooAssets.LoadAssetSync<RuntimeAnimatorController>(controllerName).AssetObject 
+            RuntimeAnimatorController controller = YooAssets.LoadAssetSync<RuntimeAnimatorController>(controllerName).AssetObject
                 as RuntimeAnimatorController;
             enemyBase.animator.runtimeAnimatorController = controller;
-            return prefabClone;
+            return prefab;
         }
 
     }

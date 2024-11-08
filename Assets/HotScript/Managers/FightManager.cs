@@ -6,6 +6,7 @@ using Factorys;
 using FightBases;
 using TMPro;
 using UnityEngine;
+using YooAsset;
 //管理战斗逻辑，伤害等
 public class FighteManager : ManagerBase<FighteManager>
 {
@@ -27,7 +28,7 @@ public class FighteManager : ManagerBase<FighteManager>
         {
             if (damageTextPrefab == null)
             {
-                return Resources.Load<GameObject>(Path.Combine(Constant.PrefabResOther, "DamageText"));
+                return YooAssets.LoadAssetSync("DamageText").AssetObject as GameObject;
             }
             else
             {

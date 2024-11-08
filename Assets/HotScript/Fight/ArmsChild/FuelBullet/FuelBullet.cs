@@ -12,10 +12,6 @@ namespace ArmsChild
             targetPosition = TargetEnemy.transform.position;
             ToolManager.Instance.TransmitByStep(1, TargetEnemy.transform.position, gameObject);
         }
-        public override void CreateDamage(GameObject enemyObj)
-        {
-
-        }
         public override bool BeforeTirgger(Collider2D collision)
         {
             if (collision.gameObject != TargetEnemy)

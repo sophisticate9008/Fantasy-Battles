@@ -47,7 +47,7 @@ public class EnemyConfigBase : ConfigBase
     [SerializeField] private List<string> damageTypeImmunityList = new();
     [SerializeField] private string attackType;//攻击类型 远程 进程
     [SerializeField] private string actionType = "land";// 行动类型 飞行 地面
-    [SerializeField] private string characterType;// 角色类型 精英 普通
+    [SerializeField] private string characterType = "normal";// 角色类型 精英 普通
     [SerializeField] private int attackCount = 1; //每次攻击的段数
     [SerializeField] private float attackCd = 2;
 

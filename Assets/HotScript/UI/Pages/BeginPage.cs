@@ -26,7 +26,7 @@ public class BeginPage : TheUIBase
     }
     private void LoadScene()
     {
-        string location = "Main";
+        string location = "Fight";
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         var physicsMode = LocalPhysicsMode.Physics2D;
         ResourcePackage package = YooAssets.GetPackage("DefaultPackage");

@@ -13,7 +13,7 @@ namespace FightBases
     {
         private bool isIdle = false;
         public AnimatorManager animatorManager;
-        public Animator animator;
+        public Animator animator => GetComponent<Animator>();
         public bool CanAction { get; set; } = true;
         public EnemyConfigBase ConstConfig => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as EnemyConfigBase;
         public EnemyConfigBase Config { get; set; }
@@ -87,7 +87,6 @@ namespace FightBases
         protected virtual void Start()
         {
             animatorManager = AnimatorManager.Instance;
-            animator = GetComponent<Animator>();
             Init();
         }
         private void RunningAnim()
