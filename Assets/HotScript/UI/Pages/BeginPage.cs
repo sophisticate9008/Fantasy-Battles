@@ -22,15 +22,14 @@ public class BeginPage : TheUIBase
     void BeginGame()
     {
         Debug.Log("开始游戏");
+        // SceneManager.LoadScene("Fight");
         LoadScene();
     }
     private void LoadScene()
     {
         string location = "Fight";
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
-        var physicsMode = LocalPhysicsMode.Physics2D;
         ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
-        // bool suspendLoad = false;
-        package.LoadSceneSync(location, sceneMode, physicsMode);
+        package.LoadSceneSync(location, sceneMode);
     }
 }
