@@ -11,6 +11,7 @@ namespace FightBases
         public virtual float BaseHeight { get; set; } = 5;
         public virtual void Init()
         {
+
             transform.SetParent(Enemy.transform);
             transform.position = Enemy.transform.position + new Vector3(0, 0, -0.01f);
             ChangeScale();
@@ -21,7 +22,7 @@ namespace FightBases
         }
         public virtual void Play()
         {
-            ClearSameEffect();
+            // ClearSameEffect();
         }
 
         public virtual void Stop()
@@ -42,7 +43,7 @@ namespace FightBases
             if(toRemove.Count <= 1) {
                 return;
             }
-            for(int i = 1; i < toRemove.Count; i++) {
+            for(int i = toRemove.Count - 2; i >= 0; i--) {
                 ObjectPoolManager.Instance.ReturnToPool(EffectName + "Pool", toRemove[i].gameObject);
             }
             // 遍历完成后，再执行移除操作

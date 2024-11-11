@@ -28,7 +28,7 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float duration = 20f;
     //力的程度
     [SerializeField] private float forceDegree = 1f;
-    [SerializeField] private string owner;
+    [SerializeField] private string owner = "";
     [SerializeField] private string damageType;
     [SerializeField] private string damagePos = "all";
     [SerializeField] private string onType;
@@ -45,14 +45,15 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float palsyTime = 1;
     [SerializeField] private float dizzyTime = 1;
     [SerializeField] private float fireTime = 1;//点燃
-    
+    [SerializeField] private float firePercentage = 0;//点燃附带的百分比伤害
+    public virtual float FirePercentage{get => firePercentage; set { firePercentage = value; } }
     public virtual float FreezeTime {get => freezeTime; set => freezeTime = value; }
     public virtual float SlowTime{get => slowTime; set => slowTime = value; }
     public virtual float SlowDegree{get => slowDegree; set => slowDegree = value; }
     public virtual float PalsyTime{get => palsyTime; set => palsyTime = value; }
     public virtual float DizzyTime{get => dizzyTime; set => dizzyTime = value; }
     public virtual float FireTime{get => fireTime; set => fireTime = value; }
-
+    
     // Prefab 属性
     public override GameObject Prefab
     {

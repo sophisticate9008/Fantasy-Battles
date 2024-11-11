@@ -13,10 +13,10 @@ public interface IEnemy {
     void Move();
     void Attack();
     void Skill();
-    void CalLife(int damage);
+    void CalLife(int damage, string owner);
 
-    //死亡火花，弹坑，追击，  
-    void Die();
+    //被谁杀死 
+    void Die(string owner);
     void BuffEffect();
     void AddBuff(string buffname, GameObject selfObj, float duration, params object[] args);
 }

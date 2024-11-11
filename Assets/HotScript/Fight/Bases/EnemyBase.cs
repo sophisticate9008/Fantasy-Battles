@@ -1,10 +1,9 @@
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Factorys;
-using UnityEditor;
+
 using UnityEngine;
 
 namespace FightBases
@@ -34,6 +33,8 @@ namespace FightBases
         public virtual void Init()
         {
             Config = ConstConfig.Clone() as EnemyConfigBase;
+            //清除buff列表
+            Buffs.Clear();
             isDead = false;
             NowLife = Config.Life;
             MaxLife = Config.Life;
@@ -212,17 +213,17 @@ namespace FightBases
             throw new System.NotImplementedException();
         }
 
-        public virtual void CalLife(int damage)
+        public virtual void CalLife(int damage, string owner)
         {
 
             NowLife -= damage;
             if (NowLife <= 0)
             {
-                Die();
+                Die(owner);
             }
         }
 
-        public virtual void Die()
+        public virtual void Die(string owner)
         {
             if (!isDead)
             {
@@ -232,10 +233,7 @@ namespace FightBases
                 animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
 
             }
-
-
             // animatorManager.SetAnimParameter(animator, "isDead", true);
-
         }
 
         void OnByType(string type, GameObject obj)
@@ -307,8 +305,8 @@ namespace FightBases
                 }
                 else
                 {
-                    //当前+持续时间大于buff结束时间，设置新的结束时间，小于则不用管，被上个buff效果包含了
-                    if (now + duration > endTime)
+                    //当前+持续时间大于等于buff结束时间，设置新的结束时间，小于则不用管，被上个buff效果包含了
+                    if (now + duration >= endTime)
                     {
                         BuffEndTimes[buffName] = now + duration;
                     }

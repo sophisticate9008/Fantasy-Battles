@@ -52,7 +52,8 @@ public class FighteManager : ManagerBase<FighteManager>
         LoadJewel();
         InitWallBlood();
     }
-    public void InitWallBlood() {
+    public void InitWallBlood()
+    {
         WallConfig.CurrentLife = WallConfig.LifeMax;
     }
     private void LoadJewel()
@@ -67,6 +68,7 @@ public class FighteManager : ManagerBase<FighteManager>
             }
         }
     }
+    #region 显示伤害
     public void CreateDamageText(GameObject enemyObj, float damage, string type, bool isCritical)
     {
         GameObject textClone = ObjectPoolManager.Instance.GetFromPool("DamageTextUIPool", DamageTextPrefab);
@@ -117,7 +119,9 @@ public class FighteManager : ManagerBase<FighteManager>
         // 启动协程，0.3秒后禁用
         StartCoroutine(DisableDamageText(textClone, 0.3f));
     }
+    #endregion
 
+    #region  格式化伤害
     // 格式化伤害值方法
     private string FormatDamage(float damage)
     {
@@ -142,7 +146,7 @@ public class FighteManager : ManagerBase<FighteManager>
             return damage.ToString("0");
         }
     }
-
+    #endregion
     private IEnumerator DisableDamageText(GameObject textObject, float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -151,12 +155,21 @@ public class FighteManager : ManagerBase<FighteManager>
         ObjectPoolManager.Instance.ReturnToPool("DamageTextUIPool", textObject);
     }
 
-    public void SelfDamageFilter(GameObject enemyObj, GameObject selfObj, bool isBuffDamage = false, float persentage = 0, float tlc = 0)
+
+    #region 伤害过滤
+    public void SelfDamageFilter(GameObject enemyObj, GameObject selfObj, bool isBuffDamage = false, float percentage = 0, float tlc = 0, string damageType = "fire")
     {
+
+
         EnemyBase enemyBase = enemyObj.GetComponent<EnemyBase>();
         EnemyConfigBase enemyConfig = enemyBase.Config;
         ArmChildBase armChildBase = selfObj.GetComponent<ArmChildBase>();
         ArmConfigBase armConfig = armChildBase.Config;
+        string owner = armConfig.Owner;
+        if (!isBuffDamage)
+        {
+            damageType = armConfig.DamageType;
+        }
         //首先过滤位置不匹配
         if (armConfig.DamagePos != "all" && enemyConfig.ActionType != "land")
         {
@@ -165,7 +178,7 @@ public class FighteManager : ManagerBase<FighteManager>
         }
 
         //过滤掉元素免疫
-        if (enemyConfig.DamageTypeImmunityList.IndexOf(armConfig.DamageType) != -1)
+        if (enemyConfig.DamageTypeImmunityList.IndexOf(damageType) != -1)
         {
             CreateDamageText(enemyObj, 0, "", false);
             return;
@@ -182,6 +195,7 @@ public class FighteManager : ManagerBase<FighteManager>
         float baseDamage;
         if (isBuffDamage)
         {
+
             baseDamage = GlobalConfig.AttackValue * armConfig.BuffDamageTlc;
         }
         else
@@ -201,7 +215,7 @@ public class FighteManager : ManagerBase<FighteManager>
         Dictionary<string, float> damageAddition = GlobalConfig.GetDamageAddition();
         foreach (var item in damageAddition)
         {
-            if (item.Key == armConfig.DamageType || item.Key == armConfig.DamageExtraType)
+            if (item.Key == damageType || item.Key == armConfig.DamageExtraType)
             {
                 addtion += item.Value;
             }
@@ -221,7 +235,7 @@ public class FighteManager : ManagerBase<FighteManager>
         float reduction = 0;
         foreach (var item in damageReduction)
         {
-            if (item.Key == armConfig.DamageType || item.Key == armConfig.DamageExtraType)
+            if (item.Key == damageType || item.Key == armConfig.DamageExtraType)
             {
                 reduction += item.Value;
             }
@@ -238,62 +252,21 @@ public class FighteManager : ManagerBase<FighteManager>
             isCritical = true;
             baseDamage *= 2 + critDamage;
             //百爆
-            args = GlobalConfig.CritWithPersentageAndMax;
+            args = GlobalConfig.CritWithPercentageAndMax;
             baseDamage += Math.Max(enemyBase.MaxLife * args[0], GlobalConfig.AttackValue * args[1]);
         }
         //一般百
-        args = GlobalConfig.DamageWithPersentageAndMax;
+        args = GlobalConfig.DamageWithPercentageAndMax;
         baseDamage += Math.Max(enemyBase.MaxLife * args[0], GlobalConfig.AttackValue * args[1]);
-
-
         //加上计算好的百分比
-
-        baseDamage += enemyBase.MaxLife * persentage;
-
+        baseDamage += enemyBase.MaxLife * percentage;
         //易伤
         baseDamage *= 1 + enemyBase.EasyHurt;
-
-        CreateDamageText(enemyObj, baseDamage, armConfig.DamageType, isCritical);
-
-        enemyBase.CalLife((int)baseDamage);
+        CreateDamageText(enemyObj, baseDamage, damageType, isCritical);
+        RecordDamage((int)baseDamage, owner);
+        //上海结算并判断谁杀死的
+        enemyBase.CalLife((int)baseDamage, owner);
     }
-
-    public void AddExp(int val)
-    {
-        exp += val;
-        if (exp / CurrentNeedExp > 0)
-        {
-            exp %= CurrentNeedExp;
-            level++;
-            AwakeSelectPanel();
-        }
-    }
-    public void AwakeSelectPanel()
-    {
-        GameObject canvas = GameObject.Find("UICanvas");
-        GameObject panel = canvas.transform.RecursiveFind("SelectPanelThree").gameObject;
-        GameObject panelBackup = Instantiate(panel, panel.transform.parent);
-        panelBackup.SetActive(true);
-        SkillSelectPanel panelBackupUI = panelBackup.GetComponent<SkillSelectPanel>();
-        List<SkillNode> availableSkills = SkillManager.Instance.GetAvailableSkills();
-        panelBackupUI.skills = availableSkills.RandomChoices(3);
-        Debug.Log("可选技能数量" + availableSkills.Count);
-        panelBackupUI.Init();
-        ControlGame(false);
-    }
-    public void ControlGame(bool isContinue)
-    {
-        if (isContinue)
-        {
-            Time.timeScale = 1;
-        }
-        else
-        {
-            Time.timeScale = 0;
-        }
-    }
-
-
     public void EnemyDamegeFilter(int harm, int count = 1)
     {
         int indeedHarm = harm - WallConfig.DamageReduction;
@@ -308,7 +281,8 @@ public class FighteManager : ManagerBase<FighteManager>
 
         for (int i = 0; i < count; i++)
         {
-            if(WallConfig.ImmunityCount > 0) {
+            if (WallConfig.ImmunityCount > 0)
+            {
                 bloodMsgs.Enqueue("免疫");
                 WallConfig.ImmunityCount--;
                 continue;
@@ -318,7 +292,60 @@ public class FighteManager : ManagerBase<FighteManager>
             bloodMsgs.Enqueue($"<color=#D72D2D> -{indeedHarm} </color>");
         }
     }
-    public void AddBlood(int val) {
+    #endregion
+    //记录伤害
+    public void RecordDamage(int damage, string owner)
+    {
+        if (statistics.ContainsKey(owner))
+        {
+            statistics[owner] += damage;
+        }
+        else
+        {
+            statistics[owner] = damage;
+        }
+    }
+    public void AddExp(int val)
+    {
+        exp += val;
+        if (exp / CurrentNeedExp > 0)
+        {
+            exp %= CurrentNeedExp;
+            level++;
+            AwakeSelectPanel();
+        }
+    }
+    #region  技能选择
+    public void AwakeSelectPanel()
+    {
+        GameObject canvas = GameObject.Find("UICanvas");
+        GameObject panel = canvas.transform.RecursiveFind("SelectPanelThree").gameObject;
+        GameObject panelBackup = Instantiate(panel, panel.transform.parent);
+        panelBackup.SetActive(true);
+        SkillSelectPanel panelBackupUI = panelBackup.GetComponent<SkillSelectPanel>();
+        List<SkillNode> availableSkills = SkillManager.Instance.GetAvailableSkills();
+        panelBackupUI.skills = availableSkills.RandomChoices(3);
+        Debug.Log("可选技能数量" + availableSkills.Count);
+        panelBackupUI.Init();
+        ControlGame(false);
+    }
+
+    public void ControlGame(bool isContinue)
+    {
+        if (isContinue)
+        {
+            Time.timeScale = 1;
+        }
+        else
+        {
+            Time.timeScale = 0;
+        }
+    }
+    #endregion
+
+
+    public void AddBlood(int val)
+    {
         WallConfig.CurrentLife += val;
         WallConfig.CurrentLife = Mathf.Clamp(WallConfig.CurrentLife, 0, WallConfig.LifeMax);
         bloodMsgs.Enqueue($"<color=#27DE1F> +{val} </color>");

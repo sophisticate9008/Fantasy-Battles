@@ -49,15 +49,14 @@ namespace FightBases
         {
             while (true)
             {
+                yield return null;
                 float now = Time.time;
-                yield return new WaitForSeconds(0.1f);
-
                 if (now >= EnemyBase.BuffEndTimes[BuffName])
                 {
                     Remove();
                     break;
                 }
-                
+
                 if (EnemyObj == null || EnemyObj.activeSelf == false)
                 {
                     Remove();
@@ -74,6 +73,6 @@ namespace FightBases
             }
         }
 
-        
+
     }
 }

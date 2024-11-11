@@ -12,6 +12,9 @@ namespace Factorys
             if(buffName.Contains("减速")) {
                 return new Slow(buffName, duration, selfObj, enemyObj, (float) args[0]);
             }
+            if(buffName.Contains("点燃")) {
+                return new Fire(buffName, duration, selfObj, enemyObj);
+            }
             return buffName switch
             {
                 // 不需要自定义参数的 Buffs

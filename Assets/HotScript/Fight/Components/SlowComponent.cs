@@ -14,7 +14,7 @@ namespace MyComponents
         public override void Exec(GameObject enemyObj)
         {
             EnemyBase enemyBase = enemyObj.GetComponent<EnemyBase>();
-            enemyBase.AddBuff( SelfObj.GetComponent<ArmChildBase>().GetType().Name + "减速", SelfObj, Config.SlowTime,Config.SlowDegree);
+            enemyBase.AddBuff(Config.Owner + "减速", SelfObj, Config.SlowTime,Config.SlowDegree);
         }
     }
 }

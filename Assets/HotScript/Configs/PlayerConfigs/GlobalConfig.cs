@@ -117,8 +117,8 @@ public class GlobalConfig : ConfigBase
     public virtual float RandomAdditonMax { get; set; } = 0;
     public virtual float AdditionToEliteOrBoss { get; set; } = 0;
 
-    public virtual float[] CritWithPersentageAndMax { get; set; } = new float[2] { 0, 0 };
-    public virtual float[] DamageWithPersentageAndMax { get; set; } = new float[2] { 0, 0 };
+    public virtual float[] CritWithPercentageAndMax { get; set; } = new float[2] { 0, 0 };
+    public virtual float[] DamageWithPercentageAndMax { get; set; } = new float[2] { 0, 0 };
 
     public virtual float EnemyBuffTimeAddition { get; set; } = 1;
     // 获取伤害加成的字典

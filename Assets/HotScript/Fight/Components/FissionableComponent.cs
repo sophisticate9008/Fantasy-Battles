@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using ArmConfigs;
-using Factorys;
+
 using FightBases;
 using UnityEngine;
 

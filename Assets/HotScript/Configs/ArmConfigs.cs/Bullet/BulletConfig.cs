@@ -45,9 +45,10 @@ namespace ArmConfigs
             ComponentStrs.Add("减速");
             ComponentStrs.Add("冰冻");
             ComponentStrs.Add("反弹");
+            ComponentStrs.Add("点燃");
             AttackCd = 1f;
             AttackCount = 30;
-            
+            BuffDamageTlc = 0.1f;
             DamageType = "ad";
             DamageExtraType = "penetrable";
             OnType = "enter";

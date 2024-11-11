@@ -22,6 +22,7 @@ namespace Factorys
                 "眩晕" => new DizzyComponent(componentName, "enter", selfObj),
                 "阻尼" => new DampComponent(componentName, "enter|stay", selfObj),
                 "Hold" => new  HoldComponent(componentName, "enter", selfObj),
+                "点燃" => new FireComponent(componentName, "enter", selfObj),
                 _ => throw new ArgumentException($"Unknown component: {componentName}")
             };
         }
