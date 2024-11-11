@@ -1,15 +1,15 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using HybridCLR;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using YooAsset;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using System;
 public class ResourceManager : MonoBehaviour
 {
 
@@ -17,10 +17,38 @@ public class ResourceManager : MonoBehaviour
     // public static void DisableOldTLS1()
     // {
 
-    //     Debug.Log("禁用TLS1.0和TLS1.1，强制使用TLS1.2或更高版本");
     //     // 禁用 TLS 1.0 和 TLS 1.1，强制使用 TLS 1.2 或更高版本
     //     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
     //     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
+    // }
+    // private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+    // {
+    //     // 检查是否存在 SSL 错误
+    //     if (sslPolicyErrors != System.Net.Security.SslPolicyErrors.None)
+    //     {
+    //         Debug.LogError("SSL Policy Errors: " + sslPolicyErrors);
+    //         return false;  // 返回 false，表示证书验证失败
+    //     }
+
+    //     // 获取证书的公钥字符串
+    //     string publicKey = certificate.GetPublicKeyString();
+
+    //     // 预设的公钥（你可以自定义这个公钥）
+    //     string expectedPublicKey = "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAENkFhFytTJe2qypTk1tpIV+9QuoRkgte7" +
+    //         "BRvWHwYk9qUznYzn8QtVaGOCMBBfjWXsqqivl8q1hs4wAYl03uNOXgFu7iZ7zFP6" +
+    //         "I6T3RB0+TR5fZqathfby47yOCZiAJI4g";
+
+    //     // 比较证书公钥和预设的公钥
+    //     if (publicKey.Equals(expectedPublicKey))
+    //     {
+    //         Debug.Log("证书验证通过");
+    //         return true;  // 返回 true，表示证书验证通过
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError("Invalid Public Key");
+    //         return false;  // 返回 false，表示证书验证失败
+    //     }
     // }
     // private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
     // {
@@ -81,6 +109,7 @@ public class ResourceManager : MonoBehaviour
         }
 
     }
+    #region 不同模式
     private IEnumerator EditorInitPackage()
     {
         //注意：如果是原生文件系统选择EDefaultBuildPipeline.RawFileBuildPipeline
@@ -155,6 +184,9 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region  更新清单
     private IEnumerator UpdateManifest()
     {
         yield return new WaitForSecondsRealtime(0.5f);
@@ -172,9 +204,9 @@ public class ResourceManager : MonoBehaviour
         else
         {
             yield return CreateDownloader();
-            yield return LoadDllBytes();
         }
     }
+    #endregion
     #region 下载逻辑
     IEnumerator CreateDownloader()
     {
@@ -186,6 +218,7 @@ public class ResourceManager : MonoBehaviour
 
         if (downloader.TotalDownloadCount == 0)
         {
+            StartGame();
             Debug.Log("Not found any download files !");
         }
         else
@@ -231,6 +264,7 @@ public class ResourceManager : MonoBehaviour
             {
                 //下载成功
                 Debug.Log("更新完成");
+                StartGame();
             }
             else
             {
@@ -241,22 +275,6 @@ public class ResourceManager : MonoBehaviour
 
         }
     }
-    #endregion
-    IEnumerator LoadDllBytes()
-    {
-        var assets = new List<string> { "HotUpdate.dll" }.Concat(AOTMetaAssemblyFiles);
-        foreach (var asset in assets)
-        {
-            var handle = package.LoadAssetAsync<TextAsset>(asset);
-            yield return handle;
-            var assetObj = handle.AssetObject as TextAsset;
-            s_assetDatas[asset] = assetObj;
-            Debug.Log($"dll:{asset}   {assetObj == null}");
-        }
-        StartGame();
-
-    }
-
     /// <summary>
     /// 开始下载
     /// </summary>
@@ -369,59 +387,51 @@ public class ResourceManager : MonoBehaviour
         }
 
     }
+    #endregion
+
     #region 补充元数据
-
-    //补充元数据dll的列表
-    //通过RuntimeApi.LoadMetadataForAOTAssembly()函数来补充AOT泛型的原始元数据
-    private static List<string> AOTMetaAssemblyFiles { get; } = new() { "mscorlib.dll", "System.dll", "System.Core.dll" };
-    private static Dictionary<string, TextAsset> s_assetDatas = new Dictionary<string, TextAsset>();
-    private static Assembly _hotUpdateAss;
-
-    public static byte[] ReadBytesFromStreamingAssets(string dllName)
-    {
-        if (s_assetDatas.ContainsKey(dllName))
-        {
-            return s_assetDatas[dllName].bytes;
-        }
-
-        return Array.Empty<byte>();
-    }
-
-
-
     /// <summary>
     /// 为aot assembly加载原始metadata， 这个代码放aot或者热更新都行。
     /// 一旦加载后，如果AOT泛型函数对应native实现不存在，则自动替换为解释模式执行
     /// </summary>
-    private static void LoadMetadataForAOTAssemblies()
+    private IEnumerator LoadMetadataForAOTAssemblies()
     {
+        HomologousImageMode mode = HomologousImageMode.SuperSet;
+        string location = "System.Core.dll";
+        AllAssetsHandle handle = package.LoadAllAssetsAsync<UnityEngine.TextAsset>(location);
+        yield return handle;
+        foreach (var assetObj in handle.AllAssetObjects)
+        {
+            UnityEngine.TextAsset textAsset = assetObj as UnityEngine.TextAsset;
+            LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(textAsset.bytes, mode);
+            Debug.Log($"LoadMetadataForAOTAssembly:{textAsset.name}. mode:{mode} ret:{err}");
+        }
         /// 注意，补充元数据是给AOT dll补充元数据，而不是给热更新dll补充元数据。
         /// 热更新dll不缺元数据，不需要补充，如果调用LoadMetadataForAOTAssembly会返回错误
-        HomologousImageMode mode = HomologousImageMode.SuperSet;
-        foreach (var aotDllName in AOTMetaAssemblyFiles)
-        {
-            byte[] dllBytes = ReadBytesFromStreamingAssets(aotDllName);
-            // 加载assembly对应的dll，会自动为它hook。一旦aot泛型函数的native函数不存在，用解释器版本代码
-            LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
-            Debug.Log($"LoadMetadataForAOTAssembly:{aotDllName}. mode:{mode} ret:{err}");
-        }
+        // 加载assembly对应的dll，会自动为它hook。一旦aot泛型函数的native函数不存在，用解释器版本代码
+
     }
     #endregion
 
 
     #region  更新完毕
     void StartGame()
-    {
-        // 加载AOT dll的元数据
-        LoadMetadataForAOTAssemblies();
-        LoadHotUpdateDll();
+    {// 加载AOT dll的元数据
+        StartCoroutine(LoadMetadataForAOTAssemblies());
+        StartCoroutine(LoadHotUpdateDll());
     }
-    private void LoadHotUpdateDll()
+    private IEnumerator LoadHotUpdateDll()
     {
-        Debug.Log("加载热更资源");
-
-        _hotUpdateAss = Assembly.Load(ReadBytesFromStreamingAssets("HotUpdate.dll"));
+        string location = "HotUpdate.dll";
+        AllAssetsHandle handle = package.LoadAllAssetsAsync<UnityEngine.TextAsset>(location);
+        yield return handle;
+        foreach (var assetObj in handle.AllAssetObjects)
+        {
+            UnityEngine.TextAsset textAsset = assetObj as UnityEngine.TextAsset;
+            Assembly.Load(textAsset.bytes);
+        }
         LoadScene();
+        // SceneManager.LoadScene("Fight");
     }
 
     // IEnumerator Run_InstantiateComponentByAsset()
@@ -446,9 +456,8 @@ public class ResourceManager : MonoBehaviour
     {
         string location = "Begin";
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
-        var physicsMode = LocalPhysicsMode.Physics2D;
         // bool suspendLoad = false;
-        package.LoadSceneSync(location, sceneMode, physicsMode);
+        package.LoadSceneSync(location, sceneMode);
     }
     #endregion
 }

@@ -129,11 +129,19 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/AssetPackage/Codes
-        CollectorGUID: b2f344d75fc3f4141bb39e123a50c0bf
+      - CollectPath: Assets/AssetPackage/Codes/AotDlls
+        CollectorGUID: 72887eba5d3604142a1c80bece9d216b
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackSeparately
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Codes/HotDlls
+        CollectorGUID: b186416fbff4ade419a7341718962340
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
@@ -160,7 +168,7 @@ MonoBehaviour:
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackSeparately
-        FilterRuleName: CollectAll
+        FilterRuleName: CollectScene
         AssetTags: 
         UserData: 
     - GroupName: ShaderVariants

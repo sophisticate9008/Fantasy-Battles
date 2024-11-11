@@ -29,7 +29,10 @@ public class BeginPage : TheUIBase
     {
         string location = "Fight";
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
+        // LocalPhysicsMode physicsMode = LocalPhysicsMode.Physics2D;
         ResourcePackage package = YooAssets.GetPackage("DefaultPackage");
         package.LoadSceneSync(location, sceneMode);
+        // Physics.SyncTransforms();
+        // SceneManager.LoadScene("Fight");
     }
 }
