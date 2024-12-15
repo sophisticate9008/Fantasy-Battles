@@ -67,19 +67,19 @@ public class SkillUtil
 
     #region 技能类型
     public static Dictionary<int, string> armTypeDict = new() {
-        {0, "Tnt"},
-        {1, "IceBomb"},
-        {2, "ElectroPenetrate"},
-        {3, "Car"},
+        {0, "BoomFireBall"},
+        {1, "IceBall"},
+        {2, "ElectroHite"},
+        {3, "GroundTremor"},
         {4, "EnergyRay"},
         {5, "Laser"},
-        {6, "IceGenerator"},
+        {6, "IceBloom"},
         {7, "JumpElectro"},
         {8, "Tornado"},
-        {9, "AirDropBomb"},
+        {9, "DragonLaunch"},
         {10, "PressureCutter"},
-        {11, "FuelBullet"},
-        {12, "Uav"},
+        {11, "FlameOrb"},
+        {12, "WhirlingBlade"},
     };
     public static string IdToArmType(int id)
     {
@@ -89,7 +89,7 @@ public class SkillUtil
         }
         else
         {
-            return "Bullet";
+            return "MagicBullet";
         }
     }
     #endregion
@@ -105,12 +105,12 @@ public class SkillUtil
             1 => "学习寒冷弹",
             2 => "学习电流直击",
             3 => "学习地震荡",
-            4 => "学习穿透射线",
+            4 => "学习能量射线",
             5 => "学习锁定激光",
             6 => "学习寒冰绽放",
-            7 => "学习跃迁电流",
+            7 => "学习跳跃电子",
             8 => "学习龙卷风",
-            9 => "学习龙息",
+            9 => "学习飞龙投射",
             10 => "学习压缩气刃",
             11 => "学习滞留火焰",
             12 => "学习旋转利刃",
@@ -173,14 +173,14 @@ public class SkillUtil
             90 => "体积增大20%",
             91 => "伤害+80%",
 
-            //穿透射线
+            //能量射线
             95 => "伤害次数+5",
             96 => "次数翻倍,冷却+50%",
             97 => "范围增加150%",
             98 => "伤害的怪物5s内受到的伤害+25%，不叠加",
             99 => "伤害+80%",
             100 => "减速80%",
-            101 => "穿透射线进化,变高能光波,伤害翻倍,附带击退",
+            101 => "能量射线进化,变高能光波,伤害翻倍,附带击退",
 
             //激光
             111 => "伤害+60%",
@@ -200,7 +200,7 @@ public class SkillUtil
             132 => "首次命中仅一个敌人时,cd减少80%",
 
 
-            //跃迁电流
+            //跳跃电子
             142 => "伤害+60%",
             143 => "次数+1",
             144 => "伤害-20%,次数+2",
@@ -222,7 +222,7 @@ public class SkillUtil
             166 => "冰龙卷",
             167 => "雷龙卷",
 
-            //龙息
+            //飞龙投射
             177 => "次数+1",
             178 => "伤害-20%,次数+2",
             179 => "范围+50%",
@@ -271,12 +271,12 @@ public class SkillUtil
             1 => "寒冷弹",
             2 => "电流直击",
             3 => "地震荡",
-            4 => "穿透射线",
+            4 => "能量射线",
             5 => "锁定激光",
             6 => "寒冰绽放",
-            7 => "跃迁电流",
+            7 => "跳跃电子",
             8 => "龙卷风",
-            9 => "龙息",
+            9 => "飞龙投射",
             10 => "压缩气刃",
             11 => "滞留火焰",
             12 => "旋转利刃",

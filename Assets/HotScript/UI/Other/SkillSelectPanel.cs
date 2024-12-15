@@ -16,14 +16,14 @@ public class SkillSelectPanel : TheUIBase
             int idx = i;
             Buttons[idx].onClick.AddListener(() => SelectSkill(skills[idx]));
         }
-        ChangeCard();
+        ChangeGroundTremord();
     }
     private void SelectSkill(SkillNode skill) {
         SkillManager.Instance.SelectSkill(skill);
         FighteManager.Instance.ControlGame(true);
         Destroy(gameObject);
     }
-    void ChangeCard() {
+    void ChangeGroundTremord() {
         int idx = 0;
         foreach (var b in Buttons) {
             SkillNode skill = skills[idx++];
