@@ -1,9 +1,7 @@
-using FightBases;
 
-namespace ArmsChild
+
+
+public class GroundTremor : ArmChildBase
 {
-    public class GroundTremor : ArmChildBase
-    {
 
-    }
 }

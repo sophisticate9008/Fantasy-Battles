@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Factorys;
-using FightBases;
+
+
 using TMPro;
 using UnityEngine;
 using YooAsset;

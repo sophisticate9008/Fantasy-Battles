@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Factorys;
+
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;

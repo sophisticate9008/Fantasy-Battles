@@ -1,16 +1,15 @@
-using FightBases;
-namespace Arms
+
+
+public class ElectroHiteArm : ArmBase
 {
-    public class ElectroHiteArm : ArmBase
+
+    public override void Attack()
     {
 
-        public override void Attack()
-        {
-
-            ArmChildBase obj = GetOneFromPool();
-            obj.transform.position = TargetEnemy.transform.position;
-            obj.TargetEnemyByArm = TargetEnemy;
-            obj.Init();
-        }
+        ArmChildBase obj = GetOneFromPool();
+        obj.transform.position = TargetEnemy.transform.position;
+        obj.TargetEnemyByArm = TargetEnemy;
+        obj.Init();
     }
 }
+

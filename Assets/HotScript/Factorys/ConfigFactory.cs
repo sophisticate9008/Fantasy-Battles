@@ -1,45 +1,43 @@
 using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using ArmConfigs;
-using FightBases;
+
+
 using UnityEngine;
 
-namespace Factorys
+
+public class ConfigFactory
 {
-    public class ConfigFactory
+
+    public static IConfig CreateInjectedConfig(string configName)
     {
-
-        public static IConfig CreateInjectedConfig(string configName)
+        if (!configName.Contains("Config"))
         {
-            if(!configName.Contains("Config")) {
-                configName += "Config";
-            }
-            string fileStr = Path.Combine(Constant.ConfigsPath, $"{configName}.json");
-            
-            Type type = CommonUtil.GetTypeByName(configName);
+            configName += "Config";
+        }
+        string fileStr = Path.Combine(Constant.ConfigsPath, $"{configName}.json");
 
-            if (File.Exists(fileStr))
-            {
-                Debug.Log(configName + "配置文件存在，注入数据");
-                string json = File.ReadAllText(fileStr);
+        Type type = CommonUtil.GetTypeByName(configName);
 
-                // 反序列化 JSON 到具体类型
-                IConfig config = JsonUtility.FromJson(json, type) as IConfig;
-                return config;
-            }
-            else
+        if (File.Exists(fileStr))
+        {
+            Debug.Log(configName + "配置文件存在，注入数据");
+            string json = File.ReadAllText(fileStr);
+
+            // 反序列化 JSON 到具体类型
+            IConfig config = JsonUtility.FromJson(json, type) as IConfig;
+            return config;
+        }
+        else
+        {
+            Debug.Log(configName + "配置文件不存在，创建新的");
+            // 使用反射实例化具体类型
+            IConfig config = Activator.CreateInstance(type) as IConfig;
+            if (config != null)
             {
-                Debug.Log(configName + "配置文件不存在，创建新的");
-                // 使用反射实例化具体类型
-                IConfig config = Activator.CreateInstance(type) as IConfig;
-                if (config != null)
-                {
-                    Debug.Log(config.GetType() + "创建成功");
-                }
-                return config;
+                Debug.Log(config.GetType() + "创建成功");
             }
+            return config;
         }
     }
 }
+

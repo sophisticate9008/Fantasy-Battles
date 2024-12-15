@@ -1,15 +1,13 @@
-namespace ArmConfigs
+
+public class MagicBulletBoomConfig : ArmConfigBase
 {
-    public class BulletBoomConfig : ArmConfigBase
+    public override void Init()
     {
-        public override void Init()
-        {
-            base.Init();
-            Duration = 0.5f;
-            OnType = "enter";
-            Tlc = 0.5f;
-            DamageType = "ad";
-            MaxForce = 150;
-        }
+        base.Init();
+        Duration = 0.5f;
+        OnType = "enter";
+        Tlc = 0.5f;
+        DamageType = "ad";
+        MaxForce = 150;
     }
 }

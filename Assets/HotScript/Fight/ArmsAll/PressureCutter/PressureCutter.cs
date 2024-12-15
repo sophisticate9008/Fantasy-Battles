@@ -1,9 +1,6 @@
-using FightBases;
 
-namespace ArmsChild
+
+public class PressureCutter : ArmChildBase
 {
-    public class PressureCutter : ArmChildBase
-    {
 
-    }
 }

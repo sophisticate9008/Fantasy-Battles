@@ -1,9 +1,10 @@
-using FightBases;
 
-namespace ArmsChild {
-    public class FlameOrbHold:  ArmChildBase  {
-        
 
-    }
+
+public class FlameOrbHold : ArmChildBase
+{
+
+
 }
+
 

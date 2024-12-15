@@ -14,7 +14,7 @@ public class SkillNode
     public string resName;
     public string armType;
     
-    public SkillNode(int id, List<int> prerequisiteIds, List<int> conflictIds, string name, string desc, int maxSelCount, string resName, bool isUnlocked = false, bool isSatisfied = false,string armType = "bullet")
+    public SkillNode(int id, List<int> prerequisiteIds, List<int> conflictIds, string name, string desc, int maxSelCount, string resName, bool isUnlocked = false, bool isSatisfied = false,string armType = "MagicBullet")
     {
         this.conflictIds = conflictIds;
         this.id = id;

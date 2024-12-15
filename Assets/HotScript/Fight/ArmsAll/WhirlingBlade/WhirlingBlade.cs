@@ -1,9 +1,7 @@
-using FightBases;
 
-namespace ArmsChild
+
+
+public class WhirlingBlade : ArmChildBase
 {
-    public class WhirlingBlade: ArmChildBase
-    {
-        
-    }
+
 }

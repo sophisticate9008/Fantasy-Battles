@@ -1,7 +1,6 @@
-namespace ArmsChild
-{
-    public class BulletFission : Bullet
-    {
 
-    }
+public class MagicBulletFission : MagicBullet
+{
+
 }
+

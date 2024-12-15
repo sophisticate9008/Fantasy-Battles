@@ -1,9 +1,8 @@
-using FightBases;
+
 using UnityEngine;
 
-namespace ArmsChild
+
+public class BoomFireBall : ArmChildBase
 {
-    public class BoomFireBall : ArmChildBase
-    {
-    }
 }
+

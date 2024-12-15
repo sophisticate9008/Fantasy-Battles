@@ -1,4 +1,4 @@
-using FightBases;
+
 using UnityEngine;
 
 public interface IComponent {

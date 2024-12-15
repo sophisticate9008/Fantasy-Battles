@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FightBases;
+
 using UnityEngine;
 [System.Serializable]
 public class GlobalConfig : ConfigBase

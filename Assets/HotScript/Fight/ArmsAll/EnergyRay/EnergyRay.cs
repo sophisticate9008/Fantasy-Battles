@@ -1,11 +1,10 @@
-using FightBases;
 
-namespace ArmsChild
+
+
+public class EnergyRay : ArmChildBase
 {
-    public class EnergyRay : ArmChildBase
-    {
 
-    }
 }
+
 
 

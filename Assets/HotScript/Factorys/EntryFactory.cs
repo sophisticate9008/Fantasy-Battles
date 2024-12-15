@@ -1,7 +1,6 @@
-namespace Factorys
-{
-    public class EntryFactory
-    {
 
-    }
+public class EntryFactory
+{
+
 }
+

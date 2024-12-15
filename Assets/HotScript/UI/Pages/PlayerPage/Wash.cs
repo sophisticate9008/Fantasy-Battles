@@ -1,5 +1,5 @@
 
-using Factorys;
+
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;

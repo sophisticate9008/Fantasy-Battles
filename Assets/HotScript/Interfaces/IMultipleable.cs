@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FightBases;
+
 using UnityEngine;
 
 public interface IMultipleable
@@ -30,14 +30,14 @@ public interface IMultipleable
 
         for (int i = 0; i < multipleLevel; i++)
         {
-            Vector3 bulletDirection = CalDirectionDifference(baseDirection, i, multipleLevel, angleDifference);
+            Vector3 MagicBulletDirection = CalDirectionDifference(baseDirection, i, multipleLevel, angleDifference);
             // 生成子弹，并根据发射方向设置旋转
             GameObject newObj = ObjectPoolManager.Instance.GetFromPool(prefab.GetComponent<ArmChildBase>().GetType().Name + "Pool", prefab);
             newObj.transform.position = position;
             ArmChildBase newArmChild = newObj.GetComponent<ArmChildBase>();
             
             // 子弹的方向和速度设置
-            newArmChild.Direction = bulletDirection.normalized;
+            newArmChild.Direction = MagicBulletDirection.normalized;
             objs.Add(newObj);
         }
         return objs;

@@ -1,10 +1,9 @@
 
-using FightBases;
 
-namespace ArmsChild
+
+
+public class MagicBulletBoom : ArmChildBase
 {
-    public class BulletBoom : ArmChildBase
-    {
 
-    }
 }
+

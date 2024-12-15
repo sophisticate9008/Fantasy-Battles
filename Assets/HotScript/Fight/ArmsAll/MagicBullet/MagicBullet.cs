@@ -1,12 +1,11 @@
 
-using FightBases;
 
-namespace ArmsChild
+
+
+public class MagicBullet : ArmChildBase
 {
-    public class Bullet : ArmChildBase
-    {
 
-    }
 }
+
 
 

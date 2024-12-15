@@ -1,8 +1,8 @@
-using FightBases;
-
-namespace ArmsChild {
-    public class IceBloom : ArmChildBase {
 
 
-    }
+
+public class IceBloom : ArmChildBase
+{
+
+
 }

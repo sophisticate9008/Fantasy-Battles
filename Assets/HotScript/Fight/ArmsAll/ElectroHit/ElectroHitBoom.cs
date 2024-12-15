@@ -1,9 +1,8 @@
-using FightBases;
 
-namespace ArmsChild
+
+
+public class ElectroHiteBoom : ArmChildBase
 {
-    public class ElectroHiteBoom: ArmChildBase
-    {
-        
-    }
+
 }
+

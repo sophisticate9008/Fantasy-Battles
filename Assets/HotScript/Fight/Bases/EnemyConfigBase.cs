@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Factorys;
+
 using UnityEngine;
-
-
 
 [System.Serializable]
 public class EnemyConfigBase : ConfigBase

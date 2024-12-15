@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using ArmConfigs;
-using FightBases;
+
+
 using UnityEngine;
 
-namespace ArmsChild
-{
+
     public class Laser : ArmChildBase
     {
         public LaserConfig ConcreteConfig => Config as LaserConfig;
@@ -131,4 +130,3 @@ namespace ArmsChild
 
     }
 
-}

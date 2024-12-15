@@ -89,7 +89,7 @@ public class SkillUtil
         }
         else
         {
-            return "MagicBullet";
+            return "MagicMagicBullet";
         }
     }
     #endregion

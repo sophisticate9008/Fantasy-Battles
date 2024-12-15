@@ -1,17 +1,16 @@
-using FightBases;
 
-namespace Arms
+
+
+public class EnergyRayArm : ArmBase
 {
-    public class EnergyRayArm : ArmBase
-    {
 
-        public override void Attack()
-        {
-            ArmChildBase obj = GetOneFromPool();
-            obj.transform.position = transform.position;
-            obj.TargetEnemyByArm = TargetEnemy;
-            obj.SetDirectionToTarget();
-            obj.Init();
-        }
+    public override void Attack()
+    {
+        ArmChildBase obj = GetOneFromPool();
+        obj.transform.position = transform.position;
+        obj.TargetEnemyByArm = TargetEnemy;
+        obj.SetDirectionToTarget();
+        obj.Init();
     }
 }
+

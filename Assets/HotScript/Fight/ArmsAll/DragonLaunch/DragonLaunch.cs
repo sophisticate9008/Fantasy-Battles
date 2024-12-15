@@ -1,9 +1,7 @@
-using FightBases;
 
-namespace ArmsChild
+
+
+public class DragonLaunch : ArmChildBase
 {
-    public class DragonLaunch : ArmChildBase
-    {
 
-    }
 }

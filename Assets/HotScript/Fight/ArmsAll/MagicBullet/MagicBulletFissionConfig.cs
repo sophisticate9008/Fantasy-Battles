@@ -1,33 +1,31 @@
-using FightBases;
 
-namespace ArmConfigs
+
+
+public class MagicBulletFissionConfig : ArmConfigBase, IMultipleable, IPenetrable
 {
-    public class BulletFissionConfig : ArmConfigBase, IMultipleable,IPenetrable
+    public MagicBulletConfig MagicBulletConfig => ConfigManager.Instance.GetConfigByClassName("MagicBullet") as MagicBulletConfig;
+
+    // 使用 override 重写属性，保持多态性
+    public override float Tlc
     {
-        public BulletConfig BulletConfig => ConfigManager.Instance.GetConfigByClassName("Bullet") as BulletConfig;
+        get => MagicBulletConfig.Tlc * 0.25f;  // 使用 MagicBulletConfig 的 tlc 属性
+    }
+    public override float Speed => MagicBulletConfig.Speed;
+    public int MultipleLevel { get; set; } = 2;
+    public float AngleDifference { get; set; } = 15f;
+    public override float CritRate => MagicBulletConfig.CritRate;
+    public override string Owner => MagicBulletConfig.Name;
 
-        // 使用 override 重写属性，保持多态性
-        public override float Tlc
-        {
-            get => BulletConfig.Tlc * 0.25f;  // 使用 BulletConfig 的 tlc 属性
-        }
-        public override float Speed => BulletConfig.Speed;
-        public int MultipleLevel { get; set; } = 2;
-        public float AngleDifference { get; set; } = 15f;
-        public override float CritRate => BulletConfig.CritRate;
-        public override string Owner => BulletConfig.Name;
+    public int PenetrationLevel { get => MagicBulletConfig.PenetrationLevel; set { } }
 
-        public int PenetrationLevel { get => BulletConfig.PenetrationLevel; set {} }
-
-        // 构造函数
-        public BulletFissionConfig() : base()
-        {
-            Name = "bulletFission";
-            Description = "次级子弹,造成本体的25%伤害";
-            DamageType = "ad";
-            DamageExtraType = "penetrable";
-            OnType = "enter";
-            ComponentStrs.Add("穿透");
-        }
+    // 构造函数
+    public MagicBulletFissionConfig() : base()
+    {
+        Name = "MagicBulletFission";
+        Description = "次级子弹,造成本体的25%伤害";
+        DamageType = "ad";
+        DamageExtraType = "penetrable";
+        OnType = "enter";
+        ComponentStrs.Add("穿透");
     }
 }

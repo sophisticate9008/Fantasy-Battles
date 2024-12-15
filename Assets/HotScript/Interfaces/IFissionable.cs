@@ -1,4 +1,4 @@
-using FightBases;
+
 
 public interface IFissionable {
     public ArmConfigBase FissionableChildConfig { get; }
