@@ -14,13 +14,6 @@
       "dependencies": {},
       "hash": "a011c51ed65c9abc3151a7a408bc70d408352933"
     },
-    "com.gustavopsantos.unitymainthreaddispatcher": {
-      "version": "https://github.com/gustavopsantos/unitymainthreaddispatcher.git?path=/Assets/UnityMainThreadDispatcher/#1.0.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "5553609a79c1c093639afc2ea789a40594715cb6"
-    },
     "com.tuyoogame.yooasset": {
       "version": "2.2.4-preview",
       "depth": 0,
@@ -421,13 +414,6 @@
       "source": "git",
       "dependencies": {},
       "hash": "2ca32138ce409a1f00b000b39bc4415a7a29b7a5"
-    },
-    "jp.hadashikick.vcontainer": {
-      "version": "1.16.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
