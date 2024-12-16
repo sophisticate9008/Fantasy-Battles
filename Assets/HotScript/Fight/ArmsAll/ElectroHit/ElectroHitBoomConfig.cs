@@ -1,5 +1,5 @@
 
-public class ElectroHiteBoomConfig : ArmConfigBase
+public class ElectroHitBoomConfig : ArmConfigBase
 {
     public override void Init()
     {

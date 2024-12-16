@@ -1,6 +1,6 @@
 
 
-public class ElectroHiteArm : ArmBase
+public class ElectroHitArm : ArmBase
 {
 
     public override void Attack()

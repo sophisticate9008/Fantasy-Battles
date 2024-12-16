@@ -1,9 +1,9 @@
 
 
-public class ElectroHiteConfig : ArmConfigBase, IBoomable
+public class ElectroHitConfig : ArmConfigBase, IBoomable
 {
     public ArmConfigBase BoomChildConfig =>
-        ConfigManager.Instance.GetConfigByClassName("ElectroHiteBoom") as ElectroHiteBoomConfig;
+        ConfigManager.Instance.GetConfigByClassName("ElectroHitBoom") as ElectroHitBoomConfig;
     public override void Init()
     {
         base.Init();

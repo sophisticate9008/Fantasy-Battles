@@ -69,7 +69,7 @@ public class SkillUtil
     public static Dictionary<int, string> armTypeDict = new() {
         {0, "BoomFireBall"},
         {1, "IceBall"},
-        {2, "ElectroHite"},
+        {2, "ElectroHit"},
         {3, "GroundTremor"},
         {4, "EnergyRay"},
         {5, "Laser"},

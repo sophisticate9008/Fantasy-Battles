@@ -1,0 +1,8 @@
+
+
+
+public class ElectroHit : ArmChildBase
+{
+    
+}
+

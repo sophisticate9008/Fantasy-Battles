@@ -1,7 +1,7 @@
 
 
 
-public class ElectroHiteBoom : ArmChildBase
+public class ElectroHitBoom : ArmChildBase
 {
 
 }
