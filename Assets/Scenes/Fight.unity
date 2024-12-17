@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 74896493}
   - component: {fileID: 74896492}
   m_Layer: 0
-  m_Name: ElectroPenetrateArm
+  m_Name: ElectroHitArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -683,7 +683,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 1450362ce713465459c39448ecc30aff, type: 3}
 --- !u!4 &95242828 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5237108227237608988, guid: 1450362ce713465459c39448ecc30aff, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8141030665049284777, guid: 1450362ce713465459c39448ecc30aff, type: 3}
   m_PrefabInstance: {fileID: 95242827}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &120601277
@@ -2251,7 +2251,7 @@ GameObject:
   - component: {fileID: 547478913}
   - component: {fileID: 547478914}
   m_Layer: 0
-  m_Name: IceGeneratorArm
+  m_Name: IceBloomArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2281,7 +2281,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 547478912}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 835d9153766dff942b559afad6e2ad4f, type: 3}
+  m_Script: {fileID: 11500000, guid: ec5313a01f2d0a147a8cfe0e6339bbcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &602623494
@@ -2371,7 +2371,7 @@ GameObject:
   - component: {fileID: 618593874}
   - component: {fileID: 618593875}
   m_Layer: 0
-  m_Name: BulletArm
+  m_Name: MagicBulletArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2401,7 +2401,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 618593872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52f474092e1a99941b66bae055029df1, type: 3}
+  m_Script: {fileID: 11500000, guid: cb29e161c82cfc142a4db60489d7f0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &618593875
@@ -2851,7 +2851,7 @@ GameObject:
   - component: {fileID: 708430702}
   - component: {fileID: 708430703}
   m_Layer: 0
-  m_Name: AirDropBombArm
+  m_Name: DragonLaunchArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2883,11 +2883,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 708430701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4385020ad014b54198bda247d604cdd, type: 3}
+  m_Script: {fileID: 11500000, guid: 81e3e69ed5f715944970ea77269b68dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plane: {fileID: 1237037062}
-  bomb: {fileID: 162943633}
+  plane: {fileID: 0}
+  bomb: {fileID: 0}
   bombDropHeight: 10
   planeSpeed: 15
   bombSpeed: 5
@@ -3274,7 +3274,7 @@ GameObject:
   - component: {fileID: 833797401}
   - component: {fileID: 833797402}
   m_Layer: 0
-  m_Name: FuelBulletArm
+  m_Name: FlameOrbArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3304,7 +3304,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 833797400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 264e71a4bfbedf9478b05167720c4f15, type: 3}
+  m_Script: {fileID: 11500000, guid: 689176da18d04384ca94e170a2f5eea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &868524890
@@ -4072,7 +4072,7 @@ GameObject:
   - component: {fileID: 1033852111}
   - component: {fileID: 1033852112}
   m_Layer: 0
-  m_Name: UavArm
+  m_Name: WhirlingBladeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4102,7 +4102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1033852110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3829381ad7c3b36408626109d6ca1641, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7b9453e47bda045b4eae63db7bf7ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1037326161
@@ -4439,7 +4439,7 @@ GameObject:
   - component: {fileID: 1116518296}
   - component: {fileID: 1116518297}
   m_Layer: 0
-  m_Name: IceBombArm
+  m_Name: IceBallArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4483,7 +4483,7 @@ GameObject:
   - component: {fileID: 1127390299}
   - component: {fileID: 1127390300}
   m_Layer: 0
-  m_Name: CarArm
+  m_Name: GroundStabArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4513,7 +4513,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1127390298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67412b0d7e0698046873d0b3c2e7d9a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bab4ab19cc37d4409fc2567fa2ea810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1128810079
@@ -5266,8 +5266,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  enemyTypes:
-  - Xiaojiangshi
   fixInterval: 3
   noiseScale: 0.8
   ViewportXCoordinate: 0.8
@@ -5562,7 +5560,7 @@ GameObject:
   - component: {fileID: 1458724487}
   - component: {fileID: 1458724488}
   m_Layer: 0
-  m_Name: TntArm
+  m_Name: BoomFireBallArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

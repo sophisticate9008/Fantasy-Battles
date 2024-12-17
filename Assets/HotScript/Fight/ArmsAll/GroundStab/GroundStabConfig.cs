@@ -1,5 +1,5 @@
 
-public class GroundTremorConfig : ArmConfigBase
+public class GroundStabConfig : ArmConfigBase
 {
     public override void Init()
     {
@@ -17,5 +17,6 @@ public class GroundTremorConfig : ArmConfigBase
         SlowDegree = 0.8f;
         SlowTime = 2;
         ComponentStrs.Add("阻尼");
+        Duration = 1;
     }
 }
