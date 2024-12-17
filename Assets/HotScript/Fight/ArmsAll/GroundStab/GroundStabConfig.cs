@@ -1,6 +1,7 @@
 
 public class GroundStabConfig : ArmConfigBase
 {
+    public bool isFire = false;
     public override void Init()
     {
         base.Init();
@@ -17,6 +18,5 @@ public class GroundStabConfig : ArmConfigBase
         SlowDegree = 0.8f;
         SlowTime = 2;
         ComponentStrs.Add("阻尼");
-        Duration = 1;
     }
 }

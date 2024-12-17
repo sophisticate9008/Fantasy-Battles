@@ -3,10 +3,10 @@
 using UnityEngine;
 
 
-public class GroundStabArm : ArmBase
+public class GroundTremorArm : ArmBase
 {
 
-    public void IndeedAttack() {
+    public override void Attack() {
         ArmChildBase obj = GetOneFromPool();
         Vector3 pos = transform.position;
         pos.x = TargetEnemy.transform.position.x;

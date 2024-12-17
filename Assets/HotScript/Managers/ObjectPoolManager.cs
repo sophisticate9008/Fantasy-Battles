@@ -22,8 +22,13 @@ public class ObjectPoolManager : ManagerBase<ObjectPoolManager>
     }
 
     // 创建对象池，并设置池的最大长度和父对象
-    public GameObject CreatePool(string poolName, GameObject prefab, int initialPoolSize, int maxPoolSize)
+    public void CreatePool(string poolName, GameObject prefab, int initialPoolSize, int maxPoolSize)
     {
+        if (poolDictionary.ContainsKey(poolName))
+        {
+            //不重复创建
+            return;
+        }
         GameObject grandParent;
         if (poolName.Contains("UI"))
         {
@@ -35,23 +40,20 @@ public class ObjectPoolManager : ManagerBase<ObjectPoolManager>
         }
         GameObject poolObject = new GameObject(poolName);
         poolObject.transform.parent = grandParent.transform;
-        if (!poolDictionary.ContainsKey(poolName))
+        Queue<GameObject> objectPool = new Queue<GameObject>();
+
+        // 初始化时创建指定数量的对象，并加入池中
+        for (int i = 0; i < initialPoolSize; i++)
         {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-
-            // 初始化时创建指定数量的对象，并加入池中
-            for (int i = 0; i < initialPoolSize; i++)
-            {
-                GameObject obj = Instantiate(prefab, poolObject.transform);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-
-            poolDictionary.Add(poolName, objectPool);
-            poolMaxSizeDictionary.Add(poolName, maxPoolSize); // 保存每个池的最大长度
-            poolParentDictionary.Add(poolName, poolObject.transform);       // 保存父对象
+            GameObject obj = Instantiate(prefab, poolObject.transform);
+            obj.SetActive(false);
+            objectPool.Enqueue(obj);
         }
-        return poolObject;
+
+        poolDictionary.Add(poolName, objectPool);
+        poolMaxSizeDictionary.Add(poolName, maxPoolSize); // 保存每个池的最大长度
+        poolParentDictionary.Add(poolName, poolObject.transform);       // 保存父对象
+
     }
 
     // 从对象池中获取对象，如果没有可用对象则创建一个新的
