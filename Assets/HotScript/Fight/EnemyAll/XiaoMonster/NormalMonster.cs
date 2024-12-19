@@ -1,12 +1,11 @@
 
 
-public class NormalMonsterConfig: EnemyConfigBase{
+using System.Collections.Generic;
+
+namespace Prefabs.Enemy
+{
     
-    public NormalMonsterConfig():base() {
-        Life = 1500;
-        Speed = 0.15f;
-        Blocks = 1;
-        RangeFire = 0;
-        CharacterType = "elite";
+    public class NormalMonster : EnemyBase
+    {
     }
 }

@@ -24,90 +24,6 @@ MonoBehaviour:
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
     Groups:
-    - GroupName: Character
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/AssetPackage/Characters
-        CollectorGUID: 302b4496d62a2014188a2a75d85996ab
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-    - GroupName: UI
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/AssetPackage/UI/ItemBackground
-        CollectorGUID: 9171c597ad1b6b545a3f6e3ae7f8eced
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/AssetPackage/UI/Prefabs
-        CollectorGUID: 1a3bdb8fd92abfd439968e9e3df99851
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/AssetPackage/UI/BottomBar
-        CollectorGUID: e32fe0d4c3212c84cbddba5deeee1653
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/AssetPackage/UI/Other
-        CollectorGUID: 986caef2e8b429f4da670ea6a37f1da8
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-    - GroupName: Enemy
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/AssetPackage/Enemys
-        CollectorGUID: 84306130f0e89cc48b4460b32b358191
-        CollectorType: 0
-        AddressRuleName: AddressDisable
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-    - GroupName: Effects
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/AssetPackage/Effects/EffectRes
-        CollectorGUID: dfa3f36f42bf76c4283106c087e70dbb
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/AssetPackage/Effects/Prefabs
-        CollectorGUID: 4ee27f64b92789746aa2b4baaf3f76c2
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
     - GroupName: Codes
       GroupDesc: 
       AssetTags: 
@@ -166,5 +82,31 @@ MonoBehaviour:
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectShaderVariants
+        AssetTags: 
+        UserData: 
+    - GroupName: Res
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/AssetPackage/Res
+        CollectorGUID: f834a0f44cbcb32449ec3758e7e6c905
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Animator
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/AssetPackage/Animator
+        CollectorGUID: ab17c9d03caa7094197b245816c1595a
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
