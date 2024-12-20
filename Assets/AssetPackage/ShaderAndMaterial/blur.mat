@@ -30,5 +30,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _BlurSize: 1.81
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
     m_Colors: []
   m_BuildTextureStacks: []

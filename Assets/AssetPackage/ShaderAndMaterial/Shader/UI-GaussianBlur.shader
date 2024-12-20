@@ -1,16 +1,30 @@
-Shader "Custom/UI-GaussianBlur"
+Shader "Custom/BlurWithStencil"
 {
     Properties
     {
-        
         _MainTex ("Texture", 2D) = "white" {}
         _BlurSize ("Blur Size", Float) = 1.0
+        _Stencil ("Stencil ID", Float) = 0
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _StencilOp ("Stencil Operation", Float) = 0
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+        _ColorMask ("Color Mask", Float) = 15
     }
-
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Overlay" }
+        Tags {"Queue" = "Transparent" "RenderType"="Transparent" "IgnoreProjector"="True"}
         Blend SrcAlpha OneMinusSrcAlpha
+
+        Stencil
+        {
+            Ref [_Stencil]
+            Comp [_StencilComp]
+            Pass [_StencilOp]
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
+        }
+        ColorMask [_ColorMask]
 
         Pass
         {
@@ -20,7 +34,7 @@ Shader "Custom/UI-GaussianBlur"
             #include "UnityCG.cginc"
 
             sampler2D _MainTex;
-            float4 _MainTex_TexelSize; // Unity 自动传递的纹理信息
+            float4 _MainTex_TexelSize;
             float _BlurSize;
 
             struct appdata_t
@@ -48,32 +62,20 @@ Shader "Custom/UI-GaussianBlur"
                 float2 uv = i.uv;
                 float4 color = float4(0, 0, 0, 0);
 
-                // 高斯模糊权重
-                float weight[5];
-                weight[0] = 0.227027;
-                weight[1] = 0.1945946;
-                weight[2] = 0.1216216;
-                weight[3] = 0.054054;
-                weight[4] = 0.016216;
-
-                // 水平方向模糊
+                // 高斯模糊核心逻辑
+                float weight[5] = {0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216};
                 for (int x = -4; x <= 4; x++)
                 {
-                    color += weight[abs(x)] * tex2D(_MainTex, uv + float2(x, 0) * _BlurSize * _MainTex_TexelSize.xy);
+                    for (int y = -4; y <= 4; y++)
+                    {
+                        color += weight[abs(x)] * weight[abs(y)] * tex2D(_MainTex, uv + float2(x, y) * _BlurSize * _MainTex_TexelSize.xy);
+                    }
                 }
-
-                // 垂直方向模糊
-                float4 finalColor = float4(0, 0, 0, 0);
-                for (int y = -4; y <= 4; y++)
-                {
-                    finalColor += weight[abs(y)] * tex2D(_MainTex, uv + float2(0, y) * _BlurSize * _MainTex_TexelSize.xy);
-                }
-
-                return finalColor;
+                return color;
             }
             ENDCG
         }
     }
 
-    FallBack "UI/Default"
+    FallBack "Transparent"
 }
