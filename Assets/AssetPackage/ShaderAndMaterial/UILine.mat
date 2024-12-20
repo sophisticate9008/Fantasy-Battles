@@ -48,7 +48,7 @@ Material:
     - _Blend: 0
     - _CastShadows: 0
     - _Cull: 0
-    - _DisFog: 14.6
+    - _DisFog: 32.2
     - _DstBlend: 10
     - _QueueControl: 0
     - _QueueOffset: 0
