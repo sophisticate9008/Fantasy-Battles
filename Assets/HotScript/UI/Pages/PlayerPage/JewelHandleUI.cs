@@ -153,7 +153,7 @@ public class JewelHandleUIBase : TheUIBase
             {
                 pic.gameObject.SetActive(false);
             }
-            ItemUtil.ChangeMetrailColor(b.transform.GetChild(0), level);
+            ItemUtil.ChangeTextColor(b.transform.GetChild(0), level);
             b.transform.GetChild(1).GetComponent<Text>().text = text;
         }
 

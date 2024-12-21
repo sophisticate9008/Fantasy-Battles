@@ -1,6 +1,6 @@
 
 using System.Collections.Generic;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -183,14 +183,30 @@ public class ItemUtil
         // 默认返回最低保底等级（通常不会执行到这里）
         return minLevel;
     }
-    public static void ChangeMetrailColor(Transform transform, int level)
+    public static void ChangeTextColor(Transform transform, int level)
     {
-        Material material = transform.GetComponent<Image>().material;
-        Material newMaterial = new Material(material);
-        newMaterial.SetColor("_EndColor", ItemUtil.LevelToColor(level));
-        transform.GetComponent<Image>().material = newMaterial;
-    }
+        // 获取 TextMeshPro 组件
+        TextMeshProUGUI tmp = transform.GetComponent<TextMeshProUGUI>();
+        if (tmp == null)
+        {
+            Debug.LogError("TextMeshProUGUI component not found on the given transform.");
+            return;
+        }
+        // 创建材质实例，避免修改共享材质
+        Material newMaterial = new(tmp.fontMaterial);
 
+        // 根据等级设置颜色
+        Color baseColor = ItemUtil.LevelToColor(level); // 假设 LevelToColor 返回的是一个 Color
+
+        // 转换为 HDR 颜色并增加亮度
+        float hdrIntensity = 1.13954f; // 亮度强度因子，可以理解为“加 1 的效果”
+        Color hdrColor = baseColor * hdrIntensity;
+        // 设置 HDR Face Color
+        newMaterial.SetColor("_FaceColor", hdrColor);
+
+        // 应用新的材质
+        tmp.fontMaterial = newMaterial;
+    }
     public static void SetSprite(Transform transform, string resName)
     {
         Image pic = transform.GetComponent<Image>();
