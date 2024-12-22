@@ -5,16 +5,10 @@ using YooAsset;
 
 public class BeginPage : TheUIBase
 {
-    public Button confirmButton;
-    public GameObject noticeWindow;
     public Button beginButton;
 
     private void Start()
     {
-        confirmButton.onClick.AddListener(() =>
-        {
-            noticeWindow.SetActive(false);
-        });
 
         beginButton.onClick.AddListener(BeginGame);
         Debug.Log("开始页面");

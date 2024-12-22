@@ -104,20 +104,52 @@ public class Draw : ConsumeBase
         TheUIBase drawPanel = Instantiate(drawPanelPrefab).AddComponent<TheUIBase>();
         UIManager.Instance.ShowUI(drawPanel);
         GameObject itemBasePrefab = YooAssets.LoadAssetSync("ItemBase").AssetObject as GameObject;
+        List<Button> JewelSlots = drawPanel.transform.RecursiveFind("Jewels").GetComponentsInDirectChildren<Button>();
+
         // ItemUIBase itemUI  = itemBasePrefab.AddComponent<ItemUIBase>();
+
         for (int i = 0; i < drawList.Count; i++)
         {
-            
             ItemUIBase itemUI = Instantiate(itemBasePrefab).AddComponent<ItemUIBase>();
             itemUI.itemInfo = drawList[i];
             itemUI.Init();
-            try {
+            ChangeItemStyle(itemUI);
+            if (drawList.Count == 1)
+            {
+                //放入中间位置
+                itemUI.transform.CopyRectTransform(JewelSlots[0].transform);
+
+            }
+            for(int j = 1; j <= drawList.Count; j++) {
+                itemUI.transform.CopyRectTransform(JewelSlots[j].transform);
+            }
+            try
+            {
                 itemUI.transform.SetParent(drawPanel.transform.RecursiveFind("JewelContent"));
-            }catch {
+            }
+            catch
+            {
                 Destroy(itemUI.gameObject);
             }
-            
+
             yield return new WaitForSeconds(0.1f);
+        }
+    }
+    //独特的抽卡样式，去除背景框，仅显示宝石
+    public void ChangeItemStyle(ItemUIBase itemUI)
+    {
+        // 将对象的透明度设为完全透明
+        Image image = itemUI.transform.GetComponent<Image>();
+        Color color = image.color;
+        color.a = 0f; // 设置透明度为完全透明
+        image.color = color;
+        //给宝石加上haloing材质
+        Material haloingMaterial = YooAssets.LoadAssetSync<Material>("haloing").AssetObject as Material;
+        itemUI.transform.GetChild(0).GetComponent<Image>().material = haloingMaterial;
+        // 遍历子代，将除了第一个子代以外的其他子代设为非激活状态
+        for (int i = 1; i < itemUI.transform.childCount; i++)
+        {
+            itemUI.transform.GetChild(i).gameObject.SetActive(false);
         }
     }
 
