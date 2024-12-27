@@ -86,8 +86,11 @@ public class JewelHandleUIBase : TheUIBase
         countText = transform.RecursiveFind("Count").GetComponent<TextMeshProUGUI>();
         placeText = transform.RecursiveFind("Place").GetComponent<TextMeshProUGUI>();
     }
-    void ChangeTextColor() {
-        
+    void ChangeTextsColor() {
+        ItemUtil.ChangeTextColor(simpleName.transform, itemInfo.level);
+        ItemUtil.ChangeTextColor(desContent.transform, itemInfo.level);
+        ItemUtil.ChangeTextColor(countText.transform, itemInfo.level);
+        ItemUtil.ChangeTextColor(placeText.transform, itemInfo.level);
     }
     public override void Init()
     {
@@ -123,9 +126,7 @@ public class JewelHandleUIBase : TheUIBase
         pic.sprite = YooAssets.LoadAssetSync<Sprite>(itemInfo.resName).AssetObject as Sprite;
         simpleName.text = itemInfo.simpleName;
         desContent.text = itemInfo.description;
-        Material newMaterial = new(material);
-        newMaterial.SetColor("_EndColor", ItemUtil.LevelToColor(itemInfo.level));
-        transform.RecursiveFind("Title").GetComponent<Image>().material = newMaterial;
+        ChangeTextsColor();
         if (itemInfo.isLock)
         {
             lockButton.gameObject.SetActive(true);
@@ -136,8 +137,8 @@ public class JewelHandleUIBase : TheUIBase
             lockButton.gameObject.SetActive(false);
             unlockButton.gameObject.SetActive(true);
         }
-        countText.text = "数量:" + itemInfo.count;
-        placeText.text = "部位:" + ItemUtil.PlaceIdToPlaceName(itemInfo.placeId);
+        countText.text = "" + itemInfo.count;
+        placeText.text = "" + ItemUtil.PlaceIdToPlaceName(itemInfo.placeId);
     }
     private void ShowJewelsOnPlace()
     {
@@ -157,8 +158,8 @@ public class JewelHandleUIBase : TheUIBase
             {
                 pic.gameObject.SetActive(false);
             }
-            ItemUtil.ChangeTextColor(b.transform.GetChild(0), level);
             b.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = text;
+            ItemUtil.ChangeTextColor(b.transform.GetChild(1), level);
         }
 
     }
