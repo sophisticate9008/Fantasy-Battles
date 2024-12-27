@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,15 +8,15 @@ using YooAsset;
 public class JewelHandleUIBase : TheUIBase
 {
     private Image pic;
-    private Text simpleName;
-    private Text desContent;
+    private TextMeshProUGUI simpleName;
+    private TextMeshProUGUI desContent;
     private Material material;
     private Button lockButton;
     private Button unlockButton;
     private Button wash;
     private Button embed;
-    private Text countText;
-    private Text placeText;
+    private TextMeshProUGUI countText;
+    private TextMeshProUGUI placeText;
     public ItemBase itemInfo;
     private JewelBase JewelInfo => itemInfo as JewelBase;
     private List<JewelBase> PlaceJewels => (List<JewelBase>)PlayerDataConfig.GetValue("place" + itemInfo.placeId);
@@ -75,15 +76,18 @@ public class JewelHandleUIBase : TheUIBase
     {
 
         pic = transform.RecursiveFind("Pic").GetComponent<Image>();
-        simpleName = transform.RecursiveFind("SimpleName").GetComponent<Text>();
-        desContent = transform.RecursiveFind("Content").GetComponent<Text>();
+        simpleName = transform.RecursiveFind("SimpleName").GetComponent<TextMeshProUGUI>();
+        desContent = transform.RecursiveFind("Content").GetComponent<TextMeshProUGUI>();
         material = transform.RecursiveFind("Title").GetComponent<Image>().material;
         lockButton = transform.RecursiveFind("Lock").GetComponent<Button>();
         unlockButton = transform.RecursiveFind("Unlock").GetComponent<Button>();
         wash = transform.RecursiveFind("Wash").GetComponent<Button>();
         embed = transform.RecursiveFind("Embed").GetComponent<Button>();
-        countText = transform.RecursiveFind("Count").GetComponent<Text>();
-        placeText = transform.RecursiveFind("Place").GetComponent<Text>();
+        countText = transform.RecursiveFind("Count").GetComponent<TextMeshProUGUI>();
+        placeText = transform.RecursiveFind("Place").GetComponent<TextMeshProUGUI>();
+    }
+    void ChangeTextColor() {
+        
     }
     public override void Init()
     {
@@ -154,7 +158,7 @@ public class JewelHandleUIBase : TheUIBase
                 pic.gameObject.SetActive(false);
             }
             ItemUtil.ChangeTextColor(b.transform.GetChild(0), level);
-            b.transform.GetChild(1).GetComponent<Text>().text = text;
+            b.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = text;
         }
 
     }
