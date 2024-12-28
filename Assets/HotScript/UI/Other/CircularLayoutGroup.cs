@@ -1,167 +1,150 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[ExecuteAlways] // 在编辑模式下执行
+[ExecuteAlways]
 [RequireComponent(typeof(RectTransform))]
-public class CircularLayoutGroup : LayoutGroup
+public class CircularLayoutGroup : LayoutGroup, IDragHandler, IEndDragHandler
 {
     [Header("布局参数")]
-    public float radius = 300f;                // 环形半径
-    [Range(0f, 360f)] public float startAngle = 0f; // 起始角度
-    public bool clockwise = true;             // 顺时针排列
+    public float radius = 300f;
+    [Range(0f, 360f)] public float startAngle = 0f;
+    public bool clockwise = true;
     public float scaleZoomFactor = 5;
 
     [Header("视角控制")]
-    public float viewAngle = 0f;              // 环形的俯视角度
+    public float viewAngle = 0f;
 
-    private bool layoutDirty = false;         // 标志布局是否需要更新
+    [Header("拖拽参数")]
+    public float dragSpeed = 0.1f; // 拖拽速度控制系数
+    public float inertia = 0.95f; // 惯性系数，范围[0, 1)
+
+    private bool isDragging = false;
+    private float currentVelocity = 0f; // 当前的旋转速度
+    private Vector2 dragStartPosition; // 拖拽开始时的位置
+
+    private bool layoutDirty = false;
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        layoutDirty = true; // 在启用时标记布局需要更新
+        layoutDirty = true;
     }
 
     protected override void OnValidate()
     {
         base.OnValidate();
-        layoutDirty = true; // 在参数更改时标记布局需要更新
+        layoutDirty = true;
     }
 
     void Update()
     {
-        // 如果布局需要更新
         if (layoutDirty)
         {
-            UpdateLayout(); // 强制更新布局
-            layoutDirty = false; // 标记布局更新完成
+            UpdateLayout();
+            layoutDirty = false;
+        }
+
+        // 如果不是拖拽状态，应用惯性效果
+        if (!isDragging && Mathf.Abs(currentVelocity) > 0.01f)
+        {
+            startAngle += currentVelocity * Time.deltaTime;
+
+            // 非线性减速公式：速度按平方根或指数缓慢衰减
+            currentVelocity *= Mathf.Pow(inertia, Time.deltaTime * 100f);
+
+            layoutDirty = true;
         }
     }
 
     public override void CalculateLayoutInputHorizontal()
     {
-        layoutDirty = true; // 横向布局时需要更新
+        layoutDirty = true;
     }
 
     public override void CalculateLayoutInputVertical()
     {
-        layoutDirty = true; // 纵向布局时需要更新
+        layoutDirty = true;
     }
 
     public override void SetLayoutHorizontal()
     {
-        layoutDirty = true; // 强制更新横向布局
+        layoutDirty = true;
     }
 
     public override void SetLayoutVertical()
     {
-        layoutDirty = true; // 强制更新纵向布局
+        layoutDirty = true;
     }
 
-    /// <summary>
-    /// 强制更新环形布局
-    /// </summary>
     private void UpdateLayout()
     {
-        // 获取所有子物体（包括不可见和未激活的子物体）
         int childCount = transform.childCount;
         if (childCount == 0) return;
 
-        // 获取父容器的尺寸和对齐参考点
         Vector2 alignmentOffset = GetAlignmentOffset();
 
-        // 计算角度步长
         float angleStep = 360f / childCount;
         float directionMultiplier = clockwise ? -1f : 1f;
 
-        // 记录子物体的位置信息
         List<(Transform child, Vector2 position, float zIndex, Canvas canvas, float scale)> childPositions = new List<(Transform, Vector2, float, Canvas, float)>();
 
-        // 遍历所有子物体
         for (int i = 0; i < childCount; i++)
         {
             Transform child = transform.GetChild(i);
             RectTransform rectChild = child.GetComponent<RectTransform>();
-            if (rectChild == null) continue; // 确保子物体是 RectTransform
+            if (rectChild == null) continue;
 
-            // 计算当前子物体的角度
             float angle = startAngle + i * angleStep * directionMultiplier;
-
-            // 转换角度为弧度
             float radian = angle * Mathf.Deg2Rad;
 
-            // 根据角度和半径计算位置
             float x = Mathf.Sin(radian) * radius + alignmentOffset.x;
             float y = Mathf.Cos(radian) * radius * Mathf.Cos(viewAngle * Mathf.Deg2Rad) + alignmentOffset.y;
 
-            // 计算物体与玩家视角的Z轴深度
             float zIndex = Mathf.Cos(radian) * Mathf.Abs(y);
 
-            // 修正右半部分的ZIndex层级
             if (y < 0)
             {
-                zIndex += Mathf.Abs(y) * 1.5f; // 让下方的物体最接近
+                zIndex += Mathf.Abs(y) * 1.5f;
             }
 
-            // 设置子物体的位置
             rectChild.anchoredPosition = new Vector2(x, y);
 
-            // 获取Canvas组件，用于控制渲染顺序
             Canvas childCanvas = child.GetComponent<Canvas>();
             if (childCanvas == null)
             {
-                childCanvas = child.gameObject.AddComponent<Canvas>(); // 如果没有Canvas，添加一个新的Canvas
+                childCanvas = child.gameObject.AddComponent<Canvas>();
             }
 
-            // 计算缩放比例，模拟真实的近大远小效果
-            // 这里我们假设视角的y位置越低，物体的y位置越大，缩放越小
-            // 使用一个线性函数来表示大小，常数因子可根据需要调整
+            float distanceFactor = Mathf.Abs(y);
+            float scale = 1f / (1.5f - distanceFactor * scaleZoomFactor / 10000);
 
-            float distanceFactor = Mathf.Abs(y); // 基于Y轴的高度计算距离
-            float scale = 1f / (1.5f - distanceFactor * scaleZoomFactor / 10000); // 线性缩放，调整常数0.15f来调整缩放速率
-
-            // 将子物体的位置、Z轴深度和缩放比例记录下来
             childPositions.Add((child, new Vector2(x, y), zIndex, childCanvas, scale));
 
-            // 重置子物体的旋转
             rectChild.localRotation = Quaternion.identity;
         }
 
-        // 根据Z轴深度排序子物体，Z值越大（越靠近视角的物体）越应该遮挡其他物体
         childPositions.Sort((a, b) => b.zIndex.CompareTo(a.zIndex));
 
-        // 更新排序后的渲染顺序
         for (int i = 0; i < childPositions.Count; i++)
         {
-            // 获取每个子物体的Canvas并更新其sortingOrder
             Canvas childCanvas = childPositions[i].canvas;
             childCanvas.overrideSorting = true;
-            childCanvas.sortingOrder = i + 1; // 根据排序顺序设置Canvas的sortingOrder
+            childCanvas.sortingOrder = i + 1;
 
-            // 更新子物体的缩放
             RectTransform rectChild = childPositions[i].child.GetComponent<RectTransform>();
             rectChild.localScale = new Vector3(childPositions[i].scale, childPositions[i].scale, 1f);
         }
 
-        // 强制更新布局
         LayoutRebuilder.MarkLayoutForRebuild(rectTransform);
     }
 
-
-    /// <summary>
-    /// 根据 childAlignment 计算对齐偏移
-    /// </summary>
-    /// <returns>对齐偏移量</returns>
     private Vector2 GetAlignmentOffset()
     {
-        // 父容器的 pivot 用于计算对齐参考点
         Vector2 pivotOffset = rectTransform.pivot;
-
-        // 父容器的尺寸
         Vector2 size = rectTransform.rect.size;
 
-        // 基于 pivot 和 childAlignment 计算对齐偏移
         Vector2 offset = new Vector2(
             (pivotOffset.x) * size.x,
             -(pivotOffset.y) * size.y
@@ -182,7 +165,6 @@ public class CircularLayoutGroup : LayoutGroup
                 offset += new Vector2(-size.x / 4, 0);
                 break;
             case TextAnchor.MiddleCenter:
-                // 已居中，无需额外偏移
                 break;
             case TextAnchor.MiddleRight:
                 offset += new Vector2(size.x / 4, 0);
@@ -199,5 +181,39 @@ public class CircularLayoutGroup : LayoutGroup
         }
 
         return offset;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (!isDragging)
+        {
+            // 记录拖拽开始时的位置
+            RectTransform parentRect = transform.parent.GetComponent<RectTransform>();
+            if (parentRect == null) return;
+
+            dragStartPosition = parentRect.InverseTransformPoint(eventData.position);
+            isDragging = true;
+        }
+
+        // 获取当前拖拽位置
+        RectTransform currentParentRect = transform.parent.GetComponent<RectTransform>();
+        if (currentParentRect == null) return;
+
+        Vector2 currentLocalPosition = currentParentRect.InverseTransformPoint(eventData.position);
+        float delta = dragStartPosition.x - currentLocalPosition.x;
+
+
+        // 更新角度，根据拖拽的位移改变
+        startAngle += delta * dragSpeed;
+        currentVelocity = delta / Time.deltaTime;  // 更新旋转速度
+
+        dragStartPosition = currentLocalPosition;  // 更新起始位置
+
+        layoutDirty = true;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDragging = false;
     }
 }
