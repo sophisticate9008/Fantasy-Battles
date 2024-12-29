@@ -118,19 +118,16 @@ public class Draw : ConsumeBase
             {
                 //放入中间位置
                 itemUI.transform.CopyRectTransform(JewelSlots[0].transform);
+            }else {
+                try {
+                    itemUI.transform.CopyRectTransform(JewelSlots[i + 1].transform);
+                }
+                catch
+                {
+                    Destroy(itemUI.gameObject);
+                }                
+            }
 
-            }
-            for(int j = 1; j <= drawList.Count; j++) {
-                itemUI.transform.CopyRectTransform(JewelSlots[j].transform);
-            }
-            try
-            {
-                itemUI.transform.SetParent(drawPanel.transform.RecursiveFind("JewelContent"));
-            }
-            catch
-            {
-                Destroy(itemUI.gameObject);
-            }
 
             yield return new WaitForSeconds(0.1f);
         }
@@ -144,8 +141,8 @@ public class Draw : ConsumeBase
         color.a = 0f; // 设置透明度为完全透明
         image.color = color;
         //给宝石加上haloing材质
-        Material haloingMaterial = YooAssets.LoadAssetSync<Material>("haloing").AssetObject as Material;
-        itemUI.transform.GetChild(0).GetComponent<Image>().material = haloingMaterial;
+        // Material haloingMaterial = YooAssets.LoadAssetSync<Material>("haloing").AssetObject as Material;
+        // itemUI.transform.GetChild(0).GetComponent<Image>().material = haloingMaterial;
         // 遍历子代，将除了第一个子代以外的其他子代设为非激活状态
         for (int i = 1; i < itemUI.transform.childCount; i++)
         {

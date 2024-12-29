@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: blur
+  m_Name: blurM
   m_Shader: {fileID: 4800000, guid: b83ffe97b6f481545b440dc2d31ef09e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

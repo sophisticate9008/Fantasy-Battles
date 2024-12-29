@@ -1,8 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
-  <assembly fullname="R3">
-    <type fullname="R3.ReactiveProperty`1" preserve="all" />
-  </assembly>
   <assembly fullname="System">
     <type fullname="System.CodeDom.Compiler.GeneratedCodeAttribute" preserve="all" />
     <type fullname="System.Collections.Generic.Queue`1" preserve="all" />
@@ -43,15 +40,19 @@
     <type fullname="UnityEngine.Events.UnityEvent" preserve="all" />
     <type fullname="UnityEngine.Events.UnityEventBase" preserve="all" />
     <type fullname="UnityEngine.Events.UnityEvent`1" preserve="all" />
+    <type fullname="UnityEngine.ExecuteAlways" preserve="all" />
     <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.HeaderAttribute" preserve="all" />
     <type fullname="UnityEngine.Material" preserve="all" />
     <type fullname="UnityEngine.Mathf" preserve="all" />
     <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.Quaternion" preserve="all" />
     <type fullname="UnityEngine.Random" preserve="all" />
+    <type fullname="UnityEngine.RangeAttribute" preserve="all" />
     <type fullname="UnityEngine.Rect" preserve="all" />
     <type fullname="UnityEngine.RectTransform" preserve="all" />
+    <type fullname="UnityEngine.RequireComponent" preserve="all" />
     <type fullname="UnityEngine.SceneManagement.LoadSceneMode" preserve="all" />
     <type fullname="UnityEngine.SceneManagement.LocalPhysicsMode" preserve="all" />
     <type fullname="UnityEngine.SerializeField" preserve="all" />
@@ -84,11 +85,16 @@
   <assembly fullname="UnityEngine.SpriteMaskModule">
     <type fullname="UnityEngine.SpriteMask" preserve="all" />
   </assembly>
+  <assembly fullname="UnityEngine.TextRenderingModule">
+    <type fullname="UnityEngine.TextAnchor" preserve="all" />
+  </assembly>
   <assembly fullname="UnityEngine.UI">
     <type fullname="UnityEngine.EventSystems.BaseEventData" preserve="all" />
     <type fullname="UnityEngine.EventSystems.EventSystem" preserve="all" />
     <type fullname="UnityEngine.EventSystems.ExecuteEvents" preserve="all" />
     <type fullname="UnityEngine.EventSystems.ExecuteEvents/EventFunction`1" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.IDragHandler" preserve="all" />
+    <type fullname="UnityEngine.EventSystems.IEndDragHandler" preserve="all" />
     <type fullname="UnityEngine.EventSystems.IEventSystemHandler" preserve="all" />
     <type fullname="UnityEngine.EventSystems.IPointerClickHandler" preserve="all" />
     <type fullname="UnityEngine.EventSystems.PointerEventData" preserve="all" />
@@ -100,7 +106,12 @@
     <type fullname="UnityEngine.UI.InputField" preserve="all" />
     <type fullname="UnityEngine.UI.InputField/ContentType" preserve="all" />
     <type fullname="UnityEngine.UI.InputField/OnChangeEvent" preserve="all" />
+    <type fullname="UnityEngine.UI.LayoutGroup" preserve="all" />
+    <type fullname="UnityEngine.UI.LayoutRebuilder" preserve="all" />
     <type fullname="UnityEngine.UI.Text" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UIModule">
+    <type fullname="UnityEngine.Canvas" preserve="all" />
   </assembly>
   <assembly fullname="YooAsset">
     <type fullname="YooAsset.AssetHandle" preserve="all" />
@@ -160,6 +171,7 @@
     <type fullname="System.Runtime.CompilerServices.IteratorStateMachineAttribute" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.RuntimeCompatibilityAttribute" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.RuntimeHelpers" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.TupleElementNamesAttribute" preserve="all" />
     <type fullname="System.RuntimeFieldHandle" preserve="all" />
     <type fullname="System.RuntimeTypeHandle" preserve="all" />
     <type fullname="System.Security.Permissions.SecurityAction" preserve="all" />
@@ -172,6 +184,7 @@
     <type fullname="System.Threading.Interlocked" preserve="all" />
     <type fullname="System.Type" preserve="all" />
     <type fullname="System.ValueTuple`2" preserve="all" />
+    <type fullname="System.ValueTuple`5" preserve="all" />
     <type fullname="System.ValueType" preserve="all" />
   </assembly>
 </linker>

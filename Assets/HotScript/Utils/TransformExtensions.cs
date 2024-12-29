@@ -43,13 +43,37 @@ public static class TransformExtensions
 
         if (originalRectTransform != null && newRectTransform != null)
         {
-            newRectTransform.anchorMin = originalRectTransform.anchorMin;
-            newRectTransform.anchorMax = originalRectTransform.anchorMax;
-            newRectTransform.pivot = originalRectTransform.pivot;
-            newRectTransform.sizeDelta = originalRectTransform.sizeDelta;
-            newRectTransform.localPosition = originalRectTransform.localPosition;
-            newRectTransform.localScale = originalRectTransform.localScale;
-            newRectTransform.localRotation = originalRectTransform.localRotation;
+            // 保存原始 RectTransform 的所有属性
+            Vector3 originalWorldPosition = originalRectTransform.position;
+            Quaternion originalWorldRotation = originalRectTransform.rotation;
+            Vector3 originalWorldScale = originalRectTransform.lossyScale;
+            Vector2 originalSizeDelta = originalRectTransform.sizeDelta;
+            Vector2 originalAnchorMin = originalRectTransform.anchorMin;
+            Vector2 originalAnchorMax = originalRectTransform.anchorMax;
+            Vector2 originalPivot = originalRectTransform.pivot;
+            Vector3 originalLocalPosition = originalRectTransform.localPosition;
+            Vector3 originalLocalScale = originalRectTransform.localScale;
+            Quaternion originalLocalRotation = originalRectTransform.localRotation;
+
+            // 设置新 RectTransform 的所有属性与原 RectTransform 保持一致
+            newRectTransform.anchorMin = originalAnchorMin;
+            newRectTransform.anchorMax = originalAnchorMax;
+            newRectTransform.pivot = originalPivot;
+            newRectTransform.sizeDelta = originalSizeDelta;
+            newRectTransform.localPosition = originalLocalPosition;
+            newRectTransform.localRotation = originalLocalRotation;
+            newRectTransform.localScale = originalLocalScale;
+
+            // 确保新物体的位置和旋转与原物体一致
+            newRectTransform.position = originalWorldPosition;
+            newRectTransform.rotation = originalWorldRotation;
+            newRectTransform.localScale = originalWorldScale;
+
+            // 替换父物体，保持原父物体不变
+            newRectTransform.SetParent(originalTransform.parent);
+
+            // 销毁原物体
+            GameObject.Destroy(originalRectTransform.gameObject);
         }
         else
         {
@@ -83,8 +107,9 @@ public static class TransformExtensions
             // 获取子物体上的组件
             T component = child.GetComponent<T>();
             // 如果子物体上存在组件，则添加到列表中
-            if (component != null) {
-                components.Add(component); 
+            if (component != null)
+            {
+                components.Add(component);
             }
         }
         return components;

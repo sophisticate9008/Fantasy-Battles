@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UI-CircleLines 1
+  m_Name: UICLinesM2
   m_Shader: {fileID: 4800000, guid: 1f431d48ddfcd2941ac55a8246d34aec, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -56,13 +56,13 @@ Material:
     - _Center_y: 0.5
     - _ColorMask: 15
     - _Cull: 0
-    - _DisFog: 25
+    - _DisFog: 50
     - _DstBlend: 10
     - _QueueControl: 0
     - _QueueOffset: 0
     - _R: 0.5
     - _Scale: 2
-    - _Speed: 1
+    - _Speed: 0
     - _SrcBlend: 5
     - _Stencil: 0
     - _StencilComp: 8
@@ -70,7 +70,7 @@ Material:
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _Surface: 1
-    - _Thickness: 0.041
+    - _Thickness: 0.028
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0

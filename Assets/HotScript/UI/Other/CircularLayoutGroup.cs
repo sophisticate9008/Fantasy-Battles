@@ -32,11 +32,11 @@ public class CircularLayoutGroup : LayoutGroup, IDragHandler, IEndDragHandler
         layoutDirty = true;
     }
 
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        layoutDirty = true;
-    }
+    // protected override void OnValidate()
+    // {
+    //     base.OnValidate();
+    //     layoutDirty = true;
+    // }
 
     void Update()
     {
@@ -214,6 +214,19 @@ public class CircularLayoutGroup : LayoutGroup, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // 判断拖拽结束时，当前指针位置和拖拽开始时的位置是否相同
+        RectTransform parentRect = transform.parent.GetComponent<RectTransform>();
+        if (parentRect == null) return;
+
+        Vector2 currentLocalPosition = parentRect.InverseTransformPoint(eventData.position);
+
+        // 如果按下和抬起位置不同，则阻止事件传递
+        if (Vector2.Distance(dragStartPosition, currentLocalPosition) > 100f)
+        {
+            eventData.pointerPress = null; // 阻止事件传递
+            eventData.pointerClick = null;
+            Debug.Log("事件不传递");
+        }
         isDragging = false;
     }
 }

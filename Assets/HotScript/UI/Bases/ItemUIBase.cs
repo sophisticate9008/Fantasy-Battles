@@ -26,7 +26,7 @@ public class ItemUIBase : TheUIBase
         if (Id < 500)
         {
             children = Prefab.transform.GetChild(1);
-            children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("Place" + PlaceId).AssetObject as Sprite;
+            children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("place" + PlaceId).AssetObject as Sprite;
             children.GetComponent<Image>().gameObject.SetActive(true);
         }
         if (itemInfo.isLock)

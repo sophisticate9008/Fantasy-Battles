@@ -430,7 +430,7 @@ public class ResourceManager : MonoBehaviour
             UnityEngine.TextAsset textAsset = assetObj as UnityEngine.TextAsset;
             Assembly.Load(textAsset.bytes);
         }
-        LoadScene();
+        // LoadScene();
         // SceneManager.LoadScene("Fight");
     }
 
