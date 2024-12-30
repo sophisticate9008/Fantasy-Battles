@@ -210,6 +210,6 @@ public class ItemUtil
     public static void SetSprite(Transform transform, string resName)
     {
         Image pic = transform.GetComponent<Image>();
-        pic.sprite = YooAsset.YooAssets.LoadAssetSync<Sprite>(resName).AssetObject as Sprite;
+        pic.sprite = CommonUtil.GetAssetByName<Sprite>(resName);
     }
 }

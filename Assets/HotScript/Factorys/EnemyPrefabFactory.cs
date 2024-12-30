@@ -13,7 +13,7 @@ public class EnemyPrefabFactory
         {
             if (normalPrefab == null)
             {
-                normalPrefab = YooAssets.LoadAssetSync("NormalEnemyPrefab").AssetObject as GameObject;
+                normalPrefab = CommonUtil.GetAssetByName<GameObject>("NormalEnemyPrefab");
                 Debug.Log("Loaded " + normalPrefab.name);
                 return normalPrefab;
             }
@@ -30,7 +30,7 @@ public class EnemyPrefabFactory
         {
             if (elitePrefab == null)
             {
-                elitePrefab = YooAssets.LoadAssetSync("EliteEnemyPrefab").AssetObject as GameObject;
+                elitePrefab = CommonUtil.GetAssetByName<GameObject>("EliteEnemyPrefab");
                 return elitePrefab;
             }
             else

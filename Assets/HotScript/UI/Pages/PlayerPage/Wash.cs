@@ -17,7 +17,7 @@ public class Wash : ConsumeBase
     {
         ItemName = "washWater";
         ConsumeCount = (ItemInfo.level - 4) * 6;
-        GameObject itemBasePrefab = YooAssets.LoadAssetSync("ItemBase").AssetObject as GameObject;
+        GameObject itemBasePrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
         ItemUIBase itemUI = Instantiate(itemBasePrefab).AddComponent<ItemUIBase>();
         itemUI.name = "ItemBase";
         itemUI.itemInfo = ItemInfo;

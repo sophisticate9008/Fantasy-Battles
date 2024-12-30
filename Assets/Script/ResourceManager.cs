@@ -447,7 +447,7 @@ public class ResourceManager : MonoBehaviour
     //     // Debug.Log("准备实例化");
     //     // GameObject go = obj.InstantiateSync();
     //     // Debug.Log($"Prefab name is {go.name}");
-    //     // GameObject prefab = YooAssets.LoadAssetSync("ExchangeBase").AssetObject as GameObject;
+    //     // GameObject prefab = CommonUtil.GetAssetByName<GameObject>("ExchangeBase");
     //     // Instantiate(prefab);
     //     // SceneManager.LoadScene("Main");
     //     LoadScene();

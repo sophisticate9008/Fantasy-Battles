@@ -123,7 +123,7 @@ public class JewelHandleUIBase : TheUIBase
     }
     private void ChangeInfo()
     {
-        pic.sprite = YooAssets.LoadAssetSync<Sprite>(itemInfo.resName).AssetObject as Sprite;
+        pic.sprite = CommonUtil.GetAssetByName<Sprite>(itemInfo.resName);
         simpleName.text = itemInfo.simpleName;
         desContent.text = itemInfo.description;
         ChangeTextsColor();
@@ -166,7 +166,7 @@ public class JewelHandleUIBase : TheUIBase
     void OnWash()
     {
         gameObject.SetActive(false);
-        GameObject WashPanelPrefab = YooAssets.LoadAssetSync("Wash").AssetObject as GameObject;
+        GameObject WashPanelPrefab = CommonUtil.GetAssetByName<GameObject>("Wash");
         Wash washUI = Instantiate(WashPanelPrefab).AddComponent<Wash>();
         washUI.originItem = JewelInfo;
         washUI.Init();

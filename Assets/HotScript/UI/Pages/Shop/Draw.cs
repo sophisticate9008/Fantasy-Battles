@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
@@ -44,7 +44,7 @@ public class Draw : ConsumeBase
             guaranteeName = "guaranteePurple";
             minLevel = 4;
         }
-        guaranteeText = transform.parent.Find("Guarantee").GetComponent<Text>();
+        guaranteeText = transform.parent.parent.Find("Guarantee").GetComponent<Text>();
         PlayerDataConfig.OnDataChanged += UpdateGuaranteeText;
         UpdateGuaranteeText(guaranteeName);
     }
@@ -100,10 +100,10 @@ public class Draw : ConsumeBase
     }
     public IEnumerator GenerateUI()
     {
-        GameObject drawPanelPrefab = YooAssets.LoadAssetSync("DrawPanel").AssetObject as GameObject;
+        GameObject drawPanelPrefab = CommonUtil.GetAssetByName<GameObject>("DrawPanel", false);
         TheUIBase drawPanel = Instantiate(drawPanelPrefab).AddComponent<TheUIBase>();
         UIManager.Instance.ShowUI(drawPanel);
-        GameObject itemBasePrefab = YooAssets.LoadAssetSync("ItemBase").AssetObject as GameObject;
+        GameObject itemBasePrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase", false);
         List<Button> JewelSlots = drawPanel.transform.RecursiveFind("Jewels").GetComponentsInDirectChildren<Button>();
 
         // ItemUIBase itemUI  = itemBasePrefab.AddComponent<ItemUIBase>();
@@ -118,14 +118,17 @@ public class Draw : ConsumeBase
             {
                 //放入中间位置
                 itemUI.transform.CopyRectTransform(JewelSlots[0].transform);
-            }else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     itemUI.transform.CopyRectTransform(JewelSlots[i + 1].transform);
                 }
                 catch
                 {
                     Destroy(itemUI.gameObject);
-                }                
+                }
             }
 
 
@@ -135,19 +138,8 @@ public class Draw : ConsumeBase
     //独特的抽卡样式，去除背景框，仅显示宝石
     public void ChangeItemStyle(ItemUIBase itemUI)
     {
-        // 将对象的透明度设为完全透明
-        Image image = itemUI.transform.GetComponent<Image>();
-        Color color = image.color;
-        color.a = 0f; // 设置透明度为完全透明
-        image.color = color;
-        //给宝石加上haloing材质
-        // Material haloingMaterial = YooAssets.LoadAssetSync<Material>("haloing").AssetObject as Material;
-        // itemUI.transform.GetChild(0).GetComponent<Image>().material = haloingMaterial;
-        // 遍历子代，将除了第一个子代以外的其他子代设为非激活状态
-        for (int i = 1; i < itemUI.transform.childCount; i++)
-        {
-            itemUI.transform.GetChild(i).gameObject.SetActive(false);
-        }
+        TextMeshProUGUI textMeshProUGUI = itemUI.GetComponentInChildren<TextMeshProUGUI>();
+        textMeshProUGUI.gameObject.SetActive(false);
     }
 
 }

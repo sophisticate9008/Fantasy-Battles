@@ -196,7 +196,7 @@ public class UIManager : ManagerBase<UIManager>
     }
     public void OnExchange(string goodName, string currencyName, int price, int goodCount = 1)
     {
-        GameObject exchangeBasePrefab = YooAssets.LoadAssetSync("ExchangeBase").AssetObject as GameObject;
+        GameObject exchangeBasePrefab = CommonUtil.GetAssetByName<GameObject>("ExchangeBase");
         ExchangeBase exchangeBase = Instantiate(exchangeBasePrefab).AddComponent<ExchangeBase>();
         exchangeBase.goodName = goodName;
         exchangeBase.currencyName = currencyName;
@@ -207,7 +207,7 @@ public class UIManager : ManagerBase<UIManager>
     }
     public void OnCommonUI(string title, string text)
     {
-        GameObject CommonUIPrefab = YooAssets.LoadAssetSync("CommonUI").AssetObject as GameObject;
+        GameObject CommonUIPrefab = CommonUtil.GetAssetByName<GameObject>("CommonUI");
         CommonUIBase commonUIBase = Instantiate(CommonUIPrefab).AddComponent<CommonUIBase>();
         commonUIBase.title = title;
         commonUIBase.innerText = text;
@@ -217,7 +217,7 @@ public class UIManager : ManagerBase<UIManager>
     public CommonUIBase OnCommonUI(string title, TheUIBase ui)
     {
         ui.gameObject.SetActive(true);
-        GameObject CommonUIPrefab = YooAssets.LoadAssetSync("CommonUI").AssetObject as GameObject;
+        GameObject CommonUIPrefab = CommonUtil.GetAssetByName<GameObject>("CommonUI");
         CommonUIBase commonUIBase = Instantiate(CommonUIPrefab).AddComponent<CommonUIBase>();
         commonUIBase.title = title;
         commonUIBase.Init();

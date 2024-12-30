@@ -30,7 +30,7 @@ public class ExchangeBase : ConsumeBase
         GenerateItem();
         inputField.text = buyCount.ToString();
         goodNameText.text = itemInfo.simpleName;
-        needItem.sprite = YooAssets.LoadAssetSync<Sprite>(currencyName).AssetObject as Sprite;
+        needItem.sprite = CommonUtil.GetAssetByName<Sprite>(currencyName);
         // 限制输入框只能输入数字
         inputField.contentType = InputField.ContentType.IntegerNumber;
 
@@ -67,7 +67,7 @@ public class ExchangeBase : ConsumeBase
             // 销毁现有物体
             Destroy(currentItem.gameObject);
             // 加载新Prefab并实例化
-            GameObject ItemPrefab = YooAssets.LoadAssetSync<GameObject>("ItemBase").AssetObject as GameObject;
+            GameObject ItemPrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
             GameObject newItem = Instantiate(ItemPrefab);
             ItemUIBase item = newItem.AddComponent<ItemUIBase>();
             itemInfo = ItemFactory.Create(goodName, goodCount);

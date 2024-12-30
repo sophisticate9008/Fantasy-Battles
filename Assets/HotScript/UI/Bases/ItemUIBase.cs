@@ -17,16 +17,17 @@ public class ItemUIBase : TheUIBase
     public int Id => itemInfo.id;
     public override void Init()
     {
+        gameObject.SetActive(true);
         string color = ItemUtil.LevelToColorString(Level);
-        Sprite background = YooAssets.LoadAssetSync<Sprite>(color).AssetObject as Sprite;
+        Sprite background = CommonUtil.GetAssetByName<Sprite>(color);
         Prefab.GetComponent<Image>().sprite = background;
         Transform children = Prefab.transform.GetChild(0);
-        children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>(ResName).AssetObject as Sprite;
+        children.GetComponent<Image>().sprite = CommonUtil.GetAssetByName<Sprite>(ResName);
         children.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Count.ToString();
         if (Id < 500)
         {
             children = Prefab.transform.GetChild(1);
-            children.GetComponent<Image>().sprite = YooAssets.LoadAssetSync<Sprite>("place" + PlaceId).AssetObject as Sprite;
+            children.GetComponent<Image>().sprite = CommonUtil.GetAssetByName<Sprite>("place" + PlaceId);
             children.GetComponent<Image>().gameObject.SetActive(true);
         }
         if (itemInfo.isLock)
@@ -40,7 +41,7 @@ public class ItemUIBase : TheUIBase
     }
     public virtual void ShowDes()
     {
-        GameObject desPrefab = YooAssets.LoadAssetSync("Des").AssetObject as GameObject;
+        GameObject desPrefab = CommonUtil.GetAssetByName<GameObject>("Des");
         DesUIBase des = Instantiate(desPrefab).AddComponent<DesUIBase>();
         des.itemInfo = itemInfo;
         des.Init();

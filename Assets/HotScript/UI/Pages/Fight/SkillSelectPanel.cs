@@ -30,7 +30,7 @@ public class SkillSelectPanel : TheUIBase
             Text skillName = b.transform.RecursiveFind("SkillName").GetComponent<Text>();
             Text desc = b.transform.RecursiveFind("Desc").GetComponent<Text> ();
             Image icon = b.transform.RecursiveFind("Icon").GetComponent<Image>();
-            Sprite iconSprite = YooAssets.LoadAssetSync<Sprite>(skill.resName).AssetObject as Sprite;
+            Sprite iconSprite = CommonUtil.GetAssetByName<Sprite>(skill.resName);
             skillName.text = skill.skillName;
             desc.text = skill.desc;
             icon.sprite = iconSprite;

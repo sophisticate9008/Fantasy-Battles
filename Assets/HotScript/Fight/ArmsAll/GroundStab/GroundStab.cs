@@ -8,12 +8,12 @@ public class GroundStab : ArmChildBase
     // 召唤特效cd
     readonly float callEffectCd = 0.3f;
     GroundStabConfig ConcreteConfig => Config as GroundStabConfig;
-    GameObject EffectPrefab => YooAssets.LoadAssetSync<GameObject>("GroundStabEffect").AssetObject as GameObject;
+    GameObject EffectPrefab => CommonUtil.GetAssetByName<GameObject>("GroundStabEffect");
     //创建特效池子
     public override void Init()
     {
         base.Init();
-        GameObject effectPrefab = YooAssets.LoadAssetSync<GameObject>("GroundStabEffect").AssetObject as GameObject;
+        GameObject effectPrefab = CommonUtil.GetAssetByName<GameObject>("GroundStabEffect");
         //创建特效池子
         ObjectPoolManager.Instance.CreatePool("GroundStabEffect", effectPrefab, 10, 50);
         StartCoroutine(CallEffect());

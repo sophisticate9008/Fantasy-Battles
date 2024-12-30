@@ -24,7 +24,7 @@ public class SkillPanel :TheUIBase {
             }
             var skill = skills[idx - 1];
             skill.gameObject.SetActive(true);
-            skill.sprite = YooAssets.LoadAssetSync<Sprite>(SkillUtil.ArmTypeToResName(item)).AssetObject as Sprite;
+            skill.sprite = CommonUtil.GetAssetByName<Sprite>(SkillUtil.ArmTypeToResName(item));
             ArmConfigBase armConfigBase = ConfigManager.Instance.GetConfigByClassName(item) as ArmConfigBase;
             skill.transform.RecursiveFind("Mask").GetComponent<Image>().fillAmount = armConfigBase.CurrentCd / armConfigBase.Cd;
             skill.transform.RecursiveFind("Ring").GetComponent<Image>().fillAmount = armConfigBase.RestDuration / armConfigBase.Duration;

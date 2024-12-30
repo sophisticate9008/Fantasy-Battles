@@ -28,7 +28,7 @@ public class FighteManager : ManagerBase<FighteManager>
         {
             if (damageTextPrefab == null)
             {
-                return YooAssets.LoadAssetSync("DamageText").AssetObject as GameObject;
+                return CommonUtil.GetAssetByName<GameObject>("DamageText");
             }
             else
             {
