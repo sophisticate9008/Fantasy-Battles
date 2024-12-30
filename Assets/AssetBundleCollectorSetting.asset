@@ -89,8 +89,56 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/AssetPackage/Res
-        CollectorGUID: f834a0f44cbcb32449ec3758e7e6c905
+      - CollectPath: Assets/AssetPackage/Res/arms
+        CollectorGUID: 4f4c7154bc46b8048b2a867d4f7205d1
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Res/effects
+        CollectorGUID: be7e55b64a075cf49b2e78c95795efc6
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Res/fight
+        CollectorGUID: cb5e433ab6225b744b067ad894fe60ae
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Res/Items
+        CollectorGUID: 34d529c6035117d45ac36501dec98c60
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Res/other
+        CollectorGUID: 9e52671a6afd9464096e7f23b1f05110
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Res/ui
+        CollectorGUID: d1547848c8846224c9374c2522fd016a
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Res/voice
+        CollectorGUID: e63373c33355f394999ec6dc6ca14966
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

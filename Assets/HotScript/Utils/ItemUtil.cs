@@ -76,13 +76,13 @@ public class ItemUtil
     {
         return level switch
         {
-            1 => "icon_baoshi_1",
-            2 => "icon_baoshi_2",
-            3 => "icon_baoshi_3",
-            4 => "icon_baoshi_4",
-            5 => "icon_baoshi_5",
-            6 => "icon_baoshi_6",
-            7 => "icon_baoshi_7",
+            1 => "baoshi_1",
+            2 => "baoshi_2",
+            3 => "baoshi_3",
+            4 => "baoshi_4",
+            5 => "baoshi_5",
+            6 => "baoshi_6",
+            7 => "baoshi_7",
             _ => throw new System.NotImplementedException(),
         };
     }
