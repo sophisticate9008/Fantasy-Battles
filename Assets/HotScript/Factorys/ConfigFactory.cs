@@ -1,13 +1,11 @@
 using System;
 using System.IO;
 
-
 using UnityEngine;
 
 
-public class ConfigFactory
+public static class ConfigFactory
 {
-
     public static IConfig CreateInjectedConfig(string configName)
     {
         if (!configName.Contains("Config"))
@@ -40,4 +38,3 @@ public class ConfigFactory
         }
     }
 }
-

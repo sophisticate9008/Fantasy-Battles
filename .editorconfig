@@ -1,0 +1,13 @@
+开启 Roslyn Analyzers 的规则配置
+[*.cs]
+# 启用特定规则
+dotnet_diagnostic.CA2000.severity = warning
+dotnet_diagnostic.CA1812.severity = error
+
+# 禁用特定规则
+dotnet_diagnostic.CA1822.severity = none
+
+# 风格规则
+csharp_new_line_before_open_brace = all
+csharp_style_var_for_built_in_types = true
+dotnet_diagnostic.rcs1110.severity = none

@@ -2,8 +2,7 @@ using System;
 
 using UnityEngine;
 
-
-public class BuffFactory
+public static class BuffFactory
 {
     public static BuffBase Create(string buffName, float duration, GameObject selfObj, GameObject enemyObj, params object[] args)
     {

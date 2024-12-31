@@ -1,6 +1,4 @@
 
-
-
 public class BoomFireBallArm : ArmBase
 {
     public override void Attack()

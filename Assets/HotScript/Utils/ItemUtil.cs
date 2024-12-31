@@ -128,9 +128,8 @@ public class ItemUtil
     /// <returns>解析后的Color对象</returns>
     public static Color HexToColor(string hex)
     {
-        Color color;
         // 使用Unity内置的TryParseHtmlString来解析16进制字符串
-        if (ColorUtility.TryParseHtmlString(hex, out color))
+        if (ColorUtility.TryParseHtmlString(hex, out Color color))
         {
             return color;
         }
@@ -143,7 +142,7 @@ public class ItemUtil
     public static int GetRandomLevel(Dictionary<int, float> probabilityDict, int minLevel = 1)
     {
         // 创建合并后的概率字典，将低于保底等级的项合并
-        Dictionary<int, float> adjustedDict = new Dictionary<int, float>();
+        Dictionary<int, float> adjustedDict = new();
         float accumulatedLowProb = 0f;  // 用于累积低于保底等级的概率
 
         foreach (var kvp in probabilityDict)
@@ -186,8 +185,7 @@ public class ItemUtil
     public static void ChangeTextColor(Transform transform, int level)
     {
         // 获取 TextMeshPro 组件
-        TextMeshProUGUI tmp = transform.GetComponent<TextMeshProUGUI>();
-        if (tmp == null)
+        if (!transform.TryGetComponent<TextMeshProUGUI>(out var tmp))
         {
             Debug.LogError("TextMeshProUGUI component not found on the given transform.");
             return;
@@ -199,7 +197,7 @@ public class ItemUtil
         Color baseColor = ItemUtil.LevelToColor(level); // 假设 LevelToColor 返回的是一个 Color
 
         // 转换为 HDR 颜色并增加亮度
-        float hdrIntensity = 1.13954f; // 亮度强度因子，可以理解为“加 1 的效果”
+        const float hdrIntensity = 1.13954f; // 亮度强度因子，可以理解为“加 1 的效果”
         Color hdrColor = baseColor * hdrIntensity;
         // 设置 HDR Face Color
         newMaterial.SetColor("_FaceColor", hdrColor);

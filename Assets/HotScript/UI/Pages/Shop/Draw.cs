@@ -100,10 +100,10 @@ public class Draw : ConsumeBase
     }
     public IEnumerator GenerateUI()
     {
-        GameObject drawPanelPrefab = CommonUtil.GetAssetByName<GameObject>("DrawPanel", false);
+        GameObject drawPanelPrefab = CommonUtil.GetAssetByName<GameObject>("DrawPanel");
         TheUIBase drawPanel = Instantiate(drawPanelPrefab).AddComponent<TheUIBase>();
         UIManager.Instance.ShowUI(drawPanel);
-        GameObject itemBasePrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase", false);
+        GameObject itemBasePrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
         List<Button> JewelSlots = drawPanel.transform.RecursiveFind("Jewels").GetComponentsInDirectChildren<Button>();
 
         // ItemUIBase itemUI  = itemBasePrefab.AddComponent<ItemUIBase>();

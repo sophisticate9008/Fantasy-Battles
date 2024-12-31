@@ -53,7 +53,7 @@ public class ArmBase : MonoBehaviour, IArms
             FindTargetNearestOrElite();
         }
 
-        if (Time.time - lastFireTime < 0)
+        if (Time.time < lastFireTime)
         {
             Config.CurrentCd = 0;
         }

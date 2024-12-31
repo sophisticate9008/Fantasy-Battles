@@ -1,13 +1,11 @@
 
 using UnityEngine;
 
-
 public class Dizzy : BuffBase
 {
     IEffectController controller;
     public Dizzy(string buffName, float duration, GameObject selfObj, GameObject enemyObj) : base(buffName, duration, selfObj, enemyObj)
     {
-
     }
     public override void Effect()
     {
@@ -21,5 +19,3 @@ public class Dizzy : BuffBase
         EffectManager.Instance.Stop(controller);
     }
 }
-
-

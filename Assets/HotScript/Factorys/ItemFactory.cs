@@ -1,8 +1,7 @@
 using System;
 
 
-
-public class ItemFactory
+public static class ItemFactory
 {
     public static ItemBase Create(string resName, int count = 1)
     {

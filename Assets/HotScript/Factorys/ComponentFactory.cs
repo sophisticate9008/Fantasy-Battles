@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 
 
-public class ComponentFactory
+public static class ComponentFactory
 {
     public static ComponentBase Create(string componentName, GameObject selfObj, params object[] args)
     {
@@ -25,4 +25,3 @@ public class ComponentFactory
         };
     }
 }
-

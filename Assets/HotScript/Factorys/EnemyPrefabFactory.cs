@@ -2,8 +2,7 @@
 using UnityEngine;
 using YooAsset;
 
-
-public class EnemyPrefabFactory
+public static class EnemyPrefabFactory
 {
     private static GameObject normalPrefab;
     private static GameObject elitePrefab;

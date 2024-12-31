@@ -4,7 +4,6 @@ using MyEnums;
 using UnityEngine;
 using YooAsset;
 
-
 [System.Serializable] // 标记为可序列化
 public class ArmConfigBase : ConfigBase
 {
@@ -46,14 +45,14 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float dizzyTime = 1;
     [SerializeField] private float fireTime = 1;//点燃
     [SerializeField] private float firePercentage = 0;//点燃附带的百分比伤害
-    public virtual float FirePercentage{get => firePercentage; set { firePercentage = value; } }
-    public virtual float FreezeTime {get => freezeTime; set => freezeTime = value; }
-    public virtual float SlowTime{get => slowTime; set => slowTime = value; }
-    public virtual float SlowDegree{get => slowDegree; set => slowDegree = value; }
-    public virtual float PalsyTime{get => palsyTime; set => palsyTime = value; }
-    public virtual float DizzyTime{get => dizzyTime; set => dizzyTime = value; }
-    public virtual float FireTime{get => fireTime; set => fireTime = value; }
-    
+    public virtual float FirePercentage { get => firePercentage; set { firePercentage = value; } }
+    public virtual float FreezeTime { get => freezeTime; set => freezeTime = value; }
+    public virtual float SlowTime { get => slowTime; set => slowTime = value; }
+    public virtual float SlowDegree { get => slowDegree; set => slowDegree = value; }
+    public virtual float PalsyTime { get => palsyTime; set => palsyTime = value; }
+    public virtual float DizzyTime { get => dizzyTime; set => dizzyTime = value; }
+    public virtual float FireTime { get => fireTime; set => fireTime = value; }
+
     // Prefab 属性
     public override GameObject Prefab
     {
@@ -138,7 +137,6 @@ public class ArmConfigBase : ConfigBase
         set => attackCount = value;
     }
 
-
     public virtual List<string> ComponentStrs
     {
         get => componentStrs;
@@ -195,7 +193,6 @@ public class ArmConfigBase : ConfigBase
         set => isLineCast = value;
     }
 
-
     public virtual int CurrentAttackedNum { get; set; } = 0;
 
     public virtual float CurrentCd { get; set; } = 0;
@@ -227,6 +224,4 @@ public class ArmConfigBase : ConfigBase
     {
         // 初始化逻辑可以在子类中进行扩展
     }
-
 }
-
