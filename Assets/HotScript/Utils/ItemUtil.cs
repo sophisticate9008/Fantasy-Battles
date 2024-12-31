@@ -53,7 +53,7 @@ public class ItemUtil
             4 => "purple",
             5 => "orange",
             6 => "red",
-            7 => "muticolour",
+            7 => "multicolor",
             _ => throw new System.NotImplementedException(),
         };
     }

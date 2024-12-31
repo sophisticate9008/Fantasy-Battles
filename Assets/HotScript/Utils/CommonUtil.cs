@@ -21,16 +21,14 @@ public class CommonUtil
         return new List<T>(items);
     }
     /// <summary>
-    /// 获得预制体，是否yooasset下载，默认为true,否则从场景中找
+    /// 获得资源
     /// </summary>
-    public static T GetAssetByName<T>(string resName, bool isYooasset = true) where T : UnityEngine.Object
+    public static T GetAssetByName<T>(string resName) where T : UnityEngine.Object
     {
-        if (typeof(T) == typeof(GameObject) && !isYooasset)
+        if (typeof(T) == typeof(GameObject) && Constant.prefabFromScene.Contains(resName))
         {
-
             GameObject prefabs = GameObject.Find("Prefabs");
             return prefabs.transform.RecursiveFind(resName).gameObject as T;
-
         }
         else
         {
