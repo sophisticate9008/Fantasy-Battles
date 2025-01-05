@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,8 +18,6 @@ public class UIManager : ManagerBase<UIManager>
     private GameObject uiCanvas;
     private GameObject currentMask; // 当前遮罩
 
-    public GameObject maskPrefab; // 遮罩预制体
-    public GameObject MessagePrefab;
     private GameObject listenedToClose;
     private string[] excluedTypes = new string[0];
     private bool enableClick = true;
@@ -157,7 +156,7 @@ public class UIManager : ManagerBase<UIManager>
 
     private void AddMask()
     {
-        if (maskPrefab == null) return;
+        GameObject maskPrefab = CommonUtil.GetAssetByName<GameObject>("UIMask");
         // 创建遮罩
         currentMask = Instantiate(maskPrefab, uiCanvas.transform);
         // 添加全屏透明遮罩，监听点击事件
@@ -189,8 +188,10 @@ public class UIManager : ManagerBase<UIManager>
     public void OnMessage(string text)
     {
         if (text == null) return;
-        TheUIBase theUIBase = Instantiate(MessagePrefab).GetComponent<TheUIBase>();
-        theUIBase.gameObject.transform.GetChild(0).GetComponent<Text>().text = text;
+        GameObject MessagePrefab = CommonUtil.GetAssetByName<GameObject>("Message");
+        TheUIBase theUIBase = Instantiate(MessagePrefab).AddComponent<TheUIBase>();
+        TextMeshProUGUI textMeshProUGUI = theUIBase.transform.RecursiveFind("Text").GetComponent<TextMeshProUGUI>();
+        textMeshProUGUI.text = text;
         ShowUI(theUIBase);
         StartCoroutine(AutoCloseMessageUI());
     }
