@@ -14,13 +14,21 @@ public class JewelBase : ItemBase
         resName = ItemUtil.LevelToJewelResName(level);
         this.count = count;
     }
-    public JewelBase Clone()
+
+    /// <summary>
+    /// 克隆宝石，参数为是否克隆数量，否则为1
+    /// </summary>
+    public JewelBase Clone(bool isCloneCount = false)
     {
-        return new JewelBase(id, level, placeId, description,1);
+        int cloneCount = isCloneCount ? count : 1;
+        return new JewelBase(id, level, placeId, description, cloneCount);
     }
-    public void SubtractCount(int num) {
+
+    public void SubtractCount(int num)
+    {
         count -= num;
-        if(count < 1) {
+        if (count < 1)
+        {
             PlayerDataConfig.jewels.Remove(this);
         }
     }

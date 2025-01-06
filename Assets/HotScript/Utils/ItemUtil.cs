@@ -90,12 +90,12 @@ public class ItemUtil
     {
         return placeId switch
         {
-            1 => "头盔",
-            2 => "护臂",
-            3 => "裤子",
-            4 => "盔甲",
-            5 => "鞋子",
-            6 => "手套",
+            1 => "法球",
+            2 => "腰带",
+            3 => "戒指",
+            4 => "头冠",
+            5 => "匕首",
+            6 => "吊坠",
             _ => throw new System.NotImplementedException(),
         };
     }
@@ -197,7 +197,7 @@ public class ItemUtil
         Color baseColor = ItemUtil.LevelToColor(level); // 假设 LevelToColor 返回的是一个 Color
 
         // 转换为 HDR 颜色并增加亮度
-        const float hdrIntensity = 1.13954f; // 亮度强度因子，可以理解为“加 1 的效果”
+        float hdrIntensity = level < 7 ? 1.13954f : 2.456513f; // 亮度强度因子，可以理解为“加 1 的效果”
         Color hdrColor = baseColor * hdrIntensity;
         // 设置 HDR Face Color
         newMaterial.SetColor("_FaceColor", hdrColor);

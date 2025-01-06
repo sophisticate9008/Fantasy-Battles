@@ -36,7 +36,8 @@ public class Equipments : TheUIBase
                 {
                     Color newColor = ItemUtil.LevelToColor(jewels[i].level);
                     newColor.a = 0.6f;
-                    childImages[i].color = newColor;
+                    float hdrIntensity = jewels[i].level < 7 ? 1.13954f : 2.456513f;
+                    childImages[i].color = newColor * hdrIntensity;
                 }
                 else
                 {

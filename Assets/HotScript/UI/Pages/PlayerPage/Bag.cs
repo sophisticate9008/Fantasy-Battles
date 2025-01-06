@@ -162,7 +162,7 @@ public class Bag : TheUIBase
         List<JewelBase> backupList = new();
         for (int i = 0; i < originList.Count; i++)
         {
-            backupList.Add(originList[i].Clone());
+            backupList.Add(originList[i].Clone(true));
         }
         //多出来的
         int restCount = totalCount % 5;
@@ -197,17 +197,21 @@ public class Bag : TheUIBase
         }
         return backupList;
     }
+    /// <summary>
+    /// 确认升级操作，处理消耗物品并更新 UI，新宝石在此前已经生成
+    /// </summary>
+    /// <param name="ConsumeList">需要消耗的 Jewel 列表</param>
     private void ConfirmUpgrade(List<JewelBase> ConsumeList)
     {
-        foreach (JewelBase jewel in PlayerDataConfig.jewels.ToList())
+        Dictionary<JewelBase, int> consumeDict = ConsumeList.ToDictionary(j => j, j => j.count);
+
+        // Step 2: 遍历 PlayerDataConfig.jewels，检查是否在 consumeDict 中
+        foreach (JewelBase jewel in PlayerDataConfig.jewels.ToList()) // 浅拷贝防止修改集合时报错
         {
-            foreach (JewelBase consumeJewel in ConsumeList)
+            if (consumeDict.TryGetValue(jewel, out int consumeCount)) // 快速查找
             {
-                if (jewel == consumeJewel)
-                {
-                    jewel.SubtractCount(consumeJewel.count);
-                    break;
-                }
+                // 减少数量，如果数量为 0，SubtractCount 内部逻辑可能会移除该 Jewel
+                jewel.SubtractCount(consumeCount);
             }
         }
         PlayerDataConfig.jewels.AddRange(newJewels);
@@ -227,7 +231,7 @@ public class Bag : TheUIBase
         GameObject upgradeJewel = CommonUtil.GetAssetByName<GameObject>("UpgradeJewel");
         TheUIBase theUIBase = Instantiate(upgradeJewel).AddComponent<TheUIBase>();
         Transform parent = theUIBase.transform.RecursiveFind("Content");
-        float delay = 0.08f;
+        float delay = 0.02f;
         int idx = 0;
         foreach (JewelBase jewel in jewelList)
         {
@@ -238,15 +242,14 @@ public class Bag : TheUIBase
                 itemUI.Init();
                 itemUI.transform.SetParent(parent);
             };
-            if (mode == 0)
-            {
-                action.Invoke();
-            }
-            else
-            {
-                ToolManager.Instance.SetTimeout(action, delay * idx++);
-            }
+            ToolManager.Instance.SetTimeout(action, delay * idx++);
+
         }
+        //刷新布局
+        ToolManager.Instance.SetTimeout(()=> {
+            parent.gameObject.SetActive(false);
+            parent.gameObject.SetActive(true);
+        }, delay * idx++);
         if (mode == 0)
         {
             Action action = () =>
@@ -255,6 +258,7 @@ public class Bag : TheUIBase
                 ConfirmUpgrade(jewelList);
             };
             UIManager.Instance.OnCommonUI("消耗以下宝石", theUIBase, action);
+
         }
         else
         {
