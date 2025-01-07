@@ -7,7 +7,7 @@ public class CommonUIBase : TheUIBase
 {
     public string title;
     public string innerText;
-    private Text titleUI;
+    public Text titleUI;
     private GameObject inner;
     private Text innerTextUI;
 

@@ -215,6 +215,7 @@ public class JewelHandleUIBase : TheUIBase
         int idx = 0;
         foreach (Button b in UnembedButtons)
         {
+            b.onClick.RemoveAllListeners();//防止重复添加
             b.gameObject.SetActive(true);
             int _ = idx++;
             b.onClick.AddListener(() =>

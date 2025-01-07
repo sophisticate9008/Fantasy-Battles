@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Equipments : TheUIBase
 {
+    private JewelHandleUIBase EquipmentPanel;//点别的时候复用一个
+    private CommonUIBase theCommonUI;//点别的时候复用一个
     public List<Button> EquipmentButtons;
     private void Start()
     {
@@ -53,18 +55,33 @@ public class Equipments : TheUIBase
         foreach (var item in EquipmentButtons)
         {
             int _ = ++idx;
-            item.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ShowPlaceJewel(_));
+            item.transform.GetComponent<Button>().onClick.AddListener(() => ShowPlaceJewel(_));
         }
     }
     void ShowPlaceJewel(int placeId)
     {
-        GameObject jewelHandle = transform.parent.RecursiveFind("JewelHandle").gameObject;
-        GameObject backup = Instantiate(jewelHandle);
-        JewelHandleUIBase theUIBase = backup.GetComponent<JewelHandleUIBase>();
-        theUIBase.itemInfo = new ItemBase {
-            placeId = placeId
-        };
-        theUIBase.InitByEquipment();
-        UIManager.Instance.OnCommonUI(ItemUtil.PlaceIdToPlaceName(placeId),  theUIBase);
+        if (EquipmentPanel)
+        {
+            EquipmentPanel.itemInfo = new ItemBase
+            {
+                placeId = placeId
+            };
+            EquipmentPanel.InitByEquipment();
+            theCommonUI.titleUI.text = ItemUtil.PlaceIdToPlaceName(placeId);
+        }
+        else
+        {
+            GameObject jewelHandle = transform.parent.RecursiveFind("JewelHandle").gameObject;
+            GameObject backup = Instantiate(jewelHandle);
+            JewelHandleUIBase theUIBase = backup.GetComponent<JewelHandleUIBase>();
+            EquipmentPanel = theUIBase;
+            theUIBase.itemInfo = new ItemBase
+            {
+                placeId = placeId
+            };
+            theUIBase.InitByEquipment();
+            theCommonUI = UIManager.Instance.OnCommonUI(ItemUtil.PlaceIdToPlaceName(placeId), theUIBase);
+        }
+
     }
 }

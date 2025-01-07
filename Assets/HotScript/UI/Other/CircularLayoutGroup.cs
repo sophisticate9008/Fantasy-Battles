@@ -116,7 +116,12 @@ public class CircularLayoutGroup : LayoutGroup, IDragHandler, IEndDragHandler
             {
                 childCanvas = child.gameObject.AddComponent<Canvas>();
             }
-
+            childCanvas.overrideSorting = true; // 启用自定义排序
+            GraphicRaycaster raycaster = child.GetComponent<GraphicRaycaster>();
+            if (raycaster == null)
+            {
+                child.gameObject.AddComponent<GraphicRaycaster>();
+            }
             float distanceFactor = Mathf.Abs(y);
             float scale = 1f / (1.5f - distanceFactor * scaleZoomFactor / 10000);
 
@@ -153,30 +158,30 @@ public class CircularLayoutGroup : LayoutGroup, IDragHandler, IEndDragHandler
         switch (childAlignment)
         {
             case TextAnchor.UpperLeft:
-                offset += new Vector2(-size.x / 4, size.y / 4);
+                offset += new Vector2(-size.x / 2, size.y / 2);
                 break;
             case TextAnchor.UpperCenter:
-                offset += new Vector2(0, size.y / 4);
+                offset += new Vector2(0, size.y / 2);
                 break;
             case TextAnchor.UpperRight:
-                offset += new Vector2(size.x / 4, size.y / 4);
+                offset += new Vector2(size.x / 2, size.y / 2);
                 break;
             case TextAnchor.MiddleLeft:
-                offset += new Vector2(-size.x / 4, 0);
+                offset += new Vector2(-size.x / 2, 0);
                 break;
             case TextAnchor.MiddleCenter:
                 break;
             case TextAnchor.MiddleRight:
-                offset += new Vector2(size.x / 4, 0);
+                offset += new Vector2(size.x / 2, 0);
                 break;
             case TextAnchor.LowerLeft:
-                offset += new Vector2(-size.x / 4, -size.y / 4);
+                offset += new Vector2(-size.x / 2, -size.y / 2);
                 break;
             case TextAnchor.LowerCenter:
-                offset += new Vector2(0, -size.y / 4);
+                offset += new Vector2(0, -size.y / 2);
                 break;
             case TextAnchor.LowerRight:
-                offset += new Vector2(size.x / 4, -size.y / 4);
+                offset += new Vector2(size.x / 2, -size.y / 2);
                 break;
         }
 
