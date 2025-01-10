@@ -4,13 +4,28 @@ using System.IO;
 
 public class AnimationClipGenerator : Editor
 {
+    private static readonly string RootFolderPath = "Assets/AssetPackage/Animator/pngs"; // 根文件夹路径
+    private static readonly string ClipSavePath = "Assets/AssetPackage/Animator/clips"; // 动画剪辑保存路径
+
     [MenuItem("Tools/Generate Animation Clips")]
     public static void GenerateAnimationClips()
     {
-        string rootFolderPath = "Assets/AssetPackage/Enemys/Animator"; // 替换为你的根文件夹路径
-        Debug.Log($"Scanning for monster folders in: {rootFolderPath}");
+        Debug.Log($"Scanning for monster folders in: {RootFolderPath}");
 
-        string[] monsterFolders = Directory.GetDirectories(rootFolderPath);
+        if (!Directory.Exists(RootFolderPath))
+        {
+            Debug.LogError($"Root folder not found: {RootFolderPath}");
+            return;
+        }
+
+        // 确保保存目录存在
+        if (!Directory.Exists(ClipSavePath))
+        {
+            Directory.CreateDirectory(ClipSavePath);
+            Debug.Log($"Created clip save directory: {ClipSavePath}");
+        }
+
+        string[] monsterFolders = Directory.GetDirectories(RootFolderPath);
 
         if (monsterFolders.Length == 0)
         {
@@ -30,45 +45,26 @@ public class AnimationClipGenerator : Editor
         string monsterName = Path.GetFileName(monsterFolder);
         Debug.Log($"Creating animation clips for monster: {monsterName}");
 
-        var idleFrames = LoadAnimationFrames(monsterFolder, "idle");
-        var runFrames = LoadAnimationFrames(monsterFolder, "run");
-        var skillFrames = LoadAnimationFrames(monsterFolder, "skill1");
-        var deathFrames = LoadAnimationFrames(monsterFolder, "death1");
-
-        if (idleFrames.Length > 0)
-            CreateAnimationClip(idleFrames, $"{monsterName}_Idle");
-        else
-            Debug.LogWarning($"No idle frames found for {monsterName}");
-
-        if (runFrames.Length > 0)
-            CreateAnimationClip(runFrames, $"{monsterName}_Run");
-        else
-            Debug.LogWarning($"No run frames found for {monsterName}");
-
-        if (skillFrames.Length > 0)
-            CreateAnimationClip(skillFrames, $"{monsterName}_Skill");
-        else
-            Debug.LogWarning($"No skill frames found for {monsterName}");
-
-        if (deathFrames.Length > 0)
-            CreateAnimationClip(deathFrames, $"{monsterName}_Die");
-        else
+        string[] actions = { "Idle", "Run", "Attack" }; // 动作列表
+        foreach (var action in actions)
         {
-            deathFrames = LoadAnimationFrames(monsterFolder, "death");
-            if (deathFrames.Length > 0)
-                CreateAnimationClip(deathFrames, $"{monsterName}_Die");
+            var frames = LoadAnimationFrames(monsterFolder, action);
+            if (frames.Length > 0)
+            {
+                CreateAnimationClip(frames, $"{monsterName}_{action}");
+            }
             else
             {
-                Debug.LogWarning($"No death frames found for {monsterName}");
+                Debug.LogWarning($"No frames found for action '{action}' in {monsterName}");
             }
         }
     }
 
     private static string[] LoadAnimationFrames(string monsterFolder, string action)
     {
-        string pattern = $"*-{action}_*.png"; // 匹配动作
+        string pattern = $"skeleton-{action}_*.png"; // 匹配动作文件
         string[] frames = Directory.GetFiles(monsterFolder, pattern);
-        Debug.Log($"Searching for action '{action}' in '{monsterFolder}', found: {frames.Length} frames");
+        Debug.Log($"Found {frames.Length} frames for action '{action}' in folder '{monsterFolder}'");
         return frames;
     }
 
@@ -85,16 +81,15 @@ public class AnimationClipGenerator : Editor
         EditorCurveBinding curveBinding = new EditorCurveBinding
         {
             type = typeof(SpriteRenderer), // 使用 SpriteRenderer 作为动画类型
-            path = "", // 根据需要设置路径
-            propertyName = "m_Sprite" // 确保使用正确的属性名
+            path = "", // 相对于 GameObject 的路径
+            propertyName = "m_Sprite" // SpriteRenderer 的 Sprite 属性
         };
 
         for (int i = 0; i < frames.Length; i++)
         {
-            string fileName = Path.GetFileName(frames[i]); // 获取文件名
-            string assetPath = Path.Combine(Path.GetDirectoryName(frames[i]), fileName).Replace('\\', '/');
+            string assetPath = frames[i].Replace('\\', '/'); // 修复路径分隔符
 
-            // 直接加载 Sprite
+            // 加载 Sprite
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
             if (sprite == null)
             {
@@ -102,23 +97,27 @@ public class AnimationClipGenerator : Editor
                 continue;
             }
 
-            // 将 Sprite 添加到关键帧
-            keyframes[i] = new ObjectReferenceKeyframe { time = i * 0.08f, value = sprite }; // 0.1秒一帧（10fps）
+            keyframes[i] = new ObjectReferenceKeyframe
+            {
+                time = i * 0.08f, // 0.08秒一帧（12.5fps）
+                value = sprite
+            };
         }
 
-        // 检查是否有有效的关键帧
+        // 检查是否有有效关键帧
         if (keyframes.Length == 0)
         {
-            Debug.LogWarning($"No valid keyframes created for clip: {clipName}");
+            Debug.LogWarning($"No valid keyframes for clip: {clipName}");
             return;
         }
 
-        // 设置关键帧到动画剪辑
+        // 设置关键帧
         AnimationUtility.SetObjectReferenceCurve(clip, curveBinding, keyframes);
 
         // 保存动画剪辑
-        AssetDatabase.CreateAsset(clip, $"Assets/AssetPackage/Enemys/clips/{clipName}.anim");
-        Debug.Log($"Created clip: {clipName}");
+        string clipPath = Path.Combine(ClipSavePath, $"{clipName}.anim").Replace('\\', '/');
+        AssetDatabase.CreateAsset(clip, clipPath);
+        Debug.Log($"Created clip: {clipName} at {clipPath}");
 
         // 设置循环时间
         AnimationClipSettings clipSettings = AnimationUtility.GetAnimationClipSettings(clip);
@@ -126,6 +125,4 @@ public class AnimationClipGenerator : Editor
         AnimationUtility.SetAnimationClipSettings(clip, clipSettings);
         AssetDatabase.SaveAssets();
     }
-
-
 }

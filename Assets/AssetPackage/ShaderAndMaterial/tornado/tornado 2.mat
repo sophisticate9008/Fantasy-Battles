@@ -74,7 +74,7 @@ Material:
     - _AlphaToMask: 1
     - _BLENDERMODE: 0
     - _Blend: 3
-    - _Blurness: 0.015
+    - _Blurness: 0.0132
     - _CULLINGMODE: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -83,7 +83,7 @@ Material:
     - _MaskStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Softness: 0
+    - _Softness: 4.32
     - _SrcBlend: 1
     - _Surface: 0
     - _ZTest: 4
@@ -93,12 +93,12 @@ Material:
     - _dissolveDegree: 0
     - _dissolveScale: 0.5
     - _dissolveSpeed: 1.19
-    - _threshold: 0.81
+    - _threshold: 0.95
     - _vertexOffsetStrength: 0.5
     - _vospeed: 1
     m_Colors:
     - _MainSpeed: {r: 1, g: 1, b: 0, a: 0}
-    - _MainTextureColor: {r: 0.2064578, g: 0.4037736, b: 0.4037736, a: 0.75686276}
+    - _MainTextureColor: {r: 0.2064578, g: 0.4037736, b: 0.4037736, a: 0.22745098}
     - _MainTiling: {r: 0, g: 0, b: 0, a: 0}
     - _MaskSpeed: {r: 1, g: 0, b: 0, a: 0}
     - _MaskTiling: {r: 0, g: 0, b: 0, a: 0}

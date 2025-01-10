@@ -272,12 +272,20 @@ PrefabInstance:
       value: NormalEnemyPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 3245709350275360155, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.34175804
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245709350275360155, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5447158
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245709350275360155, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4804
+      value: -1.8962
       objectReference: {fileID: 0}
     - target: {fileID: 3245709350275360155, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.7677
+      value: 2.4587
       objectReference: {fileID: 0}
     - target: {fileID: 3245709350275360155, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
       propertyPath: m_LocalPosition.z
@@ -311,6 +319,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3509202488277074544, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5746711
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509202488277074544, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.0052271625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509202488277074544, guid: 7971d4b33d9d74f47a77ee48afc10fce, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.023530502
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -329,12 +349,20 @@ PrefabInstance:
       value: EliteEnemyPrefab
       objectReference: {fileID: 0}
     - target: {fileID: 4971270869222383216, guid: 484afd38dcacddd458ee77b61f3b8eba, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.572304
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971270869222383216, guid: 484afd38dcacddd458ee77b61f3b8eba, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7596055
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971270869222383216, guid: 484afd38dcacddd458ee77b61f3b8eba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.89
+      value: -1.2257
       objectReference: {fileID: 0}
     - target: {fileID: 4971270869222383216, guid: 484afd38dcacddd458ee77b61f3b8eba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.76
+      value: 2.4311
       objectReference: {fileID: 0}
     - target: {fileID: 4971270869222383216, guid: 484afd38dcacddd458ee77b61f3b8eba, type: 3}
       propertyPath: m_LocalPosition.z

@@ -53,6 +53,7 @@ public class ObjectPoolManager : ManagerBase<ObjectPoolManager>
         poolDictionary.Add(poolName, objectPool);
         poolMaxSizeDictionary.Add(poolName, maxPoolSize); // 保存每个池的最大长度
         poolParentDictionary.Add(poolName, poolObject.transform);       // 保存父对象
+        Debug.Log($"创建对象池 {poolName}");
 
     }
 

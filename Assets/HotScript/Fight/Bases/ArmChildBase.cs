@@ -392,8 +392,12 @@ public class ArmChildBase : MonoBehaviour, IArmChild
 
     public void ReturnToPool()
     {
-        ChangeScale(1 / Config.SelfScale);
-        ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
+        if (Config != null)
+        {
+            ChangeScale(1 / Config.SelfScale);
+            ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
+        }
+
     }
 
     public virtual void CreateComponents()

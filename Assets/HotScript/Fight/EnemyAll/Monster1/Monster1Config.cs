@@ -1,8 +1,8 @@
 
 
-public class NormalMonsterConfig: EnemyConfigBase{
+public class Monster1Config: EnemyConfigBase{
     
-    public NormalMonsterConfig():base() {
+    public Monster1Config():base() {
         Life = 1500;
         Speed = 0.15f;
         Blocks = 1;

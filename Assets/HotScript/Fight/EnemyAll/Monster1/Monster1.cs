@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Prefabs.Enemy
 {
     
-    public class NormalMonster : EnemyBase
+    public class Monster1 : EnemyBase
     {
     }
 }

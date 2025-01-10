@@ -150,10 +150,26 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/AssetPackage/Animator
-        CollectorGUID: ab17c9d03caa7094197b245816c1595a
+      - CollectPath: Assets/AssetPackage/Animator/clips
+        CollectorGUID: 8143803efabd6fb448ba4f80acb29df2
         CollectorType: 0
         AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Animator/controllers
+        CollectorGUID: f8ad3bc25ad491a4fab29b1b8dd13f23
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/AssetPackage/Animator/pngs
+        CollectorGUID: f4cc0e10b147e3947a24ce4fef567b42
+        CollectorType: 0
+        AddressRuleName: AddressByFolderAndFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 

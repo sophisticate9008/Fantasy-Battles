@@ -43,7 +43,7 @@ public static class EnemyPrefabFactory
 
         GameObject prefab = enemyType == "normal" ? NormalPrefab : ElitePrefab;
         EnemyBase enemyBase = prefab.AddComponent(CommonUtil.GetTypeByName(enemyName)) as EnemyBase;
-        string controllerName = enemyName.ToLower() + "_Controller";
+        string controllerName = enemyName + "_Controller";
         RuntimeAnimatorController controller = YooAssets.LoadAssetSync<RuntimeAnimatorController>(controllerName).AssetObject
             as RuntimeAnimatorController;
         enemyBase.animator.runtimeAnimatorController = controller;

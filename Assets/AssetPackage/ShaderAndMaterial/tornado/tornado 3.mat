@@ -82,7 +82,7 @@ Material:
     - _Cull: 1
     - _DstBlend: 10
     - _MainUVFlowSpeed: -0.11
-    - _MaskStrength: 1
+    - _MaskStrength: 0.42
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Softness: 0

@@ -5,20 +5,21 @@ using System.Collections.Generic;
 
 public class AnimatorControllerGenerator : Editor
 {
+    private const string ClipsFolder = "Assets/AssetPackage/Animator/clips"; // 动画剪辑的路径
+    private const string ControllersFolder = "Assets/AssetPackage/Animator/controllers"; // 保存 Animator Controller 的路径
+
     [MenuItem("Tools/Generate Animator Controllers")]
     public static void GenerateAnimatorControllers()
     {
-        string clipsFolder = "Assets/AssetPackage/Enemys/clips"; // 动画剪辑的路径
-        string controllersFolder = "Assets/AssetPackage/Enemys/AnimatorControllers"; // 保存 Animator Controller 的路径
-
-        // 创建 Animator Controllers 文件夹
-        if (!AssetDatabase.IsValidFolder(controllersFolder))
+        Debug.Log("Starting Animator Controller generation...");
+        // 查找动画剪辑
+        string[] clipFiles = AssetDatabase.FindAssets("t:AnimationClip", new[] { ClipsFolder });
+        if (clipFiles.Length == 0)
         {
-            AssetDatabase.CreateFolder("Assets/AssetPackage/Enemys", "AnimatorControllers");
+            Debug.LogWarning("No animation clips found. Please check the clips folder.");
+            return;
         }
 
-        // 查找所有动画剪辑
-        string[] clipFiles = AssetDatabase.FindAssets("t:AnimationClip", new[] { clipsFolder });
         HashSet<string> processedMonsters = new HashSet<string>();
 
         foreach (string clipFile in clipFiles)
@@ -27,93 +28,101 @@ public class AnimatorControllerGenerator : Editor
             string clipName = System.IO.Path.GetFileNameWithoutExtension(clipPath);
             string monsterName = clipName.Split('_')[0]; // 提取怪物名称
 
-            // 确保每个怪物名称只处理一次
-            if (!processedMonsters.Contains(monsterName))
+            if (processedMonsters.Add(monsterName)) // 确保每个怪物只处理一次
             {
-                CreateAnimatorController(monsterName, controllersFolder);
-                processedMonsters.Add(monsterName);
+                Debug.Log($"Processing monster: {monsterName}");
+                CreateAnimatorController(monsterName);
             }
         }
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+        Debug.Log("Animator Controller generation completed!");
     }
 
-    private static void CreateAnimatorController(string monsterName, string controllersFolder)
+    private static void CreateAnimatorController(string monsterName)
     {
-        string controllerPath = $"{controllersFolder}/{monsterName}_Controller.controller";
+        string controllerPath = $"{ControllersFolder}/{monsterName}_Controller.controller";
+
         AnimatorController controller = AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
 
         // 添加参数
-        controller.AddParameter("isRunning", AnimatorControllerParameterType.Bool);
-        controller.AddParameter("isSkill", AnimatorControllerParameterType.Bool);
+        AddParameter(controller, "isRunning", AnimatorControllerParameterType.Bool);
+        AddParameter(controller, "isAttacking", AnimatorControllerParameterType.Bool);
 
         // 加载动画剪辑
-        AnimationClip idleClip = LoadAnimationClip($"{monsterName}_Idle");
-        AnimationClip runClip = LoadAnimationClip($"{monsterName}_Run");
-        AnimationClip skillClip = LoadAnimationClip($"{monsterName}_Skill");
-        AnimationClip dieClip = LoadAnimationClip($"{monsterName}_Die");
+        var clips = new Dictionary<string, AnimationClip>
+        {
+            { "Idle", LoadAnimationClip($"{monsterName}_Idle") },
+            { "Run", LoadAnimationClip($"{monsterName}_Run") },
+            { "Attack", LoadAnimationClip($"{monsterName}_Attack") }
+        };
 
-        // 创建状态并添加动画剪辑
-        if (idleClip != null) AddStateWithMotion(controller, "Idle", idleClip);
-        if (runClip != null) AddStateWithMotion(controller, "Run", runClip);
-        if (skillClip != null) AddStateWithMotion(controller, "Skill", skillClip);
-        if (dieClip != null) AddStateWithMotion(controller, "Die", dieClip);
+        // 创建状态并设置动画
+        foreach (var clipPair in clips)
+        {
+            if (clipPair.Value != null)
+            {
+                AddStateWithMotion(controller, clipPair.Key, clipPair.Value);
+            }
+        }
 
         // 设置默认状态
-        controller.layers[0].stateMachine.defaultState = controller.layers[0].stateMachine.states[0].state;
+        controller.layers[0].stateMachine.defaultState = FindState(controller, "Idle");
 
-        // 设置过渡
+        // 添加状态过渡
         AddTransition(controller, "Idle", "Run", "isRunning", true);
         AddTransition(controller, "Run", "Idle", "isRunning", false);
-        AddTransition(controller, "Idle", "Skill", "isSkill", true);
-        AddTransition(controller, "Skill", "Idle", "isSkill", false);
+        AddTransition(controller, "Idle", "Attack", "isAttacking", true);
+        AddTransition(controller, "Attack", "Idle", "isAttacking", false);
+    }
+
+    private static void AddParameter(AnimatorController controller, string name, AnimatorControllerParameterType type)
+    {
+        if (controller.parameters.Length == 0 || !System.Array.Exists(controller.parameters, p => p.name == name))
+        {
+            controller.AddParameter(name, type);
+        }
     }
 
     private static void AddStateWithMotion(AnimatorController controller, string stateName, AnimationClip clip)
     {
-        AnimatorState state = controller.layers[0].stateMachine.AddState(stateName);
+        var state = controller.layers[0].stateMachine.AddState(stateName);
         state.motion = clip;
     }
 
     private static AnimationClip LoadAnimationClip(string clipName)
     {
-        string clipPath = $"Assets/AssetPackage/Enemys/clips/{clipName}.anim";
-        Debug.Log($"Attempting to load animation clip at path: {clipPath}");
-        AnimationClip clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
+        string clipPath = $"{ClipsFolder}/{clipName}.anim";
+        var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
 
         if (clip == null)
         {
-            Debug.LogError($"Failed to load animation clip at path: {clipPath}");
+            Debug.LogWarning($"Animation clip not found: {clipPath}");
         }
         else
         {
-            Debug.Log($"Successfully loaded animation clip: {clip.name}");
+            Debug.Log($"Loaded animation clip: {clip.name}");
         }
 
         return clip;
     }
 
-    private static void AddTransition(AnimatorController controller, string fromStateName, string toStateName, string condition = null, bool conditionValue = true)
+    private static void AddTransition(AnimatorController controller, string fromStateName, string toStateName, string condition, bool conditionValue)
     {
-        AnimatorState fromState = FindState(controller, fromStateName);
-        AnimatorState toState = FindState(controller, toStateName);
+        var fromState = FindState(controller, fromStateName);
+        var toState = FindState(controller, toStateName);
 
-        if (fromState != null && toState != null)
+        if (fromState == null || toState == null)
         {
-            var transition = fromState.AddTransition(toState);
-            if (!string.IsNullOrEmpty(condition))
-            {
-                if (conditionValue)
-                {
-                    transition.AddCondition(AnimatorConditionMode.If, 0, condition);
-                }
-                else
-                {
-                    transition.AddCondition(AnimatorConditionMode.IfNot, 0, condition);
-                }
-            }
+            Debug.LogWarning($"Cannot create transition from '{fromStateName}' to '{toStateName}' - state(s) not found.");
+            return;
         }
+
+        var transition = fromState.AddTransition(toState);
+        transition.AddCondition(conditionValue ? AnimatorConditionMode.If : AnimatorConditionMode.IfNot, 0, condition);
+        transition.hasExitTime = false; // 即时过渡
+        transition.duration = 0f; // 无过渡时间
     }
 
     private static AnimatorState FindState(AnimatorController controller, string stateName)
