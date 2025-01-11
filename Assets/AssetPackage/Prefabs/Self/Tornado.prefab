@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 786910325936252192}
   - component: {fileID: 2192164513600547815}
+  - component: {fileID: -1687821618976879894}
   m_Layer: 0
   m_Name: Tornado
   m_TagString: Untagged
@@ -62,7 +63,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.008166432, y: 0.47637677}
@@ -78,6 +79,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.3229668, y: 1.0489988}
   m_EdgeRadius: 0
+--- !u!114 &-1687821618976879894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101063971453024770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1563901f33142334f910717a4ec6ee99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exceptObjs: []
 --- !u!1 &1684927403391693221
 GameObject:
   m_ObjectHideFlags: 0

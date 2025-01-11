@@ -74,7 +74,7 @@ Material:
     - _AlphaToMask: 1
     - _BLENDERMODE: 0
     - _Blend: 3
-    - _Blurness: 0.0132
+    - _Blurness: 0.015
     - _CULLINGMODE: 0
     - _CastShadows: 1
     - _Cull: 2
@@ -83,7 +83,7 @@ Material:
     - _MaskStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Softness: 4.32
+    - _Softness: 4.52
     - _SrcBlend: 1
     - _Surface: 0
     - _ZTest: 4
@@ -91,9 +91,9 @@ Material:
     - _ZWriteControl: 0
     - _alaph: 1
     - _dissolveDegree: 0
-    - _dissolveScale: 0.5
-    - _dissolveSpeed: 1.19
-    - _threshold: 0.95
+    - _dissolveScale: 0
+    - _dissolveSpeed: 1
+    - _threshold: 0.84
     - _vertexOffsetStrength: 0.5
     - _vospeed: 1
     m_Colors:

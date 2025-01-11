@@ -686,22 +686,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8141030665049284777, guid: 1450362ce713465459c39448ecc30aff, type: 3}
   m_PrefabInstance: {fileID: 95242827}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &107646285
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 946028706951704133}
-  m_Layer: 0
-  m_Name: 'BulletFission (Missing Prefab with guid: 3cbe1f0fbce38d946becb0bc56b19a5f)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &120601277
 GameObject:
   m_ObjectHideFlags: 0
@@ -3295,8 +3279,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5514968971163898992}
-  - {fileID: 946028706951704133}
   - {fileID: 3185798388839114216}
   - {fileID: 95242828}
   - {fileID: 298569846}
@@ -3718,6 +3700,14 @@ PrefabInstance:
     - target: {fileID: 1101063971453024770, guid: d5b8cd9f65a623f4b85c2bd4c0b388dd, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684927403391693221, guid: d5b8cd9f65a623f4b85c2bd4c0b388dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983728882590409380, guid: d5b8cd9f65a623f4b85c2bd4c0b388dd, type: 3}
+      propertyPath: RotationModule.curve.scalar
+      value: 8.726646
       objectReference: {fileID: 0}
     - target: {fileID: 8232431674389665459, guid: d5b8cd9f65a623f4b85c2bd4c0b388dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6045,22 +6035,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638675416}
   m_CullTransparentMesh: 1
---- !u!1 &1649413101
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5514968971163898992}
-  m_Layer: 0
-  m_Name: 'Bullet (Missing Prefab with guid: 3a96adcc251d0624dae27b1b5fdb7b60)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &1693755948
 GameObject:
   m_ObjectHideFlags: 0
@@ -7682,21 +7656,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3035b735c86c90d4aa75240275730412, type: 3}
---- !u!4 &946028706951704133
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107646285}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.45, y: 1.47, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 765355531}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3185798388839114215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7763,21 +7722,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1894043721300423780, guid: 3969e978cbcce4a46847570851f5898e, type: 3}
   m_PrefabInstance: {fileID: 3185798388839114215}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5514968971163898992
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649413101}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.473, y: 1.421, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 765355531}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6319502238134451138
 PrefabInstance:
   m_ObjectHideFlags: 0

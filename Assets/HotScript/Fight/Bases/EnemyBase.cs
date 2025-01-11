@@ -91,7 +91,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     }
     private void RunningAnim()
     {
-        animatorManager.SetAnimParameter(animator, "isSkill", false);
+        animatorManager.SetAnimParameter(animator, "isAttacking", false);
         animatorManager.SetAnimParameter(animator, "isRunning", true);//一直播放跑动动画
         if (!isDead)
         {
@@ -152,33 +152,33 @@ public class EnemyBase : MonoBehaviour, IEnemy
         {
             PreventSleep();
             string currentName = animatorManager.GetCurrentAnimName(animator);
-            if (currentName == "Skill" || isIdle)
+            if (currentName == "Attack" || isIdle)
             {
                 return;
             }
             isIdle = true;
             animatorManager.SetAnimParameter(animator, "isRunning", false);//回归idle
-            animatorManager.SetAnimParameter(animator, "isSkill", false);
+            animatorManager.SetAnimParameter(animator, "isAttacking", false);
             animatorManager.PlayAnimWithCallback(animator, "Idle", () =>
             {
                 if (isDead)
                 {
-                    animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
+                    ReturnToPool();
                     return;
                 }
                 Action _ = () =>
                 {
-                    animatorManager.SetAnimParameter(animator, "isSkill", true);//开启技能动画
-                    animatorManager.PlayAnimWithCallback(animator, "Skill", () =>
+                    animatorManager.SetAnimParameter(animator, "isAttacking", true);//开启技能动画
+                    animatorManager.PlayAnimWithCallback(animator, "Attack", () =>
                     {
                         isIdle = false;
-                        animatorManager.SetAnimParameter(animator, "isSkill", false);//关闭技能动画
+                        animatorManager.SetAnimParameter(animator, "isAttacking", false);//关闭技能动画
                         animatorManager.PlaySpecificAnim(animator, "Idle");
                         Attack();
 
                         if (isDead)
                         {
-                            animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
+                            ReturnToPool();
                             return;
                         }
 
@@ -229,7 +229,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
             isDead = true;
             OnByType("die", gameObject);
             FighteManager.Instance.AddExp(1);
-            animatorManager.PlayAnimWithCallback(animator, "Die", () => ReturnToPool());
+            ReturnToPool();
 
         }
         // animatorManager.SetAnimParameter(animator, "isDead", true);
