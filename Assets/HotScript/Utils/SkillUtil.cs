@@ -26,20 +26,20 @@ public class SkillUtil
     #region  技能图标
     public static Dictionary<string, List<int>> iconList = new()
     {
-        {"icon_keji_wenyadan", CommonUtil.AsList(0, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37)},
-        {"icon_keji_ganbingzimudan", CommonUtil.AsList(1, 48, 49, 50, 51, 52, 53, 54, 55, 56)},
-        {"icon_keji_diancichuanci", CommonUtil.AsList(2, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76)},
-        {"icon_keji_gangtiehongliu", CommonUtil.AsList(3, 85, 86, 87, 88, 89, 90, 91)},
-        {"icon_keji_gaonengshexian", CommonUtil.AsList(4, 95, 96, 97, 98, 99, 100, 101)},
-        {"icon_keji_zhidaojiguang", CommonUtil.AsList(5, 111, 112, 113, 114, 115, 116, 117)},
-        {"icon_keji_bingbao", CommonUtil.AsList(6, 127, 128, 129, 130, 131, 132)},
-        {"icon_keji_yuedaodianzi", CommonUtil.AsList(7, 142, 143, 144, 145, 146, 147, 148, 149, 150)},
-        {"icon_keji_xuanfengjianong", CommonUtil.AsList(8, 160, 161, 162, 163, 164, 165, 166, 167)},
-        {"icon_keji_kongtouhongzha", CommonUtil.AsList(9, 177, 178, 179, 180, 181)},
-        {"icon_keji_yasuoqiren", CommonUtil.AsList(10, 191, 192, 193, 194, 195, 196, 197, 198, 199)},
-        {"icon_keji_ranyoudan", CommonUtil.AsList(11, 209, 210, 211, 212, 213, 214, 215, 216)},
-        {"icon_keji_wurenji", CommonUtil.AsList(12, 226, 227, 228, 229, 230, 231)},
-        {"icon_keji_qiang", CommonUtil.AsList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)}
+        {"icon_BoomFireBall", CommonUtil.AsList(0, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37)},
+        {"icon_IceBall", CommonUtil.AsList(1, 48, 49, 50, 51, 52, 53, 54, 55, 56)},
+        {"icon_ElectroHit", CommonUtil.AsList(2, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76)},
+        {"icon_GroundStab", CommonUtil.AsList(3, 85, 86, 87, 88, 89, 90, 91)},
+        {"icon_EnergyRay", CommonUtil.AsList(4, 95, 96, 97, 98, 99, 100, 101)},
+        {"icon_Laser", CommonUtil.AsList(5, 111, 112, 113, 114, 115, 116, 117)},
+        {"icon_IceBloom", CommonUtil.AsList(6, 127, 128, 129, 130, 131, 132)},
+        {"icon_JumpElectro", CommonUtil.AsList(7, 142, 143, 144, 145, 146, 147, 148, 149, 150)},
+        {"icon_Tornado", CommonUtil.AsList(8, 160, 161, 162, 163, 164, 165, 166, 167)},
+        {"icon_DragonLaunch", CommonUtil.AsList(9, 177, 178, 179, 180, 181)},
+        {"icon_PressureCutter", CommonUtil.AsList(10, 191, 192, 193, 194, 195, 196, 197, 198, 199)},
+        {"icon_FlameOrb", CommonUtil.AsList(11, 209, 210, 211, 212, 213, 214, 215, 216)},
+        {"icon_WhirlingBlade", CommonUtil.AsList(12, 226, 227, 228, 229, 230, 231)},
+        {"icon_Staff", CommonUtil.AsList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)}
     };
     public static string ArmTypeToResName(string armType)
     {

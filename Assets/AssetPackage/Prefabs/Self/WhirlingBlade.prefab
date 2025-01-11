@@ -11461,7 +11461,7 @@ ParticleSystem:
     orbitalY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.1
+      scalar: -1.38
       minScalar: 0
       maxCurve:
         serializedVersion: 2
