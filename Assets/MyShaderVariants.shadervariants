@@ -53,16 +53,6 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: 65df88701913c224d95fc554db28381a, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
   - first: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
     second:
       variants:
@@ -79,8 +69,6 @@ ShaderVariantCollection:
       - keywords: 
         passType: 8
       - keywords: 
-        passType: 13
-      - keywords: _ALPHAPREMULTIPLY_ON
         passType: 13
   - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
     second:
@@ -124,8 +112,6 @@ ShaderVariantCollection:
       variants:
       - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
         passType: 0
-      - keywords: 
-        passType: 8
       - keywords: _ALPHATEST_ON
         passType: 8
   - first: {fileID: -6465566751694194690, guid: d609e83caba0e3e42b7578a1da99fc7c, type: 3}
@@ -158,4 +144,9 @@ ShaderVariantCollection:
     second:
       variants:
       - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+  - first: {fileID: 4800000, guid: c18a37e42c3cb2142bbecdbba8feef82, type: 3}
+    second:
+      variants:
+      - keywords: _EMISSION _SURFACE_TYPE_TRANSPARENT
         passType: 0

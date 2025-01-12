@@ -6141,7 +6141,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.96981126, g: 0.67511964, b: 0.012808777, a: 0}
-        key1: {r: 0.9169811, g: 0.35197452, b: 0.17128508, a: 1}
+        key1: {r: 0.9169811, g: 0.35197452, b: 0.17128508, a: 0.27450982}
         key2: {r: 0.19999999, g: 0.19999999, b: 0.19999999, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -11063,7 +11063,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.96981126, g: 0.67511964, b: 0.012808777, a: 0}
-        key1: {r: 0.9169811, g: 0.35197452, b: 0.17128508, a: 1}
+        key1: {r: 0.9169811, g: 0.35197452, b: 0.17128508, a: 0.47058824}
         key2: {r: 0.19999999, g: 0.19999999, b: 0.19999999, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -11461,7 +11461,7 @@ ParticleSystem:
     orbitalY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -1.38
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -19439,7 +19439,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1309151211
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

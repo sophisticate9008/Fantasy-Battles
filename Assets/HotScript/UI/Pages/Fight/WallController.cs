@@ -19,7 +19,8 @@ public class WallController : TheUIBase
     {
         High,
         Medium,
-        Low
+        Low,
+        Zero
     }
 
     void Start()
@@ -110,10 +111,15 @@ public class WallController : TheUIBase
         {
             newStage = HealthStage.Medium;
         }
-        else
+        else if (healthPercentage > 0 && healthPercentage < 0.33f)
         {
             newStage = HealthStage.Low;
         }
+        else
+        {
+            newStage = HealthStage.Zero;
+        }
+
 
         if (newStage != currentStage)
         {
@@ -134,6 +140,8 @@ public class WallController : TheUIBase
             walls.transform.GetChild(1).gameObject.SetActive(true);
         else if (currentStage == HealthStage.Low)
             walls.transform.GetChild(2).gameObject.SetActive(true);
+        else if (currentStage == HealthStage.Zero)
+            walls.transform.GetChild(3).gameObject.SetActive(true);
     }
 
     private IEnumerator FlashRedEffect()

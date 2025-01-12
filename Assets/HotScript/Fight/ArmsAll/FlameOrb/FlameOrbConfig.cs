@@ -1,18 +1,16 @@
 
-public class FlameOrbConfig : ArmConfigBase, IHoldable
+public class FlameOrbConfig : ArmConfigBase
 {
-    public ArmConfigBase HoldChildConfig => ConfigManager.Instance.GetConfigByClassName("FlameOrbHold") as FlameOrbHoldConfig;
-
     public override void Init()
     {
         base.Init();
-        Duration = 2.1f;
         AttackCount = 1;
         AttackCd = 0.5f;
-        Cd = 3;
-        OnType = "enter";
+        OnType = "stay";
+        DamageType = "fire";
         RangeFire = 10;
+        Duration = 3;
+        Tlc = 2;
         DamagePos = "land";
-        ComponentStrs.Add("Hold");
     }
 }
