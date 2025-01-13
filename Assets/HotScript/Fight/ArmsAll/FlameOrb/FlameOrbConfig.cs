@@ -9,8 +9,10 @@ public class FlameOrbConfig : ArmConfigBase
         OnType = "stay";
         DamageType = "fire";
         RangeFire = 10;
-        Duration = 3;
+        Duration = 4;
         Tlc = 2;
         DamagePos = "land";
+        Cd = 5;
+        Speed = 0;
     }
 }

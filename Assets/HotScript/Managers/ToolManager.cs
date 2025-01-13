@@ -13,13 +13,19 @@ public class ToolManager : ManagerBase<ToolManager>
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
-    public void TransmitByStep(float t, Vector3 targetPosition, GameObject obj)
+    public void TransmitByStep(float t, Vector3 targetPosition, GameObject obj,bool isRotate = true)
     {
 
-        StartCoroutine(TransmitByStepCoroutine(t, targetPosition, obj));
+        StartCoroutine(TransmitByStepCoroutine(t, targetPosition, obj, isRotate));
     }
-    private IEnumerator TransmitByStepCoroutine(float t, Vector3 targetPosition, GameObject obj)
+    private IEnumerator TransmitByStepCoroutine(float t, Vector3 targetPosition, GameObject obj, bool isRotate)
     {
+        if(isRotate) {
+            Vector3 direction = (targetPosition - obj.transform.position).normalized;
+            // 先旋转物体
+            ChangeRotation(direction, obj);            
+        }
+
         float elapsed = 0;
         float totalDistance = Vector3.Distance(obj.transform.position, targetPosition);
         float speed = totalDistance / t;
@@ -43,6 +49,20 @@ public class ToolManager : ManagerBase<ToolManager>
 
         // 确保最终位置到达目标
         obj.transform.position = targetPosition;
+    }
+    public void ChangeRotation(Vector3 direction, GameObject obj)
+    {
+        float rotateZ = Mathf.Atan2(direction.y, direction.x);
+        obj.transform.rotation = Quaternion.Euler(0, 0, rotateZ * Mathf.Rad2Deg);
+        foreach (Transform child in transform)
+        {
+            if (child.TryGetComponent<ParticleSystem>(out ParticleSystem ps))
+            {
+                var main = ps.main;
+
+                main.startRotation = -rotateZ;
+            }
+        }
     }
 
 

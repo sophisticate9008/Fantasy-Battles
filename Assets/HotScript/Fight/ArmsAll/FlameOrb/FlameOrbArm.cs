@@ -8,7 +8,7 @@ using UnityEngine;
 public class FlameOrbArm : ArmBase
 {
     public GameObject ball;
-    public float moveTime = 0.5f;
+    public float moveTime = 2f;
     protected override void Start() {
         base.Start();
         CreateBallPool();
@@ -32,10 +32,11 @@ public class FlameOrbArm : ArmBase
     {
         Vector3 targetPos = TargetEnemy.transform.position;
         ToolManager.Instance.TransmitByStep(moveTime, targetPos, ballClone);
-        yield return new WaitForSeconds(moveTime);
+        yield return new WaitForSeconds(moveTime - 0.2f);
         // 到达目标位置后触发 IndeedAttack
         IndeedAttack(targetPos);
-        Destroy(ballClone);
+        yield return new WaitForSeconds(0.3f);
+        ReturnToPool(ballClone);
     }
     public void IndeedAttack(Vector3 targetPos)
     {
@@ -45,5 +46,9 @@ public class FlameOrbArm : ArmBase
         obj.TargetEnemyByArm = TargetEnemy;
         obj.Init();
         // 这里可以实现伤害处理等逻辑
+    }
+    public void ReturnToPool(GameObject obj)
+    {
+        ObjectPoolManager.Instance.ReturnToPool("FlameOrbBallPool", obj);
     }
 }

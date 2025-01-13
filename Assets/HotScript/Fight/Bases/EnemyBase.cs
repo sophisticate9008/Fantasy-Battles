@@ -71,7 +71,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
                 // 更新物体的位置
                 Vector3 newPosition = transform.position;
                 newPosition.y = worldPos.y;  // 将物体的 y 坐标设为视口顶部
-                ToolManager.Instance.TransmitByStep(y, newPosition, gameObject);
+                ToolManager.Instance.TransmitByStep(y, newPosition, gameObject, false);
             }
         }
         else
@@ -79,7 +79,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
             // 正常情况下，只减少 y 坐标
             Vector3 newPosition = transform.position;
             newPosition.y += y;
-            ToolManager.Instance.TransmitByStep(0.5f, newPosition, gameObject);
+            ToolManager.Instance.TransmitByStep(0.5f, newPosition, gameObject, false);
         }
     }
 
