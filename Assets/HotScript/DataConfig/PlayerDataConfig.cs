@@ -6,7 +6,7 @@ using System.Reflection;
 [Serializable]
 public class PlayerDataConfig : ConfigBase
 {
-
+    public override bool IsCreatePool { get; set; } = false;
     public int diamond = 25000;
     public int keyPurple = 100;
     public int keyBlue = 200;
@@ -39,10 +39,10 @@ public class PlayerDataConfig : ConfigBase
         {
             // 获取字段当前的值
             Object currentValue = field.GetValue(this); // 这里使用 this
-            
+
             if (currentValue != newValue)
             {
-                
+
                 field.SetValue(this, newValue); // 这里也使用 this
                 OnDataChanged?.Invoke(fieldName); // 触发事件
                 SaveConfig();

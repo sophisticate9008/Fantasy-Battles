@@ -17,12 +17,14 @@ public class ChangeContent : TheUIBase
         List<Button> buttons = transform.parent.GetComponentsInDirectChildren<Button>();
         foreach (Button button in buttons) {
             button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            button.enabled = true;
         }
         _button.GetComponent<Image>().color = new Color(1, 1, 1, 1);
         foreach(Transform page in thePage.transform.parent) {
             page.gameObject.SetActive(false);
         }
         thePage.SetActive(true);
+        _button.enabled = false;
     }
 
 }

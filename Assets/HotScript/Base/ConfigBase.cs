@@ -7,6 +7,7 @@ using UnityEngine;
 public class ConfigBase : IConfig
 {
     public virtual GameObject Prefab { get; set; }
+    public virtual bool IsCreatePool { get; set; } = true;
 
     public void SaveConfig()
     {

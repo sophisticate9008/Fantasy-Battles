@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class GlobalConfig : ConfigBase
 {
+    
     // 私有字段
     [SerializeField] private float critRate;
     [SerializeField] private float critDamage;
@@ -18,11 +19,11 @@ public class GlobalConfig : ConfigBase
     [SerializeField] private float allAddition;
     [SerializeField] private float boomAddition;
     [SerializeField] private float adAddition;
-
+    public override bool IsCreatePool { get; set; } = false;
     // 构造函数
     public GlobalConfig()
     {
-
+        
         Init();
     }
 

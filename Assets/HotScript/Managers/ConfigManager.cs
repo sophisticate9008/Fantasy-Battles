@@ -28,7 +28,7 @@ public class ConfigManager : ManagerBase<ConfigManager>
     }
     private void CreatePool(string configName, IConfig config)
     {
-        if(configName.Contains("Global")) {
+        if(!config.IsCreatePool) {
             return;
         }
         if (pools.IndexOf(configName) == -1)

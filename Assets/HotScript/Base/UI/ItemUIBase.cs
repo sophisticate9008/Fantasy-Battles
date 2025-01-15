@@ -47,7 +47,10 @@ public class ItemUIBase : TheUIBase
         des.Init();
         UIManager.Instance.ShowUI(des);
     }
-
+    private void OnDestroy() {
+        gameObject.SetActive(false);
+        ToolManager.Instance.ReturnItemUIToPool(gameObject);
+    }
 
 
 }

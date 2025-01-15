@@ -17,8 +17,7 @@ public class Wash : ConsumeBase
     {
         ItemName = "washWater";
         ConsumeCount = (ItemInfo.level - 4) * 6;
-        GameObject itemBasePrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
-        ItemUIBase itemUI = Instantiate(itemBasePrefab).AddComponent<ItemUIBase>();
+        ItemUIBase itemUI = ToolManager.Instance.GetItemUIFromPool();
         itemUI.name = "ItemBase";
         itemUI.itemInfo = ItemInfo;
         itemUI.Init();

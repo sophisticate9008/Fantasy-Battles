@@ -3,6 +3,28 @@ using System.Collections;
 using UnityEngine;
 public class ToolManager : ManagerBase<ToolManager>
 {
+    private void Start()
+    {
+        CreatePool();
+    }
+    private void CreatePool()
+    {
+        ObjectPoolManager.Instance.CreatePool("ItemUIPool", CommonUtil.GetAssetByName<GameObject>("ItemBase"), 5, 500);
+    }
+    public JewelUIBase GetJewelUIFromPool()
+    {
+        GameObject obj = ObjectPoolManager.Instance.GetFromPool("ItemUIPool", CommonUtil.GetAssetByName<GameObject>("ItemBase"));
+        return obj.GetComponent<JewelUIBase>() ?? obj.AddComponent<JewelUIBase>();
+    }
+    public ItemUIBase GetItemUIFromPool()
+    {
+
+        GameObject obj = ObjectPoolManager.Instance.GetFromPool("ItemUIPool", CommonUtil.GetAssetByName<GameObject>("ItemBase"));
+        return obj.GetComponent<ItemUIBase>() ?? obj.AddComponent<ItemUIBase>();
+    }
+    public void ReturnItemUIToPool(GameObject obj) {
+        ObjectPoolManager.Instance.ReturnToPool("ItemUIPool", obj);
+    }
     public Coroutine SetTimeout(Action action, float delay)
     {
         return StartCoroutine(TimeoutCoroutine(action, delay));
@@ -13,17 +35,18 @@ public class ToolManager : ManagerBase<ToolManager>
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
-    public void TransmitByStep(float t, Vector3 targetPosition, GameObject obj,bool isRotate = true)
+    public void TransmitByStep(float t, Vector3 targetPosition, GameObject obj, bool isRotate = true)
     {
 
         StartCoroutine(TransmitByStepCoroutine(t, targetPosition, obj, isRotate));
     }
     private IEnumerator TransmitByStepCoroutine(float t, Vector3 targetPosition, GameObject obj, bool isRotate)
     {
-        if(isRotate) {
+        if (isRotate)
+        {
             Vector3 direction = (targetPosition - obj.transform.position).normalized;
             // 先旋转物体
-            ChangeRotation(direction, obj);            
+            ChangeRotation(direction, obj);
         }
 
         float elapsed = 0;
@@ -64,6 +87,7 @@ public class ToolManager : ManagerBase<ToolManager>
             }
         }
     }
+
 
 
 }

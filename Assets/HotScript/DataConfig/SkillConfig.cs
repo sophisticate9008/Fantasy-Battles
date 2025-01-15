@@ -6,5 +6,5 @@ using UnityEngine;
 public class SkillConfig : ConfigBase
 {
     public List<SkillNode> skills = SkillUtil.AllSkill();
-    
+    public override bool IsCreatePool { get; set; } = false;
 }

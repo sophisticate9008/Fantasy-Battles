@@ -4,14 +4,14 @@ using System.Linq;
 
 using UnityEngine;
 using UnityEngine.UI;
-using YooAsset;
 public class Bag : TheUIBase
 {
+    Transform JewelContent;
     private readonly List<JewelBase> newJewels = new();
-    GameObject itemUIPrefab;
     private void Start()
     {
         PlayerDataConfig.OnDataChanged += OnJewelChange;
+        JewelContent = transform.RecursiveFind("JewelContent");
     }
     private void OnJewelChange(string fieldName)
     {
@@ -20,7 +20,7 @@ public class Bag : TheUIBase
             MergeJewel();
         }
     }
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         PlayerDataConfig.OnDataChanged -= OnJewelChange;
     }
@@ -32,12 +32,17 @@ public class Bag : TheUIBase
     }
     private void OnEnable()
     {
-        itemUIPrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
         BindButton();
         MergeJewel();
+
+    }
+    private void OnDisable()
+    {
+        ReturnAll();
     }
     private void MergeJewel()
     {
+        ReturnAll();
         Debug.Log("MergeJewel");
         List<JewelBase> allJewels = PlayerDataConfig.jewels;
         Dictionary<JewelBase, JewelBase> jewelDict = new();
@@ -103,14 +108,13 @@ public class Bag : TheUIBase
         Debug.Log("宝石总数量" + count);
         return count;
     }
+
     private void GenerateJewelUI()
     {
-        Transform parent = transform.RecursiveFind("JewelContent");
-        parent.ClearChildren();
-        itemUIPrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
+        Transform parent = JewelContent;
         foreach (var jewel in PlayerDataConfig.jewels)
         {
-            JewelUIBase itemUI = Instantiate(itemUIPrefab).AddComponent<JewelUIBase>();
+            var itemUI = ToolManager.Instance.GetJewelUIFromPool();
             itemUI.itemInfo = jewel;
             itemUI.Init();
             itemUI.transform.SetParent(parent);
@@ -157,6 +161,21 @@ public class Bag : TheUIBase
         GenerateUpgradeUI(ConsumeList);
 
     }
+    private void ReturnAll()
+    {
+        Transform parent = JewelContent;
+        List<GameObject> childrenToDestroy = new();
+        foreach (Transform child in parent)
+        {
+            childrenToDestroy.Add(child.gameObject);
+        }
+        // 销毁所有子物体
+        foreach (var child in childrenToDestroy)
+        {
+            ToolManager.Instance.ReturnItemUIToPool(child);
+        }
+    }
+
     private List<JewelBase> HandleList(List<JewelBase> originList, int totalCount)
     {
         List<JewelBase> backupList = new();
@@ -237,7 +256,7 @@ public class Bag : TheUIBase
         {
             Action action = () =>
             {
-                ItemUIBase itemUI = Instantiate(itemUIPrefab).AddComponent<ItemUIBase>();
+                var itemUI = ToolManager.Instance.GetItemUIFromPool();
                 itemUI.itemInfo = jewel;
                 itemUI.Init();
                 itemUI.transform.SetParent(parent);
@@ -246,7 +265,8 @@ public class Bag : TheUIBase
 
         }
         //刷新布局
-        ToolManager.Instance.SetTimeout(()=> {
+        ToolManager.Instance.SetTimeout(() =>
+        {
             parent.gameObject.SetActive(false);
             parent.gameObject.SetActive(true);
         }, delay * idx++);
