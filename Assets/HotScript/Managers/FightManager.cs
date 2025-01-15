@@ -17,9 +17,10 @@ public class FighteManager : ManagerBase<FighteManager>
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
     public Dictionary<string, float> cdDict = new();
+    public MissionBase currentMission;
     public int exp = 0;
     public int level = 1;
-    public int CurrentNeedExp => level * 1000;
+    public int CurrentNeedExp => currentMission.A1_D * level;
     public Queue<string> bloodMsgs = new();
 
     GameObject DamageTextPrefab

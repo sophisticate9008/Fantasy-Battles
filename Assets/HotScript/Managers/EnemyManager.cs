@@ -5,22 +5,27 @@ using UnityEngine;
 // 管理怪物生成
 public class EnemyManager : ManagerBase<EnemyManager>
 {
+
     public List<AnimationCurve> spawnRateCurves; // 每种怪物的生成速率曲线
-    private List<string> enemyTypes = new() { "Monster1" }; // 支持的怪物类型
+    public MissionBase CurrentMission => FighteManager.Instance.currentMission;
+    private List<string> enemyTypes => CurrentMission.enemyTypes; // 支持的怪物类型
     private List<EnemyConfigBase> enemyConfigBases = new(); // 怪物配置
     private List<GameObject> monsterPrefabs = new(); // 怪物预制体
-    private int maxCount = 1000; // 最大生成数量
+    private int maxCount; // 最大生成数量
     private int currentCount = 0; // 当前生成数量
-    public float fixInterval = 6f; // 固定时间间隔
-    public float noiseScale = 0.8f; // 噪声比例
+    public float fixInterval; // 固定时间间隔
+    public float noiseScale; // 噪声比例
     [SerializeField]
     private float ViewportXCoordinate = 0.8f; // 视口生成的y坐标
     public int liveCount = 0;//存活数量
     private Camera mainCamera;
 
-
-    private void Start()
+    
+    public void Init()
     {
+        maxCount = CurrentMission.MaxCount;
+        fixInterval = CurrentMission.fixInterval;
+        noiseScale = CurrentMission.noiseScale;
         mainCamera = Camera.main;
         foreach (string item in enemyTypes)
         {
