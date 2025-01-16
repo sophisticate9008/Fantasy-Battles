@@ -22,6 +22,7 @@ public class MissionManager : ManagerBase<MissionManager>
     }
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         mprc = ConfigManager.Instance.GetConfigByClassName("MissionPassRecord") as MissionPassRecordConfig;
         mr = GetMissionRecordById(CurrentMaxPassId);
         mb = MissionFactory.Create(mr.missionId);

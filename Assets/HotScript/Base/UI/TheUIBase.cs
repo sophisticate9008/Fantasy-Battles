@@ -41,6 +41,21 @@ public class TheUIBase : MonoBehaviour
         // 遍历所有找到的 ItemUIBase，并将它们返回对象池
         foreach (var itemUI in itemUIs)
         {
+            // itemUI.transform.localPosition = Vector3.zero; // 重置位置
+            // itemUI.transform.localRotation = Quaternion.identity; // 重置旋转
+            // itemUI.transform.localScale = Vector3.one; // 重置缩放
+            RectTransform rectTransform = itemUI.transform as RectTransform;
+            if (rectTransform != null)
+            {
+                // 这是一个 RectTransform，可以安全地进行操作
+                rectTransform.rotation = Quaternion.Euler(0, 0, 0); // 重置 Z 轴旋转
+            }
+            else
+            {
+                // 不是 RectTransform，可以进行相应处理
+                Debug.LogWarning("Transform is not a RectTransform!");
+            }
+
             ToolManager.Instance.ReturnItemUIToPool(itemUI.gameObject);
         }
     }

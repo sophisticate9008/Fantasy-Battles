@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -140,7 +141,11 @@ public class UIManager : ManagerBase<UIManager>
         if (uiStack.Count > 0)
         {
             var currentUI = uiStack.Pop();
-            Destroy(currentUI.gameObject);
+            currentUI.gameObject.SetActive(false);
+            ToolManager.Instance.SetTimeout(() =>
+            {
+                Destroy(currentUI.gameObject);
+            }, 0.1f);
 
             // // 显示上一个 UI（如果存在）
             // if (uiStack.Count > 0)
@@ -149,7 +154,6 @@ public class UIManager : ManagerBase<UIManager>
             //     previousUI.gameObject.SetActive(true);
             // }
         }
-
         // 移除遮罩
         RemoveMask();
     }
@@ -236,6 +240,59 @@ public class UIManager : ManagerBase<UIManager>
             action?.Invoke();
         });
     }
+    public TheUIBase OnItemUIShow<T>(string title, List<T> items, float delay, Action action = null) where T : ItemBase
+    {
+        // 创建一个 ItemBase 类型的备份列表
+        List<ItemBase> itemBaseList = items.Cast<ItemBase>().ToList();
+
+        GameObject ItemUIShow = CommonUtil.GetAssetByName<GameObject>("ItemUIShow");
+        TheUIBase theUIBase = Instantiate(ItemUIShow).AddComponent<TheUIBase>();
+        Transform parent = theUIBase.transform.RecursiveFind("Content");
+        int idx = 0;
+
+        foreach (ItemBase item in itemBaseList)
+        {
+            void _()
+            {
+                if (parent == null || theUIBase == null)
+                {
+                    return;
+                }
+
+                // 从池中获取 ItemUI 并初始化
+                var itemUI = ToolManager.Instance.GetItemUIFromPool();
+                itemUI.itemInfo = item;
+                itemUI.Init();
+
+                // 设置父物体
+                itemUI.transform.SetParent(parent);
+
+
+            }
+            ToolManager.Instance.SetTimeout(_, delay * idx++);
+        }
+
+        // 刷新布局
+        // ToolManager.Instance.SetTimeout(() =>
+        // {
+        //     parent.gameObject.SetActive(false);
+        //     parent.gameObject.SetActive(true);
+        // }, delay * idx++);
+
+        // 设置通用 UI
+        if (action == null)
+        {
+            OnCommonUI(title, theUIBase);
+        }
+        else
+        {
+            OnCommonUI(title, theUIBase, action);
+        }
+
+        return theUIBase;
+    }
+
+
 }
 
 // 遮罩点击监听器

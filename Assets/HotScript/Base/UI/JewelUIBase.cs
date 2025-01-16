@@ -11,6 +11,7 @@ public class JewelUIBase : ItemUIBase
     public override void Init()
     {
         base.Init();
+        ResetDiff();
         IsEmbeded();
     }
 

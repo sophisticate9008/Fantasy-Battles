@@ -8,7 +8,7 @@ public class MissionRecord {
     public int missionId;
     public float passTime;
     public MissionRecord(int id) {
-        successPercent = -1;
+        successPercent = 0;
         missionId = id;
         isGetReward = new bool[3] {false, false, false};
         passTime = 0;

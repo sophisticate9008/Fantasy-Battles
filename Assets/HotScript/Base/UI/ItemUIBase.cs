@@ -17,6 +17,7 @@ public class ItemUIBase : TheUIBase
     public int Id => itemInfo.id;
     public override void Init()
     {
+        ResetDiff();
         gameObject.SetActive(true);
         string color = ItemUtil.LevelToColorString(Level);
         Sprite background = CommonUtil.GetAssetByName<Sprite>(color);
@@ -46,6 +47,35 @@ public class ItemUIBase : TheUIBase
         des.itemInfo = itemInfo;
         des.Init();
         UIManager.Instance.ShowUI(des);
+    }
+    public void ResetDiff()
+    {
+        // 获取 Image 组件和子物体
+        Image bg = gameObject.GetComponent<Image>();
+        Image jewel = transform.GetChild(0).GetComponent<Image>();
+        GameObject upgrade = transform.RecursiveFind("Upgrade").gameObject;
+
+        // 恢复背景透明度
+        if (bg != null)
+        {
+            Color bgColor = bg.color;
+            bgColor.a = 1f;  // 恢复 alpha 为 1 (完全不透明)
+            bg.color = bgColor;
+        }
+
+        // 恢复宝石透明度
+        if (jewel != null)
+        {
+            Color jewelColor = jewel.color;
+            jewelColor.a = 1f;  // 恢复 alpha 为 1 (完全不透明)
+            jewel.color = jewelColor;
+        }
+
+        // 如果升级显示被禁用，恢复其状态
+        if (upgrade != null)
+        {
+            upgrade.SetActive(false);  // 恢复为隐藏状态
+        }
     }
 
 

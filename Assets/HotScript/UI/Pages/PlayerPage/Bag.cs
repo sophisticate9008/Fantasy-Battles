@@ -11,6 +11,8 @@ public class Bag : TheUIBase
     private void Start()
     {
         PlayerDataConfig.OnDataChanged += OnJewelChange;
+    }
+    private void Awake() {
         JewelContent = transform.RecursiveFind("JewelContent");
     }
     private void OnJewelChange(string fieldName)
@@ -127,6 +129,9 @@ public class Bag : TheUIBase
         Dictionary<(int level, int placeId), List<JewelBase>> originJewelDict = new Dictionary<(int, int), List<JewelBase>>();
         foreach (var jewel in PlayerDataConfig.jewels)
         {
+            if(jewel.level >= 7) {
+                continue;
+            }
             // 创建联合键 (level, placeId)
             var key = (jewel.level, jewel.placeId);
             // 如果字典中已存在该键，则将宝石加入对应列表
@@ -247,29 +252,6 @@ public class Bag : TheUIBase
             UIManager.Instance.OnMessage("没有升级条件");
             return;
         }
-        GameObject upgradeJewel = CommonUtil.GetAssetByName<GameObject>("UpgradeJewel");
-        TheUIBase theUIBase = Instantiate(upgradeJewel).AddComponent<TheUIBase>();
-        Transform parent = theUIBase.transform.RecursiveFind("Content");
-        float delay = 0.02f;
-        int idx = 0;
-        foreach (JewelBase jewel in jewelList)
-        {
-            Action action = () =>
-            {
-                var itemUI = ToolManager.Instance.GetItemUIFromPool();
-                itemUI.itemInfo = jewel;
-                itemUI.Init();
-                itemUI.transform.SetParent(parent);
-            };
-            ToolManager.Instance.SetTimeout(action, delay * idx++);
-
-        }
-        //刷新布局
-        ToolManager.Instance.SetTimeout(() =>
-        {
-            parent.gameObject.SetActive(false);
-            parent.gameObject.SetActive(true);
-        }, delay * idx++);
         if (mode == 0)
         {
             Action action = () =>
@@ -277,12 +259,11 @@ public class Bag : TheUIBase
                 UIManager.Instance.CloseUI();
                 ConfirmUpgrade(jewelList);
             };
-            UIManager.Instance.OnCommonUI("消耗以下宝石", theUIBase, action);
-
+            UIManager.Instance.OnItemUIShow("消耗以下宝石", jewelList, 0.01f, action);
         }
         else
         {
-            UIManager.Instance.OnCommonUI("获得以下宝石", theUIBase);
+            UIManager.Instance.OnItemUIShow("获得以下宝石", jewelList, 0.01f);
         }
 
     }

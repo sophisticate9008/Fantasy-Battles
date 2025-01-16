@@ -109,7 +109,7 @@ public class Draw : ConsumeBase
 
         for (int i = 0; i < drawList.Count; i++)
         {
-            ItemUIBase itemUI = ToolManager.Instance.GetItemUIFromPool();
+            ItemUIBase itemUI = Instantiate(CommonUtil.GetAssetByName<GameObject>("ItemBase")).AddComponent<ItemUIBase>();
             itemUI.itemInfo = drawList[i];
             itemUI.Init();
             ChangeItemStyle(itemUI);
@@ -131,7 +131,7 @@ public class Draw : ConsumeBase
             }
 
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.03f);
         }
     }
     //独特的抽卡样式，去除背景框，仅显示宝石

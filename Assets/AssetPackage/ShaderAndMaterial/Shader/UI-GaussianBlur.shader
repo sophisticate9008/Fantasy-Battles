@@ -41,12 +41,14 @@ Shader "Custom/BlurWithStencil"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR; // 顶点颜色
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+                float4 color : COLOR; // 将顶点颜色传递给片段着色器
             };
 
             v2f vert (appdata_t v)
@@ -54,6 +56,7 @@ Shader "Custom/BlurWithStencil"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
+                o.color = v.color; // 保持颜色信息
                 return o;
             }
 
@@ -71,6 +74,9 @@ Shader "Custom/BlurWithStencil"
                         color += weight[abs(x)] * weight[abs(y)] * tex2D(_MainTex, uv + float2(x, y) * _BlurSize * _MainTex_TexelSize.xy);
                     }
                 }
+
+                // 将顶点颜色应用到最终的模糊结果
+                color *= i.color;
                 return color;
             }
             ENDCG

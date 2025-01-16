@@ -115,4 +115,24 @@ public static class TransformExtensions
         return components;
     }
 
+    /// <summary>
+    /// 递归获取某个 Transform 对象的所有子对象数量（包括子对象、孙对象及更深层次的子对象）。
+    /// </summary>
+    /// <param name="parent">父对象 Transform</param>
+    /// <returns>所有子对象的数量</returns>
+    public static int GetChildCountRecursive(this Transform parent)
+    {
+        int count = 0; // 初始化计数器
+
+        // 遍历当前 Transform 的直接子对象
+        foreach (Transform child in parent)
+        {
+            count++; // 每发现一个直接子对象，计数器 +1
+            count += GetChildCountRecursive(child); // 递归统计当前子对象的子对象数量
+        }
+
+        return count; // 返回总计数
+    }
+
+
 }

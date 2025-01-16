@@ -1,28 +1,61 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 public class ToolManager : ManagerBase<ToolManager>
 {
+    public GameObject ItemUIPrefab;
     private void Start()
     {
+        ItemUIPrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
+        if (ItemUIPrefab.GetComponent<ItemUIBase>() == null)
+        {
+            ItemUIPrefab.AddComponent<ItemUIBase>();
+        }
+
+        if (ItemUIPrefab.GetComponent<JewelUIBase>() == null)
+        {
+            ItemUIPrefab.AddComponent<JewelUIBase>();
+        }
+
         CreatePool();
     }
     private void CreatePool()
     {
-        ObjectPoolManager.Instance.CreatePool("ItemUIPool", CommonUtil.GetAssetByName<GameObject>("ItemBase"), 5, 500);
+        ObjectPoolManager.Instance.CreatePool("ItemUIPool", ItemUIPrefab, 5, 150);
     }
     public JewelUIBase GetJewelUIFromPool()
     {
-        GameObject obj = ObjectPoolManager.Instance.GetFromPool("ItemUIPool", CommonUtil.GetAssetByName<GameObject>("ItemBase"));
-        return obj.GetComponent<JewelUIBase>() ?? obj.AddComponent<JewelUIBase>();
+        GameObject obj = ObjectPoolManager.Instance.GetFromPool("ItemUIPool", ItemUIPrefab);
+        obj.GetComponent<ItemUIBase>().enabled = false;
+        JewelUIBase jub = obj.GetComponent<JewelUIBase>();
+        if (jub != null)
+        {
+            return jub;
+        }
+        else
+        {
+            return obj.AddComponent<JewelUIBase>();
+        }
     }
     public ItemUIBase GetItemUIFromPool()
     {
 
-        GameObject obj = ObjectPoolManager.Instance.GetFromPool("ItemUIPool", CommonUtil.GetAssetByName<GameObject>("ItemBase"));
-        return obj.GetComponent<ItemUIBase>() ?? obj.AddComponent<ItemUIBase>();
+        GameObject obj = ObjectPoolManager.Instance.GetFromPool("ItemUIPool", ItemUIPrefab);
+        obj.GetComponent<JewelUIBase>().enabled = false;
+        ItemUIBase iub = obj.GetComponent<ItemUIBase>();
+        if (iub != null)
+        {
+            return iub;
+        }
+        else
+        {
+            return obj.AddComponent<ItemUIBase>();
+        }
+
     }
-    public void ReturnItemUIToPool(GameObject obj) {
+    public void ReturnItemUIToPool(GameObject obj)
+    {
         ObjectPoolManager.Instance.ReturnToPool("ItemUIPool", obj);
     }
     public Coroutine SetTimeout(Action action, float delay)

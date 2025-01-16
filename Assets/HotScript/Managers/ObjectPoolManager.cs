@@ -89,6 +89,9 @@ public class ObjectPoolManager : ManagerBase<ObjectPoolManager>
     // 将对象返回到池子里
     public void ReturnToPool(string poolName, GameObject obj)
     {
+        if(obj == null) {
+            return;
+        }
         if (poolDictionary.ContainsKey(poolName))
         {
             // 如果池子已满，直接销毁对象

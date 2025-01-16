@@ -14,6 +14,9 @@ public static class Constant
     public static Vector2 rightTopBoundary = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)); // 设定右上角的边界
 
     public static List<String> prefabFromScene = CommonUtil.AsList<String>(
-            "ItemBase", "Message", "ExchangeBase", "Des", "DrawPanel", "CommonUI", "UpgradeJewel", "Wash", "Tornado"
+            "ItemBase", "Message", "ExchangeBase", "Des", "DrawPanel", "CommonUI", "ItemUIShow", "Wash", "Tornado"
     );
+    public static int diamondRewardBaseNum = 50;
+    public static int goldRewardBaseNum = 1000;
+    public static int rewardAdditon = 2;
 }
