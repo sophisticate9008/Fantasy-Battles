@@ -68,7 +68,7 @@ public class JewelHandleUIBase : TheUIBase
             ShowJewelsOnPlace();
         }
     }
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         PlayerDataConfig.OnDataChanged -= OnJewelChange;
     }

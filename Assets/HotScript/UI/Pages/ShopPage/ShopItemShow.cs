@@ -21,7 +21,7 @@ public class ShopItemShow : TheUIBase
         UpdateSingleItem("keyBlue");
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         // 移除事件监听，避免内存泄漏
         if (PlayerDataConfig != null)

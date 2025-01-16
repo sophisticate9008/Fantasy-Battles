@@ -15,7 +15,7 @@ public class Equipments : TheUIBase
         ChangeEmbedUIColor();
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         PlayerDataConfig.OnDataChanged -= OnJewelChange;
     }

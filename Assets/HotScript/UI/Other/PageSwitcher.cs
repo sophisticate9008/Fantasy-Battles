@@ -4,7 +4,7 @@ using UnityEngine;
 public class PageSwitcher : MonoBehaviour
 {
     public List<RectTransform> pages; // 所有页面的 RectTransform
-    private int currentPageIndex = 0; // 当前页面索引
+    public int currentPageIndex = 0; // 当前页面索引
     public float transitionDuration = 0.2f; // 动画时间
     public bool ScanChildren = true;
 

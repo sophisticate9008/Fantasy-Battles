@@ -8,5 +8,5 @@ public class MissionPassRecordConfig : ConfigBase
     public override bool IsCreatePool { get; set; } = false;
     public Dictionary<int,MissionRecord> PassRecords = new();
 
-
+    
 }
