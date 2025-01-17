@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class ToolManager : ManagerBase<ToolManager>
 {
+    public PlayerDataConfig PlayerDataConfig { get => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig; set { } }
     public GameObject ItemUIPrefab;
     private void Start()
     {
@@ -120,7 +122,17 @@ public class ToolManager : ManagerBase<ToolManager>
             }
         }
     }
-
+    public void GetReward(List<(string resName, int count)> itemData, List<ItemBase> jewels = null) {
+        List<ItemBase> items = new();
+        foreach(var (resName, count) in itemData) {
+            PlayerDataConfig.UpdateValueAdd(resName, count);
+            items.Add(ItemFactory.Create(resName, count));
+        }
+        if(jewels != null){
+            items.AddRange(jewels);
+        }
+        UIManager.Instance.OnItemUIShow("获得奖励",items);
+    }
 
 
 }

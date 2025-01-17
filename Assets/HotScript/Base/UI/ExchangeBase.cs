@@ -66,9 +66,7 @@ public class ExchangeBase : ConsumeBase
 
             // 销毁现有物体
             
-            // 加载新Prefab并实例化
-            GameObject ItemPrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
-            GameObject newItem = Instantiate(ItemPrefab);
+            // 加载新Prefab并实例化                                                                 
             ItemUIBase itemUI = ToolManager.Instance.GetItemUIFromPool();
             itemInfo = ItemFactory.Create(goodName, goodCount);
             itemUI.itemInfo = itemInfo;

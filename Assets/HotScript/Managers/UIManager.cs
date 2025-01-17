@@ -240,7 +240,7 @@ public class UIManager : ManagerBase<UIManager>
             action?.Invoke();
         });
     }
-    public TheUIBase OnItemUIShow<T>(string title, List<T> items, float delay, Action action = null) where T : ItemBase
+    public TheUIBase OnItemUIShow<T>(string title, List<T> items, float delay = 0.02f, Action action = null) where T : ItemBase
     {
         // 创建一个 ItemBase 类型的备份列表
         List<ItemBase> itemBaseList = items.Cast<ItemBase>().ToList();
@@ -292,8 +292,8 @@ public class UIManager : ManagerBase<UIManager>
         return theUIBase;
     }
 
-
 }
+
 
 // 遮罩点击监听器
 public class MaskListener : MonoBehaviour, IPointerClickHandler

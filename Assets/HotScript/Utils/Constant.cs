@@ -17,6 +17,7 @@ public static class Constant
             "ItemBase", "Message", "ExchangeBase", "Des", "DrawPanel", "CommonUI", "ItemUIShow", "Wash", "Tornado"
     );
     public static int diamondRewardBaseNum = 50;
-    public static int goldRewardBaseNum = 1000;
+    public static int goldRewardBaseNum = 500;
+    public static int washWaterRewardBaseNum = 1;
     public static int rewardAdditon = 2;
 }

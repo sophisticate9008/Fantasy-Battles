@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -85,19 +86,23 @@ public class FightPage : TheUIBase
     }
     void UpdateRewards()
     {
-
+        int rewardCount = 0;
         // 遍历范围
         if (mr.successPercent > 0 && mr.successPercent < 0.5f)
         {
-            UpdateRewardState(0, mr.isGetReward[0]);
+            rewardCount = 1;
         }
         else if (mr.successPercent >= 0.5f && mr.successPercent < 1f)
         {
-            UpdateRewardState(1, mr.isGetReward[1]);
+            rewardCount = 2;
         }
         else if (mr.successPercent == 1f)
         {
-            UpdateRewardState(2, mr.isGetReward[2]);
+            rewardCount = 3;
+        }
+        for (int i = 0; i < rewardCount; i++)
+        {
+            UpdateRewardState(i, mr.isGetReward[i]);
         }
     }
     void UpdateRewardState(int rewardIndex, bool isGetReward)
@@ -107,6 +112,15 @@ public class FightPage : TheUIBase
         // 获取奖励逻辑
         reward.GetChild(0).gameObject.SetActive(!isGetReward); // 未领取状态
         reward.GetChild(1).gameObject.SetActive(isGetReward);  // 已领取状态
+        if (!isGetReward)
+        {
+            Button b = reward.GetChild(0).GetComponent<Button>();
+            b.onClick.RemoveAllListeners();
+            b.onClick.AddListener(() =>
+            {
+                GetReward(rewardIndex);
+            });
+        }
     }
     void UpdateProgressBar()
     {
@@ -120,5 +134,17 @@ public class FightPage : TheUIBase
     {
         int diamondNum = Constant.diamondRewardBaseNum * (index + Constant.rewardAdditon);
         int goldRewardBaseNum = Constant.goldRewardBaseNum * (index + Constant.rewardAdditon);
+        int washWaterRewardBaseNum = Constant.washWaterRewardBaseNum * (index + Constant.rewardAdditon);
+        mr.isGetReward[index] = true;
+        PlayerDataConfig.SaveConfig();
+        List<(string resName, int count)> rewards = new()
+        {
+            ("diamond", diamondNum),
+            ("gold", goldRewardBaseNum),
+            ("washWater", washWaterRewardBaseNum)
+        };
+        ToolManager.Instance.GetReward(rewards);
+        UpdateRewards();
+        
     }
 }
