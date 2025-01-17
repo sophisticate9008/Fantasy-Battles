@@ -14,6 +14,7 @@ public class FighteManager : ManagerBase<FighteManager>
     public PlayerDataConfig playerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     public WallConfig WallConfig => ConfigManager.Instance.GetConfigByClassName("Wall") as WallConfig;
     public AnimationCurve spawnRateCurve;
+    public MissionRecord mr => MissionManager.Instance.mr;
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
     public Dictionary<string, float> cdDict = new();
@@ -350,6 +351,12 @@ public class FighteManager : ManagerBase<FighteManager>
         WallConfig.CurrentLife += val;
         WallConfig.CurrentLife = Mathf.Clamp(WallConfig.CurrentLife, 0, WallConfig.LifeMax);
         bloodMsgs.Enqueue($"<color=#27DE1F> +{val} </color>");
+    }
+
+    public void EndGame(bool isSuccess) {
+        if(isSuccess) {
+            
+        }
     }
 
 }

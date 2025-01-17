@@ -7,6 +7,7 @@ using System.Reflection;
 public class PlayerDataConfig : ConfigBase
 {
     public override bool IsCreatePool { get; set; } = false;
+    public Dictionary<int,MissionRecord> PassRecords = new();
     public int gold = 200000;
     public int diamond = 25000;
     public int keyPurple = 100;

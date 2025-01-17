@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YooAsset;
 
 public class FightPage : TheUIBase
 {
@@ -17,6 +18,7 @@ public class FightPage : TheUIBase
     public Transform progressBar;
     public Transform rewards;
     public TextMeshProUGUI percentText;
+    public Button BeginButton;
     private void Start()
     {
         FindNecessary();
@@ -33,11 +35,17 @@ public class FightPage : TheUIBase
         progressBar = transform.RecursiveFind("进度条");
         rewards = transform.RecursiveFind("宝箱");
         percentText = transform.RecursiveFind("百分比").GetComponent<TextMeshProUGUI>();
+        BeginButton = transform.RecursiveFind("开始").GetComponent<Button>();
     }
     void BindButton()
     {
+        BeginButton.onClick.AddListener(BeginFight);
         prev.onClick.AddListener(PreLevel);
         next.onClick.AddListener(NextLevel);
+    }
+    void BeginFight() {
+        var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
+        YooAssets.LoadSceneAsync("Fight", sceneMode);
     }
     public void PreLevel()
     {

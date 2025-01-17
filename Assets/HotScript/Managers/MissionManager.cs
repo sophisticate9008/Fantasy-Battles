@@ -3,36 +3,36 @@ using System.Linq;
 public class MissionManager : ManagerBase<MissionManager>
 {
     //流程选择关卡时先获取一个记录的实例,战斗时全程携带，胜利后填充数据，然后保存该记录到通关记录字典中并序列化
+    public PlayerDataConfig PlayerDataConfig { get => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig; set { } }
     public MissionRecord mr;
     public MissionBase mb;
-    public MissionPassRecordConfig mprc;
+
     public int CurrentMaxPassId
     {
         get
         {
             // 检查 PassRecords 是否为 null 或为空
-            if (mprc.PassRecords == null || mprc.PassRecords.Count == 0)
+            if (PlayerDataConfig.PassRecords == null || PlayerDataConfig.PassRecords.Count == 0)
             {
                 return 0;
             }
 
             // 返回字典中最大键值
-            return mprc.PassRecords.Keys.Max();
+            return PlayerDataConfig.PassRecords.Keys.Max();
         }
     }
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        mprc = ConfigManager.Instance.GetConfigByClassName("MissionPassRecord") as MissionPassRecordConfig;
         mr = GetMissionRecordById(CurrentMaxPassId);
         mb = MissionFactory.Create(mr.missionId);
 
     }
     public MissionRecord GetMissionRecordById(int id)
     {
-        if (mprc.PassRecords.ContainsKey(id))
+        if (PlayerDataConfig.PassRecords.ContainsKey(id))
         {
-            return mprc.PassRecords[id];
+            return PlayerDataConfig.PassRecords[id];
         }
         else
         {
@@ -45,8 +45,8 @@ public class MissionManager : ManagerBase<MissionManager>
 
     public void SaveRecord()
     {
-        mprc.PassRecords[mr.missionId] = mr;
-        mprc.SaveConfig();
+        PlayerDataConfig.PassRecords[mr.missionId] = mr;
+        PlayerDataConfig.SaveConfig();
     }
 
     public void GetRecord(MissionRecord record, int rewardId)
@@ -54,7 +54,7 @@ public class MissionManager : ManagerBase<MissionManager>
         if (!record.isGetReward[rewardId] && record.successPercent >= 0.5 * rewardId)
         {
             record.isGetReward[rewardId] = true;
-            mprc.SaveConfig();
+            PlayerDataConfig.SaveConfig();
         }
     }
 
