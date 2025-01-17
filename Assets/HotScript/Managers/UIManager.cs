@@ -29,7 +29,7 @@ public class UIManager : ManagerBase<UIManager>
         // 拦截鼠标按下事件
         // typeof(ExecuteEvents).GetField("s_PointerDownHandler", BindingFlags.NonPublic | BindingFlags.Static)
         //     .SetValue(null, new ExecuteEvents.EventFunction<IPointerDownHandler>(OnPointerDown));
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
         uiCanvas = GameObject.Find("UICanvas");
         if (uiCanvas == null)
         {

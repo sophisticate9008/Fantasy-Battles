@@ -26,7 +26,7 @@ public class MissionBase
     }
     public string LevelToName()
     {
-        return "第" + level + "关";
+        return "第" + (level + 1) + "关";
     }
     public string MapIdToMapName()
     {

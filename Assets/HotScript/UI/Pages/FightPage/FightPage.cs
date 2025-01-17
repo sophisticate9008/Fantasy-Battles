@@ -43,7 +43,8 @@ public class FightPage : TheUIBase
         prev.onClick.AddListener(PreLevel);
         next.onClick.AddListener(NextLevel);
     }
-    void BeginFight() {
+    void BeginFight()
+    {
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         YooAssets.LoadSceneAsync("Fight", sceneMode);
     }
@@ -56,13 +57,17 @@ public class FightPage : TheUIBase
         }
         SwitchLevel(mb.level - 1);
         ps.PreviousPage();
-
+        ChangeNeed();
     }
     public void NextLevel()
     {
-        if (mb.level >= cmpi)
+        if (mb.level > cmpi)
         {
             UIManager.Instance.OnMessage("新一关还未解锁");
+            return;
+        }
+        if(mb.level >= Constant.MissionMaxId) {
+            UIManager.Instance.OnMessage("最后一关了");
             return;
         }
         SwitchLevel(mb.level + 1);
@@ -87,10 +92,21 @@ public class FightPage : TheUIBase
     }
     void ChangeNeed()
     {
+        RecoverRewardsUI();
         LevelName.text = mb.LevelToName();
         percentText.text = ((int)(mr.successPercent * 100)) + "%";
         UpdateRewards();
         UpdateProgressBar();
+
+    }
+    void RecoverRewardsUI()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Transform reward = rewards.GetChild(i);
+            reward.GetChild(0).gameObject.SetActive(false); // 未领取状态
+            reward.GetChild(1).gameObject.SetActive(false);  // 已领取状态
+        }
     }
     void UpdateRewards()
     {
@@ -132,7 +148,7 @@ public class FightPage : TheUIBase
     }
     void UpdateProgressBar()
     {
-        foreach (Transform t in transform)
+        foreach (Transform t in progressBar.transform)
         {
             t.GetComponent<Image>().fillAmount = mr.successPercent;
         }
@@ -148,11 +164,11 @@ public class FightPage : TheUIBase
         List<(string resName, int count)> rewards = new()
         {
             ("diamond", diamondNum),
-            ("gold", goldRewardBaseNum),
+            ("money", goldRewardBaseNum),
             ("washWater", washWaterRewardBaseNum)
         };
         ToolManager.Instance.GetReward(rewards);
         UpdateRewards();
-        
+
     }
 }

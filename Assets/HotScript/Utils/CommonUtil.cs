@@ -25,14 +25,29 @@ public class CommonUtil
     /// </summary>
     public static T GetAssetByName<T>(string resName) where T : UnityEngine.Object
     {
-        if (typeof(T) == typeof(GameObject) && Constant.prefabFromScene.Contains(resName))
+        try
         {
-            GameObject prefabs = GameObject.Find("Prefabs");
-            return prefabs.transform.RecursiveFind(resName).gameObject as T;
-        }
-        else
-        {
+            // 特殊处理 GameObject 类型资源
+            if (typeof(T) == typeof(GameObject) && Constant.prefabFromScene.Contains(resName))
+            {
+                GameObject prefabs = GameObject.Find("Prefabs");
+                Transform foundTransform = prefabs?.transform.RecursiveFind(resName);
+
+                if (foundTransform != null)
+                {
+                    return foundTransform.gameObject as T;
+                }
+            }
+
+            // 使用 YooAssets 加载资源
             return YooAssets.LoadAssetSync<T>(resName).AssetObject as T;
         }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error loading resource: {resName}. Exception: {ex.Message}");
+            // 尝试再次加载资源作为最后的解决方案
+            return YooAssets.LoadAssetSync<T>(resName).AssetObject as T;
+        }
+
     }
 }

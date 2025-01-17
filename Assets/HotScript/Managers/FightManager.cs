@@ -11,14 +11,14 @@ using YooAsset;
 public class FighteManager : ManagerBase<FighteManager>
 {
 
-    public PlayerDataConfig playerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
+    public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     public WallConfig WallConfig => ConfigManager.Instance.GetConfigByClassName("Wall") as WallConfig;
     public AnimationCurve spawnRateCurve;
     public MissionRecord mr => MissionManager.Instance.mr;
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
     public Dictionary<string, float> cdDict = new();
-    public MissionBase currentMission;
+    public MissionBase currentMission => MissionFactory.Create(mr.missionId);
     public int exp = 0;
     public int level = 1;
     public int CurrentNeedExp => currentMission.A1_D * level;
@@ -53,6 +53,9 @@ public class FighteManager : ManagerBase<FighteManager>
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
         LoadJewel();
         InitWallBlood();
+        EndGame(true);
+        EnemyManager.Instance.Init();
+
     }
     public void InitWallBlood()
     {
@@ -63,7 +66,7 @@ public class FighteManager : ManagerBase<FighteManager>
         for (int i = 1; i <= 6; i++)
         {
 
-            var jewels = playerDataConfig.GetValue("place" + i) as List<JewelBase>;
+            var jewels = PlayerDataConfig.GetValue("place" + i) as List<JewelBase>;
             foreach (var jewel in jewels)
             {
                 ItemFactory.CreateJewelAction(jewel.id, jewel.level).Invoke();
@@ -184,7 +187,8 @@ public class FighteManager : ManagerBase<FighteManager>
         {
             CreateDamageText(enemyObj, 0, "", false);
             return;
-        };
+        }
+        ;
 
         //消耗怪物免疫次数
         if (enemyBase.ImmunityCount > 0)
@@ -310,6 +314,11 @@ public class FighteManager : ManagerBase<FighteManager>
     public void AddExp(int val)
     {
         exp += val;
+        if(exp >= 2) {
+            ControlGame(false);
+
+            EndGame(true);
+        }
         if (exp / CurrentNeedExp > 0)
         {
             exp %= CurrentNeedExp;
@@ -353,10 +362,19 @@ public class FighteManager : ManagerBase<FighteManager>
         bloodMsgs.Enqueue($"<color=#27DE1F> +{val} </color>");
     }
 
-    public void EndGame(bool isSuccess) {
-        if(isSuccess) {
-            
-        }
-    }
+    #region  对局结束
+    public void EndGame(bool isSuccess)
+    {
+        Debug.Log("对局结束");
 
+        if (isSuccess)
+        {
+            mr.successPercent = WallConfig.CurrentLife / (float)WallConfig.LifeMax;
+            mr.Save();
+        }
+        var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
+        YooAssets.LoadSceneSync("Main", sceneMode);
+        
+    }
+    #endregion
 }

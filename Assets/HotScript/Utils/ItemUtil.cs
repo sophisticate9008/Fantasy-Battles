@@ -106,6 +106,8 @@ public class ItemUtil
             "keyPurple" => "紫钥匙",
             "keyBlue" => "蓝钥匙",
             "washWater" => "洗练试剂",
+            "money" => "金币",
+            "diamond" => "钻石",
             _ => throw new System.NotImplementedException(),
         };
     }

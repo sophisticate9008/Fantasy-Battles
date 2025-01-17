@@ -36,7 +36,7 @@ public class BottomBarClick : MonoBehaviour
         }
         if (childAnimators.Count > 0)
         {
-            OnButtonClick(childAnimators[0], 0);
+            OnButtonClick(childAnimators[2], 2);
         }
 
     }

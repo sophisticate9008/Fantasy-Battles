@@ -1,10 +1,11 @@
 
+using System.Collections.Generic;
 using TMPro;
 
 
-public class ShopItemShow : TheUIBase
+public class ItemCountShow : TheUIBase
 {
-
+    public List<string> listenItem;
 
     private void Start()
     {
@@ -15,10 +16,11 @@ public class ShopItemShow : TheUIBase
     }
     private void UpdateInitialUI()
     {
+        for (int i = 0; i < listenItem.Count; i++)
+        {
+            UpdateSingleItem(listenItem[i]);
+        }
         // 更新所有 UI 元素，确保它们显示当前值
-        UpdateSingleItem("diamond");
-        UpdateSingleItem("keyPurple");
-        UpdateSingleItem("keyBlue");
     }
 
     public override void OnDestroy()
@@ -33,21 +35,13 @@ public class ShopItemShow : TheUIBase
     // 更新单个 UI 元素的方法
     private void UpdateSingleItem(string fieldName)
     {
+        int idx = listenItem.IndexOf(fieldName);
         // 使用反射获取 PlayerDataConfig 中的最新值
         int newValue = (int)PlayerDataConfig.GetValue(fieldName);
 
         // 根据 fieldName 更新相应的 UI 元素
-        switch (fieldName)
-        {
-            case "diamond":
-                transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = newValue.ToString();
-                break;
-            case "keyPurple":
-                transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = newValue.ToString();
-                break;
-            case "keyBlue":
-                transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = newValue.ToString();
-                break;
-        }
+
+        transform.GetChild(idx).GetComponent<TextMeshProUGUI>().text = newValue.ToString();
+
     }
 }

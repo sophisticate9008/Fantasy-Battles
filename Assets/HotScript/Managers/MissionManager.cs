@@ -1,11 +1,13 @@
+
 using System.Linq;
+using UnityEngine;
 
 public class MissionManager : ManagerBase<MissionManager>
 {
     //流程选择关卡时先获取一个记录的实例,战斗时全程携带，胜利后填充数据，然后保存该记录到通关记录字典中并序列化
     public PlayerDataConfig PlayerDataConfig { get => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig; set { } }
     public MissionRecord mr;
-    public MissionBase mb;
+    public MissionBase mb => MissionFactory.Create(mr.missionId);
 
     public int CurrentMaxPassId
     {
@@ -18,28 +20,31 @@ public class MissionManager : ManagerBase<MissionManager>
             }
 
             // 返回字典中最大键值
-            return PlayerDataConfig.PassRecords.Keys.Max();
+            var maxMissionId = PlayerDataConfig.PassRecords.Max(record => record.missionId);
+            return maxMissionId;
+            
         }
     }
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
         mr = GetMissionRecordById(CurrentMaxPassId);
-        mb = MissionFactory.Create(mr.missionId);
-
     }
     public MissionRecord GetMissionRecordById(int id)
     {
-        if (PlayerDataConfig.PassRecords.ContainsKey(id))
+        foreach (var record in PlayerDataConfig.PassRecords)
         {
-            return PlayerDataConfig.PassRecords[id];
+            if (record.missionId == id)
+            {
+                Debug.Log("已存在该关卡的通关记录");
+                return record;
+            }
         }
-        else
-        {
-            MissionRecord newRecord = new(id);
-            mr = newRecord;
-            return newRecord;//通关了才给记录到PassRecords
-        }
+
+        MissionRecord newRecord = new(id);
+        // mr = newRecord;
+        return newRecord;//通关了才给记录到PassRecords
+
     }
 
 
