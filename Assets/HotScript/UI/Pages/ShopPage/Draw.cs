@@ -109,7 +109,8 @@ public class Draw : ConsumeBase
 
         for (int i = 0; i < drawList.Count; i++)
         {
-            ItemUIBase itemUI = Instantiate(CommonUtil.GetAssetByName<GameObject>("ItemBase")).AddComponent<ItemUIBase>();
+            // ItemUIBase itemUI = Instantiate(CommonUtil.GetAssetByName<GameObject>("ItemBase")).AddComponent<ItemUIBase>();
+            ItemUIBase itemUI = ToolManager.Instance.GetItemUIFromPool();
             itemUI.itemInfo = drawList[i];
             itemUI.Init();
             ChangeItemStyle(itemUI);
@@ -137,7 +138,7 @@ public class Draw : ConsumeBase
     //独特的抽卡样式，去除背景框，仅显示宝石
     public void ChangeItemStyle(ItemUIBase itemUI)
     {
-        TextMeshProUGUI textMeshProUGUI = itemUI.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI textMeshProUGUI = itemUI.GetComponentInChildren<TextMeshProUGUI>(true);
         textMeshProUGUI.gameObject.SetActive(false);
     }
 

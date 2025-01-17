@@ -144,7 +144,7 @@ public class UIManager : ManagerBase<UIManager>
             currentUI.gameObject.SetActive(false);
             ToolManager.Instance.SetTimeout(() =>
             {
-                Destroy(currentUI.gameObject);
+                currentUI.SelfDestory();
             }, 0.1f);
 
             // // 显示上一个 UI（如果存在）
@@ -273,11 +273,11 @@ public class UIManager : ManagerBase<UIManager>
         }
 
         // 刷新布局
-        // ToolManager.Instance.SetTimeout(() =>
-        // {
-        //     parent.gameObject.SetActive(false);
-        //     parent.gameObject.SetActive(true);
-        // }, delay * idx++);
+        ToolManager.Instance.SetTimeout(() =>
+        {
+            parent.gameObject.SetActive(false);
+            parent.gameObject.SetActive(true);
+        }, delay * idx++);
 
         // 设置通用 UI
         if (action == null)

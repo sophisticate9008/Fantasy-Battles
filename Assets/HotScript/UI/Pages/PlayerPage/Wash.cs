@@ -25,7 +25,7 @@ public class Wash : ConsumeBase
         GameObject originItem = transform.RecursiveFind("ItemBase").gameObject;
         itemUI.transform.SetParent(originItem.transform.parent, false);
         itemUI.transform.CopyRectTransform(originItem.transform);
-        Destroy(originItem);
+        ToolManager.Instance.ReturnItemUIToPool(originItem);
         Text desText = transform.RecursiveFind("DesText").GetComponent<Text>();
         desText.text = ItemInfo.description;
         ShowWaterNum();

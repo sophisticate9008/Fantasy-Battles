@@ -1,34 +1,32 @@
 using System;
+using System.Collections.Generic;
 
 
 public static class ItemFactory
 {
+   private static readonly Dictionary<string, (int id, int level, string description)> ItemConfigs = new()
+    {
+        { "keyBlue", (501, 3, "蓝钥匙，可以进行蓝色祈愿") },
+        { "keyPurple", (502, 4, "紫钥匙，可以进行紫色祈愿") },
+        { "gold", (503, 3, "金币，养成消耗") },
+        { "washWater", (504, 4, "洗练水，重置橙色宝石以上属性") }
+    };
+
     public static ItemBase Create(string resName, int count = 1)
     {
-        return resName switch
+        if (ItemConfigs.TryGetValue(resName, out var config))
         {
-            "keyBlue" => new ItemBase
+            return new ItemBase
             {
-                simpleName = ItemUtil.VarNameToSipleName(resName),
                 resName = resName,
-                id = 501,
                 count = count,
-                level = 3,
-                description = "蓝钥匙，可以打开蓝色宝箱",
-            },
-            "keyPurple" => new ItemBase
-            {
-                simpleName = ItemUtil.VarNameToSipleName(resName),
-                resName = resName,
-                id = 502,
-                count = count,
-                level = 4,
-                description = "紫钥匙，可以打开紫色宝箱",
-            },
+                id = config.id,
+                level = config.level,
+                description = config.description
+            };
+        }
 
-            _ => throw new System.NotImplementedException(),
-        };
-
+        throw new NotImplementedException($"未实现的资源名称: {resName}");
     }
     public static JewelBase Create(int id, int level, int placeId)
     {

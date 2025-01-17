@@ -50,6 +50,7 @@ public class ItemUIBase : TheUIBase
     }
     public void ResetDiff()
     {
+        transform.GetComponentInChildren<TextMeshProUGUI>(true).gameObject.SetActive(true);
         // 获取 Image 组件和子物体
         Image bg = gameObject.GetComponent<Image>();
         Image jewel = transform.GetChild(0).GetComponent<Image>();

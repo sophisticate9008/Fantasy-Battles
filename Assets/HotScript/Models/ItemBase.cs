@@ -8,7 +8,7 @@ using System;
         //资源名字
         public string resName;
         //中文名字
-        public string simpleName;
+        public virtual string simpleName => ItemUtil.VarNameToSipleName(resName);
         //id 同质物品 比如效果同质的宝石 装备，前500预留给宝石
         public int id;
         //堆叠之后的物品数量

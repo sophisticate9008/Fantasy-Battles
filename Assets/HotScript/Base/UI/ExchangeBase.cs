@@ -65,19 +65,17 @@ public class ExchangeBase : ConsumeBase
             RectTransform originalRectTransform = currentItem.GetComponent<RectTransform>();
 
             // 销毁现有物体
-            Destroy(currentItem.gameObject);
+            
             // 加载新Prefab并实例化
             GameObject ItemPrefab = CommonUtil.GetAssetByName<GameObject>("ItemBase");
             GameObject newItem = Instantiate(ItemPrefab);
-            ItemUIBase item = newItem.AddComponent<ItemUIBase>();
+            ItemUIBase itemUI = ToolManager.Instance.GetItemUIFromPool();
             itemInfo = ItemFactory.Create(goodName, goodCount);
-            item.itemInfo = itemInfo;
-            item.Init();
-            // 将新物体设置为与原物体的父物体一致
-            newItem.transform.SetParent(originalRectTransform.parent, false);
-            item.transform.CopyRectTransform(originalRectTransform);
+            itemUI.itemInfo = itemInfo;
+            itemUI.Init();
+            itemUI.transform.CopyRectTransform(originalRectTransform);
             // 复制 RectTransform 的属性
-
+            Destroy(currentItem.gameObject);
         }
     }
 
