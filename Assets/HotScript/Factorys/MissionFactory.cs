@@ -5,9 +5,9 @@ public static class MissionFactory
     
     private static readonly Dictionary<int, (string[] enemyTypes, float fixInterval, float noiseScale, float bloodRatio, float attackRatio, int A1_D, int mapId)> missionConfigs = new()
     {
-        { 0, (new[] { "monster1" }, 6f, 0.8f, 1f, 1, 1, 0) },
-        { 1, (new[] { "monster1" }, 6f, 0.8f, 1f, 1, 1, 1) },
-        { 2, (new[] { "monster1" }, 6f, 0.8f, 1f, 1, 1, 2) },
+        { 0, (new[] { "Monster1" }, 6f, 0.8f, 1f, 1, 1, 0) },
+        { 1, (new[] { "Monster1" }, 6f, 0.8f, 1f, 1, 1, 1) },
+        { 2, (new[] { "Monster1" }, 6f, 0.8f, 1f, 1, 1, 2) },
     // Add more mission configurations as needed
     };
 

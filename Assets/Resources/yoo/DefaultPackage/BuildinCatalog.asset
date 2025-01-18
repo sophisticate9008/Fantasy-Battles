@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: DefaultPackage
-  PackageVersion: 2025-01-18-578
+  PackageVersion: 2025-01-18-729
   Wrappers:
   - BundleGUID: 00dae6dbc8aaaaf0c5c596dd5a70ef09
     FileName: 00dae6dbc8aaaaf0c5c596dd5a70ef09.bundle
@@ -29,6 +29,8 @@ MonoBehaviour:
     FileName: 0ab91c1db8ed36e0dccb963e405e5276.bundle
   - BundleGUID: 0d665e0b08ac20203ab75d73e4b32d1c
     FileName: 0d665e0b08ac20203ab75d73e4b32d1c.bundle
+  - BundleGUID: 169986bb6789ecc0de0f3d64f21fdece
+    FileName: 169986bb6789ecc0de0f3d64f21fdece.bundle
   - BundleGUID: 1764084512968f1ee484c216092ff36b
     FileName: 1764084512968f1ee484c216092ff36b.bundle
   - BundleGUID: 1c30187895f879b5e34529ce9e75cf6a
@@ -145,16 +147,12 @@ MonoBehaviour:
     FileName: ad753c3cea2b9a4f42f3cd94aa4e9656.bundle
   - BundleGUID: b4a350df13db7a7460d1e1ff00bc1407
     FileName: b4a350df13db7a7460d1e1ff00bc1407.bundle
-  - BundleGUID: b7fd6345aa5c7bbe08d101842db29007
-    FileName: b7fd6345aa5c7bbe08d101842db29007.bundle
   - BundleGUID: b91563d3e456e11a3c4fab43c46aebaf
     FileName: b91563d3e456e11a3c4fab43c46aebaf.bundle
   - BundleGUID: bbe0f4415e76dd9ce35751ff4c00fe4f
     FileName: bbe0f4415e76dd9ce35751ff4c00fe4f.bundle
   - BundleGUID: c0adce26a3bd02bd3b9d425926e316e4
     FileName: c0adce26a3bd02bd3b9d425926e316e4.bundle
-  - BundleGUID: c4a1dee10cce2ac5b714e4166703b248
-    FileName: c4a1dee10cce2ac5b714e4166703b248.bundle
   - BundleGUID: c63d09be4f7ac3e82635120974ca6658
     FileName: c63d09be4f7ac3e82635120974ca6658.bundle
   - BundleGUID: c6d3e22fc48e4e166b5c71a2adc71f5b
@@ -171,6 +169,8 @@ MonoBehaviour:
     FileName: dc019222e0a960800ac66d0062f54c83.bundle
   - BundleGUID: dc638052cf99602ec56887c733a73890
     FileName: dc638052cf99602ec56887c733a73890.bundle
+  - BundleGUID: e6dadeccb49ba703553d5fd8bccf9e64
+    FileName: e6dadeccb49ba703553d5fd8bccf9e64.bundle
   - BundleGUID: ec34c7d541b67ccfdd41a815450bee5c
     FileName: ec34c7d541b67ccfdd41a815450bee5c.bundle
   - BundleGUID: ef8625ef9c188ceb054740e595cd7082

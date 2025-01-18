@@ -21,6 +21,8 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public Dictionary<string, IComponent> InstalledComponents { get; } = new();
     public float ControlEndTime { get; set; } = 0f;
     public Dictionary<string, float> BuffEndTimes { get; set; } = new();
+    public Vector2 leftBottomBoundary;
+    public Vector2 rightBottomBoundary;
     //硬控总结束时间
     public float HardControlEndTime { get; set; }
 
@@ -31,6 +33,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public bool isDead;
     public virtual void Init()
     {
+        ControlEndTime = 0;
         Config = ConstConfig.Clone() as EnemyConfigBase;
         //清除buff列表
         Buffs.Clear();
@@ -143,7 +146,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         }
         Vector3 position = transform.position;
         float bottomEdge = -Camera.main.orthographicSize;
-        if (position.y > Constant.leftBottomBoundary.y + Config.RangeFire)
+        if (position.y > FighteManager.Instance.leftBottomBoundary.y + Config.RangeFire)
         {
             transform.Translate(Config.Speed * Time.deltaTime * Vector3.down);
             RunningAnim();
@@ -273,7 +276,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     {
 
     }
-
+    #region 增加buff
     public void AddBuff(string buffName, GameObject selfObj, float duration, params object[] args)
     {
         //全局异常状态增强
@@ -298,7 +301,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
             float endTime = BuffEndTimes[buffName];
             float now = Time.time;
             //buff已经结束
-            if (now > endTime)
+            if (now >= endTime)
             {
                 Buffs.Enqueue(BuffFactory.Create(buffName, duration, selfObj, gameObject, args));
             }
@@ -313,11 +316,13 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         }
     }
+    #endregion
     private void ClampMonsterPosition(Transform monsterTransform)
     {
+
         Vector3 position = monsterTransform.position;
-        position.x = Mathf.Clamp(position.x, Constant.leftBottomBoundary.x, Constant.rightTopBoundary.x);
-        position.y = Mathf.Clamp(position.y, Constant.leftBottomBoundary.y, Constant.rightTopBoundary.y);
+        position.x = Mathf.Clamp(position.x, FighteManager.Instance.leftBottomBoundary.x, FighteManager.Instance.rightTopBoundary.x);
+        position.y = Mathf.Clamp(position.y, FighteManager.Instance.leftBottomBoundary.y, FighteManager.Instance.rightTopBoundary.y);
         monsterTransform.position = position;
     }
 }

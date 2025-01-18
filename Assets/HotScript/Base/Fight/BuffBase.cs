@@ -49,7 +49,7 @@ public abstract class BuffBase : IBuff
         {
             yield return null;
             float now = Time.time;
-            if (now >= EnemyBase.BuffEndTimes[BuffName])
+            if (now > EnemyBase.BuffEndTimes[BuffName])
             {
                 Remove();
                 break;
@@ -64,6 +64,7 @@ public abstract class BuffBase : IBuff
     }
     public virtual void RemoveControl()
     {
+    
         float now = Time.time;
         if (now >= EnemyBase.HardControlEndTime)
         {

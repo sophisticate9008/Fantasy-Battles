@@ -10,7 +10,8 @@ using YooAsset;
 //管理战斗逻辑，伤害等
 public class FighteManager : ManagerBase<FighteManager>
 {
-
+    public Vector2 leftBottomBoundary;
+    public Vector2 rightTopBoundary;
     public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     public WallConfig WallConfig => ConfigManager.Instance.GetConfigByClassName("Wall") as WallConfig;
     public AnimationCurve spawnRateCurve;
@@ -49,7 +50,8 @@ public class FighteManager : ManagerBase<FighteManager>
 
     private void Start()
     {
-
+        leftBottomBoundary = Camera.main.ViewportToWorldPoint(new Vector3(Constant.leftBottomViewBoundary.x, Constant.leftBottomViewBoundary.y, Camera.main.nearClipPlane));
+        rightTopBoundary = Camera.main.ViewportToWorldPoint(new Vector3(Constant.rightTopViewBoundary.x, Constant.rightTopViewBoundary.y, Camera.main.nearClipPlane));
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
         LoadJewel();
         InitWallBlood();
@@ -313,11 +315,11 @@ public class FighteManager : ManagerBase<FighteManager>
     public void AddExp(int val)
     {
         exp += val;
-        if(exp >= 2) {
-            ControlGame(false);
+        // if(exp >= 2) {
+        //     ControlGame(false);
 
-            EndGame(true);
-        }
+        //     EndGame(true);
+        // }
         if (exp / CurrentNeedExp > 0)
         {
             exp %= CurrentNeedExp;
@@ -368,12 +370,13 @@ public class FighteManager : ManagerBase<FighteManager>
 
         if (isSuccess)
         {
-            mr.successPercent = WallConfig.CurrentLife / (float)WallConfig.LifeMax;
+
+            mr.successPercent = Mathf.Max(WallConfig.CurrentLife / (float)WallConfig.LifeMax, mr.successPercent);
             mr.Save();
         }
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         YooAssets.LoadSceneSync("Main", sceneMode);
-        
+
     }
     #endregion
 }
