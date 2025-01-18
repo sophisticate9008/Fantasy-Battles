@@ -53,7 +53,6 @@ public class FighteManager : ManagerBase<FighteManager>
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
         LoadJewel();
         InitWallBlood();
-        EndGame(true);
         EnemyManager.Instance.Init();
 
     }

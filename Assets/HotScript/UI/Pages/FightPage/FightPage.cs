@@ -21,10 +21,13 @@ public class FightPage : TheUIBase
     public Button BeginButton;
     private void Start()
     {
-        FindNecessary();
-        BindButton();
-        LoadMapImage(0);
-        ChangeNeed();
+        ToolManager.Instance.SetTimeout(() => {
+            FindNecessary();
+            BindButton();
+            LoadMapImage(0);
+            ChangeNeed();
+        }, 0.1f);
+
     }
     void FindNecessary()
     {

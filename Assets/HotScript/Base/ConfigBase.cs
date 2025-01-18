@@ -11,6 +11,7 @@ public class ConfigBase : IConfig
 
     public void SaveConfig()
     {
+        Debug.Log(GetType().Name + "已保存");
         string json = JsonUtility.ToJson(this, true);
         string path = Constant.ConfigsPath;
         // 确保目录存在

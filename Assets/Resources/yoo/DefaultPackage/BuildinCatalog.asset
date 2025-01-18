@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: DefaultPackage
-  PackageVersion: 2025-01-17-1192
+  PackageVersion: 2025-01-18-578
   Wrappers:
   - BundleGUID: 00dae6dbc8aaaaf0c5c596dd5a70ef09
     FileName: 00dae6dbc8aaaaf0c5c596dd5a70ef09.bundle
@@ -109,8 +109,6 @@ MonoBehaviour:
     FileName: 6e1d5da47ceabfb7aca040ea9e6663b7.bundle
   - BundleGUID: 6fe23f9bafa70d3ab87faef74e2c4d0d
     FileName: 6fe23f9bafa70d3ab87faef74e2c4d0d.bundle
-  - BundleGUID: 7304e2aaa6945c9e5b6031700e2981da
-    FileName: 7304e2aaa6945c9e5b6031700e2981da.bundle
   - BundleGUID: 7321fbaaafeac9c7d4309b4ab317dc16
     FileName: 7321fbaaafeac9c7d4309b4ab317dc16.bundle
   - BundleGUID: 7af2bd2de996438cf63d5e2f6b197043
@@ -141,20 +139,22 @@ MonoBehaviour:
     FileName: a4b1e174ebd184dbd7f1e72202b13020.bundle
   - BundleGUID: a769ab523c38157a4d142dca80c87122
     FileName: a769ab523c38157a4d142dca80c87122.bundle
-  - BundleGUID: ab0e2c55898de5169585ec458be138ca
-    FileName: ab0e2c55898de5169585ec458be138ca.bundle
   - BundleGUID: acb026fdaab89418544deb88b7381bcb
     FileName: acb026fdaab89418544deb88b7381bcb.bundle
   - BundleGUID: ad753c3cea2b9a4f42f3cd94aa4e9656
     FileName: ad753c3cea2b9a4f42f3cd94aa4e9656.bundle
   - BundleGUID: b4a350df13db7a7460d1e1ff00bc1407
     FileName: b4a350df13db7a7460d1e1ff00bc1407.bundle
+  - BundleGUID: b7fd6345aa5c7bbe08d101842db29007
+    FileName: b7fd6345aa5c7bbe08d101842db29007.bundle
   - BundleGUID: b91563d3e456e11a3c4fab43c46aebaf
     FileName: b91563d3e456e11a3c4fab43c46aebaf.bundle
   - BundleGUID: bbe0f4415e76dd9ce35751ff4c00fe4f
     FileName: bbe0f4415e76dd9ce35751ff4c00fe4f.bundle
   - BundleGUID: c0adce26a3bd02bd3b9d425926e316e4
     FileName: c0adce26a3bd02bd3b9d425926e316e4.bundle
+  - BundleGUID: c4a1dee10cce2ac5b714e4166703b248
+    FileName: c4a1dee10cce2ac5b714e4166703b248.bundle
   - BundleGUID: c63d09be4f7ac3e82635120974ca6658
     FileName: c63d09be4f7ac3e82635120974ca6658.bundle
   - BundleGUID: c6d3e22fc48e4e166b5c71a2adc71f5b

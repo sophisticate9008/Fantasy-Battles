@@ -1,6 +1,8 @@
 
 using System.Collections.Generic;
+
 using TMPro;
+using UnityEngine;
 
 
 public class ItemCountShow : TheUIBase
@@ -38,7 +40,9 @@ public class ItemCountShow : TheUIBase
         int idx = listenItem.IndexOf(fieldName);
         // 使用反射获取 PlayerDataConfig 中的最新值
         int newValue = (int)PlayerDataConfig.GetValue(fieldName);
-
+        if(idx >= listenItem.Count || idx == -1) {
+            return;
+        }
         // 根据 fieldName 更新相应的 UI 元素
 
         transform.GetChild(idx).GetComponent<TextMeshProUGUI>().text = newValue.ToString();

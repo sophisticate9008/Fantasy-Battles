@@ -239,7 +239,7 @@ public class Bag : TheUIBase
             }
         }
         PlayerDataConfig.jewels.AddRange(newJewels);
-
+        PlayerDataConfig.SaveConfig();
         GenerateUpgradeUI(newJewels, 1);
         newJewels.Clear();
         MergeJewel();

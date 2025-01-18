@@ -17,8 +17,10 @@ public class MissionRecord
     }
     public void Save()
     {
+        if(FighteManager.Instance.PlayerDataConfig.PassRecords.Contains(this)) {
+            FighteManager.Instance.PlayerDataConfig.SaveConfig();
+        }
         FighteManager.Instance.PlayerDataConfig.PassRecords.Add(this);
-        FighteManager.Instance.PlayerDataConfig.SaveConfig();
     }
     
 
