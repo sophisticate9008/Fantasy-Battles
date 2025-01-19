@@ -35,6 +35,12 @@ public class EnemyBase : MonoBehaviour, IEnemy
     {
         ControlEndTime = 0;
         Config = ConstConfig.Clone() as EnemyConfigBase;
+        if(Config.CharacterType == "elite") {
+            Config.BloodBarCount = 10;
+        }
+        if(Config.CharacterType == "boss") {
+            Config.BloodBarCount = 20;
+        }
         //清除buff列表
         Buffs.Clear();
         isDead = false;
@@ -53,6 +59,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
 
     }
+    
     public virtual void TransmitBack(float y, bool returnSpawn = false)
     {
         if (returnSpawn)

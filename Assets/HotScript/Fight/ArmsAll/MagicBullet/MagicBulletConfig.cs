@@ -35,7 +35,7 @@ public class MagicBulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPe
         Name = "MagicBullet";
         Description = "MagicBullet";
         Level = 1;
-        RangeFire = 7;
+        RangeFire = 10;
         Speed = 10f;
         Tlc = 1f;
         Cd = 2f;

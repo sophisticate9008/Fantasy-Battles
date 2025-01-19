@@ -48,6 +48,7 @@ public class EnemyConfigBase : ConfigBase
     [SerializeField] private string characterType = "normal";// 角色类型 精英 普通
     [SerializeField] private int attackCount = 1; //每次攻击的段数
     [SerializeField] private float attackCd = 2;
+    public int BloodBarCount = 1; 
 
     // 公共属性，允许重写
     public virtual float AttackCd
