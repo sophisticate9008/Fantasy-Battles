@@ -7,6 +7,6 @@ public class Monster1Config: EnemyConfigBase{
         Speed = 0.15f;
         Blocks = 1;
         RangeFire = 0;
-        CharacterType = "elite";
+        CharacterType = "normal";
     }
 }

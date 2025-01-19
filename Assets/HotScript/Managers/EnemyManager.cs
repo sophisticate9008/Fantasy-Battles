@@ -7,8 +7,8 @@ public class EnemyManager : ManagerBase<EnemyManager>
 {
 
     public List<AnimationCurve> spawnRateCurves; // 每种怪物的生成速率曲线
-    public MissionBase CurrentMission => FighteManager.Instance.currentMission;
-    private List<string> enemyTypes => CurrentMission.enemyTypes; // 支持的怪物类型
+    public MissionBase mb => FighteManager.Instance.mb;
+    private List<string> enemyTypes => mb.enemyTypes; // 支持的怪物类型
     private List<EnemyConfigBase> enemyConfigBases = new(); // 怪物配置
     private List<GameObject> monsterPrefabs = new(); // 怪物预制体
     private int maxCount; // 最大生成数量
@@ -20,12 +20,12 @@ public class EnemyManager : ManagerBase<EnemyManager>
     public int liveCount = 0;//存活数量
     private Camera mainCamera;
 
-    
+
     public void Init()
     {
-        maxCount = CurrentMission.MaxCount;
-        fixInterval = CurrentMission.fixInterval;
-        noiseScale = CurrentMission.noiseScale;
+        maxCount = mb.MaxCount;
+        fixInterval = mb.fixInterval;
+        noiseScale = mb.noiseScale;
         mainCamera = Camera.main;
         foreach (string item in enemyTypes)
         {
@@ -49,7 +49,7 @@ public class EnemyManager : ManagerBase<EnemyManager>
             // 只有在生成值大于0时才生成怪物
             if (spawnInterval > 0)
             {
-                SpawnMonster();
+                SpawnMonster().Init();
             }
 
             // 等待下次生成
@@ -57,7 +57,7 @@ public class EnemyManager : ManagerBase<EnemyManager>
         }
     }
 
-    void SpawnMonster()
+    EnemyBase SpawnMonster(int monsterIndex = -1, GameObject theEnemy = null)
     {
         currentCount++; // 增加共享数量
         liveCount++;
@@ -71,11 +71,27 @@ public class EnemyManager : ManagerBase<EnemyManager>
         Vector2 spawnPosition = new Vector2(worldPosition.x, worldPosition.y);
 
         // 随机选择怪物
-        int monsterIndex = Random.Range(0, monsterPrefabs.Count);
-        GameObject theEnemy = ObjectPoolManager.Instance.GetFromPool(enemyTypes[monsterIndex] + "Pool", monsterPrefabs[monsterIndex]);
+        if (monsterIndex == -1)
+        {
+            monsterIndex = Random.Range(0, monsterPrefabs.Count);
+        }
+        if(theEnemy == null) {
+            theEnemy = ObjectPoolManager.Instance.GetFromPool(enemyTypes[monsterIndex] + "Pool", monsterPrefabs[monsterIndex]);
+        }
 
         // 设置怪物位置并初始化
         theEnemy.transform.position = spawnPosition;
-        theEnemy.GetComponent<EnemyBase>().Init();
+        return theEnemy.GetComponent<EnemyBase>();
     }
+
+    public void GenerateElite()
+    {
+        GameObject theEnemy = EnemyPrefabFactory.Create(enemyTypes[mb.eliteIdx], "Elite");
+        EnemyBase elite = SpawnMonster(mb.eliteIdx, theEnemy);
+        elite.Config = elite.ConstConfig.Clone() as EnemyConfigBase;
+        elite.Config.CharacterType = "elite";
+        elite.Init();
+        
+    }
+
 }

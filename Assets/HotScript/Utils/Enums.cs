@@ -14,4 +14,9 @@ namespace MyEnums
         Self,
         Arm
     }
+
+    public enum SkillPanelMode{
+        Select,
+        Reward
+    }
 }

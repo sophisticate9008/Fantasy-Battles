@@ -34,7 +34,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public virtual void Init()
     {
         ControlEndTime = 0;
-        Config = ConstConfig.Clone() as EnemyConfigBase;
+        Config ??= ConstConfig.Clone() as EnemyConfigBase;
         if(Config.CharacterType == "elite") {
             Config.BloodBarCount = 10;
         }
@@ -239,6 +239,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
             isDead = true;
             OnByType("die", gameObject);
             FighteManager.Instance.AddExp(1);
+            if(Config.CharacterType == "elite") {
+                FighteManager.Instance.DefeatElite();
+            }
             ReturnToPool();
 
         }

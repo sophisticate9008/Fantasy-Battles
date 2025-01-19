@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-
-
+using MyEnums;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using YooAsset;
 //管理战斗逻辑，伤害等
 public class FighteManager : ManagerBase<FighteManager>
@@ -19,10 +18,10 @@ public class FighteManager : ManagerBase<FighteManager>
     public float radius = 25f;
     private readonly GameObject damageTextPrefab;
     public Dictionary<string, float> cdDict = new();
-    public MissionBase currentMission => MissionFactory.Create(mr.missionId);
+    public MissionBase mb => MissionFactory.Create(mr.missionId);
     public int exp = 0;
     public int level = 1;
-    public int CurrentNeedExp => currentMission.A1_D * level;
+    public int CurrentNeedExp => mb.A1_D * level;
     public Queue<string> bloodMsgs = new();
 
     GameObject DamageTextPrefab
@@ -47,7 +46,7 @@ public class FighteManager : ManagerBase<FighteManager>
         {"energy", "#B0D3B5"}
     };
     public Dictionary<string, float> statistics = new();
-
+    #region  关卡初始化
     private void Start()
     {
         leftBottomBoundary = Camera.main.ViewportToWorldPoint(new Vector3(Constant.leftBottomViewBoundary.x, Constant.leftBottomViewBoundary.y, Camera.main.nearClipPlane));
@@ -55,13 +54,22 @@ public class FighteManager : ManagerBase<FighteManager>
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
         LoadJewel();
         InitWallBlood();
+        InitBackground();
         EnemyManager.Instance.Init();
 
     }
+
+    void InitBackground()
+    {
+        Image backGround = GameObject.Find("Background").GetComponent<Image>();
+        backGround.sprite = CommonUtil.GetAssetByName<Sprite>("back_" + mb.MapIdToMapName());
+    }
+    //初始化城墙
     public void InitWallBlood()
     {
         WallConfig.CurrentLife = WallConfig.LifeMax;
     }
+    //加载宝石
     private void LoadJewel()
     {
         for (int i = 1; i <= 6; i++)
@@ -74,6 +82,7 @@ public class FighteManager : ManagerBase<FighteManager>
             }
         }
     }
+    #endregion
     #region 显示伤害
     public void CreateDamageText(GameObject enemyObj, float damage, string type, bool isCritical)
     {
@@ -320,24 +329,46 @@ public class FighteManager : ManagerBase<FighteManager>
 
         //     EndGame(true);
         // }
+        //升级
         if (exp / CurrentNeedExp > 0)
         {
             exp %= CurrentNeedExp;
             level++;
-            AwakeSelectPanel();
+
+            AwakeSkillPanel();
+            if (level == 6)
+            {
+                RealeaseElite();
+            }
         }
     }
     #region  技能选择
-    public void AwakeSelectPanel()
+    public void AwakeSkillPanel(SkillPanelMode mode = SkillPanelMode.Select)
     {
         GameObject canvas = GameObject.Find("UICanvas");
         GameObject panel = canvas.transform.RecursiveFind("SelectPanelThree").gameObject;
         GameObject panelBackup = Instantiate(panel, panel.transform.parent);
         panelBackup.SetActive(true);
         SkillSelectPanel panelBackupUI = panelBackup.GetComponent<SkillSelectPanel>();
-        List<SkillNode> availableSkills = SkillManager.Instance.GetAvailableSkills();
-        panelBackupUI.skills = availableSkills.RandomChoices(3);
-        Debug.Log("可选技能数量" + availableSkills.Count);
+        if (mode == SkillPanelMode.Select)
+        {
+            List<SkillNode> availableSkills = SkillManager.Instance.GetAvailableSkills();
+            Debug.Log("可选技能数量" + availableSkills.Count);
+            panelBackupUI.skills = availableSkills.RandomChoices(3);
+        }
+        else
+        {
+            List<SkillNode> selectedSkills = new();
+            for (int i = 0; i < 3; i++)
+            {
+                List<SkillNode> availableSkills = SkillManager.Instance.GetAvailableSkills();
+                SkillNode the = availableSkills.RandomChoices(1)[0];
+                selectedSkills.Add(the);
+                SkillManager.Instance.SelectSkill(the);
+            }
+            panelBackupUI.skills = selectedSkills;
+        }
+        panelBackupUI.mode = mode;
         panelBackupUI.Init();
         ControlGame(false);
     }
@@ -379,4 +410,23 @@ public class FighteManager : ManagerBase<FighteManager>
 
     }
     #endregion
+
+
+
+
+
+    #region  精英逻辑
+    public void RealeaseElite()
+    {
+        EnemyManager.Instance.GenerateElite();
+    }
+    public void DefeatElite()
+    {
+        ControlGame(false);
+        AwakeSkillPanel(SkillPanelMode.Reward);
+    }
+
+    #endregion
+
+
 }

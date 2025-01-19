@@ -11,9 +11,11 @@ public class MissionBase
     public float attackRatio;
     public int A1_D;//初始怪物数量，等差数列，同时为为A1和d
     public int mapId;
+    public int eliteIdx;
+    public int bossIdx;
     public MissionBase(int level, List<string> enemyTypes,
         float fixInterval, float noiseScale, float bloodRatio,
-        float attackRatio, int A1_D, int mapId)
+        float attackRatio, int A1_D, int mapId,int eliteIdx, int bossIdx)
     {
         this.level = level;
         this.enemyTypes = enemyTypes;
@@ -23,6 +25,8 @@ public class MissionBase
         this.attackRatio = attackRatio;
         this.A1_D = A1_D;
         this.mapId = mapId;
+        this.eliteIdx = eliteIdx;
+        this.bossIdx = bossIdx;
     }
     public string LevelToName()
     {
