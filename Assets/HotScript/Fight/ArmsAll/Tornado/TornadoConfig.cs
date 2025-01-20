@@ -3,6 +3,7 @@ public class TornadoConfig : ArmConfigBase
 {
     public override void Init()
     {
+        base.Init();
         Tlc = 0.1f;
         Name = "龙卷";
         Description = "龙卷攻击";

@@ -10,6 +10,7 @@ namespace ArmConfigs
 
         public override void Init()
         {
+            base.Init();
             RangeFire = 8;
             Speed = 8;
             OnType = "enter";

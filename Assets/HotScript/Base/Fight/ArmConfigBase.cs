@@ -222,6 +222,15 @@ public class ArmConfigBase : ConfigBase
     // 初始化方法，允许子类重写
     public virtual void Init()
     {
+        AutoGetOwner();
         // 初始化逻辑可以在子类中进行扩展
+    }
+    public virtual void AutoGetOwner() {
+        foreach (var item in SkillUtil.armTypeDict) {
+            if(GetType().Name.Contains(item.Value)) {
+                Owner = item.Value;
+            }
+        }
+        
     }
 }

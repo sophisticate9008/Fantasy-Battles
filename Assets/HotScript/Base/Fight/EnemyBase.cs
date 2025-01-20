@@ -238,6 +238,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         {
             isDead = true;
             OnByType("die", gameObject);
+            FighteManager.Instance.RecordKill(owner);
             FighteManager.Instance.AddExp(1);
             if(Config.CharacterType == "elite") {
                 FighteManager.Instance.DefeatElite();

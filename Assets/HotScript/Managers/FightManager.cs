@@ -23,7 +23,6 @@ public class FighteManager : ManagerBase<FighteManager>
     public int level = 1;
     public int CurrentNeedExp => mb.A1_D * level;
     public Queue<string> bloodMsgs = new();
-
     GameObject DamageTextPrefab
     {
         get
@@ -45,7 +44,8 @@ public class FighteManager : ManagerBase<FighteManager>
         {"ad", "white"},
         {"energy", "#B0D3B5"}
     };
-    public Dictionary<string, float> statistics = new();
+    public SortedDictionary<string, float> harmStatistics = new();
+    public SortedDictionary<string, int> killStatistics = new();
     #region  关卡初始化
     private void Start()
     {
@@ -312,13 +312,20 @@ public class FighteManager : ManagerBase<FighteManager>
     //记录伤害
     public void RecordDamage(int damage, string owner)
     {
-        if (statistics.ContainsKey(owner))
+        if (harmStatistics.ContainsKey(owner))
         {
-            statistics[owner] += damage;
+            harmStatistics[owner] += damage;
         }
         else
         {
-            statistics[owner] = damage;
+            harmStatistics[owner] = damage;
+        }
+    }
+    public void RecordKill(string owner) {
+        if (killStatistics.ContainsKey(owner)) {
+            killStatistics[owner]++;
+        }else {
+            killStatistics[owner] = 1;
         }
     }
     public void AddExp(int val)
@@ -428,5 +435,11 @@ public class FighteManager : ManagerBase<FighteManager>
 
     #endregion
 
-
+    public void PauseGame()
+    {
+        ControlGame(false);
+        GameObject canvas = GameObject.Find("UICanvas");
+        GameObject pausePanel = canvas.transform.RecursiveFind("PausePanel").gameObject;
+        pausePanel.SetActive(true);
+    }
 }

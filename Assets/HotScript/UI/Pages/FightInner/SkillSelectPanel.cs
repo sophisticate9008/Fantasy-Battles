@@ -8,7 +8,7 @@ using YooAsset;
 
 public class SkillSelectPanel : TheUIBase
 {
-    List<Button> Buttons => transform.GetChild(0).GetComponentsInDirectChildren<Button>();
+    List<Button> Buttons => transform.RecursiveFind("Cards").GetComponentsInDirectChildren<Button>();
     public List<SkillNode> skills;
     public TextMeshProUGUI textMeshProUGUI;
     private string title;

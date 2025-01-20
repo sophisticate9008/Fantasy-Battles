@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkillUtil
 {
     #region 技能冲突
-    public static List<List<int>> conflictLists = new() {
+    public static readonly List<List<int>> conflictLists = new() {
         CommonUtil.AsList(15,17,18,19),
 
     };
@@ -24,7 +24,7 @@ public class SkillUtil
     }
     #endregion
     #region  技能图标
-    public static Dictionary<string, List<int>> iconList = new()
+    public static readonly Dictionary<string, List<int>> iconList = new()
     {
         {"icon_BoomFireBall", CommonUtil.AsList(0, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37)},
         {"icon_IceBall", CommonUtil.AsList(1, 48, 49, 50, 51, 52, 53, 54, 55, 56)},
@@ -66,7 +66,7 @@ public class SkillUtil
     #endregion
 
     #region 技能类型
-    public static Dictionary<int, string> armTypeDict = new() {
+    public static readonly Dictionary<int, string> armTypeDict = new() {
         {0, "BoomFireBall"},
         {1, "IceBall"},
         {2, "ElectroHit"},
@@ -80,6 +80,7 @@ public class SkillUtil
         {10, "PressureCutter"},
         {11, "FlameOrb"},
         {12, "WhirlingBlade"},
+        {13,"MagicBullet"}
     };
     public static string IdToArmType(int id)
     {
