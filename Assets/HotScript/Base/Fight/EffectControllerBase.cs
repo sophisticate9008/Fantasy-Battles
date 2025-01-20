@@ -17,7 +17,7 @@ public class EffectControllerBase : MonoBehaviour, IEffectController
     }
     public virtual void ChangeScale()
     {
-        transform.localScale = Enemy.transform.localScale;
+        transform.localScale = new Vector3(1,1,1);
     }
     public virtual void Play()
     {

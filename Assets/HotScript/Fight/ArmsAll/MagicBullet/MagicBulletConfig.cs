@@ -31,6 +31,7 @@ public class MagicBulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPe
     // 重写父类的 Init 方法
     public override void Init()
     {
+        base.Init();
         // 初始化 MagicBulletConfig 的属性
         Name = "MagicBullet";
         Description = "MagicBullet";

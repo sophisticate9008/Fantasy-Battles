@@ -47,6 +47,7 @@ public class PausePanel: TheUIBase {
     void ShowSingle(int idx) {
         Transform bar = content.GetChild(idx);
         var dictItem = hs.ElementAt(idx);
+        Debug.Log(dictItem);
         string resName = SkillUtil.ArmTypeToResName(dictItem.Key);
         bar.RecursiveFind("Icon").GetComponent<Image>().sprite = CommonUtil.GetAssetByName<Sprite>(resName);
         bar.RecursiveFind("Harm").GetComponent<TextMeshProUGUI>().text = dictItem.Value.ToString();

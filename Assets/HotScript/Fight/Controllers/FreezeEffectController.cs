@@ -24,13 +24,13 @@ public class FreezeEffectController : EffectControllerBase
         Align();
         ChangeScale();
     }
-    public override void ChangeScale()
-    {
-        float srHeight = enemySr.sprite.bounds.size.y;
-        float s = srHeight / BaseHeight;
-        iceSr.transform.localScale = Vector3.one * s;
-        bulkSr.transform.localScale = Vector3.one * s;
-    }
+    // public override void ChangeScale()
+    // {
+    //     float srHeight = enemySr.sprite.bounds.size.y;
+    //     float s = srHeight / BaseHeight;
+    //     iceSr.transform.localScale = Vector3.one * s;
+    //     bulkSr.transform.localScale = Vector3.one * s;
+    // }
     private void Align()
     {
         Sprite enemySprite = enemySr.sprite;
