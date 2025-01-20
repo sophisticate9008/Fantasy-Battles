@@ -13,14 +13,12 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: DefaultPackage
-  PackageVersion: 2025-01-20-911
+  PackageVersion: 2025-01-20-918
   Wrappers:
   - BundleGUID: 00dae6dbc8aaaaf0c5c596dd5a70ef09
     FileName: 00dae6dbc8aaaaf0c5c596dd5a70ef09.bundle
   - BundleGUID: 01633df91a5046c0513c040c8f58eb31
     FileName: 01633df91a5046c0513c040c8f58eb31.bundle
-  - BundleGUID: 0334f063f1797409f773b23f835c63f0
-    FileName: 0334f063f1797409f773b23f835c63f0.bundle
   - BundleGUID: 04a3be7b8e556535015c4015e1921989
     FileName: 04a3be7b8e556535015c4015e1921989.bundle
   - BundleGUID: 06b2a36fe13de3ddb983adeb8eac9ae1
@@ -129,6 +127,8 @@ MonoBehaviour:
     FileName: 997363a4d251df24a2c37a1bbcf268e0.bundle
   - BundleGUID: 9bd2b1af426a173d5f983a1bb42a50d3
     FileName: 9bd2b1af426a173d5f983a1bb42a50d3.bundle
+  - BundleGUID: 9dab92b21ffd0bc3f83eaef645866744
+    FileName: 9dab92b21ffd0bc3f83eaef645866744.bundle
   - BundleGUID: a4b1e174ebd184dbd7f1e72202b13020
     FileName: a4b1e174ebd184dbd7f1e72202b13020.bundle
   - BundleGUID: a769ab523c38157a4d142dca80c87122

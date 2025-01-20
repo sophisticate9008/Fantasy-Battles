@@ -321,10 +321,14 @@ public class FighteManager : ManagerBase<FighteManager>
             harmStatistics[owner] = damage;
         }
     }
-    public void RecordKill(string owner) {
-        if (killStatistics.ContainsKey(owner)) {
+    public void RecordKill(string owner)
+    {
+        if (killStatistics.ContainsKey(owner))
+        {
             killStatistics[owner]++;
-        }else {
+        }
+        else
+        {
             killStatistics[owner] = 1;
         }
     }
@@ -442,5 +446,13 @@ public class FighteManager : ManagerBase<FighteManager>
         GameObject canvas = GameObject.Find("UICanvas");
         GameObject pausePanel = canvas.transform.RecursiveFind("PausePanel").gameObject;
         pausePanel.SetActive(true);
+    }
+    void Update()
+    {
+        // 监听键盘上的 Esc 键或手机的返回键
+        if (Input.GetKeyDown(KeyCode.Escape))
+        { 
+            PauseGame();
+        }
     }
 }
