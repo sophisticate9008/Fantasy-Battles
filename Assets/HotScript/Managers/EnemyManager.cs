@@ -86,12 +86,14 @@ public class EnemyManager : ManagerBase<EnemyManager>
 
     public void GenerateElite()
     {
-        GameObject theEnemy = EnemyPrefabFactory.Create(enemyTypes[mb.eliteIdx], "Elite");
+        GameObject prefab = EnemyPrefabFactory.Create(enemyTypes[mb.eliteIdx], "elite");
+        GameObject theEnemy = Instantiate(prefab);
+        theEnemy.SetActive(false);
         EnemyBase elite = SpawnMonster(mb.eliteIdx, theEnemy);
         elite.Config = elite.ConstConfig.Clone() as EnemyConfigBase;
         elite.Config.CharacterType = "elite";
         elite.Init();
-        
+        theEnemy.SetActive(true);
     }
 
 }

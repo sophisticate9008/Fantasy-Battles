@@ -13,7 +13,7 @@ public class SkillSelectPanel : TheUIBase
     public TextMeshProUGUI textMeshProUGUI;
     private string title;
     public SkillPanelMode mode;
-    public Button confirmBtn;
+    public Button confirmBtn => transform.RecursiveFind("Confirm").GetComponent<Button>();
     public override void Init()
     {
 

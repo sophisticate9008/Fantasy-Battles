@@ -343,7 +343,7 @@ public class FighteManager : ManagerBase<FighteManager>
             level++;
 
             AwakeSkillPanel();
-            if (level == 6)
+            if (level == 2)
             {
                 RealeaseElite();
             }
@@ -425,6 +425,7 @@ public class FighteManager : ManagerBase<FighteManager>
     #region  精英逻辑
     public void RealeaseElite()
     {
+        Debug.Log("释放精英");
         EnemyManager.Instance.GenerateElite();
     }
     public void DefeatElite()

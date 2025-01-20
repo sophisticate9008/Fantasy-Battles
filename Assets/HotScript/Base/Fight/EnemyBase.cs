@@ -35,17 +35,21 @@ public class EnemyBase : MonoBehaviour, IEnemy
     {
         ControlEndTime = 0;
         Config ??= ConstConfig.Clone() as EnemyConfigBase;
+        NowLife = (int)(Config.Life * FighteManager.Instance.mb.bloodRatio);
+        MaxLife = NowLife;
         if(Config.CharacterType == "elite") {
             Config.BloodBarCount = 10;
+            NowLife *= 10;
+            MaxLife *= 10;
         }
         if(Config.CharacterType == "boss") {
             Config.BloodBarCount = 20;
+
         }
         //清除buff列表
         Buffs.Clear();
         isDead = false;
-        NowLife = Config.Life;
-        MaxLife = Config.Life;
+
         ImmunityCount = Config.ImmunityCount;
         TransmitBack(y: 0, returnSpawn: true);
         CanAction = true;
@@ -97,7 +101,6 @@ public class EnemyBase : MonoBehaviour, IEnemy
     protected virtual void Start()
     {
         animatorManager = AnimatorManager.Instance;
-        Init();
     }
     private void RunningAnim()
     {
@@ -243,7 +246,12 @@ public class EnemyBase : MonoBehaviour, IEnemy
             if(Config.CharacterType == "elite") {
                 FighteManager.Instance.DefeatElite();
             }
-            ReturnToPool();
+            if(Config.CharacterType == "normal") {
+                ReturnToPool();
+            }else {
+                Destroy(gameObject);
+            }
+            
 
         }
         // animatorManager.SetAnimParameter(animator, "isDead", true);
