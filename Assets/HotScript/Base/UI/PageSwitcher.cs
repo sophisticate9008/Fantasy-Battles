@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PageSwitcher : MonoBehaviour
 {
+    public int initIdx = 0;
     public List<RectTransform> pages; // 所有页面的 RectTransform
     public int currentPageIndex = 0; // 当前页面索引
     public float transitionDuration = 0.2f; // 动画时间
@@ -23,6 +24,7 @@ public class PageSwitcher : MonoBehaviour
                 if (child.GetComponent<RectTransform>() != null)
                 {
                     pages.Add(child.GetComponent<RectTransform>());
+                    child.gameObject.SetActive(false);
                 }
             }
         }
@@ -32,8 +34,19 @@ public class PageSwitcher : MonoBehaviour
             BindBtns();
         }
         StartCallBack();
+        if(btnsParent != null) {
+            InitActive();
+        }
+        
     }
-    
+    public virtual void InitActive()
+    {
+        pages[initIdx].gameObject.SetActive(true);
+        float tmp = transitionDuration;
+        transitionDuration = 0;
+        btns[initIdx].onClick.Invoke();
+        transitionDuration = tmp;
+    }
     public virtual void StartCallBack()
     {
 
