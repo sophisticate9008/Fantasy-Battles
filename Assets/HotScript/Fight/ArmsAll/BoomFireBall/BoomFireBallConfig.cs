@@ -21,7 +21,7 @@ public class BoomFireBallConfig : ArmConfigBase, IPenetrable, IBoomable, IHoldab
         ComponentStrs.Add("穿透");
         ComponentStrs.Add("爆炸");
         ComponentStrs.Add("Hold");
-        AttackCount = 5;
+        AttackCount = 1;
         AttackCd = 0.5f;
     }
 }

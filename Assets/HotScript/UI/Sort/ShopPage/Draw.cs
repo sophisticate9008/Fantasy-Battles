@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
 
-public class Draw : ConsumeBase
+public class Draw : SingleConsumeBase
 {
     public enum ProbabilityType
     {

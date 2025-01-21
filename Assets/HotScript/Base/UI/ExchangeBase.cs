@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
-public class ExchangeBase : ConsumeBase
+public class ExchangeBase : SingleConsumeBase
 {
     private int buyCount;
     public string goodName;

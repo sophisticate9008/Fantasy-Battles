@@ -166,6 +166,7 @@ public class UIManager : ManagerBase<UIManager>
         // 添加全屏透明遮罩，监听点击事件
         currentMask.AddComponent<MaskListener>().onMaskClicked += OnMaskClicked;
         maskStack.Push(currentMask.GetComponent<TheUIBase>());
+        currentMask.SetActive(true);
     }
 
     private void RemoveMask()

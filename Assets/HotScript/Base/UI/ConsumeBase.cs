@@ -1,38 +1,58 @@
-
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-public class ConsumeBase : TheUIBase, IConsume
+public class ConsumeBase : TheUIBase
 {
-    public int _ConsumeCount;
-    public string _itemName;
-
-    public virtual string ItemName { get => _itemName; set => _itemName = value; }
-    public virtual int ConsumeCount { get => _ConsumeCount; set => _ConsumeCount = value; }
+    // 使用元组 (string, int) 来存储物品名称和对应的消耗数量
+    public List<(string itemName, int consumeCount)> consumeItemsData = new();
+    public virtual List<(string itemName, int consumeCount)> ConsumeItemsData {
+        get { return consumeItemsData; }
+        set { consumeItemsData = value; }
+    }
     public virtual void PreConsume()
     {
-        if ((int)PlayerDataConfig.GetValue(ItemName) >= ConsumeCount)
+        // 检查所有物品的消耗条件
+        foreach (var itemData in consumeItemsData)
         {
-            if(PostConsume()) {
-                AfterConsume();
+            if ((int)PlayerDataConfig.GetValue(itemData.itemName) < itemData.consumeCount)
+            {
+                // 如果任何物品不足，显示不足的消息并退出
+                UIManager.Instance.OnMessage(ItemUtil.VarNameToSipleName(itemData.itemName) + "不足");
+                return;
             }
-        }else {
-            UIManager.Instance.OnMessage(ItemUtil.VarNameToSipleName(ItemName) + "不足");
+        }
+
+        // 所有物品都符合条件，统一进行消耗
+        if (PostConsume())
+        {
+            AfterConsume();
         }
     }
+
+    // 统一消耗前的逻辑检查
     public virtual bool PostConsume()
     {
-        return true;
+        return true; // 可扩展预处理逻辑
     }
+
+    // 统一进行消耗逻辑
     public virtual void AfterConsume()
     {
-        PlayerDataConfig.UpdateValue(ItemName, (int)PlayerDataConfig.GetValue(ItemName) - ConsumeCount);
-
+        foreach (var (itemName, consumeCount) in consumeItemsData)
+        {
+            PlayerDataConfig.UpdateValueSubtract(itemName, consumeCount);
+        }
+        // 可扩展消耗后的其他逻辑
     }
-    public virtual void Start() {
+
+    public virtual void Start()
+    {
         BindButton();
     }
-    public virtual void BindButton() {
+
+    public virtual void BindButton()
+    {
         GetComponent<Button>().onClick.AddListener(PreConsume);
     }
 }

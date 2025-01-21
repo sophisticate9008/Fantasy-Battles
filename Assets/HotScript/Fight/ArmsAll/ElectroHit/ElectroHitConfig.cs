@@ -9,7 +9,6 @@ public class ElectroHitConfig : ArmConfigBase, IBoomable
         base.Init();
         Name = "电磁穿透";
         Description = "电磁穿透";
-        ComponentStrs.Add("爆炸");
         ComponentStrs.Add("麻痹");
         ScopeRadius = 2;
         OnType = "enter";
@@ -18,7 +17,7 @@ public class ElectroHitConfig : ArmConfigBase, IBoomable
         CritRate = 0.2f;
         AttackCd = 0.5f;
         Cd = 5f;
-        AttackCount = 5;
+        AttackCount = 1;
         Duration = 0.3f;
         RangeFire = 9;
     }

@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
-public class Wash : ConsumeBase
+public class Wash : SingleConsumeBase
 {
     public JewelBase originItem;
     public JewelBase ItemInfo => originItem.Clone();
