@@ -42,7 +42,9 @@ public class FighteManager : ManagerBase<FighteManager>
         {"ice", "blue"},
         {"fire", "red"},
         {"ad", "white"},
-        {"energy", "#B0D3B5"}
+        {"energy", "#B0D3B5"},
+        {"wind", "#00cade"},
+        {"elec", "#c358db"}
     };
     public SortedDictionary<string, float> harmStatistics = new();
     public SortedDictionary<string, int> killStatistics = new();
@@ -231,7 +233,7 @@ public class FighteManager : ManagerBase<FighteManager>
         Dictionary<string, float> damageAddition = GlobalConfig.GetDamageAddition();
         foreach (var item in damageAddition)
         {
-            if (item.Key == damageType || item.Key == armConfig.DamageExtraType)
+            if (item.Key == damageType)
             {
                 addtion += item.Value;
             }
@@ -251,7 +253,7 @@ public class FighteManager : ManagerBase<FighteManager>
         float reduction = 0;
         foreach (var item in damageReduction)
         {
-            if (item.Key == damageType || item.Key == armConfig.DamageExtraType)
+            if (item.Key == damageType)
             {
                 reduction += item.Value;
             }

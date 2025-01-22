@@ -4,7 +4,7 @@ using System.Reflection;
 
 
 [Serializable]
-public class PlayerDataConfig : ConfigBase
+public class PlayerDataConfig : ConfigBase,IFlagInjectFromFile
 {
     public override bool IsCreatePool { get; set; } = false;
     public List<MissionRecord> PassRecords = new();
@@ -24,7 +24,30 @@ public class PlayerDataConfig : ConfigBase
     public List<ItemBase> items = new();
     public List<JewelBase> jewels = new();
 
+    #region  装备或技能等级
+    public int levelPlace1 = 1;
+    public int levelPlace2 = 1;
+    public int levelPlace3 = 1;
+    public int levelPlace4 = 1;
+    public int levelPlace5 = 1;
+    public int levelPlace6 = 1;
+    public int levelArm0 = 1;
+    public int levelArm1 = 1;
+    public int levelArm2 = 1;
+    public int levelArm3 = 1;
+    public int levelArm4 = 1;
+    public int levelArm5 = 1;
+    public int levelArm6 = 1;
+    public int levelArm7 = 1;
+    public int levelArm8 = 1;
+    public int levelArm9 = 1;
+    public int levelArm10 = 1;
+    public int levelArm11 = 1;
+    public int levelArm12 = 1;
+    public int levelArm13 = 1;
 
+    
+    #endregion
 
 
     //该字段用来手动通知宝石变动更新

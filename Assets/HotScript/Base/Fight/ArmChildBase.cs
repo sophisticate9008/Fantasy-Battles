@@ -509,7 +509,7 @@ public class ArmChildBase : MonoBehaviour, IArmChild
             Vector2 direction = (rb.position - center).normalized;
 
             // 施加龙卷风力
-            rb.AddForce(forceMagnitude * Config.ForceDegree * direction);
+            rb.AddForce(forceMagnitude * direction);
 
             // 启动协程来恢复状态
             StartCoroutine(ResetStateAfterDelay(rb, originalVelocity, originalAngularVelocity, 0.5f)); // 0.5秒后恢复状态

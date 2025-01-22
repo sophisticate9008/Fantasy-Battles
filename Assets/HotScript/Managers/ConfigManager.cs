@@ -7,15 +7,15 @@ using UnityEngine;
 public class ConfigManager : ManagerBase<ConfigManager>
 {
     private readonly List<string> pools = new();
-    private Dictionary<string, IConfig> configCache = new();
+    private Dictionary<string, ConfigBase> configCache = new();
 
 
-    public IConfig GetConfigByClassName(string className)
+    public ConfigBase GetConfigByClassName(string className)
     {
 
-        if (!configCache.TryGetValue(className, out IConfig config))
+        if (!configCache.TryGetValue(className, out ConfigBase config))
         {
-            config = ConfigFactory.CreateInjectedConfig(className);
+            config = ConfigFactory.Create(className);
             configCache[className] = config; // 缓存配置
         }
         try {
@@ -26,7 +26,7 @@ public class ConfigManager : ManagerBase<ConfigManager>
         
         return config;
     }
-    private void CreatePool(string configName, IConfig config)
+    private void CreatePool(string configName, ConfigBase config)
     {
         if(!config.IsCreatePool) {
             return;

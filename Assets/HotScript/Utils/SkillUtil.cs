@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillUtil
+public static class SkillUtil
 {
     #region 技能冲突
     public static readonly List<List<int>> conflictLists = new() {
@@ -41,6 +41,7 @@ public class SkillUtil
         {"icon_WhirlingBlade", CommonUtil.AsList(12, 226, 227, 228, 229, 230, 231)},
         {"icon_Staff", CommonUtil.AsList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)}
     };
+
     public static string ArmTypeToResName(string armType)
     {
         foreach (var armTypeItem in armTypeDict)
@@ -96,8 +97,7 @@ public class SkillUtil
     #endregion
 
 
-
-    #region 技能描述名字
+    #region 技能描述
     public static string IdToDesc(int id)
     {
         return id switch
@@ -264,6 +264,8 @@ public class SkillUtil
 
         };
     }
+    #endregion
+    #region 技能名字
     public static string IdToName(int id)
     {
         return id switch

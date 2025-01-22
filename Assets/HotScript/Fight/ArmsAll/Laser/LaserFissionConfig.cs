@@ -9,7 +9,6 @@ public class LaserFissionConfig : LaserConfig
     public override void Init()
     {
         base.Init();
-        Name = "次级激光";
         ScopeRadius = 1f;
         OnType = "stay";
         DamageType = "energy";

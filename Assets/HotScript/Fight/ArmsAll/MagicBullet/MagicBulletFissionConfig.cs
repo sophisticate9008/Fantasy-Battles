@@ -21,10 +21,7 @@ public class MagicBulletFissionConfig : ArmConfigBase, IMultipleable, IPenetrabl
     // 构造函数
     public MagicBulletFissionConfig() : base()
     {
-        Name = "MagicBulletFission";
-        Description = "次级子弹,造成本体的25%伤害";
         DamageType = "ad";
-        DamageExtraType = "penetrable";
         OnType = "enter";
         ComponentStrs.Add("穿透");
     }

@@ -33,27 +33,11 @@ public class MagicBulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPe
     {
         base.Init();
         // 初始化 MagicBulletConfig 的属性
-        Name = "MagicBullet";
-        Description = "MagicBullet";
-        Level = 1;
-        RangeFire = 10;
         Speed = 10f;
-        Tlc = 1f;
-        Cd = 2f;
-        CritRate = 0.1f;
-        Owner = Name;
         ComponentStrs.Add("穿透");
-        ComponentStrs.Add("减速");
-        ComponentStrs.Add("冰冻");
-        ComponentStrs.Add("反弹");
-        ComponentStrs.Add("点燃");
         AttackCd = 1f;
         AttackCount = 30;
-        BuffDamageTlc = 0.1f;
-        DamageType = "ad";
-        DamageExtraType = "penetrable";
         OnType = "enter";
-        BuffDamageTlc = 0.1f;
         CdType = MyEnums.CdTypes.Exhaust;
     }
 }

@@ -50,4 +50,20 @@ public class CommonUtil
         }
 
     }
+    /// <summary>
+    /// 判断某个类型是否实现了指定的接口
+    /// </summary>
+    /// <typeparam name="TInterface">接口类型</typeparam>
+    /// <param name="type">要检查的类型</param>
+    /// <returns>是否实现了指定接口</returns>
+    public static bool IsImplementsInterface<TInterface>(Type type)
+    {
+        if (type == null)
+            throw new ArgumentNullException(nameof(type));
+
+        if (!typeof(TInterface).IsInterface)
+            throw new ArgumentException($"{typeof(TInterface).Name} 必须是接口类型。");
+
+        return typeof(TInterface).IsAssignableFrom(type);
+    }
 }

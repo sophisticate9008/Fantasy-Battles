@@ -11,15 +11,9 @@ namespace ArmConfigs
         public override void Init()
         {
             base.Init();
-            RangeFire = 8;
             Speed = 8;
             OnType = "enter";
-            DamageType = "wind";
-            DamagePos = "all";
-            Cd = 3;
             ScopeRadius = 10f;
-            SelfScale = 1;
-            Tlc = 1;
             ComponentStrs.Add("穿透");
             MaxForce = 100;
         }

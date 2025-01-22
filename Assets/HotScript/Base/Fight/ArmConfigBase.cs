@@ -7,6 +7,7 @@ using YooAsset;
 [System.Serializable] // 标记为可序列化
 public class ArmConfigBase : ConfigBase
 {
+    public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     private GameObject prefab;
 
     // 使用私有字段来存储属性值
@@ -16,22 +17,20 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private int level = 1;
     [SerializeField] private float tlc;
     [SerializeField] private float speed;
-    [SerializeField] private int rangeFire;
+    [SerializeField] private float rangeFire;
     [SerializeField] private float cd;
-    [SerializeField] private float attackCd;
+    [SerializeField] private float attackCd = 0.5f;
     [SerializeField] private int attackCount = 1;
     [SerializeField] private List<string> componentStrs = new();
-    [SerializeField] private float buffDamageTlc;//待定
+    [SerializeField] private float buffDamageTlc = 0.1f;//待定
     [SerializeField] private float selfScale = 1;
     //持续时间
     [SerializeField] private float duration = 20f;
     //力的程度
-    [SerializeField] private float forceDegree = 1f;
     [SerializeField] private string owner = "";
     [SerializeField] private string damageType;
     [SerializeField] private string damagePos = "all";
     [SerializeField] private string onType;
-    [SerializeField] private string damageExtraType = "";
     [SerializeField] private float scopeRadius = 3f;
     [SerializeField] private bool isLineCast = false;
     [SerializeField] private float maxForce = 0; // 最大力
@@ -113,7 +112,7 @@ public class ArmConfigBase : ConfigBase
         set => speed = value;
     }
 
-    public virtual int RangeFire
+    public virtual float RangeFire
     {
         get => rangeFire;
         set => rangeFire = value;
@@ -141,11 +140,6 @@ public class ArmConfigBase : ConfigBase
     {
         get => componentStrs;
         set => componentStrs = value;
-    }
-    public virtual float ForceDegree
-    {
-        get => forceDegree;
-        set => forceDegree = value;
     }
     //技能最大持续时间
     public virtual float Duration { get => duration; set => duration = value; }
@@ -175,11 +169,7 @@ public class ArmConfigBase : ConfigBase
         set => onType = value;
     }
 
-    public virtual string DamageExtraType
-    {
-        get => damageExtraType;
-        set => damageExtraType = value;
-    }
+
 
     public virtual float ScopeRadius
     {
@@ -223,6 +213,7 @@ public class ArmConfigBase : ConfigBase
     public virtual void Init()
     {
         AutoGetOwner();
+        InjectData();
         // 初始化逻辑可以在子类中进行扩展
     }
     public virtual void AutoGetOwner() {
@@ -231,6 +222,17 @@ public class ArmConfigBase : ConfigBase
                 Owner = item.Value;
             }
         }
-        
+    }
+    public virtual void InjectData() {
+        if(GetType().Name.Replace("Config", "") == owner) {
+            int level = (int)PlayerDataConfig.GetValue(ArmUtil.ArmTypeToFieldName(owner));
+            ArmPropBase armProp = new(level, owner);
+            Cd = armProp.cd;
+            RangeFire = armProp.rangeFire;
+            Tlc = armProp.tlc;
+            DamagePos = armProp.damagePos;
+            DamageType = armProp.damageType;
+        }
     }
 }
+

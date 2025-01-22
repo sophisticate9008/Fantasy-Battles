@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 
 [System.Serializable]
-public class ConfigBase : IConfig
+public class ConfigBase
 {
     public virtual GameObject Prefab { get; set; }
     public virtual bool IsCreatePool { get; set; } = true;
