@@ -47,7 +47,7 @@ public class WallController : TheUIBase
     {
         float fillAmount = WallConfig.CurrentLife / (float)WallConfig.LifeMax;
         bar.fillAmount = fillAmount;
-        Vector2 textPosition = new Vector2(fillRectTransform.rect.width * fillAmount, textRectTransform.anchoredPosition.y);
+        Vector2 textPosition = new Vector2(fillRectTransform.rect.width * (fillAmount - 0.5f) , textRectTransform.anchoredPosition.y);
         textRectTransform.anchoredPosition = textPosition;
         string _ = WallConfig.ImmunityCount > 0 ? $"({WallConfig.ImmunityCount})" : "";
         blood.text = $"<color=#6BE2AF>❤</color> {WallConfig.CurrentLife} <color=yellow>{_}</color>";

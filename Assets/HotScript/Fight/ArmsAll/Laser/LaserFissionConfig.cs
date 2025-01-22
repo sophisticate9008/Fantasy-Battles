@@ -5,7 +5,7 @@ public class LaserFissionConfig : LaserConfig
     public override float Tlc { get => LaserConfig.Tlc * 0.1f; }
     public override bool IsFlame => LaserConfig.IsFlame;
     public override float CritRate => LaserConfig.CritRate;
-    public int FissionLevel = 4;
+    public int FissionLevel = 0;
     public override void Init()
     {
         base.Init();

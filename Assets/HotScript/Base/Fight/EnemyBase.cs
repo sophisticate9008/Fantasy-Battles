@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour, IEnemy
 {
+    public SpriteRenderer sr;
     private bool isIdle = false;
     public AnimatorManager animatorManager;
     public Animator animator => GetComponent<Animator>();
@@ -101,6 +102,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     protected virtual void Start()
     {
         animatorManager = AnimatorManager.Instance;
+        sr = GetComponent<SpriteRenderer>();
     }
     private void RunningAnim()
     {
@@ -120,9 +122,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
             animatorManager.StopAnim(animator);
 
         }
-        // if(isDead) {
-        //     Invoke(nameof(ReturnToPool), 1f);
-        // }
+        if(isDead) {
+            ReturnToPool();
+        }
         // else
         // {
         //     animatorManager.PlayAnim(animator, 1f);
@@ -227,8 +229,13 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     public virtual void CalLife(int damage, string owner)
     {
-
+        sr.color = Color.red;
+        ToolManager.Instance.SetTimeout(() =>
+        {
+            sr.color = Color.white;
+        }, 0.1f);
         NowLife -= damage;
+        
         if (NowLife <= 0)
         {
             Die(owner);

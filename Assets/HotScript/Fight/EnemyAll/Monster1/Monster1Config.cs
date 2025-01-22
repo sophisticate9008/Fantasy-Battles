@@ -8,5 +8,6 @@ public class Monster1Config: EnemyConfigBase{
         Blocks = 1;
         RangeFire = 0;
         CharacterType = "normal";
+        Damage = 100;
     }
 }

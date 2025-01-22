@@ -40,7 +40,7 @@ public class FighteManager : ManagerBase<FighteManager>
     public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
     private static readonly Dictionary<string, string> colorDict = new() {
         {"ice", "blue"},
-        {"fire", "red"},
+        {"fire", "orange"},
         {"ad", "white"},
         {"energy", "#B0D3B5"},
         {"wind", "#00cade"},
