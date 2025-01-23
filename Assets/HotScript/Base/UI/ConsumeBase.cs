@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ConsumeBase : TheUIBase
 {
+    
     // 使用元组 (string, int) 来存储物品名称和对应的消耗数量
     public List<(string itemName, int consumeCount)> consumeItemsData = new();
     public virtual List<(string itemName, int consumeCount)> ConsumeItemsData {
@@ -13,7 +15,7 @@ public class ConsumeBase : TheUIBase
     public virtual void PreConsume()
     {
         // 检查所有物品的消耗条件
-        foreach (var itemData in consumeItemsData)
+        foreach (var itemData in ConsumeItemsData.ToList())
         {
             if ((int)PlayerDataConfig.GetValue(itemData.itemName) < itemData.consumeCount)
             {
@@ -39,8 +41,9 @@ public class ConsumeBase : TheUIBase
     // 统一进行消耗逻辑
     public virtual void AfterConsume()
     {
-        foreach (var (itemName, consumeCount) in consumeItemsData)
+        foreach (var (itemName, consumeCount) in ConsumeItemsData.ToList())
         {
+            Debug.Log($"消耗 {itemName} {consumeCount}");
             PlayerDataConfig.UpdateValueSubtract(itemName, consumeCount);
         }
         // 可扩展消耗后的其他逻辑

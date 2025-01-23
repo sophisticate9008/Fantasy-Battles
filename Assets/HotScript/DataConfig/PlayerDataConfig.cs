@@ -4,7 +4,7 @@ using System.Reflection;
 
 
 [Serializable]
-public class PlayerDataConfig : ConfigBase,IFlagInjectFromFile
+public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
 {
     public override bool IsCreatePool { get; set; } = false;
     public List<MissionRecord> PassRecords = new();
@@ -15,6 +15,7 @@ public class PlayerDataConfig : ConfigBase,IFlagInjectFromFile
     public int guaranteeBlue = 10;//蓝色保底
     public int guaranteePurple = 10;//紫色保底
     public int washWater = 120;
+
     public List<JewelBase> place1 = new();
     public List<JewelBase> place2 = new();
     public List<JewelBase> place3 = new();
@@ -46,9 +47,34 @@ public class PlayerDataConfig : ConfigBase,IFlagInjectFromFile
     public int levelArm12 = 1;
     public int levelArm13 = 1;
 
-    
+
     #endregion
 
+    #region 武器碎片
+    public int armChip0 = 0;
+    public int armChip1 = 0;
+    public int armChip2 = 0;
+    public int armChip3 = 0;
+    public int armChip4 = 0;
+    public int armChip5 = 0;
+    public int armChip6 = 0;
+    public int armChip7 = 0;
+    public int armChip8 = 0;
+    public int armChip9 = 0;
+    public int armChip10 = 0;
+    public int armChip11 = 0;
+    public int armChip12 = 0;
+    public int armChip13 = 0;
+
+    #endregion
+    #region  装备碎片
+    public int equipmentChip1 = 0;
+    public int equipmentChip2 = 0;
+    public int equipmentChip3 = 0;
+    public int equipmentChip4 = 0;
+    public int equipmentChip5 = 0;
+    public int equipmentChip6 = 0;
+    #endregion
 
     //该字段用来手动通知宝石变动更新
     public int jewelChange = 0;

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public static class ArmUtil
 {
+    public static List<string> AllArmTypes => SkillUtil.armTypeDict.Values.ToList();
     public static string ArmTypeToDamagePos(string ArmType)
     {
         return ArmType switch
@@ -111,9 +113,13 @@ public static class ArmUtil
     #endregion
     #region 持续时间等差数列
     #endregion
-    public static string ArmTypeToFieldName(string armType)
+    public static string ArmTypeToLevelFieldName(string armType)
     {
         return "levelArm" + ArmTypeToId(armType);
+    }
+    public static string ArmTypeToChipFieldName(string armType)
+    {
+        return "armChip" + ArmTypeToId(armType);
     }
     public static int ArmTypeToId(string armType)
     {
@@ -127,6 +133,19 @@ public static class ArmUtil
         return -1;
     }
 
+    #region 武器名字
+    public static string ArmTypeToArmName(string armType) {
+        int id = ArmTypeToId(armType);
+        if(id < 13) {
+            return SkillUtil.IdToName(id);
+        }
+        return "魔法弹";
+    }
+    #endregion
+    public static string ArmTypeToChipResName(string armType)
+    {
+        return "chip_" + armType;
+    }
 
 
 

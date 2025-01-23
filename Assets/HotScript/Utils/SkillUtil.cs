@@ -39,7 +39,7 @@ public static class SkillUtil
         {"icon_PressureCutter", CommonUtil.AsList(10, 191, 192, 193, 194, 195, 196, 197, 198, 199)},
         {"icon_FlameOrb", CommonUtil.AsList(11, 209, 210, 211, 212, 213, 214, 215, 216)},
         {"icon_WhirlingBlade", CommonUtil.AsList(12, 226, 227, 228, 229, 230, 231)},
-        {"icon_Staff", CommonUtil.AsList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)}
+        {"icon_MagicBullet", CommonUtil.AsList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)}
     };
 
     public static string ArmTypeToResName(string armType)

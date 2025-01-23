@@ -1,4 +1,5 @@
-public class ArmPropBase {
+public class ArmPropBase
+{
     public int level;
     public float cd => cdAP.a1 + cdAP.d * level;
     public float rangeFire => ArmUtil.ArmTypeToRangeFire(armtype);
@@ -9,9 +10,16 @@ public class ArmPropBase {
     public string armtype;
     public (float a1, float d) tlcAP => ArmUtil.ArmTypeToTlcAP(armtype);
     public (float a1, float d) cdAP => ArmUtil.ArmTypeToCdAP(armtype);
-    public ArmPropBase(int level, string armtype) {
+    public string resName => SkillUtil.ArmTypeToResName(armtype);
+    public string armName => ArmUtil.ArmTypeToArmName(armtype);
+    public int moneyNeed => Constant.upgradeMoneyNeed.a1 + Constant.upgradeMoneyNeed.d * level;
+    public int chipNeed => Constant.upgradeChipNeed.a1 + Constant.upgradeChipNeed.d * level;
+    public string chipResName => ArmUtil.ArmTypeToChipResName(armtype);
+    
+    public ArmPropBase(int level, string armtype)
+    {
         this.level = level;
         this.armtype = armtype;
     }
-     
+
 }

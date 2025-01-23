@@ -225,7 +225,7 @@ public class ArmConfigBase : ConfigBase
     }
     public virtual void InjectData() {
         if(GetType().Name.Replace("Config", "") == owner) {
-            int level = (int)PlayerDataConfig.GetValue(ArmUtil.ArmTypeToFieldName(owner));
+            int level = (int)PlayerDataConfig.GetValue(ArmUtil.ArmTypeToLevelFieldName(owner));
             ArmPropBase armProp = new(level, owner);
             Cd = armProp.cd;
             RangeFire = armProp.rangeFire;

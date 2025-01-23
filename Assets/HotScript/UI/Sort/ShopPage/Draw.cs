@@ -10,6 +10,10 @@ using YooAsset;
 
 public class Draw : SingleConsumeBase
 {
+    public string itemName;
+    public int consumeCount;
+    public override string ItemName { get => itemName; set => itemName = value; }
+    public override int ConsumeCount { get => consumeCount; set => consumeCount = value; }
     public enum ProbabilityType
     {
         ProbDict1, // 使用字典1
