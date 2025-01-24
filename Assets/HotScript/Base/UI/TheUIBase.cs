@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -122,4 +123,141 @@ public class TheUIBase : MonoBehaviour
         }
     }
     #endregion
+    #region  UI控制效果
+    private Vector3 initialPosition; // 记录初始位置
+    private CanvasGroup canvasGroup; // 控制透明度
+    private bool isAnimating = false; // 动画状态标志
+
+    /// <summary>
+    /// 初始化方法，记录 UI 的初始位置并获取 CanvasGroup。
+    /// </summary>
+    protected void InitializeUIBase()
+    {
+        initialPosition = transform.position; // 记录当前 UI 的位置
+        canvasGroup = GetComponent<CanvasGroup>(); // 获取 CanvasGroup 组件
+
+        if (canvasGroup == null)
+        {
+            // 如果没有 CanvasGroup，则自动添加
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+    }
+
+    /// <summary>
+    /// 从屏幕指定方向移动到初始位置，同时淡入透明度。
+    /// </summary>
+    /// <param name="direction">移动方向，例如 "left", "right", "up", "down"。</param>
+    /// <param name="duration">移动持续时间（秒）。</param>
+    public void OpenFromDirection(string direction, float duration)
+    {
+        if (isAnimating) return; // 如果动画正在进行，直接返回
+        gameObject.SetActive(true);
+        InitializeUIBase();
+        Vector3 startPosition = CalculateStartPosition(direction);
+        if (startPosition == Vector3.zero) return;
+
+        // 将 UI 设置到起始位置，并将透明度置为 0
+        transform.position = startPosition;
+        canvasGroup.alpha = 0;
+
+        // 标记为正在动画
+        isAnimating = true;
+
+        // 启动协程，移动到目标位置并调整透明度
+        StartCoroutine(MoveToPosition(initialPosition, 1, duration, () => isAnimating = false));
+    }
+
+    /// <summary>
+    /// 从当前位置移动到屏幕外的指定方向，同时淡出透明度并关闭对象。
+    /// </summary>
+    /// <param name="direction">移动方向，例如 "left", "right", "up", "down"。</param>
+    /// <param name="duration">移动持续时间（秒）。</param>
+    public void CloseToDirection(string direction, float duration)
+    {
+        if (isAnimating) return; // 如果动画正在进行，直接返回
+
+        InitializeUIBase();
+        Vector3 endPosition = CalculateStartPosition(direction);
+        if (endPosition == Vector3.zero) return;
+
+        // 标记为正在动画
+        isAnimating = true;
+
+        // 启动协程，移动到目标位置并调整透明度
+        StartCoroutine(MoveToPosition(endPosition, 0, duration, () =>
+        {
+            // 在完成移动后关闭对象
+            gameObject.SetActive(false);
+            transform.position = initialPosition; // 恢复位置
+            isAnimating = false; // 动画结束
+        }));
+    }
+
+    /// <summary>
+    /// 计算屏幕外的起始或结束位置。
+    /// </summary>
+    /// <param name="direction">方向字符串。</param>
+    /// <returns>计算后的起始或结束位置。</returns>
+    private Vector3 CalculateStartPosition(string direction)
+    {
+        Vector3 position = initialPosition;
+
+        switch (direction.ToLower())
+        {
+            case "left":
+                position.x = -Screen.width; // 屏幕左侧
+                break;
+            case "right":
+                position.x = Screen.width; // 屏幕右侧
+                break;
+            case "up":
+                position.y = Screen.height; // 屏幕上方
+                break;
+            case "down":
+                position.y = -Screen.height; // 屏幕下方
+                break;
+            default:
+                Debug.LogError("Invalid direction. Use 'left', 'right', 'up', or 'down'.");
+                return Vector3.zero;
+        }
+
+        return position;
+    }
+
+    /// <summary>
+    /// 协程：移动到目标位置并调整透明度。
+    /// </summary>
+    /// <param name="targetPosition">目标位置。</param>
+    /// <param name="targetAlpha">目标透明度。</param>
+    /// <param name="duration">移动持续时间（秒）。</param>
+    /// <param name="onComplete">移动完成后的回调（可选）。</param>
+    private IEnumerator MoveToPosition(Vector3 targetPosition, float targetAlpha, float duration, System.Action onComplete = null)
+    {
+        Vector3 startPosition = transform.position; // 起始位置
+        float startAlpha = canvasGroup.alpha; // 起始透明度
+        float elapsed = 0f; // 已经过时间
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            // 线性插值移动位置
+            transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+
+            // 线性插值调整透明度
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+
+            yield return null; // 等待下一帧
+        }
+
+        // 确保最终位置和透明度准确
+        transform.position = targetPosition;
+        canvasGroup.alpha = targetAlpha;
+
+        // 调用完成回调（如果有）
+        onComplete?.Invoke();
+    }
+    #endregion
+
 }

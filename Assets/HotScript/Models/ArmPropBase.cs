@@ -1,7 +1,7 @@
 public class ArmPropBase : ReflectiveBase
 {
     public int level;
-    public float cd => cdAP.a1 + cdAP.d * level;
+    public float cd => cdAP.a1 - cdAP.d * level;
     public float rangeFire => ArmUtil.ArmTypeToRangeFire(armtype);
     public float tlc => tlcAP.a1 + tlcAP.d * level;
     public string damagePos => ArmUtil.ArmTypeToDamagePos(armtype);

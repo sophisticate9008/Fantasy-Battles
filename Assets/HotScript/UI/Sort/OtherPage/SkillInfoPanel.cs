@@ -107,10 +107,10 @@ public class SkillInfoPanel : ConsumeBase
     }
     void Close()
     {
-        gameObject.SetActive(false);
+        CloseToDirection("down", 0.3f);
     }
     public void AwakePanel() {
-        gameObject.SetActive(true);
+        OpenFromDirection("down", 0.3f);
     }
     string ReplaceText(string text)
     {
