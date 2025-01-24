@@ -15,6 +15,7 @@ public class SkillSingleUI : TheUIBase
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI nameText;
     public GameObject redDot;
+    public Button btn;
     public int chip => (int)PlayerDataConfig.GetValue(ArmUtil.ArmTypeToChipFieldName(armType));
     public int money => (int)PlayerDataConfig.GetValue("money");
     void FindNecessary()
@@ -24,6 +25,15 @@ public class SkillSingleUI : TheUIBase
         levelText = transform.RecursiveFind("LevelText").GetComponent<TextMeshProUGUI>();
         nameText = transform.RecursiveFind("NameText").GetComponent<TextMeshProUGUI>();
         redDot = transform.RecursiveFind("RedDot").gameObject;
+        btn = GetComponent<Button>();
+    }
+    void BindButton() {
+        btn.onClick.AddListener(AwakePanel);
+    }
+    void AwakePanel() {
+        SkillInfoPanel infoPanel = transform.parent.parent.RecursiveFind("InfoPanel").GetComponent<SkillInfoPanel>();
+        infoPanel.currentArmProp = current;
+        infoPanel.AwakePanel();
     }
     void UpdateSome() {
         nameText.text = current.armName;
@@ -48,6 +58,7 @@ public class SkillSingleUI : TheUIBase
     private void Start()
     {
         FindNecessary();
+        BindButton();
     }
     public void GetProps()
     {

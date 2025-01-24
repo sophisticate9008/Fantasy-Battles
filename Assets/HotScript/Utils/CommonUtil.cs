@@ -66,4 +66,8 @@ public class CommonUtil
 
         return typeof(TInterface).IsAssignableFrom(type);
     }
+
+    public static string ChangeTextColor(string text, string color) {
+        return "<color=" + color + ">" + text + "</color>";
+    }
 }

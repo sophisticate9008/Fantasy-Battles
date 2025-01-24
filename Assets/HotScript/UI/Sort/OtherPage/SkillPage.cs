@@ -12,7 +12,7 @@ public class SkillPage: TheUIBase
         allArmTypes = ArmUtil.AllArmTypes;
         Debug.Log("armtypes");
         
-        parent = transform.RecursiveFind("技能");
+        parent = transform.RecursiveFind("技能列表");
         foreach (var armType in allArmTypes) {
             GameObject clone = Instantiate(skillPrefab,parent);
             SkillSingleUI skillSingleUI = clone.AddComponent<SkillSingleUI>();

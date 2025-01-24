@@ -14,7 +14,6 @@ namespace ArmConfigs
             AttackCd = 0.2f;
             CdType = CdTypes.WaitLast;
             ControlBy = ControlBy.Arm;
-            Duration = 10;
             ComponentStrs.Add("反弹");
             ComponentStrs.Add("阻尼");
             Speed = 3;

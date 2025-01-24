@@ -14,7 +14,6 @@ public class LaserConfig : ArmConfigBase
     {
         base.Init();
         AttackCd = 0.2f;
-        Duration = 4f;
         OnType = "stay";
         CritRate = 0.5f;
         ScopeRadius = 12f;

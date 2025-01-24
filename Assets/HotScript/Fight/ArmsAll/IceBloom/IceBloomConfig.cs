@@ -6,7 +6,6 @@ public class IceBloomConfig : ArmConfigBase
         base.Init();
         OnType = "stay";
         ComponentStrs.Add("冰冻");
-        Duration = 3f;
         AttackCd = 0.2f;
         ComponentStrs.Add("减速");
     }

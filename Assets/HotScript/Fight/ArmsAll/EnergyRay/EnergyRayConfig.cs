@@ -10,7 +10,6 @@ public class EnergyRayConfig : ArmConfigBase
         AttackCd = 0.2f;
         CdType = CdTypes.WaitLast;
         ControlBy = ControlBy.Arm;
-        Duration = 3;
     }
 }
 

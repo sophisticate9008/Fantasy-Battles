@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 public class TheUIBase : MonoBehaviour
 {
@@ -8,11 +9,7 @@ public class TheUIBase : MonoBehaviour
     //     BoxCollider2D collider = gameObject.AddComponent<BoxCollider2D>();
     //     collider.isTrigger = true;
     // }
-    public GameObject Prefab
-    {
-        get { return gameObject; }
-        set { }
-    }
+
 
     public PlayerDataConfig PlayerDataConfig { get => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig; set { } }
 
@@ -70,7 +67,8 @@ public class TheUIBase : MonoBehaviour
             // 将对象返回到对象池
             ToolManager.Instance.ReturnItemUIToPool(itemGameObject);
         }
-        if(processedObjects.Count > 0) {
+        if (processedObjects.Count > 0)
+        {
             Debug.Log("返回了 " + processedObjects.Count + " 个物品UI.");
         }
     }
@@ -86,4 +84,42 @@ public class TheUIBase : MonoBehaviour
 
     }
 
+
+    #region  自动注入字段
+    /// <summary>
+    /// 自动注入字段方法。
+    /// 该方法会通过反射获取当前类中的字段，递归查找场景中的对象，并自动将字段与场景中的对象关联。
+    /// 要求：场景中的对象名称与字段名称一致。
+    /// </summary>
+    protected void AutoInjectFields()
+    {
+        // 获取当前类的所有字段（包括 public 和 private 的实例字段）
+        FieldInfo[] fields = this.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        foreach (FieldInfo field in fields)
+        {
+            // 检查字段类型是否是 Unity 的组件类型或 GameObject 类型
+            if (typeof(Component).IsAssignableFrom(field.FieldType) || field.FieldType == typeof(GameObject))
+            {
+                // 使用 RecursiveFind 方法，根据字段名称查找对应的 Transform
+                Transform targetTransform = transform.RecursiveFind(field.Name);
+
+                // 如果找到了对应的 Transform
+                if (targetTransform != null)
+                {
+                    // 如果字段类型是 GameObject，直接赋值 GameObject
+                    if (field.FieldType == typeof(GameObject))
+                    {
+                        field.SetValue(this, targetTransform.gameObject);
+                    }
+                    // 如果字段类型是组件，则获取组件并赋值
+                    else
+                    {
+                        field.SetValue(this, targetTransform.GetComponent(field.FieldType));
+                    }
+                }
+            }
+        }
+    }
+    #endregion
 }

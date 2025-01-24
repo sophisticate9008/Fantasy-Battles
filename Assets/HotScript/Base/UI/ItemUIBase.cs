@@ -15,6 +15,7 @@ public class ItemUIBase : TheUIBase
     public int Count => itemInfo.count;
     public int PlaceId => itemInfo.placeId;
     public int Id => itemInfo.id;
+    public GameObject Prefab => gameObject;
     public override void Init()
     {
         ResetDiff();

@@ -12,7 +12,7 @@ public class LaserFissionConfig : LaserConfig
         ScopeRadius = 1f;
         OnType = "stay";
         DamageType = "energy";
-        Duration = 0.1f;
+        Duration = 0.19f;
         AttackCd = 0.2f;
     }
 }

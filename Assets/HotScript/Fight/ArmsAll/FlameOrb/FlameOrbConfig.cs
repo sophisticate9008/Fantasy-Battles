@@ -5,7 +5,6 @@ public class FlameOrbConfig : ArmConfigBase
     {
         base.Init();
         OnType = "stay";
-        Duration = 4;
         Speed = 0;
     }
 }

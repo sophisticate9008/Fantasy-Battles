@@ -108,7 +108,7 @@ public class ItemUtil
             "washWater" => "洗练试剂",
             "money" => "金币",
             "diamond" => "钻石",
-            _ => throw new System.NotImplementedException(),
+            _ => "物品",
         };
     }
     public static string ProbDictToString(Dictionary<int, float> probabilityDict)

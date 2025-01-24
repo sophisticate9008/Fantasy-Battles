@@ -4,7 +4,6 @@ public class TornadoConfig : ArmConfigBase
     public override void Init()
     {
         base.Init();
-        Duration = 15f;
         AttackCount = 1;
         AttackCd = 0.2f;
         OnType = "stay";

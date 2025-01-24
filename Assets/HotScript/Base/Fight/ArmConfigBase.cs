@@ -232,6 +232,12 @@ public class ArmConfigBase : ConfigBase
             Tlc = armProp.tlc;
             DamagePos = armProp.damagePos;
             DamageType = armProp.damageType;
+            Duration = armProp.duration;
+            AttackCd = armProp.attackCd;
+            if(CommonUtil.IsImplementsInterface<IPenetrable>(GetType())) {
+                IPenetrable config = this as IPenetrable;
+                config.PenetrationLevel = armProp.penetration;
+            }
         }
     }
 }
