@@ -28,9 +28,9 @@ public class ItemUIBase : TheUIBase
         children.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = Count.ToString();
         if (Id < 500)
         {
-            children = Prefab.transform.GetChild(1);
-            children.GetComponent<Image>().sprite = CommonUtil.GetAssetByName<Sprite>("place" + PlaceId);
-            children.GetComponent<Image>().gameObject.SetActive(true);
+            Image pos = Prefab.transform.GetChild(1).GetComponent<Image>();
+            pos.sprite = CommonUtil.GetAssetByName<Sprite>("place" + PlaceId);
+            pos.gameObject.SetActive(true);
         }
         if (itemInfo.isLock)
         {
@@ -56,7 +56,7 @@ public class ItemUIBase : TheUIBase
         Image bg = gameObject.GetComponent<Image>();
         Image jewel = transform.GetChild(0).GetComponent<Image>();
         GameObject upgrade = transform.RecursiveFind("Upgrade").gameObject;
-
+        Image pos = transform.GetChild(1).GetComponent<Image>();
         // 恢复背景透明度
         if (bg != null)
         {
@@ -77,6 +77,10 @@ public class ItemUIBase : TheUIBase
         if (upgrade != null)
         {
             upgrade.SetActive(false);  // 恢复为隐藏状态
+        }
+        if (pos != null)
+        {
+            pos.gameObject.SetActive(false);
         }
     }
 

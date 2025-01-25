@@ -13,7 +13,8 @@ public static class Constant
     public static Vector2 rightTopViewBoundary = new(1, 1f);
 
     public static List<String> prefabFromScene = CommonUtil.AsList<String>(
-            "ItemBase", "Message", "ExchangeBase", "Des", "DrawPanel", "CommonUI", "ItemUIShow", "Wash", "Tornado","SkillSingle"
+            "ItemBase", "Message", "ExchangeBase", "Des", "DrawPanel", "CommonUI",
+            "ItemUIShow", "Wash", "Tornado", "SkillSingle", "UIMask"
     );
     public static int diamondRewardBaseNum = 50;
     public static int goldRewardBaseNum = 500;

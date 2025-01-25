@@ -60,14 +60,19 @@ public class Equipments : TheUIBase
     }
     void ShowPlaceJewel(int placeId)
     {
-        if (EquipmentPanel)
+        // if (EquipmentPanel)
+        // {
+        //     EquipmentPanel.itemInfo = new ItemBase
+        //     {
+        //         placeId = placeId
+        //     };
+        //     EquipmentPanel.InitByEquipment();
+        //     theCommonUI.titleUI.text = ItemUtil.PlaceIdToPlaceName(placeId);
+        //     EquipmentPanel.gameObject.SetActive(true);
+        // }
+        if (false)
         {
-            EquipmentPanel.itemInfo = new ItemBase
-            {
-                placeId = placeId
-            };
-            EquipmentPanel.InitByEquipment();
-            theCommonUI.titleUI.text = ItemUtil.PlaceIdToPlaceName(placeId);
+
         }
         else
         {
