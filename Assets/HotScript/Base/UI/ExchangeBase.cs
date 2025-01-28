@@ -12,7 +12,7 @@ public class ExchangeBase : SingleConsumeBase
     public override string ItemName => currencyName;
     public override int ConsumeCount => price * buyCount;
     private Text goodNameText;
-    private Image needItem;
+    public Image needItem;
     private Text needNum;
     private Button addButton;
     private Button subtractButton;

@@ -121,6 +121,7 @@ public static class ArmUtil
     {
         return "armChip" + ArmTypeToId(armType);
     }
+
     public static int ArmTypeToId(string armType)
     {
         foreach (var item in SkillUtil.armTypeDict)
@@ -132,7 +133,17 @@ public static class ArmUtil
         }
         return -1;
     }
-
+    public static string IdToArmType(int id)
+    {
+        foreach (var item in SkillUtil.armTypeDict)
+        {
+            if (item.Key == id)
+            {
+                return item.Value;
+            }
+        }
+        return "";
+    }
     #region 武器名字
     public static string ArmTypeToArmName(string armType)
     {
@@ -144,10 +155,13 @@ public static class ArmUtil
         return "魔法弹";
     }
     #endregion
+
+    #region  碎片相关
     public static string ArmTypeToChipResName(string armType)
     {
         return "chip_" + armType;
     }
+    #endregion
     public static float ArmTypeToDuration(string armType)
     {
         int id = ArmTypeToId(armType);

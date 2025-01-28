@@ -7,6 +7,7 @@ public class DraggableUIBase : TheUIBase
     public Vector2 offset;
     public bool isDragging = false;
     public RectTransform parentRectTransform;
+    public int orginIndex;
     public virtual void Start()
     {
         // 获取 RectTransform 组件，并缓存到字段
@@ -16,11 +17,14 @@ public class DraggableUIBase : TheUIBase
 
     public virtual void BeginDrag()
     {
+        orginIndex = transform.GetSiblingIndex();
+        transform.SetAsLastSibling();
         // 可以在这里添加拖拽开始的逻辑
     }
 
     public virtual void EndDrag()
     {
+        transform.SetSiblingIndex(orginIndex);
         // 可以在这里添加拖拽结束的逻辑
     }
 

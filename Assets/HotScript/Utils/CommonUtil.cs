@@ -28,7 +28,7 @@ public class CommonUtil
         try
         {
             // 特殊处理 GameObject 类型资源
-            if (typeof(T) == typeof(GameObject) && Constant.prefabFromScene.Contains(resName))
+            if (typeof(T) == typeof(GameObject))
             {
                 GameObject prefabs = GameObject.Find("Prefabs");
                 Transform foundTransform = prefabs?.transform.RecursiveFind(resName);
@@ -44,7 +44,7 @@ public class CommonUtil
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Error loading resource: {resName}. Exception: {ex.Message}");
+            Debug.LogWarning($"Error loading resource: {resName}. Exception: {ex.Message}");
             // 尝试再次加载资源作为最后的解决方案
             return YooAssets.LoadAssetSync<T>(resName).AssetObject as T;
         }

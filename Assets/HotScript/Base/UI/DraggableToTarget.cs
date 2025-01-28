@@ -16,12 +16,14 @@ public class DraggableToTarget : DraggableUIBase
 
     public override void BeginDrag()
     {
+        base.BeginDrag();
         // 记录初始位置
         initialPosition = selfRectTransform.localPosition;
     }
 
     public override void EndDrag()
     {
+        base.EndDrag();
         foreach (RectTransform target in targets)
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(target, selfRectTransform.position))
@@ -35,10 +37,12 @@ public class DraggableToTarget : DraggableUIBase
                     // 将现有子对象移回拖拽元素的原始位置（带渐变）
                     StartCoroutine(SmoothMove(existingChild, initialPosition));
                     existingChild.SetParent(selfRectTransform.parent); // 设置为当前拖拽元素的父级
+                    existingChild.SetSiblingIndex(orginIndex);
                 }
 
                 // 将当前拖拽元素设置为目标的子对象
                 selfRectTransform.SetParent(target);
+                
                 StartCoroutine(SmoothMove(selfRectTransform, Vector2.zero)); // 平滑移动到目标中心
 
                 // 触发回调

@@ -200,7 +200,7 @@ public class UIManager : ManagerBase<UIManager>
         ShowUI(theUIBase);
         StartCoroutine(AutoCloseMessageUI());
     }
-    public void OnExchange(string goodName, string currencyName, int price, int goodCount = 1)
+    public ExchangeBase OnExchange(string goodName, string currencyName, int price, int goodCount = 1)
     {
         GameObject exchangeBasePrefab = CommonUtil.GetAssetByName<GameObject>("ExchangeBase");
         ExchangeBase exchangeBase = Instantiate(exchangeBasePrefab).AddComponent<ExchangeBase>();
@@ -210,6 +210,7 @@ public class UIManager : ManagerBase<UIManager>
         exchangeBase.goodCount = goodCount;
         exchangeBase.Init();
         ShowUI(exchangeBase);
+        return exchangeBase;
     }
     public void OnCommonUI(string title, string text)
     {

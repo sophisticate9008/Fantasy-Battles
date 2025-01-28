@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public static class ItemFactory
 {
-   private static readonly Dictionary<string, (int id, int level, string description)> ItemConfigs = new()
+    private static readonly Dictionary<string, (int id, int level, string description)> ItemConfigs = new()
     {
         { "keyBlue", (501, 3, "蓝钥匙，可以进行蓝色祈愿") },
         { "keyPurple", (502, 4, "紫钥匙，可以进行紫色祈愿") },
@@ -25,6 +25,20 @@ public static class ItemFactory
                 level = config.level,
                 description = config.description
             };
+        }
+        else
+        {
+            if (resName.Contains("armChip"))
+            {
+                return new ItemBase
+                {
+                    resName = ArmUtil.ArmTypeToChipResName(ArmUtil.IdToArmType(int.Parse(resName.Replace("armChip", "")))),
+                    count = count,
+                    id = 506,
+                    level = 3,
+                    description = "武器碎片,升级用"
+                };
+            }
         }
 
         throw new NotImplementedException($"未实现的资源名称: {resName}");
