@@ -10,6 +10,7 @@ public class SkillSingleUI : TheUIBase
     public ArmPropBase next;
     public int lastLevel;
     public int lastMoney;
+    public int lastChip;
     public Image ring;
     public Image icon;
     public TextMeshProUGUI levelText;
@@ -45,8 +46,9 @@ public class SkillSingleUI : TheUIBase
     {
         int needChipCount = current.chipNeed;
         lastMoney = money;
+        lastChip = chip;
         int needMoneyCount = current.moneyNeed;
-        if (chip >= needChipCount && needMoneyCount >= money)
+        if (chip >= needChipCount && money >= needMoneyCount)
         {
             redDot.SetActive(true);
         }
@@ -77,7 +79,7 @@ public class SkillSingleUI : TheUIBase
     private void Update()
     {
         //监听升级
-        if (level != lastLevel || money != lastMoney)
+        if (level != lastLevel || money != lastMoney || chip != lastChip)
         {
             Init();
         }

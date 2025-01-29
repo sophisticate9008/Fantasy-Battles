@@ -46,7 +46,15 @@ public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
     public int levelArm11 = 1;
     public int levelArm12 = 1;
     public int levelArm13 = 1;
-
+    public int AllLevelArm{
+        get{
+            int res = 0;
+            for(int i = 0; i < 14; i++) {
+                res += (int)GetValue("levelArm" + i);
+            }
+            return res;
+        }
+    }
 
     #endregion
 
