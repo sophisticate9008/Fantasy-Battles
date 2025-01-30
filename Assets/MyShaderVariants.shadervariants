@@ -80,10 +80,31 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 13
+  - first: {fileID: -6465566751694194690, guid: d609e83caba0e3e42b7578a1da99fc7c, type: 3}
+    second:
+      variants:
+      - keywords: _ALPHAMODULATE_ON _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+      - keywords: _ALPHATEST_ON
+        passType: 0
+      - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+      - keywords: _ALPHATEST_ON
+        passType: 8
+  - first: {fileID: 4800000, guid: b6e8968aaef3a994695d9f3fd6c37487, type: 3}
+    second:
+      variants:
+      - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
+        passType: 0
   - first: {fileID: 4800000, guid: 7a3e288ec1b06e046baa7ca5a5b8791b, type: 3}
     second:
       variants:
       - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 1f431d48ddfcd2941ac55a8246d34aec, type: 3}
+    second:
+      variants:
+      - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
         passType: 0
   - first: {fileID: -6465566751694194690, guid: 3bd9d617d99c4cb489f192f05a65a5ef, type: 3}
     second:
@@ -107,6 +128,23 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 4800000, guid: b83ffe97b6f481545b440dc2d31ef09e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e4c05b7f4e4288641a1100b3b8a130ef, type: 3}
+    second:
+      variants:
+      - keywords: _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: c1846b4b22741c846a3555369d6e4e1f, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: 
+        passType: 8
   - first: {fileID: -6465566751694194690, guid: 7178c20c05db92c43a9fd1cb3944c66e, type: 3}
     second:
       variants:
@@ -114,39 +152,3 @@ ShaderVariantCollection:
         passType: 0
       - keywords: _ALPHATEST_ON
         passType: 8
-  - first: {fileID: -6465566751694194690, guid: d609e83caba0e3e42b7578a1da99fc7c, type: 3}
-    second:
-      variants:
-      - keywords: _ALPHAMODULATE_ON _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-      - keywords: _ALPHATEST_ON
-        passType: 0
-      - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-      - keywords: _ALPHATEST_ON
-        passType: 8
-  - first: {fileID: 4800000, guid: b83ffe97b6f481545b440dc2d31ef09e, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: b6e8968aaef3a994695d9f3fd6c37487, type: 3}
-    second:
-      variants:
-      - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-  - first: {fileID: 4800000, guid: e4c05b7f4e4288641a1100b3b8a130ef, type: 3}
-    second:
-      variants:
-      - keywords: _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-  - first: {fileID: 4800000, guid: 1f431d48ddfcd2941ac55a8246d34aec, type: 3}
-    second:
-      variants:
-      - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-  - first: {fileID: 4800000, guid: c18a37e42c3cb2142bbecdbba8feef82, type: 3}
-    second:
-      variants:
-      - keywords: _EMISSION _SURFACE_TYPE_TRANSPARENT
-        passType: 0

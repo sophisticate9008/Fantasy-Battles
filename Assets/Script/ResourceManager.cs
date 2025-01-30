@@ -5,56 +5,10 @@ using HybridCLR;
 using UnityEngine;
 using YooAsset;
 using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using System;
+
 public class ResourceManager : MonoBehaviour
 {
 
-    // [RuntimeInitializeOnLoadMethod]
-    // public static void DisableOldTLS1()
-    // {
-
-    //     // 禁用 TLS 1.0 和 TLS 1.1，强制使用 TLS 1.2 或更高版本
-    //     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-    //     ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(ValidateServerCertificate);
-    // }
-    // private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
-    // {
-    //     // 检查是否存在 SSL 错误
-    //     if (sslPolicyErrors != System.Net.Security.SslPolicyErrors.None)
-    //     {
-    //         Debug.LogError("SSL Policy Errors: " + sslPolicyErrors);
-    //         return false;  // 返回 false，表示证书验证失败
-    //     }
-
-    //     // 获取证书的公钥字符串
-    //     string publicKey = certificate.GetPublicKeyString();
-
-    //     // 预设的公钥（你可以自定义这个公钥）
-    //     string expectedPublicKey = "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAENkFhFytTJe2qypTk1tpIV+9QuoRkgte7" +
-    //         "BRvWHwYk9qUznYzn8QtVaGOCMBBfjWXsqqivl8q1hs4wAYl03uNOXgFu7iZ7zFP6" +
-    //         "I6T3RB0+TR5fZqathfby47yOCZiAJI4g";
-
-    //     // 比较证书公钥和预设的公钥
-    //     if (publicKey.Equals(expectedPublicKey))
-    //     {
-    //         Debug.Log("证书验证通过");
-    //         return true;  // 返回 true，表示证书验证通过
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("Invalid Public Key");
-    //         return false;  // 返回 false，表示证书验证失败
-    //     }
-    // }
-    // private static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-    // {
-    //     // 这里返回 true 直接绕过证书验证
-    //     return true;
-    // }
     public EPlayMode PlayMode = EPlayMode.OfflinePlayMode;
     private ResourcePackage package;
     private string packageName = "DefaultPackage";
@@ -73,6 +27,7 @@ public class ResourceManager : MonoBehaviour
         else
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
             AwakeCallBack();
         }
     }
@@ -212,6 +167,7 @@ public class ResourceManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.5f);
         var package = YooAssets.GetPackage(packageName);
+        
         int downloadingMaxNum = 10;
         int failedTryAgain = 3;
         downloader = package.CreateResourceDownloader(downloadingMaxNum, failedTryAgain);
@@ -272,7 +228,7 @@ public class ResourceManager : MonoBehaviour
                 Debug.Log("更新失败");
             }
             // PatchEventDefine.FoundUpdateFiles.SendEventMessage(totalDownloadCount, totalDownloadBytes);
-
+            
         }
     }
     /// <summary>

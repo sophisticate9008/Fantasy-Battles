@@ -34,10 +34,11 @@ public class PageSwitcher : MonoBehaviour
             BindBtns();
         }
         StartCallBack();
-        if(btnsParent != null) {
+        if (btnsParent != null)
+        {
             InitActive();
         }
-        
+
     }
     public virtual void InitActive()
     {
@@ -60,6 +61,7 @@ public class PageSwitcher : MonoBehaviour
         btns = btnsParent.GetComponentsInDirectChildren<Button>();
         for (int i = 0; i < btns.Count; i++)
         {
+
             int idx = i;
             btns[idx].onClick.AddListener(() =>
             {
@@ -85,7 +87,6 @@ public class PageSwitcher : MonoBehaviour
 
         RectTransform current = pages[currentPageIndex];
         RectTransform target = pages[newPageIndex];
-
         // 确保目标页面激活
         target.gameObject.SetActive(true);
 
@@ -128,20 +129,17 @@ public class PageSwitcher : MonoBehaviour
         // 设置初始透明度
         currentCanvasGroup.alpha = 1f;
         targetCanvasGroup.alpha = 0f;
-
         while (elapsed < transitionDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             float t = elapsed / transitionDuration;
-
             // 平滑过渡
             current.anchoredPosition = Vector2.Lerp(currentStart, currentEnd, t);
             target.anchoredPosition = Vector2.Lerp(targetStart, targetEnd, t);
-
+            
             // 淡入淡出效果
             currentCanvasGroup.alpha = Mathf.Lerp(1f, 0f, t);
             targetCanvasGroup.alpha = Mathf.Lerp(0f, 1f, t);
-
             yield return null;
         }
 

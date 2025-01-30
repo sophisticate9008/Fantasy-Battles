@@ -112,4 +112,10 @@ public class ObjectPoolManager : ManagerBase<ObjectPoolManager>
             Destroy(obj); // 如果池不存在，销毁对象
         }
     }
+    public void ClearPool(string poolName) {
+        if(poolDictionary.ContainsKey(poolName)) {
+            poolDictionary[poolName].Clear();
+        }
+        
+    }
 }

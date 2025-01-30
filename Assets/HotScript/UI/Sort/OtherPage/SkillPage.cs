@@ -11,8 +11,8 @@ public class SkillPage : TheUIBase
 
     private void Start()
     {
-        PlayerDataConfig.OnDataChanged += UpdateCritDamage;
         AutoInjectFields();
+        PlayerDataConfig.OnDataChanged += UpdateCritDamage;
         skillPrefab = CommonUtil.GetAssetByName<GameObject>("SkillSingle");
         allArmTypes = ArmUtil.AllArmTypes;
         Debug.Log("armtypes");

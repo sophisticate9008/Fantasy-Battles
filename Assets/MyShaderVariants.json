@@ -1,6 +1,6 @@
 {
     "ShaderTotalCount": 26,
-    "VariantTotalCount": 32,
+    "VariantTotalCount": 33,
     "ShaderVariantInfos": [
         {
             "AssetPath": "Assets/AssetPackage/ShaderAndMaterial/Shader/CommonShader.shadergraph",
@@ -96,15 +96,20 @@
             ]
         },
         {
-            "AssetPath": "Assets/AssetPackage/ShaderAndMaterial/Shader/ParticlesUnlit.shader",
-            "ShaderName": "URP/Particles/Unlit",
-            "ShaderVariantCount": 1,
+            "AssetPath": "Assets/AssetPackage/ShaderAndMaterial/Shader/Partical.shadergraph",
+            "ShaderName": "Shader Graphs/Partical",
+            "ShaderVariantCount": 2,
             "ShaderVariantElements": [
                 {
                     "PassType": 0,
                     "Keywords": [
-                        "_EMISSION",
-                        "_SURFACE_TYPE_TRANSPARENT"
+                        ""
+                    ]
+                },
+                {
+                    "PassType": 8,
+                    "Keywords": [
+                        ""
                     ]
                 }
             ]

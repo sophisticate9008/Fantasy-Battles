@@ -13,9 +13,28 @@ public class MissionBase
     public int mapId;
     public int eliteIdx;
     public int bossIdx;
+    public Dictionary<int, float> JewelProbDict
+    {
+        get
+        {
+            float p5 = 0.0001f + level * 0.00001f;
+            float p4 = 0.006f + level * 0.0001f;
+            float p3 = 0.01f + level * 0.001f;
+            float p2 = 0.05f + level * 0.01f;
+            float p1 = 1 - p5 - p4 - p3 - p2;
+            return new() {
+                        { 1,p1 },  // Level 1, 概率 60%
+                        { 2, p2 },  // Level 2, 概率 30%
+                        { 3, p3 },  // Level 3, 概率 9.5%
+                        { 4, p4}, // Level 4, 概率 0.35%
+                        { 5,p5 }  // Level 5, 概率 0.15%
+            };
+        }
+
+    }
     public MissionBase(int level, List<string> enemyTypes,
         float fixInterval, float noiseScale, float bloodRatio,
-        float attackRatio, int A1_D, int mapId,int eliteIdx, int bossIdx)
+        float attackRatio, int A1_D, int mapId, int eliteIdx, int bossIdx)
     {
         this.level = level;
         this.enemyTypes = enemyTypes;

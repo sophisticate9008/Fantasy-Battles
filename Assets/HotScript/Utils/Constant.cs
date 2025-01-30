@@ -23,5 +23,6 @@ public static class Constant
     public static (int a1, int d) upgradeMoneyNeed = (500, 100);
     public static (int a1, int d) upgradeChipNeed = (20, 5);
     public static (int a1, int d) equipmentAttack = (0, 10);
+    public static (int a1, int d) upLevelExpNeed = (50,50);
 
 }

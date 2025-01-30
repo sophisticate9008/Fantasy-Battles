@@ -9,7 +9,6 @@ public class ToolManager : ManagerBase<ToolManager>
     public GameObject ItemUIPrefab;
     private void Start()
     {
-        // DontDestroyOnLoad(gameObject);
         ItemUIPrefab = Instantiate(CommonUtil.GetAssetByName<GameObject>("ItemBase"));
         if (ItemUIPrefab.GetComponent<ItemUIBase>() == null)
         {

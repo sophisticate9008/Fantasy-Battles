@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using YooAsset;
@@ -21,12 +22,14 @@ public class FightPage : TheUIBase
     public Button BeginButton;
     private void Start()
     {
+        FindNecessary();
+        BindButton();
+        LoadMapImage(0);
+        ChangeNeed();
         ToolManager.Instance.SetTimeout(() => {
-            FindNecessary();
-            BindButton();
-            LoadMapImage(0);
-            ChangeNeed();
+            ps.transform.GetChild(0).gameObject.SetActive(true);
         }, 0.1f);
+        
 
     }
     void FindNecessary()
@@ -69,7 +72,8 @@ public class FightPage : TheUIBase
             UIManager.Instance.OnMessage("新一关还未解锁");
             return;
         }
-        if(mb.level >= Constant.MissionMaxId) {
+        if (mb.level >= Constant.MissionMaxId)
+        {
             UIManager.Instance.OnMessage("最后一关了");
             return;
         }

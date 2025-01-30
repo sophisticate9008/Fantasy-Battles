@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MyEnums;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using YooAsset;
 //管理战斗逻辑，伤害等
@@ -414,10 +415,11 @@ public class FighteManager : ManagerBase<FighteManager>
 
         if (isSuccess)
         {
-
             mr.successPercent = Mathf.Max(WallConfig.CurrentLife / (float)WallConfig.LifeMax, mr.successPercent);
             mr.Save();
         }
+        MissionManager.Instance.OnReward(mb.level);
+        ControlGame(true);
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         YooAssets.LoadSceneSync("Main", sceneMode);
 

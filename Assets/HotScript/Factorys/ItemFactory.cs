@@ -10,7 +10,8 @@ public static class ItemFactory
         { "keyPurple", (502, 4, "紫钥匙，可以进行紫色祈愿") },
         { "money", (503, 3, "金币，养成消耗") },
         { "washWater", (504, 4, "洗练水，重置橙色宝石以上属性") },
-        {"diamond", (505, 5,"钻石，最高级货币" )}
+        {"diamond", (505, 5,"钻石，最高级货币" )},
+        {"exp",(507,2, "经验值，升级用") }
     };
 
     public static ItemBase Create(string resName, int count = 1)
