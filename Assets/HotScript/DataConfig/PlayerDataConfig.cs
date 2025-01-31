@@ -47,16 +47,30 @@ public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
     public int levelArm11 = 1;
     public int levelArm12 = 1;
     public int levelArm13 = 1;
-    public int AllLevelArm{
-        get{
+    public int AllLevelArm
+    {
+        get
+        {
             int res = 0;
-            for(int i = 0; i < 14; i++) {
+            for (int i = 0; i < 14; i++)
+            {
                 res += (int)GetValue("levelArm" + i);
             }
             return res;
         }
     }
-
+    public int AllLevelEquipment
+    {
+        get
+        {
+            int res = 0;
+            for (int i = 1; i < 7; i++)
+            {
+                res += (int)GetValue("levelPlace1" + i);
+            }
+            return res;
+        }
+    }
     #endregion
 
     #region 武器碎片

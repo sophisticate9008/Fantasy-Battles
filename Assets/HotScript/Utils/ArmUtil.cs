@@ -81,7 +81,7 @@ public static class ArmUtil
             10 => 6f,
             11 => 6f,
             12 => 6f,
-            13 => 6f,
+            13 => 10f,
             _ => throw new System.NotImplementedException(),
         };
     }

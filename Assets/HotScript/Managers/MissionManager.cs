@@ -67,11 +67,13 @@ public class MissionManager : ManagerBase<MissionManager>
     }
     public void OnReward(int innerLevel)
     {
+
+        Debug.Log("OnReward");
         items.Clear();
-        if (innerLevel < 5)
-        {
-            return;
-        }
+        // if (innerLevel < 5)
+        // {
+        //     return;
+        // }
         int killCount = innerLevel * mb.A1_D + innerLevel * (innerLevel - 1) / 2 * mb.A1_D;
         int moneyGet = (int)(killCount * (0.5 + mb.level * 0.01));
         int diamondGet = (int)(killCount * (0.01 + mb.level * 0.001));
@@ -83,6 +85,8 @@ public class MissionManager : ManagerBase<MissionManager>
         items.Add(ItemFactory.Create("diamond", diamondGet));
         items.Add(ItemFactory.Create("exp", expGet));
         GetJewel();
+        GetArmChip(killCount);
+        GetEquipmentChip(killCount);
         StartCoroutine(WaitSceneChange(() =>
         {
             UIManager.Instance.OnItemUIShow("获得奖励", items);
@@ -102,6 +106,30 @@ public class MissionManager : ManagerBase<MissionManager>
             items.Add(jewelBase);
         }
         PlayerDataConfig.SaveConfig();
+    }
+    void GetArmChip(int killCount)
+    {
+        
+        int chipSum = (int)(killCount * 0.1f);
+        int n = 5;
+        var ress = CommonUtil.DistributeRandomly(13, chipSum, n);
+        Debug.Log(ress);
+        foreach(var res in ress) {
+            PlayerDataConfig.UpdateValueAdd("armChip" + res.id, res.n);
+            items.Add(ItemFactory.CreateArmChip(res));
+        }
+
+    }
+    void GetEquipmentChip(int killCount)
+    {
+        int chipSum = (int)(killCount * 0.05f);
+        int n = 6;
+        var ress = CommonUtil.DistributeRandomly(5, chipSum, n);
+        foreach (var res in ress)
+        {
+            PlayerDataConfig.UpdateValueAdd("equipmentChip" + (res.id + 1), res.n);
+            items.Add(ItemFactory.CreateEquipmentChip(res));
+        }
     }
     IEnumerator WaitSceneChange(System.Action action)
     {

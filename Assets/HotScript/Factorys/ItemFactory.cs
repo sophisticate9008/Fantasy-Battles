@@ -27,19 +27,25 @@ public static class ItemFactory
                 description = config.description
             };
         }
-        else
+        if (resName.Contains("armChip"))
         {
-            if (resName.Contains("armChip"))
+            return new ItemBase
             {
-                return new ItemBase
-                {
-                    resName = ArmUtil.ArmTypeToChipResName(ArmUtil.IdToArmType(int.Parse(resName.Replace("armChip", "")))),
-                    count = count,
-                    id = 506,
-                    level = 3,
-                    description = "武器碎片,升级用"
-                };
-            }
+                resName = ArmUtil.ArmTypeToChipResName(ArmUtil.IdToArmType(int.Parse(resName.Replace("armChip", "")))),
+                count = count,
+                id = 506,
+                level = 3,
+                description = "武器碎片,升级用"
+            };
+        }
+        if(resName.Contains("equipmentChip")) {
+            return new ItemBase {
+                resName = resName,
+                count = count,
+                id = 508,
+                level = 3,
+                description = "装备碎片,升级用"
+            };
         }
 
         throw new NotImplementedException($"未实现的资源名称: {resName}");
@@ -82,5 +88,15 @@ public static class ItemFactory
             10 => () => globalConfig.ElecAddition += level * 0.04f,
             _ => throw new NotImplementedException(),
         };
+    }
+    public static ItemBase CreateArmChip((int idx, int count) res)
+    {
+        string resName = "armChip" + res.idx;
+        return Create(resName, res.count);
+    }
+    public static ItemBase CreateEquipmentChip((int idx, int count) res)
+    {
+        string resName = "equipmentChip" + (res.idx + 1);
+        return Create(resName, res.count);
     }
 }

@@ -418,7 +418,7 @@ public class FighteManager : ManagerBase<FighteManager>
             mr.successPercent = Mathf.Max(WallConfig.CurrentLife / (float)WallConfig.LifeMax, mr.successPercent);
             mr.Save();
         }
-        MissionManager.Instance.OnReward(mb.level);
+        MissionManager.Instance.OnReward(level);
         ControlGame(true);
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         YooAssets.LoadSceneSync("Main", sceneMode);

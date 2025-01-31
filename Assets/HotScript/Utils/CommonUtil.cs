@@ -67,7 +67,55 @@ public class CommonUtil
         return typeof(TInterface).IsAssignableFrom(type);
     }
 
-    public static string ChangeTextColor(string text, string color) {
+    public static string ChangeTextColor(string text, string color)
+    {
         return "<color=" + color + ">" + text + "</color>";
     }
+
+    /// <summary>
+    /// 将s个总量分到0到n中的x种
+    /// </summary>
+    public static List<(int id, int n)> DistributeRandomly(int n, int s, int x)
+    {
+        if (x == 0 || s == 0) return new List<(int, int)>(); // 如果没有分配数量，返回空
+
+        System.Random rand = new();
+        HashSet<int> selectedIndexes = new();
+
+        // 随机选取 x 个不重复的序列号
+        while (selectedIndexes.Count < x)
+        {
+            selectedIndexes.Add(rand.Next(0, n + 1));
+        }
+
+        List<int> portions = new List<int>(new int[x]);
+        int remaining = s;
+
+        // 随机分配 s 到 x 个序列
+        for (int i = 0; i < x - 1; i++)
+        {
+            // 保证剩余的量足够分配
+            int maxValue = remaining - (x - i - 1);
+            if (maxValue < 1)
+            {
+                // 如果剩余的量无法满足分配，确保至少为1
+                maxValue = 1;
+            }
+            int value = rand.Next(1, maxValue + 1); // 保证remaining和x-i-1的条件
+            portions[i] = value;
+            remaining -= value;
+        }
+        portions[x - 1] = remaining; // 剩余的数值给最后一个序列
+
+        // 组装结果
+        List<(int, int)> result = new List<(int, int)>();
+        int index = 0;
+        foreach (int seq in selectedIndexes)
+        {
+            result.Add((seq, portions[index++]));
+        }
+
+        return result;
+    }
+
 }
