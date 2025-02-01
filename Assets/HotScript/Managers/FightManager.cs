@@ -175,116 +175,33 @@ public class FighteManager : ManagerBase<FighteManager>
 
 
     #region 伤害过滤
-    public void SelfDamageFilter(GameObject enemyObj, GameObject selfObj, bool isBuffDamage = false, float percentage = 0, float tlc = 0, string damageType = "fire")
+    DamageCalculator calculator = new DamageCalculator()
+        .AddNode(new ElementImmunityNode())
+        .AddNode(new BaseDamageNode())
+        .AddNode(new CriticalHitNode())
+        .AddNode(new DamageAdditionNode())
+        .AddNode(new DamageAppend())
+        .AddNode(new DamageReductionNode())
+        .AddNode(new EasyHurtNode());
+    public void SelfDamageFilter(GameObject enemyObj, GameObject selfObj, bool isBuffDamage = false,
+     float percentage = 0, float tlc = default, string damageType = "")
     {
-
-
-        EnemyBase enemyBase = enemyObj.GetComponent<EnemyBase>();
-        EnemyConfigBase enemyConfig = enemyBase.Config;
-        ArmChildBase armChildBase = selfObj.GetComponent<ArmChildBase>();
-        ArmConfigBase armConfig = armChildBase.Config;
-        string owner = armConfig.Owner;
-        if (!isBuffDamage)
+        var context = new DamageContext
         {
-            damageType = armConfig.DamageType;
-        }
-        //首先过滤位置不匹配
-        if (armConfig.DamagePos != "all" && enemyConfig.ActionType != "land")
-        {
-            CreateDamageText(enemyObj, -1, "", false);
-            return;
-        }
+            Defender = enemyObj,
+            Attacker = selfObj,
+            IsBuffDamage = isBuffDamage,
+            Percentage = percentage,
+            Tlc = tlc,
+            DamageType = damageType
+        };
 
-        //过滤掉元素免疫
-        if (enemyConfig.DamageTypeImmunityList.IndexOf(damageType) != -1)
-        {
-            CreateDamageText(enemyObj, 0, "", false);
-            return;
-        }
-        ;
-
-        //消耗怪物免疫次数
-        if (enemyBase.ImmunityCount > 0)
-        {
-            CreateDamageText(enemyObj, 0, "", false);
-            enemyBase.ImmunityCount--;
-            return;
-        }
-        //计算基础伤害
-        float baseDamage;
-        if (isBuffDamage)
-        {
-
-            baseDamage = GlobalConfig.AttackValue * armConfig.BuffDamageTlc;
-        }
-        else
-        {
-            if (tlc == 0)
-            {
-                baseDamage = GlobalConfig.AttackValue * armConfig.Tlc;
-            }
-            else
-            {
-                baseDamage = GlobalConfig.AttackValue * tlc;
-            }
-
-        }
-        //基础伤害通过伤害加成
-        float addtion = GlobalConfig.AllAddition;
-        Dictionary<string, float> damageAddition = GlobalConfig.GetDamageAddition();
-        foreach (var item in damageAddition)
-        {
-            if (item.Key == damageType)
-            {
-                addtion += item.Value;
-            }
-        }
-        //随机浮动宝石
-        float randomAdditon = UnityEngine.Random.Range(GlobalConfig.RandomAdditonMin, GlobalConfig.RandomAdditonMax);
-        addtion += randomAdditon;
-        //对精英boss加成
-        addtion += GlobalConfig.AdditionToEliteOrBoss;
-        //待补充 血量高于 血量低于 自身血量低于 防线生命低于
-
-        //基础伤害乘倍率
-        baseDamage *= 1 + addtion;
-
-        //怪物伤害减免(可为负)
-        Dictionary<string, float> damageReduction = enemyConfig.GetDamageReduction();
-        float reduction = 0;
-        foreach (var item in damageReduction)
-        {
-            if (item.Key == damageType)
-            {
-                reduction += item.Value;
-            }
-        }
-        baseDamage *= 1 + reduction;
-
-        //暴击
-        float critRate = GlobalConfig.CritRate + armConfig.CritRate;
-        float critDamage = GlobalConfig.CritDamage;
-        float[] args;
-        bool isCritical = false;
-        if (UnityEngine.Random.Range(1, 101) < critRate * 100)
-        {
-            isCritical = true;
-            baseDamage *= 2 + critDamage;
-            //百爆
-            args = GlobalConfig.CritWithPercentageAndMax;
-            baseDamage += Math.Max(enemyBase.MaxLife * args[0], GlobalConfig.AttackValue * args[1]);
-        }
-        //一般百
-        args = GlobalConfig.DamageWithPercentageAndMax;
-        baseDamage += Math.Max(enemyBase.MaxLife * args[0], GlobalConfig.AttackValue * args[1]);
-        //加上计算好的百分比
-        baseDamage += enemyBase.MaxLife * percentage;
+        calculator.Calculate(context);
         //易伤
-        baseDamage *= 1 + enemyBase.EasyHurt;
-        CreateDamageText(enemyObj, baseDamage, damageType, isCritical);
-        RecordDamage((int)baseDamage, owner);
+        CreateDamageText(enemyObj, (int)context.FinalDamage, context.DamageType, context.IsCritical);
+        RecordDamage((int)context.FinalDamage, context.AttackerConfig.Owner);
         //上海结算并判断谁杀死的
-        enemyBase.CalLife((int)baseDamage, owner);
+        context.DefenderComponent.CalLife((int)context.FinalDamage, context.AttackerConfig.Owner);
     }
     public void EnemyDamegeFilter(int harm, int count = 1)
     {
@@ -455,7 +372,7 @@ public class FighteManager : ManagerBase<FighteManager>
     {
         // 监听键盘上的 Esc 键或手机的返回键
         if (Input.GetKeyDown(KeyCode.Escape))
-        { 
+        {
             PauseGame();
         }
     }
