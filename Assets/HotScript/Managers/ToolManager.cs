@@ -70,6 +70,16 @@ public class ToolManager : ManagerBase<ToolManager>
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
+    public Coroutine SetTimeoutUnScaled(Action action, float delay)
+    {
+        return StartCoroutine(TimeoutCoroutineUnScaled(action, delay));
+    }
+
+    private IEnumerator TimeoutCoroutineUnScaled(Action action, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        action?.Invoke();
+    }
     public void TransmitByStep(float t, Vector3 targetPosition, GameObject obj, bool isRotate = true)
     {
 
@@ -122,16 +132,19 @@ public class ToolManager : ManagerBase<ToolManager>
             }
         }
     }
-    public void GetReward(List<(string resName, int count)> itemData, List<ItemBase> jewels = null) {
+    public void GetReward(List<(string resName, int count)> itemData, List<ItemBase> jewels = null)
+    {
         List<ItemBase> items = new();
-        foreach(var (resName, count) in itemData) {
+        foreach (var (resName, count) in itemData)
+        {
             PlayerDataConfig.UpdateValueAdd(resName, count);
             items.Add(ItemFactory.Create(resName, count));
         }
-        if(jewels != null){
+        if (jewels != null)
+        {
             items.AddRange(jewels);
         }
-        UIManager.Instance.OnItemUIShow("获得奖励",items);
+        UIManager.Instance.OnItemUIShow("获得奖励", items);
     }
 
 

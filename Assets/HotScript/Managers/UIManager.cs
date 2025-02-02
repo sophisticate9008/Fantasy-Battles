@@ -12,7 +12,7 @@ using YooAsset;
 public class UIManager : ManagerBase<UIManager>
 {
     private static UIManager _instance;
-
+    bool isSkipSelf;
 
     private readonly Stack<TheUIBase> uiStack = new();
     private readonly Stack<TheUIBase> maskStack = new();
@@ -70,7 +70,8 @@ public class UIManager : ManagerBase<UIManager>
             //如果包含自身面板，则不处理
             foreach (var result in results)
             {
-                if (result.gameObject == listenedToClose)
+                
+                if (result.gameObject == listenedToClose && !isSkipSelf)
                 {
                     return;
                 }
@@ -78,22 +79,24 @@ public class UIManager : ManagerBase<UIManager>
             //排除列表
             foreach (var result in results)
             {
-                foreach (string exclude in excluedTypes)
-                {
-                    // 获取点击对象的组件
-                    var component = result.gameObject.GetComponent(exclude);
-                    if (component != null)
+                if(excluedTypes != null) {
+                    foreach (string exclude in excluedTypes)
                     {
-                        // 包含在排除列表中，跳过关闭面板
-                        return;
-                    }
+                        // 获取点击对象的组件
+                        var component = result.gameObject.GetComponent(exclude);
+                        if (component != null)
+                        {
+                            // 包含在排除列表中，跳过关闭面板
+                            return;
+                        }
+                    }                    
                 }
             }
             if (listenedToClose != null && listenedToClose.activeSelf == true)
             {
                 enableClick = false;
                 OnListenedclose();
-                ToolManager.Instance.SetTimeout(() => enableClick = true, 0.3f);
+                ToolManager.Instance.SetTimeoutUnScaled(() => enableClick = true, 0.3f);
             }
             //否则关闭
 
@@ -101,8 +104,9 @@ public class UIManager : ManagerBase<UIManager>
         }
     }
 
-    public void OnListenedToclose(GameObject theUI, string[] excluedTypes)
+    public void OnListenedToclose(GameObject theUI, string[] excluedTypes = null, bool isSkipSelf = false)
     {
+        this.isSkipSelf = isSkipSelf;
         listenedToClose = theUI;
         this.excluedTypes = excluedTypes;
     }

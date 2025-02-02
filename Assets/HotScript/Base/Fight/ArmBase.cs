@@ -7,12 +7,12 @@ using UnityEngine;
 
 public class ArmBase : MonoBehaviour, IArms
 {
-
+    public Camera mainCamera;
     private float lastFireTime = -10000f;
     public GameObject TargetEnemy { get; set; }
 
     public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name.Replace("Arm", "")) as ArmConfigBase;
-
+    Vector2 screenBottomCenterWorldPos;
     public void FindTargetNearestOrElite()
     {
         EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
@@ -21,7 +21,7 @@ public class ArmBase : MonoBehaviour, IArms
         enemies = enemies.Where(x => Config.DamagePos == "all" || x.Config.ActionType == "land").ToArray();
         foreach (EnemyBase enemy in enemies)
         {
-            float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
+            float distanceToEnemy = Vector2.Distance(screenBottomCenterWorldPos, enemy.transform.position);
             if (distanceToEnemy < shortestDistance && distanceToEnemy <= Config.RangeFire)
             {
                 shortestDistance = distanceToEnemy;
@@ -40,7 +40,10 @@ public class ArmBase : MonoBehaviour, IArms
     }
     protected virtual void Start()
     {
+        mainCamera = Camera.main;
         SkillManager.Instance.SelectedArmTypes.Add(GetType().Name.Replace("Arm", ""));
+        Vector2 screenBottomCenter = new Vector2(Screen.width * 0.5f, 0);
+        screenBottomCenterWorldPos = mainCamera.ScreenToWorldPoint(screenBottomCenter);
     }
     public virtual void Update()
     {
