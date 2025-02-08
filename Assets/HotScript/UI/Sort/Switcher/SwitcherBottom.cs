@@ -8,23 +8,19 @@ public class SwitcherBottom : PageSwitcher
     // 存储所有子对象的 Animator
     private List<Animator> childAnimators;
 
-    public override void StartCallBack() {
-        childAnimators = btnsParent.GetComponentsInDirectChildren<Animator>();
-    }
     // 当按钮被点击时执行的逻辑
     public override void ClickCallBack(int idx)
     {
         // 遍历所有子对象，关闭其他动画，只开启点击的那个动画
-        for (int i = 0; i < childAnimators.Count; i++)
+        for (int i = 0; i < btns.Count; i++)
         {
             if (i == idx)
             {
-                childAnimators[i].enabled = true;
+                btns[i].transform.GetChild(1).gameObject.SetActive(true);
             }
             else
             {
-                childAnimators[i].Rebind();
-                childAnimators[i].enabled = false; // 关闭其他动画
+                btns[i].transform.GetChild(1).gameObject.SetActive(false);
             }
         }
     }

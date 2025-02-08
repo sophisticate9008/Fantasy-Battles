@@ -9,13 +9,13 @@ public class DamageAppend : DamageNodeBase
             // 百爆计算
             var args = GlobalConfig.CritWithPercentageAndMax;
             context.FinalDamage += Math.Max(
-                context.DefenderComponent.MaxLife * args[0],
+                args[0] * context.DefenderConfig.PerLife,
                 GlobalConfig.AttackValue * args[1]
             );
         }
         var damageArgs = GlobalConfig.DamageWithPercentageAndMax;
         context.FinalDamage += Math.Max(
-            context.DefenderComponent.MaxLife * damageArgs[0],
+            context.DefenderComponent.MaxLife * damageArgs[0] / context.DefenderConfig.BloodBarCount,
             GlobalConfig.AttackValue * damageArgs[1]
         );
 

@@ -12,7 +12,22 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public SpriteRenderer sr;
     private bool isIdle = false;
     public AnimatorManager animatorManager;
-    public Animator animator => GetComponent<Animator>();
+    private Animator _animator;
+    public Animator animator
+    {
+        get
+        {
+            if (_animator == null)
+            {
+                _animator = GetComponent<Animator>();
+                return _animator;
+            }
+            else
+            {
+                return _animator;
+            }
+        }
+    }
     public bool CanAction { get; set; } = true;
     public EnemyConfigBase ConstConfig => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as EnemyConfigBase;
     public EnemyConfigBase Config { get; set; }
@@ -38,12 +53,14 @@ public class EnemyBase : MonoBehaviour, IEnemy
         Config ??= ConstConfig.Clone() as EnemyConfigBase;
         NowLife = (int)(Config.Life * FighteManager.Instance.mb.bloodRatio);
         MaxLife = NowLife;
-        if(Config.CharacterType == "elite") {
+        if (Config.CharacterType == "elite")
+        {
             Config.BloodBarCount = 10;
             NowLife *= 10;
             MaxLife *= 10;
         }
-        if(Config.CharacterType == "boss") {
+        if (Config.CharacterType == "boss")
+        {
             Config.BloodBarCount = 20;
 
         }
@@ -64,7 +81,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
 
     }
-    
+
     public virtual void TransmitBack(float y, bool returnSpawn = false)
     {
         if (returnSpawn)
@@ -103,6 +120,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     {
         animatorManager = AnimatorManager.Instance;
         sr = GetComponent<SpriteRenderer>();
+
     }
     private void RunningAnim()
     {
@@ -122,7 +140,8 @@ public class EnemyBase : MonoBehaviour, IEnemy
             animatorManager.StopAnim(animator);
 
         }
-        if(isDead) {
+        if (isDead)
+        {
             ReturnToPool();
         }
         // else
@@ -235,7 +254,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
             sr.color = Color.white;
         }, 0.1f);
         NowLife -= damage;
-        
+
         if (NowLife <= 0)
         {
             Die(owner);
@@ -250,15 +269,19 @@ public class EnemyBase : MonoBehaviour, IEnemy
             OnByType("die", gameObject);
             FighteManager.Instance.RecordKill(owner);
             FighteManager.Instance.AddExp(1);
-            if(Config.CharacterType == "elite") {
+            if (Config.CharacterType == "elite")
+            {
                 FighteManager.Instance.DefeatElite();
             }
-            if(Config.CharacterType == "normal") {
+            if (Config.CharacterType == "normal")
+            {
                 ReturnToPool();
-            }else {
+            }
+            else
+            {
                 Destroy(gameObject);
             }
-            
+
 
         }
         // animatorManager.SetAnimParameter(animator, "isDead", true);

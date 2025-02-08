@@ -49,7 +49,7 @@ public class EnemyConfigBase : ConfigBase
     [SerializeField] private int attackCount = 1; //每次攻击的段数
     [SerializeField] private float attackCd = 2;
     public int BloodBarCount = 1; 
-
+    public int PerLife => Life / BloodBarCount;
     // 公共属性，允许重写
     public virtual float AttackCd
     {
