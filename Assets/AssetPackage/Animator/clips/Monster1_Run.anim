@@ -41,6 +41,29 @@ AnimationClip:
     classID: 212
     script: {fileID: 0}
     flags: 2
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 519195bac3588544999e03e200d4d88c, type: 3}
+    - time: 0.08
+      value: {fileID: 21300000, guid: 2775585ba6e34144eab5ecffbe36ddec, type: 3}
+    - time: 0.16
+      value: {fileID: 21300000, guid: cfebae1ebc262b04fb59781e3d9dd9cc, type: 3}
+    - time: 0.24
+      value: {fileID: 21300000, guid: 0baf4a0d169e03944958b0331389e894, type: 3}
+    - time: 0.32
+      value: {fileID: 21300000, guid: 781cb54b54693af4bb4edfd9f0223550, type: 3}
+    - time: 0.39999998
+      value: {fileID: 21300000, guid: b8555298ed8ff4c40a12f20ef296c67b, type: 3}
+    - time: 0.48
+      value: {fileID: 21300000, guid: 4ea8f69ad4577c9468a15b84a10c86fe, type: 3}
+    - time: 0.56
+      value: {fileID: 21300000, guid: 065fb0ddf8a508944b739572c00ac233, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 114
+    script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+    flags: 2
   m_SampleRate: 60
   m_WrapMode: 2
   m_Bounds:
@@ -57,7 +80,24 @@ AnimationClip:
       isPPtrCurve: 1
       isIntCurve: 0
       isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 0
+      attribute: 2015549526
+      script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
     pptrCurveMapping:
+    - {fileID: 21300000, guid: 519195bac3588544999e03e200d4d88c, type: 3}
+    - {fileID: 21300000, guid: 2775585ba6e34144eab5ecffbe36ddec, type: 3}
+    - {fileID: 21300000, guid: cfebae1ebc262b04fb59781e3d9dd9cc, type: 3}
+    - {fileID: 21300000, guid: 0baf4a0d169e03944958b0331389e894, type: 3}
+    - {fileID: 21300000, guid: 781cb54b54693af4bb4edfd9f0223550, type: 3}
+    - {fileID: 21300000, guid: b8555298ed8ff4c40a12f20ef296c67b, type: 3}
+    - {fileID: 21300000, guid: 4ea8f69ad4577c9468a15b84a10c86fe, type: 3}
+    - {fileID: 21300000, guid: 065fb0ddf8a508944b739572c00ac233, type: 3}
     - {fileID: 21300000, guid: 519195bac3588544999e03e200d4d88c, type: 3}
     - {fileID: 21300000, guid: 2775585ba6e34144eab5ecffbe36ddec, type: 3}
     - {fileID: 21300000, guid: cfebae1ebc262b04fb59781e3d9dd9cc, type: 3}

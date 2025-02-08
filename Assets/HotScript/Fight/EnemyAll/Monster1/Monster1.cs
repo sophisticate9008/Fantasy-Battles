@@ -1,11 +1,7 @@
 
 
-using System.Collections.Generic;
 
-namespace Prefabs.Enemy
+
+public class Monster1 : EnemyBase
 {
-    
-    public class Monster1 : EnemyBase
-    {
-    }
 }

@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class AnimationClipGenerator : Editor
@@ -18,7 +19,6 @@ public class AnimationClipGenerator : Editor
             return;
         }
 
-        // 确保保存目录存在
         if (!Directory.Exists(ClipSavePath))
         {
             Directory.CreateDirectory(ClipSavePath);
@@ -26,7 +26,6 @@ public class AnimationClipGenerator : Editor
         }
 
         string[] monsterFolders = Directory.GetDirectories(RootFolderPath);
-
         if (monsterFolders.Length == 0)
         {
             Debug.LogWarning("No monster folders found.");
@@ -45,7 +44,7 @@ public class AnimationClipGenerator : Editor
         string monsterName = Path.GetFileName(monsterFolder);
         Debug.Log($"Creating animation clips for monster: {monsterName}");
 
-        string[] actions = { "Idle", "Run", "Attack" }; // 动作列表
+        string[] actions = { "Idle", "Run", "Attack" };
         foreach (var action in actions)
         {
             var frames = LoadAnimationFrames(monsterFolder, action);
@@ -62,7 +61,7 @@ public class AnimationClipGenerator : Editor
 
     private static string[] LoadAnimationFrames(string monsterFolder, string action)
     {
-        string pattern = $"skeleton-{action}_*.png"; // 匹配动作文件
+        string pattern = $"skeleton-{action}_*.png";
         string[] frames = Directory.GetFiles(monsterFolder, pattern);
         Debug.Log($"Found {frames.Length} frames for action '{action}' in folder '{monsterFolder}'");
         return frames;
@@ -74,22 +73,27 @@ public class AnimationClipGenerator : Editor
 
         AnimationClip clip = new AnimationClip
         {
-            wrapMode = WrapMode.Loop // 设置为循环播放
+            wrapMode = WrapMode.Loop
         };
 
         ObjectReferenceKeyframe[] keyframes = new ObjectReferenceKeyframe[frames.Length];
-        EditorCurveBinding curveBinding = new EditorCurveBinding
+        EditorCurveBinding spriteRendererBinding = new EditorCurveBinding
         {
-            type = typeof(SpriteRenderer), // 使用 SpriteRenderer 作为动画类型
-            path = "", // 相对于 GameObject 的路径
-            propertyName = "m_Sprite" // SpriteRenderer 的 Sprite 属性
+            type = typeof(SpriteRenderer),
+            path = "",
+            propertyName = "m_Sprite"
+        };
+
+        EditorCurveBinding imageBinding = new EditorCurveBinding
+        {
+            type = typeof(Image),
+            path = "",
+            propertyName = "m_Sprite"
         };
 
         for (int i = 0; i < frames.Length; i++)
         {
-            string assetPath = frames[i].Replace('\\', '/'); // 修复路径分隔符
-
-            // 加载 Sprite
+            string assetPath = frames[i].Replace('\\', '/');
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
             if (sprite == null)
             {
@@ -99,29 +103,26 @@ public class AnimationClipGenerator : Editor
 
             keyframes[i] = new ObjectReferenceKeyframe
             {
-                time = i * 0.08f, // 0.08秒一帧（12.5fps）
+                time = i * 0.08f,
                 value = sprite
             };
         }
 
-        // 检查是否有有效关键帧
         if (keyframes.Length == 0)
         {
             Debug.LogWarning($"No valid keyframes for clip: {clipName}");
             return;
         }
 
-        // 设置关键帧
-        AnimationUtility.SetObjectReferenceCurve(clip, curveBinding, keyframes);
+        AnimationUtility.SetObjectReferenceCurve(clip, spriteRendererBinding, keyframes);
+        AnimationUtility.SetObjectReferenceCurve(clip, imageBinding, keyframes);
 
-        // 保存动画剪辑
         string clipPath = Path.Combine(ClipSavePath, $"{clipName}.anim").Replace('\\', '/');
         AssetDatabase.CreateAsset(clip, clipPath);
         Debug.Log($"Created clip: {clipName} at {clipPath}");
 
-        // 设置循环时间
         AnimationClipSettings clipSettings = AnimationUtility.GetAnimationClipSettings(clip);
-        clipSettings.loopTime = true; // 设置为循环播放
+        clipSettings.loopTime = true;
         AnimationUtility.SetAnimationClipSettings(clip, clipSettings);
         AssetDatabase.SaveAssets();
     }
