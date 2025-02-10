@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -212,4 +213,79 @@ public class ItemUtil
         Image pic = transform.GetComponent<Image>();
         pic.sprite = CommonUtil.GetAssetByName<Sprite>(resName);
     }
+    #region  物品字典
+    public static readonly Dictionary<string, (int id, int level, string description)> ItemConfigs = new()
+    {
+        { "keyBlue", (501, 3, "蓝钥匙，可以进行蓝色祈愿") },
+        { "keyPurple", (502, 4, "紫钥匙，可以进行紫色祈愿") },
+        { "money", (503, 3, "金币，养成消耗") },
+        { "washWater", (504, 4, "洗练水，重置橙色宝石以上属性") },
+        {"diamond", (505, 5,"钻石，最高级货币" )},
+        {"exp",(507,2, "经验值，升级用") }
+    };
+
+    public static string IdToResName(int id)
+    {
+        // Loop through the dictionary to find the key associated with the given ID
+        foreach (var item in ItemConfigs)
+        {
+            if (item.Value.id == id)
+            {
+                return item.Key;  // Return the key (name) of the item
+            }
+        }
+        return string.Empty;  // If ID not found, return empty string
+    }
+
+    public static string IdToDes(int id)
+    {
+        // Loop through the dictionary to find the description for the given ID
+        foreach (var item in ItemConfigs)
+        {
+            if (item.Value.id == id)
+            {
+                return item.Value.description;  // Return the description
+            }
+        }
+        return string.Empty;  // If ID not found, return empty string
+    }
+    #endregion
+
+    #region  宝石描述和函数
+    public static string IdLevelToJewelDesc(int id, int level)
+    {
+        return id switch
+        {
+            1 => $"攻击力加{level * 10}",
+            2 => $"暴击率加{level * 1}%",
+            3 => $"暴击伤害加{level * 10}%",
+            4 => $"全输出加{level * 3}%",
+            5 => $"火系伤害加{level * 4}%",
+            6 => $"能量系伤害加{level * 4}%",
+            7 => $"冰系伤害加{level * 4}%",
+            8 => $"风系伤害加{level * 4}%",
+            9 => $"物理伤害加{level * 4}%",
+            10 => $"电系伤害加{level * 4}%",
+            _ => throw new System.NotImplementedException(),
+        };
+    }
+    public static Action CreateJewelAction(int id, int level)
+    {
+        GlobalConfig globalConfig = ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
+        return id switch
+        {
+            1 => () => globalConfig.AttackValue += level * 10,
+            2 => () => globalConfig.CritRate += level * 0.01f,
+            3 => () => globalConfig.CritDamage += level * 0.1f,
+            4 => () => globalConfig.AllAddition += level * 0.03f,
+            5 => () => globalConfig.FireAddition += level * 0.04f,
+            6 => () => globalConfig.EnergyAddition += level * 0.04f,
+            7 => () => globalConfig.IceAddition += level * 0.04f,
+            8 => () => globalConfig.WindAddition += level * 0.04f,
+            9 => () => globalConfig.AdAddition += level * 0.04f,
+            10 => () => globalConfig.ElecAddition += level * 0.04f,
+            _ => throw new NotImplementedException(),
+        };
+    }
+    #endregion
 }

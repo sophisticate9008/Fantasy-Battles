@@ -70,7 +70,7 @@ public class UIManager : ManagerBase<UIManager>
             //如果包含自身面板，则不处理
             foreach (var result in results)
             {
-                
+
                 if (result.gameObject == listenedToClose && !isSkipSelf)
                 {
                     return;
@@ -79,7 +79,8 @@ public class UIManager : ManagerBase<UIManager>
             //排除列表
             foreach (var result in results)
             {
-                if(excluedTypes != null) {
+                if (excluedTypes != null)
+                {
                     foreach (string exclude in excluedTypes)
                     {
                         // 获取点击对象的组件
@@ -89,7 +90,7 @@ public class UIManager : ManagerBase<UIManager>
                             // 包含在排除列表中，跳过关闭面板
                             return;
                         }
-                    }                    
+                    }
                 }
             }
             if (listenedToClose != null && listenedToClose.activeSelf == true)
@@ -119,7 +120,8 @@ public class UIManager : ManagerBase<UIManager>
     public void ShowUI(TheUIBase ui)
     {
         AddMask();
-        // // 隐藏当前 UI（如果存在）
+
+        // Hide the current UI (if exists)
         // if (uiStack.Count > 0)
         // {
         //     var currentUI = uiStack.Peek();
@@ -130,9 +132,17 @@ public class UIManager : ManagerBase<UIManager>
         ui.transform.SetParent(uiCanvas.transform, false);
         ui.gameObject.SetActive(true);
 
+        // Center the UI horizontally, keep vertical position as is
+        RectTransform rectTransform = ui.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            // Set the anchor to the top-left corner and adjust only the horizontal position
+            rectTransform.anchorMin = new Vector2(0.5f, rectTransform.anchorMin.y);  // Set X to center, keep original Y
+            rectTransform.anchorMax = new Vector2(0.5f, rectTransform.anchorMax.y);  // Set X to center, keep original Y
+            rectTransform.anchoredPosition = new Vector2(0, rectTransform.anchoredPosition.y); // Keep original Y position
+        }
 
-        // 添加遮罩
-
+        // Add mask here
     }
     private IEnumerator AutoCloseMessageUI()
     {

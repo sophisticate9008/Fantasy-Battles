@@ -55,13 +55,15 @@ public class FighteManager : ManagerBase<FighteManager>
         leftBottomBoundary = Camera.main.ViewportToWorldPoint(new Vector3(Constant.leftBottomViewBoundary.x, Constant.leftBottomViewBoundary.y, Camera.main.nearClipPlane));
         rightTopBoundary = Camera.main.ViewportToWorldPoint(new Vector3(Constant.rightTopViewBoundary.x, Constant.rightTopViewBoundary.y, Camera.main.nearClipPlane));
         ObjectPoolManager.Instance.CreatePool("DamageTextUIPool", DamageTextPrefab, 20, 500);
-        LoadJewel();
+        InitGlobalConfig();
         InitWallBlood();
         InitBackground();
         EnemyManager.Instance.Init();
 
     }
-
+    void InitGlobalConfig() {
+        GlobalConfig.LoadJewel();
+    }
     void InitBackground()
     {
         Image backGround = GameObject.Find("Background").GetComponent<Image>();
@@ -73,18 +75,6 @@ public class FighteManager : ManagerBase<FighteManager>
         WallConfig.CurrentLife = WallConfig.LifeMax;
     }
     //加载宝石
-    private void LoadJewel()
-    {
-        for (int i = 1; i <= 6; i++)
-        {
-
-            var jewels = PlayerDataConfig.GetValue("place" + i) as List<JewelBase>;
-            foreach (var jewel in jewels)
-            {
-                ItemFactory.CreateJewelAction(jewel.id, jewel.level).Invoke();
-            }
-        }
-    }
     #endregion
     #region 显示伤害
     public void CreateDamageText(GameObject enemyObj, float damage, string type, bool isCritical)

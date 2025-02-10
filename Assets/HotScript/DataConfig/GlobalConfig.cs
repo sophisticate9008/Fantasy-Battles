@@ -1,10 +1,12 @@
+
 using System.Collections.Generic;
 
 using UnityEngine;
+
 [System.Serializable]
 public class GlobalConfig : ConfigBase
 {
-    
+    public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     // 私有字段
     [SerializeField] private float critRate;
     [SerializeField] private float critDamage;
@@ -23,16 +25,16 @@ public class GlobalConfig : ConfigBase
     // 构造函数
     public GlobalConfig()
     {
-        
+
         Init();
     }
 
     // 初始化方法
-    protected virtual void Init()
+    public virtual void Init()
     {
         // 可以在这里添加初始化逻辑
-        AttackValue = 10;
-        CritRate = 0.1f;
+        attackValue = PlayerDataConfig.AttackValue;
+        CritRate = 0.05f;
         CritDamage = 0;
     }
     public float TransmitRate { get; set; }
@@ -135,5 +137,36 @@ public class GlobalConfig : ConfigBase
             { "boom", BoomAddition },
             { "ad", AdAddition }
         };
+    }
+    public void LoadJewel()
+    {
+        for (int i = 1; i <= 6; i++)
+        {
+            var jewels = PlayerDataConfig.GetValue("place" + i) as List<JewelBase>;
+            foreach (var jewel in jewels)
+            {
+                ItemUtil.CreateJewelAction(jewel.id, jewel.level).Invoke();
+            }
+        }
+    }
+    public string MergeJewelDes()
+    {
+        string text = "";
+        List<string> allDes = new();
+        for (int i = 1; i <= 6; i++)
+        {
+            var jewels = PlayerDataConfig.GetValue("place" + i) as List<JewelBase>;
+            foreach (var jewel in jewels)
+            {
+                allDes.Add(ItemUtil.IdLevelToJewelDesc(jewel.id, jewel.level));
+            }
+        }
+
+        var merger = new AffixMerger();
+        var merged = merger.MergeAffixes(allDes);
+        foreach(var des in merged) {
+            text += des.ToString() + "\n";
+        }
+        return text;
     }
 }

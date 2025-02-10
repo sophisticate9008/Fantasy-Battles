@@ -15,8 +15,48 @@ public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
     public int guaranteeBlue = 10;//蓝色保底
     public int guaranteePurple = 10;//紫色保底
     public int washWater = 120;
+    public (int a1, int d) upLevelExpNeed => Constant.upLevelExpNeed;
     public int exp = 0;
+    public int ExpNeed
+    {
+        get
+        {
+            int level = PlayerLevel;
+            return upLevelExpNeed.a1 + (level - 1) * upLevelExpNeed.d;
+        }
+    }
+    public int ExpCurrent
+    {
+        get
+        {
+            int totalExpForCurrentLevel = 0;
+            for (int i = 1; i < PlayerLevel; i++)
+            {
+                totalExpForCurrentLevel += upLevelExpNeed.a1 + (i - 1) * upLevelExpNeed.d;
+            }
+            return exp - totalExpForCurrentLevel;
+        }
+    }
 
+    public int PlayerLevel
+    {
+        get
+        {
+            int level = 1;
+            int expNeeded = upLevelExpNeed.a1;
+            int totalExp = 0;
+
+            while (exp >= totalExp + expNeeded)
+            {
+                totalExp += expNeeded;
+                level++;
+                expNeeded = upLevelExpNeed.a1 + (level - 1) * upLevelExpNeed.d;
+            }
+
+            return level;
+        }
+    }
+    public int AttackValue { get { return 100 + (PlayerLevel - 1) * 5 + AllLevelEquipment * 4;} }
     public List<JewelBase> place1 = new();
     public List<JewelBase> place2 = new();
     public List<JewelBase> place3 = new();
@@ -47,6 +87,10 @@ public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
     public int levelArm11 = 1;
     public int levelArm12 = 1;
     public int levelArm13 = 1;
+    public void InitAttack()
+    {
+
+    }
     public int AllLevelArm
     {
         get
@@ -54,7 +98,7 @@ public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
             int res = 0;
             for (int i = 0; i < 14; i++)
             {
-                res += (int)GetValue("levelArm" + i);
+                res += (int)GetValue("levelArm" + i) - 1;
             }
             return res;
         }
@@ -66,7 +110,7 @@ public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
             int res = 0;
             for (int i = 1; i < 7; i++)
             {
-                res += (int)GetValue("levelPlace1" + i);
+                res += (int)GetValue("levelPlace" + i) - 1;
             }
             return res;
         }
@@ -141,4 +185,7 @@ public class PlayerDataConfig : ConfigBase, IFlagInjectFromFile
         int orginValue = (int)GetValue(fieldName);
         UpdateValue(fieldName, orginValue - val);
     }
+
+
+    
 }

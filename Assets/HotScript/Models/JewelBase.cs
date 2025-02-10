@@ -5,13 +5,13 @@ using System;
 public class JewelBase : ItemBase
 {
     public override string simpleName => ItemUtil.LevelToJewelSimpleName(level);
-    public JewelBase(int id, int level, int placeId, string description, int count = 1)
+    public override string resName => ItemUtil.LevelToJewelResName(level);
+    public override string description => ItemUtil.IdLevelToJewelDesc(id, level);
+    public JewelBase(int id, int level, int placeId, int count = 1)
     {
         this.id = id;
         this.level = level;
         this.placeId = placeId;
-        this.description = description;
-        resName = ItemUtil.LevelToJewelResName(level);
         this.count = count;
     }
 
@@ -21,7 +21,7 @@ public class JewelBase : ItemBase
     public JewelBase Clone(bool isCloneCount = false)
     {
         int cloneCount = isCloneCount ? count : 1;
-        return new JewelBase(id, level, placeId, description, cloneCount);
+        return new JewelBase(id, level, placeId, cloneCount);
     }
 
     public void SubtractCount(int num)

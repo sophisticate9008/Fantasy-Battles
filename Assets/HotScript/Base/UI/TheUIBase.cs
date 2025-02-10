@@ -13,7 +13,7 @@ public class TheUIBase : MonoBehaviour
 
 
     public PlayerDataConfig PlayerDataConfig { get => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig; set { } }
-
+    public GlobalConfig GlobalConfig { get => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig; set { } }
     public virtual void Init()
     {
 
