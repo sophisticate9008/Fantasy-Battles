@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 56255283}
   - component: {fileID: 56255282}
   m_Layer: 5
-  m_Name: "\u602A\u7269\u60C5\u51B5"
+  m_Name: monsterInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4231,7 +4231,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.0006110492}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 6}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &188421555
 MonoBehaviour:
@@ -7404,10 +7404,10 @@ RectTransform:
   - {fileID: 130207894}
   m_Father: {fileID: 1707390484}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 55.1962}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 254.79796, y: -30.672607}
+  m_SizeDelta: {x: 489.59592, y: 55.1962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &416681662
 MonoBehaviour:
@@ -14903,7 +14903,7 @@ GameObject:
   - component: {fileID: 920557437}
   - component: {fileID: 920557436}
   m_Layer: 5
-  m_Name: "\u5956\u52B1\u60C5\u51B5"
+  m_Name: rewards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16673,10 +16673,10 @@ RectTransform:
   - {fileID: 441246823}
   m_Father: {fileID: 1707390484}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 55.1962}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 764.3939, y: -30.672607}
+  m_SizeDelta: {x: 489.59592, y: 55.1962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1051757425
 MonoBehaviour:
@@ -22682,6 +22682,7 @@ GameObject:
   - component: {fileID: 1521233743}
   - component: {fileID: 1521233745}
   - component: {fileID: 1521233744}
+  - component: {fileID: 1521233746}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -22752,6 +22753,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1521233742}
   m_CullTransparentMesh: 1
+--- !u!114 &1521233746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521233742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4423f51407d1c644a265fae2faaf559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterInfo: {fileID: 0}
+  rewards: {fileID: 0}
 --- !u!1 &1532913912
 GameObject:
   m_ObjectHideFlags: 0
@@ -24887,7 +24902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1732768734
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30396,7 +30411,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.0006110492}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 6}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2014929512
 MonoBehaviour:
@@ -30606,7 +30621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2043234241
 RectTransform:
   m_ObjectHideFlags: 0
