@@ -13,6 +13,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private bool isIdle = false;
     public AnimatorManager animatorManager;
     private Animator _animator;
+
     public Animator animator
     {
         get
@@ -49,8 +50,11 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public bool isDead;
     public virtual void Init()
     {
+
         ControlEndTime = 0;
         Config ??= ConstConfig.Clone() as EnemyConfigBase;
+        ChangeScale(Config.SelfScale);
+        ChangeMass();
         NowLife = (int)(Config.Life * FighteManager.Instance.mb.bloodRatio);
         MaxLife = NowLife;
         if (Config.CharacterType == "elite")
@@ -167,7 +171,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
             PreventSleep();
         }
     }
-
+    #region 移动
 
     public virtual void Move()
     {
@@ -236,6 +240,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         // 立即恢复到原始位置
         transform.position = originalPosition;
     }
+    #endregion 
     public virtual void Attack()
     {
         FighteManager.Instance.EnemyDamegeFilter(Config.Damage, Config.AttackCount);
@@ -309,15 +314,24 @@ public class EnemyBase : MonoBehaviour, IEnemy
             buff.EffectAndAutoRemove();
         }
     }
-
+    void ChangeScale(float scaleFactor)
+    {
+        gameObject.transform.localScale *= scaleFactor;
+        foreach (Transform child in gameObject.transform)
+        {
+            child.localScale *= scaleFactor;
+        }
+    }
     public void ReturnToPool()
     {
+        ChangeScale(1 / Config.SelfScale);
+        GetComponent<Rigidbody2D>().mass = 1;
         //存活数量-1
         EnemyManager.Instance.liveCount--;
         //移除所有buff
         ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
         //移除子特效
-
+        
 
     }
 
@@ -373,6 +387,12 @@ public class EnemyBase : MonoBehaviour, IEnemy
         position.x = Mathf.Clamp(position.x, FighteManager.Instance.leftBottomBoundary.x, FighteManager.Instance.rightTopBoundary.x);
         position.y = Mathf.Clamp(position.y, FighteManager.Instance.leftBottomBoundary.y, FighteManager.Instance.rightTopBoundary.y);
         monsterTransform.position = position;
+    }
+
+    public void ChangeMass() {
+        Debug.Log("ChangeMass" + Config.Mass);
+        
+        GetComponent<Rigidbody2D>().mass = Config.Mass;
     }
 }
 

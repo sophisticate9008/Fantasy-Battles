@@ -6,6 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyConfigBase : ConfigBase
 {
+    public float SelfScale = 1;
+    public float Mass = 1;
     // 私有字段
     private GameObject prefab;
     // Prefab 属性，允许重写

@@ -18,7 +18,7 @@ public class ArmBase : MonoBehaviour, IArms
         EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
-        enemies = enemies.Where(x => Config.DamagePos == "all" || x.Config.ActionType == "land").ToArray();
+        enemies = enemies.Where(x => Config.DamagePos == "all" || x.gameObject.activeInHierarchy && x.Config.ActionType == "land").ToArray();
         foreach (EnemyBase enemy in enemies)
         {
             float distanceToEnemy = Vector2.Distance(screenBottomCenterWorldPos, enemy.transform.position);

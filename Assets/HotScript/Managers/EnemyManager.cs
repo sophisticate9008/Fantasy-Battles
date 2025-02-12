@@ -68,7 +68,7 @@ public class EnemyManager : ManagerBase<EnemyManager>
         Vector3 worldPosition = mainCamera.ViewportToWorldPoint(new Vector3(viewportXCoordinate, 1f, mainCamera.nearClipPlane));
 
         // 设置生成位置
-        Vector2 spawnPosition = new Vector2(worldPosition.x, worldPosition.y);
+        Vector2 spawnPosition = new(worldPosition.x, worldPosition.y);
 
         // 随机选择怪物
         if (monsterIndex == -1)

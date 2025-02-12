@@ -42,12 +42,15 @@ public static class EnemyPrefabFactory
     {
 
         GameObject prefab = enemyType == "normal" ? NormalPrefab : ElitePrefab;
-        EnemyBase enemyBase = prefab.AddComponent(CommonUtil.GetTypeByName(enemyName)) as EnemyBase;
+        GameObject prefabClone = GameObject.Instantiate(prefab, GameObject.Find("Enemy").transform);
+        prefabClone.SetActive(false);
+        EnemyBase enemyBase = prefabClone.AddComponent(CommonUtil.GetTypeByName(enemyName)) as EnemyBase;
         string controllerName = enemyName + "_Controller";
         RuntimeAnimatorController controller = YooAssets.LoadAssetSync<RuntimeAnimatorController>(controllerName).AssetObject
             as RuntimeAnimatorController;
         enemyBase.animator.runtimeAnimatorController = controller;
-        return prefab;
+        
+        return prefabClone;
     }
 
 }
