@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class ConsumeBase : TheUIBase
 {
-    
+    public Action afterAction;
     // 使用元组 (string, int) 来存储物品名称和对应的消耗数量
     public List<(string itemName, int consumeCount)> consumeItemsData = new();
     public virtual List<(string itemName, int consumeCount)> ConsumeItemsData {
@@ -47,6 +48,7 @@ public class ConsumeBase : TheUIBase
             PlayerDataConfig.UpdateValueSubtract(itemName, consumeCount);
         }
         // 可扩展消耗后的其他逻辑
+        afterAction?.Invoke();
     }
 
     public virtual void Start()

@@ -147,5 +147,13 @@ public class ToolManager : ManagerBase<ToolManager>
         UIManager.Instance.OnItemUIShow("获得奖励", items);
     }
 
+    // 生成需要数量的字符串，不够则是红色
+    public string GenerateNeedCountText(string fieldName, int need)
+    {
+        int currentCount = (int)PlayerDataConfig.GetValue(fieldName);
+        string preText = need > currentCount ? CommonUtil.ChangeTextColor(need.ToString(), "red") : need.ToString();
+        string intactText = preText + "/" + currentCount;
+        return intactText;
+    }
 
 }

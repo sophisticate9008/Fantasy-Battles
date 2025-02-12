@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PageSwitcher : MonoBehaviour
+public class PageSwitcher : TheUIBase
 {
     public int initIdx = 0;
     public List<RectTransform> pages; // 所有页面的 RectTransform
@@ -80,7 +80,7 @@ public class PageSwitcher : MonoBehaviour
     /// <summary>
     /// 切换到指定页面
     /// </summary>
-    public void SwitchToPage(int newPageIndex, bool isRight)
+    public virtual void SwitchToPage(int newPageIndex, bool isRight)
     {
         if (newPageIndex < 0 || newPageIndex >= pages.Count || newPageIndex == currentPageIndex)
             return; // 无效操作

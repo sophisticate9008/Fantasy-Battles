@@ -29,7 +29,7 @@ public class SkillInfoPanel : ConsumeBase
         {"ice", "冰"},
         {"elec", "电"},
         {"ad", "物理"},
-        {"wind", "wind"},
+        {"wind", "风"},
         {"energy", "能量"},
     };
     public List<TextMeshProUGUI> propTexts;
@@ -80,13 +80,8 @@ public class SkillInfoPanel : ConsumeBase
     void InitOther()
     {
         int moneyNeed = currentArmProp.moneyNeed;
-        int currentMoney = PlayerDataConfig.money;
-        string moneyPreText = moneyNeed > currentMoney ? CommonUtil.ChangeTextColor(moneyNeed.ToString(), "red") : moneyNeed.ToString();
-        moneyText.text = moneyPreText + "/" + currentMoney;
-        int chipNeed = currentArmProp.chipNeed;
-        int currentChip = (int)PlayerDataConfig.GetValue(currentArmProp.chipFieldName);
-        string chipPreText = chipNeed > currentChip ? CommonUtil.ChangeTextColor(chipNeed.ToString(), "red") : chipNeed.ToString();
-        chipText.text = chipPreText + "/" + currentChip;
+        moneyText.text = ToolManager.Instance.GenerateNeedCountText("money", moneyNeed);
+        chipText.text = ToolManager.Instance.GenerateNeedCountText(currentArmProp.chipFieldName, currentArmProp.chipNeed);
         chipImg.sprite = CommonUtil.GetAssetByName<Sprite>(currentArmProp.chipResName);
         icon.sprite = CommonUtil.GetAssetByName<Sprite>(currentArmProp.resName);
         levelText.text = currentArmProp.level.ToString();
@@ -109,7 +104,8 @@ public class SkillInfoPanel : ConsumeBase
     {
         CloseToDirection("down", 0.3f);
     }
-    public void AwakePanel() {
+    public void AwakePanel()
+    {
         OpenFromDirection("down", 0.3f);
     }
     string ReplaceText(string text)
