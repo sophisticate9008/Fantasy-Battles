@@ -25,4 +25,6 @@ public static class Constant
     public static (int a1, int d) equipmentAttack = (0, 10);
     public static (int a1, int d) upLevelExpNeed = (50,50);
 
+    public static float moveOneAnimatorSpeed = 0.25f;//移动速度为0.25时动画播放速度为1;
+
 }

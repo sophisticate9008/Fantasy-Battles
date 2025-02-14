@@ -10,6 +10,14 @@ public class Boss6Config : EnemyConfigBase
         Blocks = 1;
         RangeFire = 0;
         CharacterType = "normal";
-        Damage = 100;
+        Damage = 200;
+        DerateAd = -0.5f;
+        DerateElec = 1;
+        DerateWind = 1;
+        DerateFire = 1;
+        DerateIce = 1;
+        BuffImmunityList.Add("点燃");
+        BuffImmunityList.Add("麻痹");
+        BuffImmunityList.Add("冰冻");
     }
 }

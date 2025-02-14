@@ -16,13 +16,13 @@ public class Slow : BuffBase
     {
         originSpeed = EnemyBase.Config.Speed;
         EnemyBase.Config.Speed = originSpeed * (1 - MaxSlowRate);
-        AnimatorManager.Instance.PlayAnim(EnemyBase.animator, 1 - MaxSlowRate);
+        AnimatorManager.Instance.PlayAnim(EnemyBase.animator, EnemyBase.animator.speed * (1 - MaxSlowRate));
     }
 
     public override void Remove()
     {
         EnemyBase.Config.SlowRates.Remove(slowRate);
         EnemyBase.Config.Speed = originSpeed * (1 - MaxSlowRate);
-        AnimatorManager.Instance.PlayAnim(EnemyBase.animator, 1 - MaxSlowRate);
+        AnimatorManager.Instance.PlayAnim(EnemyBase.animator, EnemyBase.animator.speed / (1 - MaxSlowRate));
     }
 }

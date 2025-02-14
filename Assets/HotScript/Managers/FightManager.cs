@@ -22,7 +22,7 @@ public class FighteManager : ManagerBase<FighteManager>
     public MissionBase mb => MissionFactory.Create(mr.missionId);
     public int exp = 0;
     public int level = 1;
-    public int CurrentNeedExp => mb.A1_D * level;
+    public int CurrentNeedExp => mb.A1_D * level * 10000;
     public Queue<string> bloodMsgs = new();
     GameObject DamageTextPrefab
     {
@@ -45,7 +45,8 @@ public class FighteManager : ManagerBase<FighteManager>
         {"ad", "white"},
         {"energy", "#B0D3B5"},
         {"wind", "#00cade"},
-        {"elec", "#c358db"}
+        {"elec", "#c358db"},
+        {"addBlood", "#4ec9a2"}
     };
     public SortedDictionary<string, float> harmStatistics = new();
     public SortedDictionary<string, int> killStatistics = new();
@@ -77,7 +78,7 @@ public class FighteManager : ManagerBase<FighteManager>
     //加载宝石
     #endregion
     #region 显示伤害
-    public void CreateDamageText(GameObject enemyObj, float damage, string type, bool isCritical)
+    public void CreateTextUI(GameObject enemyObj, float damage, string type, bool isCritical)
     {
         GameObject textClone = ObjectPoolManager.Instance.GetFromPool("DamageTextUIPool", DamageTextPrefab);
 
@@ -188,11 +189,12 @@ public class FighteManager : ManagerBase<FighteManager>
 
         calculator.Calculate(context);
         //易伤
-        CreateDamageText(enemyObj, (int)context.FinalDamage, context.DamageType, context.IsCritical);
+        CreateTextUI(enemyObj, (int)context.FinalDamage, context.DamageType, context.IsCritical);
         RecordDamage((int)context.FinalDamage, context.AttackerConfig.Owner);
         //上海结算并判断谁杀死的
         context.DefenderComponent.CalLife((int)context.FinalDamage, context.AttackerConfig.Owner);
     }
+
     public void EnemyDamegeFilter(int harm, int count = 1)
     {
         int indeedHarm = harm - WallConfig.DamageReduction;
@@ -218,6 +220,9 @@ public class FighteManager : ManagerBase<FighteManager>
             bloodMsgs.Enqueue($"<color=#D72D2D> -{indeedHarm} </color>");
         }
     }
+    public void ShowBloodAdd(int value, GameObject enemyObj) {
+        CreateTextUI(enemyObj, value, "addBlood", false);
+    } 
     #endregion
     //记录伤害
     public void RecordDamage(int damage, string owner)
@@ -308,7 +313,7 @@ public class FighteManager : ManagerBase<FighteManager>
     #endregion
 
 
-    public void AddBlood(int val)
+    public void AddWallBlood(int val)
     {
         WallConfig.CurrentLife += val;
         WallConfig.CurrentLife = Mathf.Clamp(WallConfig.CurrentLife, 0, WallConfig.LifeMax);

@@ -218,11 +218,18 @@ public class ArmChildBase : MonoBehaviour, IArmChild
     //重写自定义传入tlc，比如说区域中心伤害翻倍之类的
     public virtual void CreateDamage(GameObject enemyObj)
     {
-        FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject);
+        if(enemyObj.GetComponent<EnemyBase>().AcceptHarm(enemyObj, gameObject)) {
+            FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject);
+
+        }
+        
     }
     public virtual void CreateDamage(GameObject enemyObj, float tlc)
     {
-        FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, tlc: tlc);
+        if(enemyObj.GetComponent<EnemyBase>().AcceptHarm(enemyObj, gameObject)) {
+            FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject);
+
+        }
     }
     public virtual void Move()
     {
@@ -331,63 +338,26 @@ public class ArmChildBase : MonoBehaviour, IArmChild
         Collider2D[] collidersInRange = Physics2D.OverlapCircleAll(detectionCenter, scopeRadius);
 
         // 排除 centerObj 本身
-        if (centerObj != null)
-        {
-            collidersInRange = collidersInRange.Where(collider => collider.gameObject != centerObj).ToArray();
-        }
-        //排除exceptObjs
         if (exceptObjs != null)
         {
-            collidersInRange = collidersInRange.Where(collider => !exceptObjs.Contains(collider.gameObject)).ToArray();
-        }
-
-        // 筛选出所有包含 EnemyBase 组件的敌人
-        List<EnemyBase> enemiesInRange = collidersInRange
-            .Select(collider => collider.GetComponent<EnemyBase>())
-            .Where(enemy => enemy != null)
-            .OrderBy(enemy => Vector2.Distance(detectionCenter, enemy.transform.position))
-            .ToList();
-
-        // 如果没有敌人，则返回空列表
-        if (enemiesInRange.Count == 0)
-        {
-            if (setTargetEnemy)
-            {
-                TargetEnemy = null;
-            }
-            return new List<GameObject>();
-
-        }
-
-        // 如果 isRandom 为 true，随机选择 num 个敌人
-        List<GameObject> selectedEnemies;
-        if (isRandom)
-        {
-            selectedEnemies = enemiesInRange
-                .OrderBy(e => UnityEngine.Random.value) // 随机打乱顺序
-                .Take(num) // 选择 num 个敌人
-                .Select(e => e.gameObject) // 获取对应的 GameObject
-                .ToList();
+            exceptObjs.Add(centerObj);
         }
         else
         {
-            // 按顺序选择最近的 num 个敌人
-            selectedEnemies = enemiesInRange
-                .Take(num) // 选择 num 个敌人
-                .Select(e => e.gameObject) // 获取对应的 GameObject
-                .ToList();
+            exceptObjs = new() { centerObj };
         }
+        var enemys = ToolManager.Instance.FindEnemyInScope(detectionCenter, scopeRadius, num, isRandom, exceptObjs);
 
         // 如果 num == 1，将唯一敌人设置为 TargetEnemy
-        if (num == 1 && selectedEnemies.Count > 0)
+        if (num == 1 && enemys.Count > 0)
         {
             if (setTargetEnemy)
             {
-                TargetEnemy = selectedEnemies[0];
+                TargetEnemy = enemys[0];
             }
         }
 
-        return selectedEnemies;
+        return enemys;
     }
 
     public void ReturnToPool()

@@ -30,6 +30,11 @@ public class EnemyManager : ManagerBase<EnemyManager>
         foreach (string item in enemyTypes)
         {
             EnemyConfigBase configBase = ConfigManager.Instance.GetConfigByClassName(item) as EnemyConfigBase;
+            if (configBase.BulletPrefab != null)
+            {
+                ObjectPoolManager.Instance.CreatePool(configBase.GetType().Name.Replace("Config", "") + "BulletPool",
+                configBase.BulletPrefab, 10, 50);
+            }
             enemyConfigBases.Add(configBase);
             monsterPrefabs.Add(configBase.Prefab);
             StartCoroutine(SpawnMonsters(item)); // 启动特定怪物类型的生成协程
@@ -75,7 +80,8 @@ public class EnemyManager : ManagerBase<EnemyManager>
         {
             monsterIndex = Random.Range(0, monsterPrefabs.Count);
         }
-        if(theEnemy == null) {
+        if (theEnemy == null)
+        {
             theEnemy = ObjectPoolManager.Instance.GetFromPool(enemyTypes[monsterIndex] + "Pool", monsterPrefabs[monsterIndex]);
         }
 

@@ -6,7 +6,25 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyConfigBase : ConfigBase
 {
+    public float telAttackArriveTime = 1f;//远程攻击到达时间
+    private GameObject _bulletPrefab;
+    public GameObject BulletPrefab
+    {
+        get
+        {
+            if (_bulletPrefab != null)
+            {
+                return _bulletPrefab;
+            }
+            else
+            {
+                _bulletPrefab = CommonUtil.GetAssetByName<GameObject>("EnemyBullet" + GetType().Name.Replace("Config", ""));
+                return _bulletPrefab;
+            }
+        }
+    }
     public float SelfScale = 1;
+    public float ScopeRadius = 1;
     public float Mass = 1;
     // 私有字段
     private GameObject prefab;
@@ -43,14 +61,14 @@ public class EnemyConfigBase : ConfigBase
     [SerializeField] private float derateWind;
     [SerializeField] private float derateEnergy;
     [SerializeField] private float deratePenetrate;
-    [SerializeField] private List<string> controlImmunityList = new();
+    [SerializeField] private List<string> buffImmunityList = new();
     [SerializeField] private List<string> damageTypeImmunityList = new();
     [SerializeField] private string attackType;//攻击类型 远程 进程
     [SerializeField] private string actionType = "land";// 行动类型 飞行 地面
     [SerializeField] private string characterType = "normal";// 角色类型 精英 普通
     [SerializeField] private int attackCount = 1; //每次攻击的段数
     [SerializeField] private float attackCd = 2;
-    public int BloodBarCount = 1; 
+    public int BloodBarCount = 1;
     public int PerLife => Life / BloodBarCount;
     // 公共属性，允许重写
     public virtual float AttackCd
@@ -147,10 +165,10 @@ public class EnemyConfigBase : ConfigBase
         set => derateEnergy = value;
     }
 
-    public virtual List<string> ControlImmunityList
+    public virtual List<string> BuffImmunityList
     {
-        get => controlImmunityList;
-        set => controlImmunityList = value ?? new List<string>();
+        get => buffImmunityList;
+        set => buffImmunityList = value ?? new List<string>();
     }
 
     public virtual string AttackType

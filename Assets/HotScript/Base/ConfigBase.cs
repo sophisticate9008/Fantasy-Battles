@@ -1,11 +1,13 @@
 using System;
 using System.IO;
 using System.Reflection;
+using MyEnums;
 using UnityEngine;
 
 [System.Serializable]
 public class ConfigBase
 {
+    public AttackRange attackRange = AttackRange.near;
     public virtual GameObject Prefab { get; set; }
     public virtual bool IsCreatePool { get; set; } = true;
 

@@ -19,4 +19,9 @@ namespace MyEnums
         Select,
         Reward
     }
+
+    public enum AttackRange{
+        tel,
+        near,
+    }
 }

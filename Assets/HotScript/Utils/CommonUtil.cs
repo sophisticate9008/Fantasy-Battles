@@ -44,9 +44,14 @@ public class CommonUtil
         }
         catch (Exception ex)
         {
-            Debug.LogWarning($"Error loading resource: {resName}. Exception: {ex.Message}");
+            try {
+                return YooAssets.LoadAssetSync<T>(resName).AssetObject as T;
+            } catch {
+                Debug.LogWarning($"Error loading resource: {resName}. Exception: {ex.Message}");
+                return null;
+            }
             // 尝试再次加载资源作为最后的解决方案
-            return YooAssets.LoadAssetSync<T>(resName).AssetObject as T;
+            
         }
 
     }

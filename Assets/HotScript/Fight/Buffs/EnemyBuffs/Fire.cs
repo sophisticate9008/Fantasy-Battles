@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Fire : BuffBase
 {
-
+    float tlc;
     IEffectController controller;
-    public Fire(string buffName, float duration, GameObject selfObj, GameObject enemyObj) : base(buffName, duration, selfObj, enemyObj)
+    public Fire(string buffName, float duration, GameObject selfObj, GameObject enemyObj, float tlc) : base(buffName, duration, selfObj, enemyObj)
     {
+        this.tlc = tlc;
     }
 
     public override void Effect()
@@ -25,7 +26,7 @@ public class Fire : BuffBase
     IEnumerator LastingFlame()
     {
         yield return new WaitForSeconds(0.49f);
-        FighteManager.Instance.SelfDamageFilter(EnemyObj, SelfObj, true, ArmChildBase.Config.FirePercentage, damageType: "fire");
+        FighteManager.Instance.SelfDamageFilter(EnemyObj, SelfObj, true, ArmChildBase.Config.FirePercentage, damageType: "fire", tlc: tlc);
 
     }
 }

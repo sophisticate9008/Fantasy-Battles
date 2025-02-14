@@ -10,6 +10,8 @@ public class Boss1Config : EnemyConfigBase
         Blocks = 1;
         RangeFire = 0;
         CharacterType = "boss";
-        Damage = 500;
+        Damage = 200;
+        Mass = 3;
+        DerateFire = -0.5f;
     }
 }

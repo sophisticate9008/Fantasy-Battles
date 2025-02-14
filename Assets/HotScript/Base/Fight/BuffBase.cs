@@ -29,6 +29,7 @@ public abstract class BuffBase : IBuff
     public void EffectAndAutoRemove()
     {
         Effect();
+        EnemyBase.buffEffects.Add(BuffName);
         UpdateEndtimes();
         ToolManager.Instance.StartCoroutine(AutoRemove());
     }
@@ -51,12 +52,14 @@ public abstract class BuffBase : IBuff
             float now = Time.time;
             if (now > EnemyBase.BuffEndTimes[BuffName])
             {
+                EnemyBase.buffEffects.Remove(BuffName);
                 Remove();
                 break;
             }
 
             if (EnemyObj == null || EnemyObj.activeSelf == false)
             {
+                EnemyBase.buffEffects.Remove(BuffName);
                 Remove();
                 break;
             }

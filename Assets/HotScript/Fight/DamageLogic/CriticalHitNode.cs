@@ -4,9 +4,16 @@ public class CriticalHitNode : DamageNodeBase
 {
     public override bool Process(DamageContext context)
     {
-        var config = context.AttackerConfig;
-        float critRate = GlobalConfig.CritRate + config.CritRate;
-        
+        float critRate;
+        if (context.IsBuffDamage)
+        {
+            critRate = GlobalConfig.CritRate;
+        }
+        else
+        {
+            var config = context.AttackerConfig;
+            critRate = GlobalConfig.CritRate + config.CritRate;
+        }
         if (UnityEngine.Random.value < critRate)
         {
             context.IsCritical = true;

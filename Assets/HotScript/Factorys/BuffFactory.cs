@@ -12,7 +12,7 @@ public static class BuffFactory
         }
         if (buffName.Contains("点燃"))
         {
-            return new Fire(buffName, duration, selfObj, enemyObj);
+            return new Fire(buffName, duration, selfObj, enemyObj, (float)args[0]);
         }
         return buffName switch
         {

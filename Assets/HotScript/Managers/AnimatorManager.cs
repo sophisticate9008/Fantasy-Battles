@@ -117,6 +117,15 @@ public class AnimatorManager : ManagerBase<AnimatorManager>
         }
         return "";
     }
+    // 获取当前动画的播放速度
+    public float GetCurrentAnimSpeed(Animator anim)
+    {
+        if (anim != null)
+        {
+            return anim.speed;  // 返回当前动画的播放速度
+        }
+        return 0f; // 如果 animator 为空，返回默认速度 0
+    }
 
     // 协程等待动画播放完成
     public IEnumerator WaitForAnimation(Animator anim, string animName, Action callback)

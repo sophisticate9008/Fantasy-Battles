@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 public class ToolManager : ManagerBase<ToolManager>
@@ -155,5 +156,63 @@ public class ToolManager : ManagerBase<ToolManager>
         string intactText = preText + "/" + currentCount;
         return intactText;
     }
+
+    #region 寻找范围内敌人
+    public List<GameObject> FindEnemyInScope(Vector3 detectionCenter, float scopeRadius, int num = -1, bool isRandomSel = false, List<GameObject> exceptObjs = null)
+    {
+        if (num == 0)
+        {
+            return null;
+        }
+
+        // 获取范围内的所有碰撞体，按离底部远近排序
+        Collider2D[] collidersInRange = Physics2D.OverlapCircleAll(detectionCenter, scopeRadius);
+
+        //排除exceptObjs
+        if (exceptObjs != null)
+        {
+            collidersInRange = collidersInRange.Where(collider => !exceptObjs.Contains(collider.gameObject)).ToArray();
+        }
+
+        // 筛选出所有包含 EnemyBase 组件的敌人
+        List<EnemyBase> enemiesInRange = collidersInRange
+            .Select(collider => collider.GetComponent<EnemyBase>())
+            .Where(enemy => enemy != null)
+            .OrderBy(enemy => Vector2.Distance(detectionCenter, enemy.transform.position))
+            .ToList();
+
+        // 如果没有敌人，则返回空列表
+        if (enemiesInRange.Count == 0)
+        {
+            return new List<GameObject>();
+        }
+
+        // 如果 isRandom 为 true，随机选择 num 个敌人
+        List<GameObject> selectedEnemies;
+        if(num < 0) {
+             return enemiesInRange.Select(x => x.gameObject).ToList();
+        }
+        if (isRandomSel)
+        {
+            selectedEnemies = enemiesInRange
+                .OrderBy(e => UnityEngine.Random.value) // 随机打乱顺序
+                .Take(num) // 选择 num 个敌人
+                .Select(e => e.gameObject) // 获取对应的 GameObject
+                .ToList();
+        }
+        else
+        {
+            // 按顺序选择最近的 num 个敌人
+            selectedEnemies = enemiesInRange
+                .Take(num) // 选择 num 个敌人
+                .Select(e => e.gameObject) // 获取对应的 GameObject
+                .ToList();
+        }
+
+        // 如果 num == 1，将唯一敌人设置为 TargetEnemy
+        return selectedEnemies;
+    }
+    #endregion
+
 
 }

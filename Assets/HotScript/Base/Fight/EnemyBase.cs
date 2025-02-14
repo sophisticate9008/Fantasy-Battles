@@ -2,13 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-
+using MyEnums;
 using UnityEngine;
 
 
 public class EnemyBase : MonoBehaviour, IEnemy
 {
+    public bool isFire => buffEffects.Any(buff => buff.Contains("点燃"));
+    public bool isFreezen => buffEffects.Contains("冰冻");
+    public float lastAddBloodTime = 0;
+    public float moveAnimatorSpeed = 1;
     public SpriteRenderer sr;
     private bool isIdle = false;
     public AnimatorManager animatorManager;
@@ -34,12 +37,13 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public EnemyConfigBase Config { get; set; }
     public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
     public bool IsInit { get; set; }
-    public Queue<IBuff> Buffs { get; } = new();
-    public Dictionary<string, IComponent> InstalledComponents { get; } = new();
+    public Queue<BuffBase> Buffs { get; } = new();
     public float ControlEndTime { get; set; } = 0f;
     public Dictionary<string, float> BuffEndTimes { get; set; } = new();
+    public List<string> buffEffects;
     public Vector2 leftBottomBoundary;
     public Vector2 rightBottomBoundary;
+    public Dictionary<string, List<Action>> allTypeActions;
     //硬控总结束时间
     public float HardControlEndTime { get; set; }
 
@@ -50,11 +54,13 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public bool isDead;
     public virtual void Init()
     {
-
+        lastAddBloodTime = Time.time;
+        allTypeActions = new() { { "die", new() } };
         ControlEndTime = 0;
         Config ??= ConstConfig.Clone() as EnemyConfigBase;
         ChangeScale(Config.SelfScale);
         ChangeMass();
+        ChangeAnimatorSpeed();
         NowLife = (int)(Config.Life * FighteManager.Instance.mb.bloodRatio);
         MaxLife = NowLife;
         if (Config.CharacterType == "elite")
@@ -79,7 +85,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         try
         {
             animatorManager.SetAnimParameter(animator, "isRunning", true);
-            animatorManager.PlayAnim(animator, 1f);
+            animatorManager.PlayAnim(animator, moveAnimatorSpeed);
         }
         catch { }
 
@@ -125,6 +131,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         animatorManager = AnimatorManager.Instance;
         sr = GetComponent<SpriteRenderer>();
 
+
     }
     private void RunningAnim()
     {
@@ -153,7 +160,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         //     animatorManager.PlayAnim(animator, 1f);
         // }
     }
-    public void Update()
+    public virtual void Update()
     {
         ClampMonsterPosition(transform);
         if (!IsInit)
@@ -235,22 +242,46 @@ public class EnemyBase : MonoBehaviour, IEnemy
         Vector3 originalPosition = transform.position;
 
         // 施加微小的移动
-        transform.position = originalPosition + new Vector3(0.001f, 0, 0); // 在X轴上施加微小的移动
+        transform.position = originalPosition + new Vector3(0.00001f, 0, 0); // 在X轴上施加微小的移动
 
         // 立即恢复到原始位置
         transform.position = originalPosition;
     }
     #endregion 
+
+    #region  攻击技能
     public virtual void Attack()
+    {
+        if (Config.attackRange == AttackRange.near)
+        {
+            IndeedAttack();
+        }
+        else
+        {
+            TelAttack();
+        }
+
+    }
+    public virtual void TelAttack()
+    {
+        GameObject bullet = ObjectPoolManager.Instance.GetFromPool(Config.GetType().Name.Replace("Config", "") + "BulletPool", Config.BulletPrefab);
+        bullet.transform.position = transform.position;
+        Vector3 targetPos = new(transform.position.x, FighteManager.Instance.leftBottomBoundary.y, 0);
+        ToolManager.Instance.TransmitByStep(Config.telAttackArriveTime, targetPos, bullet, false);
+        bullet.transform.localScale *= Config.SelfScale;
+        ToolManager.Instance.SetTimeout(() =>
+        {
+            bullet.transform.localScale /= Config.SelfScale;
+            IndeedAttack();
+            ObjectPoolManager.Instance.ReturnToPool(Config.GetType().Name.Replace("Config", "") + "BulletPool", bullet);
+        }, Config.telAttackArriveTime);
+    }
+    public virtual void IndeedAttack()
     {
         FighteManager.Instance.EnemyDamegeFilter(Config.Damage, Config.AttackCount);
     }
 
-    public virtual void Skill()
-    {
-        throw new System.NotImplementedException();
-    }
-
+    #endregion
     public virtual void CalLife(int damage, string owner)
     {
         sr.color = Color.red;
@@ -265,13 +296,17 @@ public class EnemyBase : MonoBehaviour, IEnemy
             Die(owner);
         }
     }
-
+    public virtual void AddLife(int count)
+    {
+        NowLife = Math.Min(NowLife + count, MaxLife);
+        FighteManager.Instance.ShowBloodAdd(NowLife, gameObject);
+    }
+    #region 死亡
     public virtual void Die(string owner)
     {
         if (!isDead)
         {
             isDead = true;
-            OnByType("die", gameObject);
             FighteManager.Instance.RecordKill(owner);
             FighteManager.Instance.AddExp(1);
             if (Config.CharacterType == "elite")
@@ -286,33 +321,22 @@ public class EnemyBase : MonoBehaviour, IEnemy
             {
                 Destroy(gameObject);
             }
-
-
         }
         // animatorManager.SetAnimParameter(animator, "isDead", true);
     }
-
-    void OnByType(string type, GameObject obj)
-    {
-        foreach (var component in InstalledComponents)
-        {
-            foreach (var _ in component.Value.Types)
-            {
-                if (_ == type)
-                {
-                    component.Value.Exec(obj);
-                }
-            }
-        }
-    }
+    #endregion
 
     public void BuffEffect()
     {
         while (Buffs.Count > 0)
         {
             var buff = Buffs.Dequeue();
-            buff.EffectAndAutoRemove();
+            UseBuff(buff);
         }
+    }
+    public virtual void UseBuff(BuffBase buff)
+    {
+        buff.EffectAndAutoRemove();
     }
     void ChangeScale(float scaleFactor)
     {
@@ -331,8 +355,6 @@ public class EnemyBase : MonoBehaviour, IEnemy
         //移除所有buff
         ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
         //移除子特效
-        
-
     }
 
     public void RelaseExp()
@@ -340,13 +362,13 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     }
     #region 增加buff
-    public void AddBuff(string buffName, GameObject selfObj, float duration, params object[] args)
+    public virtual void AddBuff(string buffName, GameObject selfObj, float duration, params object[] args)
     {
         //全局异常状态增强
         duration *= GlobalConfig.EnemyBuffTimeAddition;
 
-        //免疫指定控制buff
-        if (Config.ControlImmunityList.Any(immunity => buffName.Contains(immunity)))
+        //免疫指定buff
+        if (Config.BuffImmunityList.Any(immunity => buffName.Contains(immunity)))
         {
             return;
         }
@@ -389,10 +411,37 @@ public class EnemyBase : MonoBehaviour, IEnemy
         monsterTransform.position = position;
     }
 
-    public void ChangeMass() {
-        Debug.Log("ChangeMass" + Config.Mass);
-        
+    public void ChangeMass()
+    {
+
         GetComponent<Rigidbody2D>().mass = Config.Mass;
+    }
+    public void ChangeAnimatorSpeed()
+    {
+        moveAnimatorSpeed = Config.Speed / Constant.moveOneAnimatorSpeed;
+    }
+    #region 范围索敌
+    public List<GameObject> FindEnemyInScope()
+    {
+        return ToolManager.Instance.FindEnemyInScope(transform.position, Config.ScopeRadius, exceptObjs: new List<GameObject>() { gameObject });
+    }
+    #endregion
+
+
+    #region 计算距离防线的屏幕y距离
+    public float ScreenDistanceToWall
+    {
+        get
+        {
+            var wallScreenPos = Camera.main.ViewportToScreenPoint(Constant.leftBottomViewBoundary);
+            var selfScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+            return selfScreenPos.y - wallScreenPos.y;
+        }
+    }
+    #endregion
+
+    public virtual bool AcceptHarm(GameObject enemy, GameObject armChild) {
+        return true;
     }
 }
 

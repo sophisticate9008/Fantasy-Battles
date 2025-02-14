@@ -5,11 +5,14 @@ public class Monster11Config : EnemyConfigBase
 
     public Monster11Config() : base()
     {
-        Life = 1500;
-        Speed = 0.15f;
+        Life = 4000;
+        Speed = 0.2f;
         Blocks = 1;
         RangeFire = 0;
         CharacterType = "normal";
-        Damage = 100;
+        Damage = 25;
+        Mass = 3;
+        BuffImmunityList.Add("眩晕");
+        DeratePenetrate = 0.5f;
     }
 }

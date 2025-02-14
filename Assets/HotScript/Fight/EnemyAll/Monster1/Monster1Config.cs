@@ -11,5 +11,6 @@ public class Monster1Config: EnemyConfigBase{
         Mass = 5;
         Blocks = 2;
         SelfScale = 1f;
+        DerateWind = 0.5f;
     }
 }
