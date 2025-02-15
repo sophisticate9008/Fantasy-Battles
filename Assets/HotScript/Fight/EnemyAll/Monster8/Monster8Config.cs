@@ -15,6 +15,6 @@ public class Monster8Config : EnemyConfigBase
         BuffImmunityList.Add("点燃");
         DerateIce = 0.5f;
         DerateFire = -0.5f;
-
+        SelfScale = 0.8f;
     }
 }

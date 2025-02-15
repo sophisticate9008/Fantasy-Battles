@@ -10,19 +10,20 @@ using YooAsset;
 //管理战斗逻辑，伤害等
 public class FighteManager : ManagerBase<FighteManager>
 {
+    private bool isEnd = false;
     public Vector2 leftBottomBoundary;
     public Vector2 rightTopBoundary;
     public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     public WallConfig WallConfig => ConfigManager.Instance.GetConfigByClassName("Wall") as WallConfig;
     public AnimationCurve spawnRateCurve;
     public MissionRecord mr => MissionManager.Instance.mr;
-    public float radius = 25f;
+    private float radius = 10f;
     private readonly GameObject damageTextPrefab;
     public Dictionary<string, float> cdDict = new();
     public MissionBase mb => MissionFactory.Create(mr.missionId);
     public int exp = 0;
     public int level = 1;
-    public int CurrentNeedExp => mb.A1_D * level * 10000;
+    public int CurrentNeedExp => mb.A1_D * level;
     public Queue<string> bloodMsgs = new();
     GameObject DamageTextPrefab
     {
@@ -46,7 +47,8 @@ public class FighteManager : ManagerBase<FighteManager>
         {"energy", "#B0D3B5"},
         {"wind", "#00cade"},
         {"elec", "#c358db"},
-        {"addBlood", "#4ec9a2"}
+        {"addBlood", "#4ec9a2"},
+        {"爆燃", "red"}
     };
     public SortedDictionary<string, float> harmStatistics = new();
     public SortedDictionary<string, int> killStatistics = new();
@@ -62,7 +64,8 @@ public class FighteManager : ManagerBase<FighteManager>
         EnemyManager.Instance.Init();
 
     }
-    void InitGlobalConfig() {
+    void InitGlobalConfig()
+    {
         GlobalConfig.LoadJewel();
     }
     void InitBackground()
@@ -78,7 +81,18 @@ public class FighteManager : ManagerBase<FighteManager>
     //加载宝石
     #endregion
     #region 显示伤害
-    public void CreateTextUI(GameObject enemyObj, float damage, string type, bool isCritical)
+    public void CreateDamageTextUI(GameObject enemyObj, float damage, string type, bool isCritical)
+    {
+        // 伤害值格式转换
+        string formattedDamage = FormatDamage(damage);
+        // 生成彩色字符串
+        string color = colorDict.ContainsKey(type) ? colorDict[type] : "white";
+        string damageText = isCritical ? $"<color=#ED1523>{formattedDamage}</color>" : $"<color={color}>{formattedDamage}</color>";
+        ShowText(enemyObj, damageText, isCritical);
+
+
+    }
+    public void ShowText(GameObject enemyObj, string text, bool isCritical = false)
     {
         GameObject textClone = ObjectPoolManager.Instance.GetFromPool("DamageTextUIPool", DamageTextPrefab);
 
@@ -100,29 +114,17 @@ public class FighteManager : ManagerBase<FighteManager>
 
         // 设置 UI 元素的位置为圆周范围内的随机位置
         textClone.transform.position = offsetPosition;
-
-        // 伤害值格式转换
-        string formattedDamage = FormatDamage(damage);
-
-        // 生成彩色字符串
-        string color = colorDict.ContainsKey(type) ? colorDict[type] : "white";
-        string damageText = isCritical ? $"<color=#ED1523>{formattedDamage}</color>" : $"<color={color}>{formattedDamage}</color>";
         Transform critText = textClone.transform.Find("Critical");
         Transform normalText = textClone.transform.Find("Normal");
-
         // 设置 TextMeshPro 组件的文本
         Transform[] textTransforms = new Transform[] { critText, normalText };
         int activeIndex = isCritical ? 0 : 1;
         int inactiveIndex = isCritical ? 1 : 0;
-
-        // 启用其中一个，禁用另一个
         textTransforms[activeIndex].gameObject.SetActive(true);
         textTransforms[inactiveIndex].gameObject.SetActive(false);
-
-        // 更新启用的文本内容
         if (textTransforms[activeIndex].TryGetComponent<TextMeshProUGUI>(out var activeText))
         {
-            activeText.text = damageText;
+            activeText.text = text;
         }
 
         // 启动协程，0.3秒后禁用
@@ -130,17 +132,15 @@ public class FighteManager : ManagerBase<FighteManager>
     }
     #endregion
 
+
     #region  格式化伤害
     // 格式化伤害值方法
     private string FormatDamage(float damage)
     {
-        if (damage < 0)
+
+        if (damage == 0)
         {
-            return "Miss";
-        }
-        else if (damage == 0)
-        {
-            return "Immunity";
+            return "免疫";
         }
         else if (damage >= 1000000)
         {
@@ -189,7 +189,7 @@ public class FighteManager : ManagerBase<FighteManager>
 
         calculator.Calculate(context);
         //易伤
-        CreateTextUI(enemyObj, (int)context.FinalDamage, context.DamageType, context.IsCritical);
+        CreateDamageTextUI(enemyObj, (int)context.FinalDamage, context.DamageType, context.IsCritical);
         RecordDamage((int)context.FinalDamage, context.AttackerConfig.Owner);
         //上海结算并判断谁杀死的
         context.DefenderComponent.CalLife((int)context.FinalDamage, context.AttackerConfig.Owner);
@@ -219,10 +219,15 @@ public class FighteManager : ManagerBase<FighteManager>
             WallConfig.CurrentLife = Mathf.Clamp(WallConfig.CurrentLife, 0, WallConfig.LifeMax);
             bloodMsgs.Enqueue($"<color=#D72D2D> -{indeedHarm} </color>");
         }
+        if (WallConfig.CurrentLife == 0)
+        {
+            EndGame(false);
+        }
     }
-    public void ShowBloodAdd(int value, GameObject enemyObj) {
-        CreateTextUI(enemyObj, value, "addBlood", false);
-    } 
+    public void ShowBloodAdd(int value, GameObject enemyObj)
+    {
+        CreateDamageTextUI(enemyObj, value, "addBlood", false);
+    }
     #endregion
     //记录伤害
     public void RecordDamage(int damage, string owner)
@@ -250,6 +255,7 @@ public class FighteManager : ManagerBase<FighteManager>
     public void AddExp(int val)
     {
         exp += val;
+
         // if(exp >= 2) {
         //     ControlGame(false);
 
@@ -262,10 +268,19 @@ public class FighteManager : ManagerBase<FighteManager>
             level++;
 
             AwakeSkillPanel();
-            if (level == 2)
+            if (level == 8)
             {
                 RealeaseElite();
             }
+            if (level == 15)
+            {
+                RealeaseBoss();
+            }
+        }
+
+        if (EnemyManager.Instance.IsStop && EnemyManager.Instance.liveCount == 0)
+        {
+            EndGame(true);
         }
     }
     #region  技能选择
@@ -323,6 +338,11 @@ public class FighteManager : ManagerBase<FighteManager>
     #region  对局结束
     public void EndGame(bool isSuccess)
     {
+        if (isEnd)
+        {
+            return;
+        }
+        isEnd = true;
         Debug.Log("对局结束");
 
         if (isSuccess)
@@ -334,7 +354,6 @@ public class FighteManager : ManagerBase<FighteManager>
         ControlGame(true);
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         YooAssets.LoadSceneSync("Main", sceneMode);
-
     }
     #endregion
 
@@ -342,11 +361,16 @@ public class FighteManager : ManagerBase<FighteManager>
 
 
 
-    #region  精英逻辑
+    #region  精英boss逻辑
     public void RealeaseElite()
     {
         Debug.Log("释放精英");
         EnemyManager.Instance.GenerateElite();
+    }
+    public void RealeaseBoss()
+    {
+        Debug.Log("释放领主");
+        EnemyManager.Instance.GenerateBoss();
     }
     public void DefeatElite()
     {

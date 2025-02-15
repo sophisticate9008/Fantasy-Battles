@@ -14,7 +14,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public float moveAnimatorSpeed = 1;
     public SpriteRenderer sr;
     private bool isIdle = false;
-    public AnimatorManager animatorManager;
+    public AnimatorManager animatorManager => AnimatorManager.Instance;
     private Animator _animator;
 
     public Animator animator
@@ -87,7 +87,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
             animatorManager.SetAnimParameter(animator, "isRunning", true);
             animatorManager.PlayAnim(animator, moveAnimatorSpeed);
         }
-        catch { }
+        catch{}
 
 
     }
@@ -128,7 +128,6 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     protected virtual void Start()
     {
-        animatorManager = AnimatorManager.Instance;
         sr = GetComponent<SpriteRenderer>();
 
 
@@ -179,7 +178,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
         }
     }
     #region 移动
-
+    public virtual void IndeedMove() {
+        transform.Translate(Config.Speed * Time.deltaTime * Vector3.down);
+    }
     public virtual void Move()
     {
         if (isDead)
@@ -190,7 +191,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         float bottomEdge = -Camera.main.orthographicSize;
         if (position.y > FighteManager.Instance.leftBottomBoundary.y + Config.RangeFire)
         {
-            transform.Translate(Config.Speed * Time.deltaTime * Vector3.down);
+            IndeedMove();
             RunningAnim();
         }
         else //到达射程内
@@ -299,7 +300,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public virtual void AddLife(int count)
     {
         NowLife = Math.Min(NowLife + count, MaxLife);
-        FighteManager.Instance.ShowBloodAdd(NowLife, gameObject);
+        FighteManager.Instance.ShowBloodAdd(count, gameObject);
     }
     #region 死亡
     public virtual void Die(string owner)
@@ -307,6 +308,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
         if (!isDead)
         {
             isDead = true;
+            foreach(var action in allTypeActions["die"]) {
+                action.Invoke();
+            }
             FighteManager.Instance.RecordKill(owner);
             FighteManager.Instance.AddExp(1);
             if (Config.CharacterType == "elite")
@@ -419,6 +423,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public void ChangeAnimatorSpeed()
     {
         moveAnimatorSpeed = Config.Speed / Constant.moveOneAnimatorSpeed;
+
     }
     #region 范围索敌
     public List<GameObject> FindEnemyInScope()
@@ -440,7 +445,8 @@ public class EnemyBase : MonoBehaviour, IEnemy
     }
     #endregion
 
-    public virtual bool AcceptHarm(GameObject enemy, GameObject armChild) {
+    public virtual bool AcceptHarm(GameObject enemy, GameObject armChild)
+    {
         return true;
     }
 }

@@ -12,6 +12,8 @@ public class EnemyManager : ManagerBase<EnemyManager>
     private List<EnemyConfigBase> enemyConfigBases = new(); // 怪物配置
     private List<GameObject> monsterPrefabs = new(); // 怪物预制体
     private int maxCount; // 最大生成数量
+    public bool IsStop => isStop;
+    private bool isStop = false;
     private int currentCount = 0; // 当前生成数量
     public float fixInterval; // 固定时间间隔
     public float noiseScale; // 噪声比例
@@ -60,14 +62,16 @@ public class EnemyManager : ManagerBase<EnemyManager>
             // 等待下次生成
             yield return new WaitForSeconds(spawnInterval);
         }
+        isStop = true;
+
     }
 
-    EnemyBase SpawnMonster(int monsterIndex = -1, GameObject theEnemy = null)
+    EnemyBase SpawnMonster(int monsterIndex = -1, GameObject theEnemy = null, bool isRandom = true)
     {
         currentCount++; // 增加共享数量
         liveCount++;
         // 随机生成视口坐标中的x坐标（0到设置之间）
-        float viewportXCoordinate = Random.Range(0f, ViewportXCoordinate);
+        float viewportXCoordinate = isRandom ? Random.Range(0f, ViewportXCoordinate) : 0.5f;
 
         // 将视口坐标转换为世界坐标
         Vector3 worldPosition = mainCamera.ViewportToWorldPoint(new Vector3(viewportXCoordinate, 1f, mainCamera.nearClipPlane));
@@ -99,6 +103,18 @@ public class EnemyManager : ManagerBase<EnemyManager>
         elite.Config = elite.ConstConfig.Clone() as EnemyConfigBase;
         elite.Config.CharacterType = "elite";
         elite.Init();
+        theEnemy.SetActive(true);
+    }
+
+    public void GenerateBoss()
+    {
+        GameObject prefab = EnemyPrefabFactory.Create("Boos" + mb.bossIdx, "boss");
+        GameObject theEnemy = Instantiate(prefab);
+        theEnemy.SetActive(false);
+        EnemyBase boss = SpawnMonster(mb.eliteIdx, theEnemy, false);
+        boss.Config = boss.ConstConfig.Clone() as EnemyConfigBase;
+        boss.Config.CharacterType = "boss";
+        boss.Init();
         theEnemy.SetActive(true);
     }
 

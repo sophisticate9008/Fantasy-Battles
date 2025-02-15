@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Monster2 : EnemyBase
 {
-    public float lastAddBloodTime = 0;
     public override void UseBuff(BuffBase buff)
     {
         if (buff.BuffName.Contains("点燃"))
@@ -23,29 +22,43 @@ public class Monster2 : EnemyBase
         void die()
         {
             List<GameObject> arroundEnemies = FindEnemyInScope();
+            bool fire = isFire;
+            if (fire)
+            {
+                FighteManager.Instance.ShowText(gameObject, "爆燃", false);
+            }
+            else
+            {
+                FighteManager.Instance.ShowText(gameObject, "治愈", false);
+            }
             foreach (var enemy in arroundEnemies)
             {
                 EnemyBase eb = enemy.transform.GetComponent<EnemyBase>();
-                if(isFire) {
+                if (fire)
+                {
                     eb.AddBuff("草兽点燃", null, 3f, 0.01f);
-                }else {
+                }
+                else
+                {
                     eb.AddLife((int)(MaxLife * 0.05f));
                 }
-                
             }
         }
         allTypeActions["die"].Add(die);
     }
-    public override void Update() {
+    public override void Update()
+    {
         base.Update();
-        if(Time.time - lastAddBloodTime > 3f) {
-            if(isFire) {
+        if (Time.time - lastAddBloodTime > 3f)
+        {
+            if (isFire)
+            {
                 return;
             }
             lastAddBloodTime = Time.time;
             AddLife((int)(MaxLife * 0.05f));
         }
-        
+
 
     }
 }

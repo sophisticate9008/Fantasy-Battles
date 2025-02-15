@@ -4,7 +4,7 @@ public class Monster1Config: EnemyConfigBase{
     
     public Monster1Config():base() {
         Life = 3000;
-        Speed = 0.3f;
+        Speed = 0.15f;
         RangeFire = 0;
         CharacterType = "normal";
         Damage = 20;

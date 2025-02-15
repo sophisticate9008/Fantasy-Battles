@@ -11,6 +11,6 @@ public class FireComponent : ComponentBase
     public override void Exec(GameObject enemyObj)
     {
         EnemyBase enemyBase = enemyObj.GetComponent<EnemyBase>();
-        enemyBase.AddBuff(Config.Owner + "点燃", SelfObj, Config.FireTime);
+        enemyBase.AddBuff(Config.Owner + "点燃", SelfObj, Config.FireTime, Config.fireTlc);
     }
 }

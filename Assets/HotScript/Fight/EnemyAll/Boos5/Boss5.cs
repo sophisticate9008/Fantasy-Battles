@@ -6,7 +6,7 @@ public class Boss5:EnemyBase {
         if(armChild.GetComponent<ArmChildBase>().Config.ComponentStrs.Contains("穿透")) {
             float rand = Random.Range(0,1);
             if(rand < 0.2f) {
-                FighteManager.Instance.CreateTextUI(gameObject, -1, "闪避", false);
+                FighteManager.Instance.ShowText(gameObject, "闪避");
                 return false;
             }
         }

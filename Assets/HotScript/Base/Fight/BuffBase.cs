@@ -7,7 +7,20 @@ using UnityEngine;
 public abstract class BuffBase : IBuff
 {
     public EnemyBase EnemyBase => EnemyObj.GetComponent<EnemyBase>();
-    public ArmChildBase ArmChildBase => SelfObj.GetComponent<ArmChildBase>();
+    private ArmChildBase _armChildBase;
+    public ArmChildBase ArmChildBase
+    {
+        get
+        {
+            if (SelfObj == null) {
+                return null;
+            }
+            if(_armChildBase == null) {
+                _armChildBase = SelfObj.GetComponent<ArmChildBase>();
+            }
+            return _armChildBase;
+        }
+    }
 
     public GameObject EnemyObj { get; set; }
 
@@ -67,7 +80,7 @@ public abstract class BuffBase : IBuff
     }
     public virtual void RemoveControl()
     {
-    
+
         float now = Time.time;
         if (now >= EnemyBase.HardControlEndTime)
         {
