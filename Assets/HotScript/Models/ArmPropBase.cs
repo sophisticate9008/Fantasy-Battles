@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class ArmPropBase : ReflectiveBase
 {
     public int level;
@@ -21,6 +23,8 @@ public class ArmPropBase : ReflectiveBase
     public string des => ArmUtil.ArmTypeToDes(armtype);
     public string chipFieldName => "armChip" + ArmUtil.ArmTypeToId(armtype);
     public string levelFieldName => "levelArm" + ArmUtil.ArmTypeToId(armtype);
+    public List<string> skillsDes => ArmUtil.ArmTypeToSkills(armtype);
+    public List<int> armLevelPos => ArmUtil.armLevelPos;
     public ArmPropBase(int level, string armtype)
     {
         this.level = level;

@@ -42,6 +42,7 @@ public class SkillInfoPanel : ConsumeBase
     public Button confirmBtn;
     public Button closeBtn;
     public Image chipImg;
+    public Transform skillsDes;
     void FindNecessary()
     {
         foreach (var prop in propsFieldName)
@@ -75,6 +76,7 @@ public class SkillInfoPanel : ConsumeBase
         ConsumeItemsData.Add(("money", currentArmProp.moneyNeed));
         ConsumeItemsData.Add((currentArmProp.chipFieldName, currentArmProp.chipNeed));
         InitProps();
+        InitSkillDes();
         InitOther();
     }
     void InitOther()
@@ -87,6 +89,20 @@ public class SkillInfoPanel : ConsumeBase
         levelText.text = currentArmProp.level.ToString();
         desText.text = currentArmProp.des;
         nameText.text = currentArmProp.armName;
+    }
+
+    void InitSkillDes()
+    {
+        skillsDes.ClearChildren();
+        GameObject theDes = CommonUtil.GetAssetByName<GameObject>("SkillDes");
+        for (int i = 0; i < currentArmProp.skillsDes.Count; i++)
+        {
+            GameObject clone = Instantiate(theDes, skillsDes);
+            SkillDes skillDes = clone.AddComponent<SkillDes>();
+            skillDes.InjectData(currentArmProp.armLevelPos[i], currentArmProp, currentArmProp.skillsDes[i]);
+            skillDes.gameObject.SetActive(true);
+        }
+
     }
     void InitProps()
     {
@@ -103,6 +119,8 @@ public class SkillInfoPanel : ConsumeBase
     void Close()
     {
         CloseToDirection("down", 0.3f);
+
+
     }
     public void AwakePanel()
     {
