@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class Equipments : TheUIBase
@@ -25,11 +26,21 @@ public class Equipments : TheUIBase
         {
             ChangeEmbedUIColor();
         }
+        if(fieldName.Contains("levelPlace")) {
+            int placeId = int.Parse(fieldName.Replace("levelPlace", ""));
+        }
+    }
+    void ChangeLevel(int placeId) {
+        EquipmentButtons[placeId - 1].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = 
+            PlayerDataConfig.GetValue("levelPlace" + placeId).ToString();
     }
     void ChangeEmbedUIColor()
     {
+        int idx = 1;
         foreach (var item in EquipmentButtons)
         {
+            ChangeLevel(idx);
+            idx++;
             List<Image> childImages = item.transform.RecursiveFind("JewelPreview").GetComponentsInDirectChildren<Image>();
             List<JewelBase> jewels = (List<JewelBase>)PlayerDataConfig.GetValue(item.gameObject.name);
             for (int i = 0; i < 5; i++)

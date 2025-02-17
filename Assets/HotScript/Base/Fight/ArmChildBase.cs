@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class ArmChildBase : MonoBehaviour, IArmChild
 {
+    public bool isUseComponent = true;
     private float alreadyStayTime;
     public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as ArmConfigBase;
     public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
@@ -33,7 +34,7 @@ public class ArmChildBase : MonoBehaviour, IArmChild
         set => targetEnemy = value;
     }
     public bool IsInit { get; set; }
-    public Dictionary<string, IComponent> InstalledComponents { get; set; } = new();
+    public Dictionary<string, ComponentBase> InstalledComponents { get; set; } = new();
     private Vector3 direction;
     public virtual Vector3 Direction
     {
@@ -160,7 +161,7 @@ public class ArmChildBase : MonoBehaviour, IArmChild
             foreach (var _ in component.Value.Types)
             {
 
-                if (_ == type)
+                if (_ == type && isUseComponent)
                 {
                     component.Value.Exec(obj);
                 }
