@@ -27,7 +27,7 @@ public static class SkillUtil
     public static readonly Dictionary<string, List<int>> iconList = new()
     {
         {"icon_BoomFireBall", CommonUtil.AsList(0, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37)},
-        {"icon_IceBall", CommonUtil.AsList(1, 48, 49, 50, 51, 52, 53, 54, 55, 56)},
+        {"icon_IceBall", CommonUtil.AsList(1, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58)},
         {"icon_ElectroHit", CommonUtil.AsList(2, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76)},
         {"icon_GroundStab", CommonUtil.AsList(3, 85, 86, 87, 88, 89, 90, 91)},
         {"icon_EnergyRay", CommonUtil.AsList(4, 95, 96, 97, 98, 99, 100, 101)},
@@ -91,7 +91,7 @@ public static class SkillUtil
         }
         else
         {
-            return "MagicMagicBullet";
+            return "MagicBullet";
         }
     }
     #endregion
@@ -103,7 +103,7 @@ public static class SkillUtil
         return id switch
         {
             0 => "学习高爆火球",
-            1 => "学习寒冷弹",
+            1 => "学习寒冰弹",
             2 => "学习电流直击",
             3 => "学习地刺",
             4 => "学习能量射线",
@@ -143,15 +143,17 @@ public static class SkillUtil
             36 => "高爆火球点燃的怪物死亡后爆炸",
             37 => "高爆火球进化,穿透+2, 爆炸范围+80%, 爆炸击退+60%",
             //预留10个
-            48 => "寒冷弹齐射+1",
-            49 => "寒冷弹发射次数+1",
-            50 => "寒冷弹伤害-20%, 穿透+2",
-            51 => "寒冷弹伤害+60%,穿透+1",
-            52 => "寒冷弹伤害+100%,击退+30%",
-            53 => "寒冷弹无限叠加冻伤",
-            54 => "寒冷弹穿透+1,击退+60%",
-            55 => "寒冷弹命中冻结敌人2s",
-            56 => "寒冷弹进化,每次命中分裂1个次级冰弹,继承加成",
+            48 => "寒冰弹齐射+1",
+            49 => "寒冰弹连发次数+1",
+            50 => "寒冰弹伤害-20%, 穿透+2",
+            51 => "寒冰弹伤害+60%,穿透+1",
+            52 => "寒冰弹伤害+100%,击退+30%",
+            53 => "寒冰弹叠加冻伤,上限加5层，持续5s",
+            54 => "寒冰弹穿透+1,击退+60%",
+            55 => "寒冰弹命中冻结敌人2s",
+            56 => "寒冰弹进化,每次命中分裂1个原始冰弹,继承加成",
+            57 => "数量+1",
+            58 => "数量+2",
             //预留十个
             66 => "电磁穿刺次数+1",
             67 => "伤害-20%.次数+2",
@@ -197,8 +199,7 @@ public static class SkillUtil
             128 => "范围+100%",
             129 => "持续时间+2s",
             130 => "次数+1",
-            131 => "伤害-20%, 次数+2",
-            132 => "首次命中仅一个敌人时,cd减少80%",
+            132 => "中心伤害翻倍",
 
 
             //跳跃电子
@@ -271,7 +272,7 @@ public static class SkillUtil
         return id switch
         {
             0 => "高爆火球",
-            1 => "寒冷弹",
+            1 => "寒冰弹",
             2 => "电流直击",
             3 => "地刺",
             4 => "能量射线",
@@ -309,7 +310,7 @@ public static class SkillUtil
             36 => "爆炸传染",
             37 => "温压进化",
             48 => "齐射强化",
-            49 => "发射强化",
+            49 => "连发强化",
             50 => "穿透提升I",
             51 => "穿透提升II",
             52 => "击退强化",
@@ -317,6 +318,8 @@ public static class SkillUtil
             54 => "击退扩展",
             55 => "冻结效果",
             56 => "干冰进化",
+            57 => "数量提升I",
+            58 => "数量提升II",
             66 => "穿刺增幅",
             67 => "穿刺数量增幅",
             68 => "伤害提升",
@@ -353,7 +356,6 @@ public static class SkillUtil
             128 => "范围扩展",
             129 => "持续延长",
             130 => "次数增幅I",
-            131 => "次数增幅II",
             132 => "冷却大幅缩减",
             142 => "跃迁增伤",
             143 => "次数增幅I",
@@ -400,7 +402,7 @@ public static class SkillUtil
             229 => "旋转利刃增伤",
             230 => "持续时间延长",
             231 => "体积扩展",
-            _ => throw new NotImplementedException(),
+            _ => "",
         };
     }
 
@@ -422,6 +424,7 @@ public static class SkillUtil
             31 => 2,
             47 => 2,
             48 => 2,
+            57 => 2,
             66 => 2,
             68 => 2,
             85 => 2,
@@ -429,7 +432,6 @@ public static class SkillUtil
             99 => 2,
             111 => 3,
             115 => 2,
-            130 => 2,
             143 => 2,
             146 => 3,
             177 => 2,
@@ -453,6 +455,16 @@ public static class SkillUtil
     //技能前置列表
 
     #region 技能前置
+
+    public static Dictionary<int, List<int>> GetPreListDict()
+    {
+        Dictionary<int, List<int>> dict = new();
+        for (int i = 0; i <= Constant.maxSkillId; i++)
+        {
+            dict.Add(i, IdToPreList(i));
+        }
+        return dict;
+    }
     public static List<int> IdToPreList(int id)
     {
         if (CommonUtil.AsList(28, 29, 30, 31, 32, 33, 35, 36).Contains(id))
@@ -541,15 +553,19 @@ public static class SkillUtil
     public static List<SkillNode> AllSkill()
     {
         List<SkillNode> all = new();
-        for (int i = 0; i <= 27; i++)
+        for (int i = 0; i <= Constant.maxSkillId; i++)
         {
-            all.Add(CreateSkillNode(i));
+            if (IdToName(i) != "")
+            {
+                all.Add(CreateSkillNode(i));
+            }
+
         }
         return all;
     }
     public static SkillNode CreateSkillNode(int id)
     {
-        return new SkillNode(id, IdToPreList(id), IdToConflictIds(id), IdToName(id), IdToDesc(id),
+        return new SkillNode(id, null, IdToConflictIds(id), IdToName(id), IdToDesc(id),
                     IdToMaxSelCount(id), IdToResName(id), IdToIsUnlocked(id), IdToIsSatisfied(id), IdToArmType(id));
     }
     #endregion
@@ -563,8 +579,8 @@ public static class SkillUtil
         }
         return id switch
         {
-            17 => true,
-            22 => true,
+            17 => false,
+            22 => false,
             26 => false,
             27 => false,
             48 => false,

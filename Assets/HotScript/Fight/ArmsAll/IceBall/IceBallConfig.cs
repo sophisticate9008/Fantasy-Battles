@@ -1,9 +1,11 @@
 
-public class IceBallConfig : ArmConfigBase, IPenetrable, IMultipleable
+public class IceBallConfig : ArmConfigBase, IPenetrable, IMultipleable,IReboundable
 {
     public int PenetrationLevel { get; set; } = 1;
     public int MultipleLevel { get; set; } = 1;
     public float AngleDifference { get; set; } = 5;
+    public float FreezenProb { get; set; } = 0f;
+    public int ReboundCount { get; set; } = 0;
 
     public override void Init()
     {
