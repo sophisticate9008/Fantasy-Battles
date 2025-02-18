@@ -18,7 +18,6 @@ public class DamageAppend : DamageNodeBase
             context.DefenderComponent.MaxLife * damageArgs[0] / context.DefenderConfig.BloodBarCount,
             GlobalConfig.AttackValue * damageArgs[1]
         );
-
         context.FinalDamage += context.Percentage * context.DefenderComponent.MaxLife;
         return true;
     }

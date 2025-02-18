@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 
 public static class ArmUtil
@@ -265,8 +266,8 @@ public static class ArmUtil
             "击杀怪物后减少0.2sCd",
             "解锁技能，效果：[伤害变为200%]",
             "每次释放造成两次伤害",
-            "解锁技能，效果：局内cd降低20%",
-            "命中后，10s内受到的电系伤害增加50%",
+            "解锁技能，效果：[击杀后范围内触发一次追击,不触发附加效果]",
+            "命中后，触发一次弹射三次的跳跃电子，不继承强化和效果",
             "命中后，10s内受到的所有伤害提高10%",
         }},
         {"GroundStab", new() {
@@ -291,9 +292,9 @@ public static class ArmUtil
         }},
         {"Laser", new() {
             "伤害倍率增加0.5",
-            "解锁技能: 效果：[主目标造成200%伤害]",
+            "cd - 2",
             "提高2射程",
-            "解锁技能:效果:[持续时间增加2.5s]",
+            "解锁技能:效果:[持续降下无强化的电流直击]",
             "点燃敌人2s",
             "增加击退效果",
             "使敌人受到伤害提高10%",
@@ -305,15 +306,15 @@ public static class ArmUtil
             "持续时间+1s",
             "解锁技能：效果：[5%概率触发深度冻结,无视冰冻抗性]",
             "减速效果翻倍",
-            "结束时释放12个冰片,享受魔法弹的穿透加成",
-            "结束时释放冰片翻倍",
-            "释放时命中一个怪物时减少2scd"
+            "结束时释放冰片+6",
+            "结束时释放冰片+6",
+            "结束时释放冰片+6"
         }},
         {"JumpElectro", new() {
             "弹射次数+1",
             "麻痹时间+0.5s",
             "cd - 1s",
-            "解锁技能：效果：[命中敌人5%概率再次释放一次]",
+            "命中敌人5%概率再次释放一次",
             "伤害倍率增加0.5",
             "点燃敌人3s",
             "每次命中5%减少0.5sCd",
@@ -328,7 +329,7 @@ public static class ArmUtil
             "解锁技能：效果：[变为雷龙卷]",
             "牵引力增加",
             "cd - 3",
-            "每牵引到一个敌人，伤害提高2%"
+            "每牵引30个敌人，释放一次无强化压缩气刃"
         }},
         {"DragonLaunch", new() {
             "cd - 1s",
@@ -344,11 +345,11 @@ public static class ArmUtil
             "cd - 1",
             "击退力度增加",
             "射程增大2",
-            "解锁技能：效果：[穿透+4]",
+            "击退力度增大",
             "穿透+2",
-            "初始2多发",
+            "初始多发+1",
             "cd - 2",
-            "穿透 + 6"
+            "穿透 + 3"
         }},
         {"FlameOrb", new() {
             "cd - 0.5s",
@@ -361,7 +362,7 @@ public static class ArmUtil
             "点燃时造成最大生命值1%的伤害"
         }},
         {"WhirlingBlade", new() {
-            "持续时间+1s",
+            "持续时间+2s",
             "初始体积增大20%",
             "cd - 2s",
             "解锁技能:效果：[每命中30次敌人，释放一个无强化的小利刃]",
@@ -371,14 +372,14 @@ public static class ArmUtil
             "初始变为两个利刃运行"
         }},
         {"MagicBullet", new() {
-            "初始暴击率 + 5%",
+            "初始暴击率 + 3%",
+            "穿透+1",
             "火系,电系魔法弹取消前置",
-            "魔法弹爆炸取消前置",
-            "解锁技能:效果[碰到墙壁反弹]，效果[攻速增加10%]",
+            "解锁两个技能:效果[碰到墙壁反弹]，效果[攻速增加10%]",
+            "初始暴击率 + 5%",
             "冰系魔法弹取消前置",
-            "初始暴击率 + 8%",
-            "穿透+2",
-            "魔法弹有30%的概率造成30%的重伤效果"
+            "魔法弹爆炸取消前置",
+            "魔法弹有5%的概率造成30%的重伤效果3s"
         }}
     };
     public static List<int> armLevelPos = new() {
@@ -433,7 +434,7 @@ public static class ArmUtil
     public static MagicBulletConfig magicBulletConfig =>
         ConfigManager.Instance.GetConfigByClassName("MagicBullet") as MagicBulletConfig;
 
-    public static GlobalConfig globalConfig => 
+    public static GlobalConfig globalConfig =>
         ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
     #endregion
     #region 技能养成的执行函数
@@ -443,10 +444,15 @@ public static class ArmUtil
             () => {boomFireBallConfig.ReboundCount += 1;},
             () => {boomFireBallConfig.PenetrationLevel += 1;},
             () => {SkillManager.Instance.UnlockSkill(37);},
-            () => {boomFireBallConfig.BoomChildConfig.ComponentStrs.Add("点燃"); boomFireBallConfig.BoomChildConfig.FireTime += 2},
+            () => {boomFireBallConfig.BoomChildConfig.ComponentStrs.Add("点燃"); boomFireBallConfig.BoomChildConfig.FireTime += 2;},
             () => {boomFireBallConfig.PenetrationLevel += 1;},
             () => {boomFireBallConfig.CritRate = 1; boomFireBallConfig.BoomChildConfig.CritRate = 1;},
-            () => {boomFireBallConfig.ComponentStrs.Add("再放"); ((BoomFireBallBoomConfig)boomFireBallConfig.BoomChildConfig).PerNum = 30; },
+            () => {
+                FighteManager.Instance.AddAccumulateListener(nameof(BoomFireBallBoom), 30, (selfObj) => {
+                    boomFireBallConfig.TheArm.FindRandomTarget();
+                    boomFireBallConfig.TheArm.Attack();
+                });
+            },
 
         }},
         {"IceBall", new() {
@@ -460,125 +466,172 @@ public static class ArmUtil
             () => {globalConfig.freezenHurtMaxLevel += 5;},
         }},
         {"ElectroHit", new () {
-            "伤害倍率增加0.5",
-            "麻痹时间增加1s",
-            "击杀怪物后减少0.2sCd",
-            "解锁技能，效果：[伤害变为200%]",
-            "每次释放造成两次伤害",
-            "解锁技能，效果：局内cd降低20%",
-            "命中后，10s内受到的电系伤害增加50%",
-            "命中后，10s内受到的所有伤害提高10%",
+            () => {electroHitConfig.Tlc += 0.5f;},
+            () => {electroHitConfig.PalsyTime += 1;},
+            () => {electroHitConfig.TheArm.killActions.Add(() => {electroHitConfig.TheArm.SubtractCd(0.2f);} );},
+            () => {SkillManager.Instance.UnlockSkill(75);},
+            () => {electroHitConfig.harmCount += 1;},
+            () => {SkillManager.Instance.UnlockSkill(69);},
+            () => {
+                electroHitConfig.TheArm.Config.typeActions["enter"].Add((selfObj, enemyObj) => {
+                    JumpElectroConfig initConfig = ArmConfigBase.CreateInitConfig<JumpElectroConfig>();
+                    initConfig.JumpCount = 3;
+                    initConfig.Owner = electroHitConfig.Owner;
+                    List<GameObject> objs = electroHitConfig.TheArm.FindRandomTarget();
+                    GameObject targetEnemy;
+                    if(objs.Count > 0) {
+                        targetEnemy = objs[0];
+                    }else {
+                        targetEnemy = null;
+                    }
+                    FighteManager.Instance.AttackWithCustomConfig(targetEnemy, initConfig,selfObj);
+                });
+                // jumpElectroConfig.TheArm.AttackWithCustomConfig(jumpElectroConfig.TheArm.TargetEnemy);
+            },
+            () => {electroHitConfig.ComponentStrs.Add("易伤");},
         }},
         {"GroundStab", new() {
-            "减速效果提高10%",
-            "减速效果提高10%",
-            "解锁技能：效果:[附加火焰]",
-            "附加的火焰造成最大生命值2%的伤害",
-            "使敌人受到的伤害提高10%",
-            "有1%概率秒杀普通敌人",
-            "减速效果持续时间增加2s",
-            "击退力度增加100%"
+            () => {groundStabConfig.SlowDegree += 0.1f;},
+            () => {SkillManager.Instance.UnlockSkill(89);},
+            () => {groundStabConfig.FirePercentage += 0.02f;},
+            () => {groundStabConfig.EasyHurtDegree += 0.1f;},
+            () => {groundStabConfig.CrushProb += 0.01f;},
+            () => {groundStabConfig.SlowTime += 2;},
+            () => {groundStabConfig.MaxForce *= 2;},
         }},
         {"EnergyRay", new() {
-            "增加1s持续时间",
-            "增加30%的减速效果",
-            "减少1s cd",
-            "解锁技能：效果：[重伤50% 持续1s]",
-            "增加1s持续时间",
-            "有10%概率眩晕敌人1s",
-            "使敌人受到伤害提高10%",
-            "重伤效果变为100%"
+            () => {energyRayConfig.Duration += 1;},
+            () => {energyRayConfig.ComponentStrs.Add("减速"); energyRayConfig.SlowDegree += 0.3f;},
+            () => {energyRayConfig.Cd -= 1;},
+            () => {energyRayConfig.ComponentStrs.Add("重伤"); energyRayConfig.GBHRate += 0.5f;},
+            () => {energyRayConfig.Duration += 2;},
+            () => {energyRayConfig.DizzyProb = 0.1f;  energyRayConfig.ComponentStrs.Add("眩晕");},
+            () => {energyRayConfig.ComponentStrs.Add("易伤");},
+            () => {energyRayConfig.GBHRate += 0.5f;},
         }},
         {"Laser", new() {
-            "伤害倍率增加0.5",
-            "解锁技能: 效果：[主目标造成200%伤害]",
-            "提高2射程",
-            "解锁技能:效果:[持续时间增加2.5s]",
-            "点燃敌人2s",
-            "增加击退效果",
-            "使敌人受到伤害提高10%",
-            "击杀敌人后增加0.2s持续时间"
+            () => {laserConfig.Tlc += 0.5f;},
+            () => {laserConfig.Cd -= 2;},
+            () => {laserConfig.RangeFire += 2;},
+            () => {SkillManager.Instance.UnlockSkill(117);},
+            () => {laserConfig.FireTime = 2f; laserConfig.IsFlame = true;},
+            () => {laserConfig.MaxForce = 10;},
+            () => {laserConfig.EasyHurtDegree = 0.1f; laserConfig.ComponentStrs.Add("易伤");},
+            () => {
+                laserConfig.TheArm.killActions.Add(() => {
+                    laserConfig.TheArm.AddDuration(0.2f);
+                });
+            },
         }},
         {"IceBloom", new() {
-            "增加30%的减速效果",
-            "cd - 2s",
-            "持续时间+1s",
-            "解锁技能：效果：[5%概率触发深度冻结,无视冰冻抗性]",
-            "减速效果翻倍",
-            "结束时释放12个冰片,享受魔法弹的穿透加成",
-            "结束时释放冰片翻倍",
-            "释放时命中一个怪物时减少2scd"
+            () => {iceBloomConfig.ComponentStrs.Add("减速"); iceBallConfig.SlowDegree = 0.3f;},
+            () => {iceBloomConfig.Cd -= 2;},
+            () => {iceBloomConfig.Duration += 1;},
+            () => {iceBloomConfig.SlowDegree = 0.6f;},
+            () => {SkillManager.Instance.UnlockSkill(131);},
+            () => {iceBloomConfig.IceChipNum += 6;},
+            () => {iceBloomConfig.IceChipNum += 6;},
+            () => {iceBloomConfig.IceChipNum += 6;},
         }},
         {"JumpElectro", new() {
-            "弹射次数+1",
-            "麻痹时间+0.5s",
-            "cd - 1s",
-            "解锁技能：效果：[命中敌人5%概率再次释放一次]",
-            "伤害倍率增加0.5",
-            "点燃敌人3s",
-            "每次命中5%减少0.5sCd",
-            "cd - 2s"
-
+            () => {jumpElectroConfig.JumpCount += 1;},
+            () => {jumpElectroConfig.PalsyTime += 0.5f;},
+            () => {jumpElectroConfig.Cd -= 1;},
+            () => {jumpElectroConfig.typeActions["enter"].Add ((selfObj, enemyObj) => {
+                if(UnityEngine.Random.value <= 0.05f) {
+                    if(jumpElectroConfig.TheArm.TargetEnemy.activeSelf) {
+                        jumpElectroConfig.TheArm.Attack();
+                    }
+                }
+            });},
+            () => {jumpElectroConfig.Tlc = 0.5f;},
+            () => {jumpElectroConfig.FireTime = 3f; jumpElectroConfig.ComponentStrs.Add("点燃");},
+            () => {jumpElectroConfig.typeActions["enter"].Add ((selfObj, enemyObj) => {
+                if(UnityEngine.Random.value <= 0.05f) {
+                    electroHitConfig.TheArm.SubtractCd(0.5f);
+                }
+            });},
+            () => {jumpElectroConfig.Cd -= 2;}
         }},
         {"Tornado", new() {
-            "伤害倍率增加0.2",
-            "持续时间+2s",
-            "范围增加0.2",
-            "解锁技能：效果：[变为冰龙卷]",
-            "解锁技能：效果：[变为雷龙卷]",
-            "牵引力增加",
-            "cd - 3",
-            "每牵引到一个敌人，伤害提高2%"
+            () => {tornadoConfig.Tlc += 0.2f;},
+            () => {tornadoConfig.Duration += 2f;},
+            () => {tornadoConfig.SelfScale += 0.2f;},
+            () => {SkillManager.Instance.UnlockSkill(166);},
+            () => {SkillManager.Instance.UnlockSkill(167);},
+            () => {tornadoConfig.MaxForce -= 5;},
+            () => {tornadoConfig.Cd -= 3;},
+            () => {
+                FighteManager.Instance.AddAccumulateListener(nameof(Tornado), 30, (selfObj) => {
+                    PressureCutterConfig initConfig = ArmConfigBase.CreateInitConfig<PressureCutterConfig>();
+                    initConfig.Owner = nameof(Tornado);
+                    List<GameObject> objs = tornadoConfig.TheArm.FindRandomTarget();
+                    GameObject targetEnemy;
+                    if(objs.Count > 0) {
+                        targetEnemy = objs[0];
+                    }else {
+                        targetEnemy = null;
+                    }
+                    FighteManager.Instance.AttackWithCustomConfig(targetEnemy,initConfig, selfObj );
+
+                });
+            }
+
         }},
         {"DragonLaunch", new() {
-            "cd - 1s",
-            "下落速度加快",
-            "必定眩晕敌人2秒",
-            "范围加大",
-            "击退力度增加",
-            "使敌人受到的伤害增加10%",
-            "cd - 2",
-            "伤害增加100%"
+            () => {dragonLaunchConfig.Cd -= 1;},
+            () => {((DragonLaunchArm)dragonLaunchConfig.TheArm).bombSpeed -= 2;},
+            () => {dragonLaunchConfig.ComponentStrs.Add("眩晕"); dragonLaunchConfig.DizzyTime = 2;},
+            () => {dragonLaunchConfig.SelfScale += 0.2f;},
+            () => {dragonLaunchConfig.MaxForce += 20;},
+            () => {dragonLaunchConfig.ComponentStrs.Add("易伤"); dragonLaunchConfig.EasyHurtDegree = 0.1f;},
+            () => {dragonLaunchConfig.Cd -= 2;},
+            () => {dragonLaunchConfig.Tlc *= 2;},
         }},
         {"PressureCutter", new() {
-            "cd - 1",
-            "击退力度增加",
-            "射程增大2",
-            "解锁技能：效果：[穿透+4]",
-            "穿透+2",
-            "初始2多发",
-            "cd - 2",
-            "穿透 + 6"
+            () => {pressureCutterConfig.Cd -= 1;},
+            () => {pressureCutterConfig.MaxForce += 20;},
+            () => {pressureCutterConfig.RangeFire += 2;},
+            () => {pressureCutterConfig.MaxForce += 30;},
+            () => {pressureCutterConfig.PenetrationLevel += 2;},
+            () => {pressureCutterConfig.MultipleLevel += 1;},
+            () => {pressureCutterConfig.Cd -= 2;},
+            () => {pressureCutterConfig.PenetrationLevel += 3;}
         }},
         {"FlameOrb", new() {
-            "cd - 0.5s",
-            "射程增加1",
-            "持续时间+1s",
-            "解锁技能：效果：[伤害翻倍]",
-            "cd - 0.6s",
-            "增加50%的减速效果",
-            "灼烧时造成最大生命值1%的伤害",
-            "点燃时造成最大生命值1%的伤害"
+            () => {flameOrbConfig.Cd -= 0.5f;},
+            () => {flameOrbConfig.RangeFire += 1;},
+            () => {flameOrbConfig.Duration += 1;},
+            () => {SkillManager.Instance.UnlockSkill(216);},
+            () => {flameOrbConfig.Cd -= 0.6f;},
+            () => {flameOrbConfig.ComponentStrs.Add("减速"); flameOrbConfig.SlowDegree = 0.5f; flameOrbConfig.SlowTime = 0.2f;},
+            () => {flameOrbConfig.percentage += 0.01f;},
+            () => {flameOrbConfig.FirePercentage += 0.01f;},
         }},
         {"WhirlingBlade", new() {
-            "持续时间+1s",
-            "初始体积增大20%",
-            "cd - 2s",
-            "解锁技能:效果：[每命中30次敌人，释放一个无强化的小利刃]",
-            "运行速度加快",
-            "1%概率秒杀敌人",
-            "火焰点燃附加1%最大生命值1%",
-            "初始变为两个利刃运行"
+            () => {whirlingBladeConfig.Duration += 2;},
+            () => {whirlingBladeConfig.SelfScale += 0.2f;},
+            () => {whirlingBladeConfig.Cd -= 2;},
+            () => {SkillManager.Instance.UnlockSkill(232);},
+            () => {whirlingBladeConfig.Speed += 0.2f;},
+            () => {whirlingBladeConfig.CrushProb += 0.01f;},
+            () => {whirlingBladeConfig.FirePercentage += 0.01f;},
+            () => {whirlingBladeConfig.AttackCount = 2; whirlingBladeConfig.SelfScale -= 0.3f;},
         }},
         {"MagicBullet", new() {
-            "初始暴击率 + 5%",
-            "火系,电系魔法弹取消前置",
-            "魔法弹爆炸取消前置",
-            "解锁技能:效果[碰到墙壁反弹]，效果[攻速增加10%]",
-            "冰系魔法弹取消前置",
-            "初始暴击率 + 8%",
-            "穿透+2",
-            "魔法弹有30%的概率造成30%的重伤效果"
+            () => {magicBulletConfig.CritRate += 0.03f;},
+            () => {magicBulletConfig.PenetrationLevel += 1;},
+            () => {SkillManager.Instance.CancelPreList(17); SkillManager.Instance.CancelPreList(18);},
+            () => {SkillManager.Instance.UnlockSkill(26); SkillManager.Instance.UnlockSkill(27);},
+            () => {magicBulletConfig.CritRate += 0.05f;},
+            () => {SkillManager.Instance.CancelPreList(19);},
+            () => {SkillManager.Instance.CancelPreList(20);},
+            () => {magicBulletConfig.typeActions["enter"].Add((selfObj, enemyObj) => {
+                if(UnityEngine.Random.value < 0.05) {
+                    enemyObj.GetComponent<EnemyBase>().AddBuff("枪重伤",selfObj, 3, 0.3f);
+                }
+            });}
+
         }}
     };
     public static List<Action> GetArmSkillAction(string armType, int level)

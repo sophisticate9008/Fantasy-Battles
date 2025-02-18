@@ -1,10 +1,9 @@
 
-public class BoomFireBallBoomConfig : ArmConfigBase,IReRelease
-{
-    public int PerNum { get; set ; } = 1;
-    public float ReleaseProb { get ; set; } = 0;
+using System;
+using System.Collections.Generic;
 
-    public ArmConfigBase ReleaseObjConfig => ArmUtil.boomFireBallConfig;
+public class BoomFireBallBoomConfig : ArmConfigBase
+{
 
     public override void Init()
     {

@@ -12,11 +12,21 @@ public class ArmChildBase : MonoBehaviour, IArmChild
 {
     public bool isUseComponent = true;
     private float alreadyStayTime;
-    public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name) as ArmConfigBase;
+    ArmConfigBase config;
+    public ArmConfigBase Config {
+        get{
+            config ??= ConfigManager.Instance.GetConfigByClassName(GetType().Name) as ArmConfigBase;
+            return config;
+        }
+        set {
+            config = value;
+        }
+    }
     public GlobalConfig GlobalConfig => ConfigManager.Instance.GetConfigByClassName("Global") as GlobalConfig;
     // public Dictionary<string, float> DamageAddition => GlobalConfig.GetDamageAddition();
     public virtual GameObject TargetEnemyByArm { get; set; }
     private GameObject targetEnemy;
+
     public virtual GameObject TargetEnemy
     {
         get
@@ -198,7 +208,15 @@ public class ArmChildBase : MonoBehaviour, IArmChild
             // 如果当前 key 匹配触发类型，则创建伤害
             if (onType == key)
             {
+                FighteManager.Instance.AddTriggerCount(GetType().Name, gameObject);
                 CreateDamage(obj);
+            }
+            foreach(var item in Config.typeActions) {
+                if (item.Key == key) {
+                    foreach(var action in item.Value) {
+                        action.Invoke(gameObject, obj);
+                    }
+                }
             }
 
             // 调用触发处理
@@ -219,17 +237,23 @@ public class ArmChildBase : MonoBehaviour, IArmChild
     //重写自定义传入tlc，比如说区域中心伤害翻倍之类的
     public virtual void CreateDamage(GameObject enemyObj)
     {
-        if(enemyObj.GetComponent<EnemyBase>().AcceptHarm(enemyObj, gameObject)) {
-            FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject);
-
+        if (enemyObj.GetComponent<EnemyBase>().AcceptHarm(enemyObj, gameObject))
+        {
+            for (int i = 0; i < Config.harmCount; i++)
+            {
+                FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, percentage:Config.percentage);
+            }
         }
-        
+
     }
     public virtual void CreateDamage(GameObject enemyObj, float tlc)
     {
-        if(enemyObj.GetComponent<EnemyBase>().AcceptHarm(enemyObj, gameObject)) {
-            FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject);
-
+        if (enemyObj.GetComponent<EnemyBase>().AcceptHarm(enemyObj, gameObject))
+        {
+            for (int i = 0; i < Config.harmCount; i++)
+            {
+                FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, tlc:tlc,percentage:Config.percentage);
+            }
         }
     }
     public virtual void Move()
@@ -366,6 +390,7 @@ public class ArmChildBase : MonoBehaviour, IArmChild
         if (Config != null)
         {
             ChangeScale(1 / Config.SelfScale);
+            Config = null;
             ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);
         }
 

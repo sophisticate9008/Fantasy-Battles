@@ -10,6 +10,9 @@ public class DizzyComponent : ComponentBase
     public override void Exec(GameObject enemyObj)
     {
         EnemyBase enemyBase = enemyObj.GetComponent<EnemyBase>();
-        enemyBase.AddBuff("眩晕", SelfObj, Config.PalsyTime);
+        if(Random.value <= Config.DizzyProb) {
+            enemyBase.AddBuff("眩晕", SelfObj, Config.PalsyTime);
+        }
+            
     }
 }

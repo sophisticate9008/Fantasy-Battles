@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
 using MyEnums;
 using TMPro;
 using UnityEngine;
@@ -10,6 +12,7 @@ using YooAsset;
 //管理战斗逻辑，伤害等
 public class FighteManager : ManagerBase<FighteManager>
 {
+ 
     private bool isEnd = false;
     public Vector2 leftBottomBoundary;
     public Vector2 rightTopBoundary;
@@ -50,6 +53,8 @@ public class FighteManager : ManagerBase<FighteManager>
         {"addBlood", "#4ec9a2"},
         {"爆燃", "red"}
     };
+
+
     public SortedDictionary<string, float> harmStatistics = new();
     public SortedDictionary<string, int> killStatistics = new();
     #region  关卡初始化
@@ -190,10 +195,15 @@ public class FighteManager : ManagerBase<FighteManager>
         calculator.Calculate(context);
         //易伤
         CreateDamageTextUI(enemyObj, (int)context.FinalDamage, context.DamageType, context.IsCritical);
-        RecordDamage((int)context.FinalDamage, context.AttackerConfig.Owner);
+        RecordDamage((int)context.FinalDamage, context.Owner);
         //上海结算并判断谁杀死的
-        context.DefenderComponent.CalLife((int)context.FinalDamage, context.AttackerConfig.Owner);
+        bool isKill = context.DefenderComponent.CalLifeAndIsKill((int)context.FinalDamage, context.Owner);
+        if (isKill)
+        {
+            OnKill?.Invoke(context.Owner);
+        }
     }
+    public event Action<string> OnKill;
 
     public void EnemyDamegeFilter(int harm, int count = 1)
     {
@@ -395,4 +405,82 @@ public class FighteManager : ManagerBase<FighteManager>
             PauseGame();
         }
     }
+
+    #region 武器的触发次数以及函数
+    public Dictionary<string, int> AccumulateDict = new();
+    public Dictionary<(string armChildType, int perNum), List<Action<GameObject>>> AccumulateActions;
+    
+    public void AddTriggerCount(string armChildType, GameObject selfObj)
+    {
+
+        if (AccumulateDict.ContainsKey(armChildType))
+        {
+            AccumulateDict[armChildType]++;
+        }
+        else
+        {
+            AccumulateDict.Add(armChildType, 1);
+        }
+        TriggerActions(armChildType, selfObj);
+    }
+    public void AddAccumulateListener(string armChildType, int perNum, Action<GameObject> action)
+    {
+        var key = (armChildType, perNum);
+
+        // 如果不存在对应的 (armChildType, perNum) 键，创建一个新的 List<Action> 来存储该 action
+        if (!AccumulateActions.ContainsKey(key))
+        {
+            AccumulateActions[key] = new() { action };
+        }
+        else
+        {
+            // 如果已经存在该键，直接将新的 action 添加到现有的 List<Action> 中
+            AccumulateActions[key].Add(action);
+        }
+    }
+    private void TriggerActions(string armChildType, GameObject selfObj)
+    {
+        // 遍历每个 key (armChildType, perNum)，并检查是否触发
+        foreach (var key in AccumulateActions.Keys.ToList())  // 用 ToList() 避免在遍历时修改字典
+        {
+            if (key.armChildType == armChildType && AccumulateDict.ContainsKey(armChildType))
+            {
+                int currentCount = AccumulateDict[armChildType];
+
+                if (currentCount >= key.perNum)
+                {
+                    // 执行对应的 actions
+                    var actionsToExecute = AccumulateActions[key];
+                    foreach (var action in actionsToExecute)
+                    {
+                        action.Invoke(selfObj);
+                    }
+
+                    // 重置触发计数
+                    AccumulateDict[armChildType] -= key.perNum;
+
+                    // 可选：如果希望仅触发一次，可以删除 actions
+                    // AccumulateActions.Remove(key); 
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region 自定义配置，目标敌人，配置的一次攻击
+    public void AttackWithCustomConfig( GameObject targetEnemy, ArmConfigBase armConfigBase, GameObject selfObj)
+    {
+        if(targetEnemy == null || !targetEnemy.activeSelf) {
+            return;
+        }
+        string theName = armConfigBase.GetType().Name;
+        GameObject prefab = armConfigBase.Prefab;
+        ObjectPoolManager.Instance.CreatePool(theName, prefab, 5, 20);
+        ArmChildBase obj = ObjectPoolManager.Instance.GetFromPool(theName, prefab).GetComponent<ArmChildBase>();
+        obj.transform.position = selfObj.transform.position;
+        obj.TargetEnemyByArm = targetEnemy;
+        obj.Config = armConfigBase;
+        obj.Init();
+    }
+    #endregion
 }

@@ -10,7 +10,7 @@ public class DragonLaunchArm : ArmBase
     public GameObject bomb;
     private float bombDropHeight = 10f; // 炸弹投放高度
     private float dragonSpeed = 15f; // 飞机移动速度
-    private float bombSpeed = 7f; // 炸弹下落速度
+    public float bombSpeed = 7f; // 炸弹下落速度
 
     public override void Attack()
     {

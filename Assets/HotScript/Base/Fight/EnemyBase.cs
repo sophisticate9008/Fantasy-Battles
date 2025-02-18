@@ -283,7 +283,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     }
 
     #endregion
-    public virtual void CalLife(int damage, string owner)
+    public virtual bool CalLifeAndIsKill(int damage, string owner)
     {
         sr.color = Color.red;
         ToolManager.Instance.SetTimeout(() =>
@@ -295,7 +295,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
         if (NowLife <= 0)
         {
             Die(owner);
+            return true;
         }
+        return false;
     }
     public virtual void AddLife(int count)
     {

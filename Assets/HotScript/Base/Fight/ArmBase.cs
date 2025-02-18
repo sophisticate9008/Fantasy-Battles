@@ -13,6 +13,7 @@ public class ArmBase : MonoBehaviour, IArms
 
     public ArmConfigBase Config => ConfigManager.Instance.GetConfigByClassName(GetType().Name.Replace("Arm", "")) as ArmConfigBase;
     Vector2 screenBottomCenterWorldPos;
+    public List<System.Action> killActions = new();
     public void FindTargetNearestOrElite()
     {
         EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
@@ -40,10 +41,23 @@ public class ArmBase : MonoBehaviour, IArms
     }
     protected virtual void Start()
     {
+        Config.TheArm = this;
         mainCamera = Camera.main;
         SkillManager.Instance.SelectedArmTypes.Add(GetType().Name.Replace("Arm", ""));
         Vector2 screenBottomCenter = new Vector2(Screen.width * 0.5f, 0);
         screenBottomCenterWorldPos = mainCamera.ScreenToWorldPoint(screenBottomCenter);
+        FighteManager.Instance.OnKill += OnKill;
+
+    }
+    public void OnKill(string owenr)
+    {
+        if (owenr == Config.Owner)
+        {
+            foreach (var action in killActions)
+            {
+                action.Invoke();
+            }
+        }
     }
     public virtual void Update()
     {
@@ -71,7 +85,15 @@ public class ArmBase : MonoBehaviour, IArms
             StartCoroutine(AttackSequence()); // 发射
         }
     }
+    public void SubtractCd(float value)
+    {
+        lastFireTime -= value;
+    }
 
+    public void AddDuration(float value)
+    {
+        Config.RestDuration += value;
+    }
     public virtual IEnumerator AttackSequence()
     {
         Config.CurrentAttackedNum = 0;
@@ -127,6 +149,7 @@ public class ArmBase : MonoBehaviour, IArms
     {
 
     }
+    //以自定义config和位置进行攻击
     public virtual List<GameObject> FindRandomTarget(int count = 1)
     {
         EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();

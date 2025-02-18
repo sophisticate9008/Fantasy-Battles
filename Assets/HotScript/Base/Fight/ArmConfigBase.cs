@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using MyEnums;
@@ -7,6 +8,16 @@ using YooAsset;
 [System.Serializable] // 标记为可序列化
 public class ArmConfigBase : ConfigBase
 {
+    public Dictionary<string, List<Action<GameObject, GameObject>>> typeActions = new(){
+        {"enter", new()},
+        {"stay", new()},
+        {"exit", new()},
+    };
+    public static T CreateInitConfig<T>() where T : ArmConfigBase, new()
+    {
+        return new T();
+    }
+    public ArmBase TheArm { get; set; }
     public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
     private GameObject prefab;
 
@@ -51,7 +62,13 @@ public class ArmConfigBase : ConfigBase
     public virtual float PalsyTime { get => palsyTime; set => palsyTime = value; }
     public virtual float DizzyTime { get => dizzyTime; set => dizzyTime = value; }
     public virtual float FireTime { get => fireTime; set => fireTime = value; }
+    public virtual float EasyHurtDegree{get;set;} = 0;
+    public virtual float CrushProb{get;set;} = 0;
     public float fireTlc = 0.1f;
+    public int harmCount = 1;//每次触发造成的伤害次数
+    public float GBHRate = 0;
+    public float DizzyProb = 1;
+    public float percentage = 0;//正常附加 的百分比
     // Prefab 属性
     public override GameObject Prefab
     {
@@ -216,15 +233,20 @@ public class ArmConfigBase : ConfigBase
         InjectData();
         // 初始化逻辑可以在子类中进行扩展
     }
-    public virtual void AutoGetOwner() {
-        foreach (var item in SkillUtil.armTypeDict) {
-            if(GetType().Name.Contains(item.Value)) {
+    public virtual void AutoGetOwner()
+    {
+        foreach (var item in SkillUtil.armTypeDict)
+        {
+            if (GetType().Name.Contains(item.Value))
+            {
                 Owner = item.Value;
             }
         }
     }
-    public virtual void InjectData() {
-        if(GetType().Name.Replace("Config", "") == owner) {
+    public virtual void InjectData()
+    {
+        if (GetType().Name.Replace("Config", "") == owner)
+        {
             int level = (int)PlayerDataConfig.GetValue(ArmUtil.ArmTypeToLevelFieldName(owner));
             ArmPropBase armProp = new(level, owner);
             Cd = armProp.cd;
@@ -234,7 +256,8 @@ public class ArmConfigBase : ConfigBase
             DamageType = armProp.damageType;
             Duration = armProp.duration;
             AttackCd = armProp.attackCd;
-            if(CommonUtil.IsImplementsInterface<IPenetrable>(GetType())) {
+            if (CommonUtil.IsImplementsInterface<IPenetrable>(GetType()))
+            {
                 IPenetrable config = this as IPenetrable;
                 config.PenetrationLevel = armProp.penetration;
             }

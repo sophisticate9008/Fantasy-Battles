@@ -14,7 +14,10 @@ public class SkillManager : ManagerBase<SkillManager>
         return preList[id];
     }
     #endregion
-
+    public void CancelPreList(int id)
+    {
+        preList[id].Clear();
+    }
     public readonly List<string> SelectedArmTypes = new();
     public void UnlockSkill(int id)
     {

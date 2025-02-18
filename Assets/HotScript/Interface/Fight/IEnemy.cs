@@ -10,7 +10,6 @@ public interface IEnemy {
     EnemyConfigBase Config { get;}
     void Move();
     void Attack();
-    void CalLife(int damage, string owner);
 
     //被谁杀死 
     void Die(string owner);
