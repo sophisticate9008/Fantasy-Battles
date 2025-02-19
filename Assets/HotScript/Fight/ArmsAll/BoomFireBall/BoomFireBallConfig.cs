@@ -1,7 +1,7 @@
 
 public class BoomFireBallConfig : ArmConfigBase, IPenetrable, IBoomable, IHoldable,IReboundable
 {
-    public int PenetrationLevel { get; set; } = 2;
+    public int PenetrationLevel { get; set; } = 1;
     
     public ArmConfigBase BoomChildConfig => ConfigManager.Instance.GetConfigByClassName("BoomFireBallBoom") as BoomFireBallBoomConfig;
 

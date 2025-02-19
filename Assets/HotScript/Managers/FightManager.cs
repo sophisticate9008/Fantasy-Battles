@@ -66,8 +66,19 @@ public class FighteManager : ManagerBase<FighteManager>
         InitGlobalConfig();
         InitWallBlood();
         InitBackground();
+        InvokeArmActions();
         EnemyManager.Instance.Init();
 
+    }
+
+    void InvokeArmActions() {
+        foreach(var armType in ArmUtil.AllArmTypes) {
+            int id = ArmUtil.ArmTypeToId(armType);
+            int level = (int)PlayerDataConfig.GetValue("levelArm" + id);
+            foreach(var action in ArmUtil.GetArmSkillAction(armType, level)) {
+                action.Invoke();
+            }
+        }
     }
     void InitGlobalConfig()
     {
@@ -408,7 +419,7 @@ public class FighteManager : ManagerBase<FighteManager>
 
     #region 武器的触发次数以及函数
     public Dictionary<string, int> AccumulateDict = new();
-    public Dictionary<(string armChildType, int perNum), List<Action<GameObject>>> AccumulateActions;
+    public Dictionary<(string armChildType, int perNum), List<Action<GameObject>>> AccumulateActions = new();
     
     public void AddTriggerCount(string armChildType, GameObject selfObj)
     {

@@ -67,7 +67,7 @@ public class SkillManager : ManagerBase<SkillManager>
     private bool Check(SkillNode skill)
     {
         //检查前置
-        foreach (int prereqId in skill.prerequisiteIds)
+        foreach (int prereqId in IdToPreList(skill.id))
         {
             if (!selectedSkills.Exists(s => s.id == prereqId))
             {

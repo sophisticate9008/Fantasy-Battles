@@ -230,7 +230,7 @@ public static class ArmUtil
             8 => 0.2f,
             11 => 0.5f,
             12 => 0.2f,
-            13 => 1f,
+            13 => 0.8f,
             _ => 0.5f,
         };
     }
@@ -357,7 +357,7 @@ public static class ArmUtil
             "持续时间+1s",
             "解锁技能：效果：[伤害翻倍]",
             "cd - 0.6s",
-            "增加50%的减速效果",
+            "增加20%的减速效果",
             "灼烧时造成最大生命值1%的伤害",
             "点燃时造成最大生命值1%的伤害"
         }},
@@ -604,7 +604,7 @@ public static class ArmUtil
             () => {flameOrbConfig.Duration += 1;},
             () => {SkillManager.Instance.UnlockSkill(216);},
             () => {flameOrbConfig.Cd -= 0.6f;},
-            () => {flameOrbConfig.ComponentStrs.Add("减速"); flameOrbConfig.SlowDegree = 0.5f; flameOrbConfig.SlowTime = 0.2f;},
+            () => {flameOrbConfig.ComponentStrs.Add("减速"); flameOrbConfig.SlowDegree = 0.2f; flameOrbConfig.SlowTime = 0.2f;},
             () => {flameOrbConfig.percentage += 0.01f;},
             () => {flameOrbConfig.FirePercentage += 0.01f;},
         }},
@@ -634,9 +634,21 @@ public static class ArmUtil
 
         }}
     };
+    
     public static List<Action> GetArmSkillAction(string armType, int level)
     {
-        return null;
+        int count = 0;
+        foreach(var pos in armLevelPos) {
+            if(level >= pos) {
+                count++;
+            }
+        }
+        List<Action> actions = new();
+        for(int i = 0; i < count; i++) {
+            actions.Add(skillActionDict[armType][i]);
+        }
+        return actions;
+
     }
     #endregion
 

@@ -69,6 +69,7 @@ public class ArmConfigBase : ConfigBase
     public float GBHRate = 0;
     public float DizzyProb = 1;
     public float percentage = 0;//正常附加 的百分比
+    public float addition = 0;//伤害加成
     // Prefab 属性
     public override GameObject Prefab
     {
