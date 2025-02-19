@@ -1,7 +1,7 @@
 
 public class IceBloomConfig : ArmConfigBase
 {
-    public int IceChipNum = 12;
+    public int IceChipNum = 6;
     public override void Init()
     {
         base.Init();

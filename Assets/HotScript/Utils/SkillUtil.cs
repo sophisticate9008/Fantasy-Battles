@@ -7,7 +7,8 @@ public static class SkillUtil
     #region 技能冲突
     public static readonly List<List<int>> conflictLists = new() {
         CommonUtil.AsList(15,17,18,19),
-
+        CommonUtil.AsList(113, 114),
+        CommonUtil.AsList(166,167)
     };
     public static List<int> IdToConflictIds(int id)
     {
@@ -27,7 +28,7 @@ public static class SkillUtil
     public static readonly Dictionary<string, List<int>> iconList = new()
     {
         {"icon_BoomFireBall", CommonUtil.AsList(0, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37)},
-        {"icon_IceBall", CommonUtil.AsList(1, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58)},
+        {"icon_IceBall", CommonUtil.AsList(1, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58)},
         {"icon_ElectroHit", CommonUtil.AsList(2, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76)},
         {"icon_GroundStab", CommonUtil.AsList(3, 85, 86, 87, 88, 89, 90, 91)},
         {"icon_EnergyRay", CommonUtil.AsList(4, 95, 96, 97, 98, 99, 100, 101)},
@@ -36,7 +37,7 @@ public static class SkillUtil
         {"icon_JumpElectro", CommonUtil.AsList(7, 142, 143, 144, 145, 146, 147, 148, 149, 150)},
         {"icon_Tornado", CommonUtil.AsList(8, 160, 161, 162, 163, 164, 165, 166, 167)},
         {"icon_DragonLaunch", CommonUtil.AsList(9, 177, 178, 179, 180, 181)},
-        {"icon_PressureCutter", CommonUtil.AsList(10, 191, 192, 193, 194, 195, 196, 197, 198, 199)},
+        {"icon_PressureCutter", CommonUtil.AsList(10, 191, 192,  194, 195, 196, 197, 198, 199)},
         {"icon_FlameOrb", CommonUtil.AsList(11, 209, 210, 211, 212, 213, 214, 215, 216)},
         {"icon_WhirlingBlade", CommonUtil.AsList(12, 226, 227, 228, 229, 230, 231)},
         {"icon_MagicBullet", CommonUtil.AsList(13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27)}
@@ -144,10 +145,9 @@ public static class SkillUtil
             37 => "高爆火球进化,穿透+2, 爆炸范围+80%, 爆炸击退+60%",
             //预留10个
             48 => "寒冰弹齐射+1",
-            49 => "寒冰弹连发次数+1",
             50 => "寒冰弹伤害-20%, 穿透+2",
             51 => "寒冰弹伤害+60%,穿透+1",
-            52 => "寒冰弹伤害+100%,击退+30%",
+            52 => "寒冰弹伤害+100%",
             53 => "寒冰弹叠加冻伤,上限加5层，持续5s",
             54 => "寒冰弹穿透+1,击退+60%",
             55 => "寒冰弹命中冻结敌人2s",
@@ -158,7 +158,7 @@ public static class SkillUtil
             66 => "电磁穿刺次数+1",
             67 => "次数+2",
             68 => "伤害+80%",
-            69 => "杀死怪物后对范围内敌人追击一次伤害",
+            69 => "杀死怪物后再释放一次",
             70 => "命中后释放6个粒子",
             71 => "命中后爆炸",
             72 => "爆炸范围+80%",
@@ -183,7 +183,7 @@ public static class SkillUtil
             98 => "伤害的怪物5s内受到的伤害+25%，不叠加",
             99 => "伤害+80%",
             100 => "减速80%",
-            101 => "能量射线进化,变高能光波,伤害翻倍,附带击退",
+            101 => "能量射线进化,变高能光波,伤害增加100%,附带击退",
 
             //激光
             111 => "伤害+60%",
@@ -199,7 +199,7 @@ public static class SkillUtil
             128 => "范围+100%",
             129 => "持续时间+2s",
             130 => "多释放+1",
-            132 => "可以叠加冻伤",
+            132 => "可以叠加冻伤,冻伤层数上限+5",
             131 => "5%概率深度冻结,无视冰冻抗性",
             133 => "结束后释放6个冰魔法弹冰片",
 
@@ -235,11 +235,11 @@ public static class SkillUtil
             //压缩气刃
             191 => "次数+1",
             192 => "伤害-20%,次数+2",
-            193 => "连发+1",
+
             194 => "齐射+1",
             195 => "穿透+6",
-            196 => "体积增大50%",
-            197 => "伤害+80%",
+            196 => "体积增大50%,伤害增加50%",
+            197 => "伤害+100%",
             198 => "冷却-20%,伤害+30%",
             199 => "击退+50%",
 
@@ -247,14 +247,14 @@ public static class SkillUtil
             209 => "次数+1",
             210 => "伤害-20%, 次数+2",
             211 => "灼烧伤害+80%",
-            212 => "点燃伤害+80%",
+            212 => "点燃伤害倍率+0.5",
             213 => "范围增加100%",
             214 => "范围内减速50%",
             215 => "点燃的怪物死亡后留下一片无强化燃烧区域",
-            216 => "滞留火焰进化, 灼烧伤害+100%, 点燃伤害+100%",
+            216 => "滞留火焰进化, 灼烧伤害+100%, 点燃倍率+0.8",
 
             //旋转利刃
-            226 => "速度+40%,持续时间+40%",
+            226 => "速度+40%,持续时间+2s",
             227 => "附加点燃",
             228 => "附加两秒眩晕",
             229 => "伤害+60%",
@@ -311,7 +311,6 @@ public static class SkillUtil
             36 => "爆炸传染",
             37 => "温压进化",
             48 => "齐射强化",
-            49 => "连发强化",
             50 => "穿透提升I",
             51 => "穿透提升II",
             52 => "击退强化",
@@ -385,7 +384,6 @@ public static class SkillUtil
             181 => "伤害强化",
             191 => "数量增幅I",
             192 => "数量增幅II",
-            193 => "连发增幅",
             194 => "齐射增幅",
             195 => "穿透强化",
             196 => "体积扩展",
@@ -434,15 +432,17 @@ public static class SkillUtil
             85 => 2,
             90 => 2,
             99 => 2,
+
             111 => 3,
             115 => 2,
+            130 => 2,
             143 => 2,
             146 => 3,
             177 => 2,
             179 => 2,
             181 => 3,
             191 => 2,
-            193 => 2,
+
             194 => 3,
             199 => 2,
             209 => 2,
@@ -577,7 +577,7 @@ public static class SkillUtil
     #region 技能是否解锁
     public static bool IdToIsUnlocked(int id)
     {
-        List<int> lockList = CommonUtil.AsList(75, 17, 22, 26, 27, 37, 48, 49, 56, 193, 194, 89, 117, 131, 216, 232);
+        List<int> lockList = CommonUtil.AsList(75, 17, 22, 26, 27, 37, 48, 49, 56, 194, 89, 117, 131, 216, 232);
         // if (id <= 16)
         // {
         //     return true;
@@ -640,7 +640,7 @@ public static class SkillUtil
             ,//"魔法弹变为冰系魔法弹",
             20 => () => { ArmUtil.magicBulletConfig.ComponentStrs.Add("爆炸"); }
             ,//"魔法弹爆炸",
-            21 => () => { (ArmUtil.magicBulletConfig.BoomChildConfig as MagicBulletBoomConfig).SelfScale *= 1.6; }
+            21 => () => { (ArmUtil.magicBulletConfig.BoomChildConfig as MagicBulletBoomConfig).SelfScale *= 1.6f; }
             ,//"魔法弹爆炸范围增加60%",
             22 => () => { ArmUtil.magicBulletConfig.addition += 0.6f; }
             ,//"魔法弹伤害+60%",
@@ -653,141 +653,349 @@ public static class SkillUtil
                 ArmUtil.magicBulletConfig.MagicBulletFissionConfig.MultipleLevel = 4;
                 ArmUtil.magicBulletConfig.MagicBulletFissionConfig.DamageType = "ice";
                 ArmUtil.magicBulletConfig.ComponentStrs.Add("分裂");
-            },//"魔法弹命中后散发四个小冰片",
-            26 => () => {ArmUtil.magicBulletConfig.AttackCd *= 0.9;},//"射速增加10%",
-            27 => () => {ArmUtil.magicBulletConfig.ReboundCount += 1;},//"魔法弹碰到墙壁反弹次数+1",
+            }
+            ,//"魔法弹命中后散发四个小冰片",
+            26 => () => { ArmUtil.magicBulletConfig.AttackCd *= 0.9f; }
+            ,//"射速增加10%",
+            27 => () => { ArmUtil.magicBulletConfig.ReboundCount += 1; }
+            ,//"魔法弹碰到墙壁反弹次数+1",
 
 
-            28 => "高爆火球冲撞伤害+75%,爆炸击退+60%",
-            29 => "高爆火球爆炸伤害+80%",
-            30 => "高爆火球爆炸范围+80%",
-            31 => "高爆火球数量+1",
-            32 => "高爆火球数量+2",
-            33 => "高爆火球点燃敌人6s",
-            34 => "高爆火球点燃附加最大生命值3%",
-            35 => "高爆火球击中释放3个火焰碎片",
-            36 => "高爆火球点燃的怪物死亡后爆炸",
-            37 => "高爆火球进化,穿透+2, 爆炸范围+80%, 爆炸击退+60%",
+            28 => () => { ArmUtil.boomFireBallConfig.addition += 0.75f; ArmUtil.boomFireBallConfig.BoomChildConfig.MaxForce *= 1.6f; }
+            ,//"高爆火球冲撞伤害+75%,爆炸击退+60%",
+            29 => () => { ArmUtil.boomFireBallConfig.addition += 0.8f; }
+            ,//"高爆火球爆炸伤害+80%",
+            30 => () => { ArmUtil.boomFireBallConfig.BoomChildConfig.SelfScale += 0.8f; }
+            ,//"高爆火球爆炸范围+80%",
+            31 => () => { ArmUtil.boomFireBallConfig.AttackCount += 1; }
+            ,//"高爆火球数量+1",
+            32 => () => { ArmUtil.boomFireBallConfig.AttackCount += 2; }
+            , //"高爆火球数量+2",
+            33 => () => { ArmUtil.boomFireBallConfig.BoomChildConfig.FireTime += 6; ArmUtil.boomFireBallConfig.BoomChildConfig.ComponentStrs.Add("点燃"); }
+            ,//"高爆火球点燃敌人6s",
+            34 => () => { ArmUtil.boomFireBallConfig.BoomChildConfig.FirePercentage += 0.03f; }
+            ,//"高爆火球点燃附加最大生命值3%",
+            35 => () => { ArmUtil.boomFireBallConfig.ComponentStrs.Add("分裂"); }
+            , //"高爆火球击中释放3个火焰碎片",
+            36 => () =>
+            {
+                ArmUtil.boomFireBallConfig.typeActions["enter"].Add((selfObj, enemyObj) =>
+                {
+                    var eb = enemyObj.GetComponent<EnemyBase>();
+                    eb.allTypeActions["die"].Add(() =>
+                    {
+                        var InitConfig = ArmUtil.boomFireBallConfig.CreateInitConfig<BoomFireBallBoomConfig>(false);
+                        FighteManager.Instance.AttackWithCustomConfig(enemyObj, InitConfig, selfObj, 1);
+                    });
+                });
+            }
+            ,//"高爆火球点燃的怪物死亡后爆炸",
+            37 => () =>
+            {
+                ArmUtil.boomFireBallConfig.PenetrationLevel += 2;
+                ArmUtil.boomFireBallConfig.SelfScale *= 1.5f;
+                ArmUtil.boomFireBallConfig.BoomChildConfig.SelfScale += 0.8f;
+                ArmUtil.boomFireBallConfig.BoomChildConfig.MaxForce *= 1.6f;
+            }
+            , //"高爆火球进化,穿透+2, 爆炸范围+80%, 爆炸击退+60%",
             //预留10个
-            48 => "寒冰弹齐射+1",
-            49 => "寒冰弹连发次数+1",
-            50 => "寒冰弹伤害-20%, 穿透+2",
-            51 => "寒冰弹伤害+60%,穿透+1",
-            52 => "寒冰弹伤害+100%,击退+30%",
-            53 => "寒冰弹叠加冻伤,上限加5层，持续5s",
-            54 => "寒冰弹穿透+1,击退+60%",
-            55 => "寒冰弹命中冻结敌人2s",
-            56 => "寒冰弹进化,每次命中分裂1个原始冰弹,继承加成",
-            57 => "数量+1",
-            58 => "数量+2",
+            48 => () => { ArmUtil.iceBallConfig.MultipleLevel += 1; }
+            , //"寒冰弹齐射+1",
+            50 => () => { ArmUtil.iceBallConfig.addition -= 0.2f; ArmUtil.iceBallConfig.PenetrationLevel += 2; }
+            ,// "寒冰弹伤害-20%, 穿透+2",
+            51 => () => { ArmUtil.iceBallConfig.addition += 0.6f; ArmUtil.iceBallConfig.PenetrationLevel += 1; }
+            ,//"寒冰弹伤害+60%,穿透+1",
+            52 => () => { ArmUtil.iceBallConfig.addition += 1; }
+            ,//"寒冰弹伤害+100%",
+            53 => () => { ArmUtil.iceBallConfig.ComponentStrs.Add("冻伤"); ArmUtil.globalConfig.freezenHurtMaxLevel += 5; }
+            ,//"寒冰弹叠加冻伤,上限加5层，持续5s",
+            54 => () => { ArmUtil.iceBallConfig.PenetrationLevel += 1; ArmUtil.iceBallConfig.MaxForce *= 0.6f; }
+            ,//"寒冰弹穿透+1,击退+60%",
+            55 => () => { ArmUtil.iceBallConfig.ComponentStrs.Add("冰冻"); ArmUtil.iceBallConfig.FreezeTime += 2; }
+            ,//"寒冰弹命中冻结敌人2s",
+            56 => () => { ArmUtil.iceBallConfig.IsUpgrade = true; }
+            ,//"寒冰弹进化,每次命中分裂1个原始冰弹,继承加成",
+            57 => () => { ArmUtil.iceBallConfig.AttackCount += 1; }
+            ,//"数量+1",
+            58 => () => { ArmUtil.iceBallConfig.AttackCount += 2; }
+            ,//"数量+2",
             //预留十个
-            66 => "电磁穿刺次数+1",
-            67 => "次数+2",
-            68 => "伤害+80%",
-            69 => "杀死怪物后对范围内敌人追击一次伤害",
-            70 => "命中后释放6个粒子",
-            71 => "命中后爆炸",
-            72 => "爆炸范围+80%",
-            73 => "爆炸范围内生成电磁场,持续两秒,减速50%,造成攻击力100%的伤害",
-            74 => "电磁场持续时间+4s",
-            75 => "电流直击进化,相关所有伤害+200%",
-            76 => "麻痹时间+1.5s",
+            66 => () => { ArmUtil.electroHitConfig.AttackCount += 1; }
+            ,//"电磁穿刺次数+1",
+            67 => () => { ArmUtil.electroHitConfig.AttackCount += 2; }
+            ,//"次数+2",
+            68 => () => { ArmUtil.electroHitConfig.addition += 0.8f; }
+            ,//"伤害+80%",
+            69 => () =>
+            {
+                ArmUtil.electroHitConfig.TheArm.killActions.Add(() =>
+                {
+                    ArmUtil.electroHitConfig.TheArm.Attack();
+                });
+            }
+            , //"杀死怪物后再释放一次",
+            70 => () => { ArmUtil.electroHitConfig.ComponentStrs.Add("分裂"); }
+            ,// "命中后释放6个粒子",
+            71 => () => { ArmUtil.electroHitConfig.ComponentStrs.Add("爆炸"); }
+            ,//"命中后爆炸",
+            72 => () => { ArmUtil.electroHitConfig.BoomChildConfig.SelfScale += 0.8f; }
+            , //"爆炸范围+80%",
+            73 => () => { ArmUtil.electroHitConfig.ComponentStrs.Add("Hold"); }
+            , //"爆炸范围内生成电磁场,持续两秒,减速50%,造成攻击力50%的伤害",
+            74 => () => { }
+            ,//"电磁场持续时间+4s",
+            75 => () => { ArmUtil.electroHitConfig.addition += 2; }
+            ,//"电流直击进化,相关所有伤害+200%",
+            76 => () => { ArmUtil.electroHitConfig.PalsyTime += 1.5f; }
+            ,//"麻痹时间+1.5s",
 
             //预留十个
-            85 => "次数+1",
-            86 => " 次数+2",
-            87 => "击退+100%,10%几率眩晕1s",
-            88 => "速度加快20%,冷却-25%",
-            89 => "点燃怪物3s",
-            90 => "体积增大20%",
-            91 => "伤害+80%",
+            85 => () => { ArmUtil.groundStabConfig.AttackCount += 1; }
+            ,//"次数+1",
+            86 => () => { ArmUtil.groundStabConfig.AttackCount += 2; }
+            , // 次数+2",
+            87 => () =>
+            {
+                ArmUtil.groundStabConfig.MaxForce *= 2;
+                ArmUtil.groundStabConfig.ComponentStrs.Add("击退");
+                ArmUtil.groundStabConfig.DizzyProb = 0.1f;
+            }
+            , //击退+100%,10%几率眩晕1s",
+            88 => () => { ArmUtil.groundStabConfig.Speed += 0.2f; ArmUtil.groundStabConfig.Cd *= 0.75f; }
+            , //速度加快20%,冷却-25%",
+            89 => () => { ArmUtil.groundStabConfig.ComponentStrs.Add("点燃"); ArmUtil.groundStabConfig.FireTime = 3; }
+            , //点燃怪物3s",
+            90 => () => { ArmUtil.groundStabConfig.SelfScale += 0.2f; }
+            , //体积增大20%",
+            91 => () => { ArmUtil.groundStabConfig.addition += 0.8f; }
+            , //伤害+80%",
 
             //能量射线
-            95 => "伤害次数+5",
-            96 => "次数翻倍,冷却+50%",
-            97 => "范围增加150%",
-            98 => "伤害的怪物5s内受到的伤害+25%，不叠加",
-            99 => "伤害+80%",
-            100 => "减速80%",
-            101 => "能量射线进化,变高能光波,伤害翻倍,附带击退",
+            95 => () => { ArmUtil.energyRayConfig.Duration += 1; }
+            , //伤害次数+5",
+            96 => () => { ArmUtil.energyRayConfig.Duration *= 2; ArmUtil.energyRayConfig.Cd *= 1.5f; }
+            , //次数翻倍,冷却+50%",
+            97 => () => { ArmUtil.energyRayConfig.SelfScale *= 1.5f; }
+            , //范围增加150%",
+            98 => () =>
+            {
+                ArmUtil.energyRayConfig.ComponentStrs.Add("易伤");
+                ArmUtil.energyRayConfig.EasyHurtDegree += 0.25f;
+            }
+            , //伤害的怪物5s内受到的伤害+25%，不叠加",
+            99 => () => { ArmUtil.energyRayConfig.addition += 0.8f; }
+            , //伤害+80%",
+            100 => () => { ArmUtil.energyRayConfig.SlowDegree += 0.8f; ArmUtil.energyRayConfig.ComponentStrs.Add("减速"); }
+            , //减速80%",
+            101 => () =>
+            {
+                ArmUtil.energyRayConfig.IsUpgrade = true;
+                ArmUtil.energyRayConfig.addition += 1;
+                ArmUtil.energyRayConfig.MaxForce += 10;
+            }
+            , //能量射线进化,变高能光波,伤害增加100%,附带击退",
 
             //激光
-            111 => "伤害+60%",
-            112 => "主目标伤害+200%",
-            113 => "伤害次数+15",
-            114 => "伤害次数+25",
-            115 => "激光分裂数+2",
-            116 => "激光和电流直击伤害+60%",
-            117 => "主目标持续释放电流直击",
+            111 => () => { ArmUtil.laserConfig.addition += 0.6f; }
+            , //伤害+60%",
+            112 => () => { ArmUtil.laserConfig.IsMainDamageUp = true; }
+            , //主目标伤害+200%",
+            113 => () => { ArmUtil.laserConfig.Duration += 3f; }
+            , //伤害次数+15",
+            114 => () => { ArmUtil.laserConfig.Duration += 5f; }
+            , //伤害次数+25",
+            115 => () => { ArmUtil.laserConfig.laserFissionConfig.FissionLevel += 2; }
+            , //激光分裂数+2",
+            116 => () => { ArmUtil.laserConfig.addition += 0.6f; ArmUtil.electroHitConfig.addition += 0.6f; }
+            , //激光和电流直击伤害+60%",
+            117 => () =>
+            {
+                ArmUtil.laserConfig.typeActions["stay"].Add((selfObj, enemyObj) =>
+                {
+                    ElectroHitConfig initConfig = ArmUtil.laserConfig.CreateInitConfig<ElectroHitConfig>();
+                    FighteManager.Instance.AttackWithCustomConfig(enemyObj, initConfig, selfObj, 1);
+                });
+            }
+            , //主目标持续释放电流直击",
 
             //寒冰绽放
-            127 => "伤害+60%",
-            128 => "范围+100%",
-            129 => "持续时间+2s",
-            130 => "多释放+1",
-            132 => "可以叠加冻伤",
-            131 => "5%概率深度冻结,无视冰冻抗性",
-            133 => "结束后释放6个冰魔法弹冰片",
+            127 => () => { ArmUtil.iceBloomConfig.addition += 0.6f; }
+            , //伤害+60%",
+            128 => () => { ArmUtil.iceBloomConfig.SelfScale += 1; }
+            , //范围+100%",
+            129 => () => { ArmUtil.iceBloomConfig.Duration += 2; }
+            , //持续时间+2s",
+            130 => () => { ArmUtil.iceBloomConfig.AttackCount += 1; }
+            , //多释放+1",
+            132 => () => { ArmUtil.iceBloomConfig.ComponentStrs.Add("冻伤"); ArmUtil.globalConfig.freezenHurtMaxLevel += 5; }
+            , //可以叠加冻伤",
+            131 => () =>
+            {
+                ArmUtil.iceBloomConfig.typeActions["stay"].Add((selfObj, enemyObj) =>
+                {
+                    if (UnityEngine.Random.value <= 0.05f)
+                    {
+                        enemyObj.GetComponent<EnemyBase>().AddBuff("深度冻结", selfObj, 0.5f);
+                    }
+                });
+            }
+            , //5%概率深度冻结,无视冰冻抗性",
+            133 => () =>
+            {
+                ArmUtil.iceBloomConfig.typeActions["return"].Add((selfObj, enemyObj) =>
+                {
+                    for (int i = 0; i < ArmUtil.iceBloomConfig.IceChipNum; i++)
+                    {
+
+                    }
+                });
+            }
+            , //结束后释放6个冰魔法弹冰片",
 
             //跳跃电子
-            142 => "伤害+60%",
-            143 => "次数+1",
-            144 => "伤害-20%,次数+2",
-            145 => "弹射次数+2",
-            146 => "麻痹时间+2s",
-            147 => "弹射目标处释放1次无强化电流直击",
-            148 => "弹射目标受到的伤害增加25%",
-            149 => "弹射目标处发生爆炸",
-            150 => "爆炸范围+80%",
+            142 => () => { ArmUtil.jumpElectroConfig.addition += 0.6f; }
+            , //伤害+60%",
+            143 => () => { ArmUtil.jumpElectroConfig.AttackCount += 1; }
+            , //次数+1",
+            144 => () => { ArmUtil.jumpElectroConfig.addition -= 0.2f; ArmUtil.jumpElectroConfig.AttackCount += 2; }
+            , //伤害-20%,次数+2",
+            145 => () => { ArmUtil.jumpElectroConfig.JumpCount += 2; }
+            , //弹射次数+2",
+            146 => () => { ArmUtil.jumpElectroConfig.PalsyTime += 2f; }
+            , //麻痹时间+2s",
+            147 => () =>
+            {
+                ArmUtil.jumpElectroConfig.typeActions["enter"].Add((selfObj, enemyObj) =>
+                {
+                    ArmConfigBase initConfig = ArmUtil.jumpElectroConfig.CreateInitConfig<ElectroHitConfig>();
+                    FighteManager.Instance.AttackWithCustomConfig(enemyObj, initConfig, selfObj, 1);
+                });
+            }
+            , //弹射目标处释放1次无强化电流直击",
+            148 => () => { ArmUtil.jumpElectroConfig.ComponentStrs.Add("易伤"); ArmUtil.jumpElectroConfig.EasyHurtDegree += 0.25f; }
+            , //弹射目标受到的伤害增加25%",
+            149 => () => { ArmUtil.jumpElectroConfig.ComponentStrs.Add("爆炸"); }
+            , //弹射目标处发生爆炸",
+            150 => () => { ArmUtil.jumpElectroConfig.BoomChildConfig.SelfScale += 0.8f; }
+            , //爆炸范围+80%",
 
 
             //龙卷风
-            160 => "伤害+60%",
-            161 => "速度+40%,持续时间+40%",
-            162 => "持续时间+100%",
-            163 => "牵引力+40%",
-            164 => "双重龙卷,持续时间-30%",
-            165 => "范围+50%",
-            166 => "冰龙卷",
-            167 => "雷龙卷",
+            160 => () => { ArmUtil.tornadoConfig.addition += 0.6f; }
+            , //伤害+60%",
+            161 => () => { ArmUtil.tornadoConfig.Speed *= 0.4f; ArmUtil.tornadoConfig.Duration += 2f; }
+            , //速度+40%,持续时间+40%",
+            162 => () => { ArmUtil.tornadoConfig.Duration *= 2f; }
+            , //持续时间+100%",
+            163 => () => { ArmUtil.tornadoConfig.MaxForce *= 1.4f; }
+            , //牵引力+40%",
+            164 => () => { ArmUtil.tornadoConfig.AttackCount += 1; ArmUtil.tornadoConfig.Duration *= 0.7f; }
+            , //双重龙卷,持续时间-30%",
+            165 => () => { ArmUtil.tornadoConfig.SelfScale += 0.5f; }
+            , //范围+50%",
+            166 => () => { ArmUtil.tornadoConfig.IsIceTornado = false; }
+            , //冰龙卷",
+            167 => () => { ArmUtil.tornadoConfig.IsElecTornado = true; }
+            , //雷龙卷",
 
             //飞龙投射
-            177 => "次数+1",
-            178 => "伤害-20%,次数+2",
-            179 => "范围+50%",
-            180 => "击退+50%",
-            181 => "伤害+80%",
+            177 => () => { ArmUtil.dragonLaunchConfig.AttackCount += 1; }
+            , //次数+1",
+            178 => () => { ArmUtil.dragonLaunchConfig.AttackCount += 2; ArmUtil.dragonLaunchConfig.addition -= 0.2f; }
+            , //伤害-20%,次数+2",
+            179 => () => { ArmUtil.dragonLaunchConfig.SelfScale += 0.5f; }
+            , //范围+50%",
+            180 => () => { ArmUtil.dragonLaunchConfig.MaxForce *= 1.5f; }
+            , //击退+50%",
+            181 => () => { ArmUtil.dragonLaunchConfig.addition += 0.8f; }
+            , //伤害+80%",
 
             //压缩气刃
-            191 => "次数+1",
-            192 => "伤害-20%,次数+2",
-            193 => "连发+1",
-            194 => "齐射+1",
-            195 => "穿透+6",
-            196 => "体积增大50%",
-            197 => "伤害+80%",
-            198 => "冷却-20%,伤害+30%",
-            199 => "击退+50%",
+            191 => () => { ArmUtil.pressureCutterConfig.AttackCount += 1; }
+            , //次数+1",
+            192 => () => { ArmUtil.pressureCutterConfig.AttackCount += 2; ArmUtil.pressureCutterConfig.addition -= 0.2f; }
+            , //伤害-20%,次数+2",
+            194 => () => { ArmUtil.pressureCutterConfig.MultipleLevel += 1; }
+            , //齐射+1",
+            195 => () => { ArmUtil.pressureCutterConfig.PenetrationLevel += 6; }
+            , //穿透+6",
+            196 => () => { ArmUtil.pressureCutterConfig.SelfScale += 0.5f; ArmUtil.pressureCutterConfig.addition += 0.5f; }
+            , //体积增大50%",
+            197 => () => { ArmUtil.pressureCutterConfig.addition += 1f; }
+            , //伤害+100%",
+            198 => () => { ArmUtil.pressureCutterConfig.Cd *= 0.8f; ArmUtil.pressureCutterConfig.addition += 0.3f; }
+            , //冷却-20%,伤害+30%",
+            199 => () => { ArmUtil.pressureCutterConfig.MaxForce *= 1.5f; }
+            , //击退+50%",
 
             //滞留火焰
-            209 => "次数+1",
-            210 => "伤害-20%, 次数+2",
-            211 => "灼烧伤害+80%",
-            212 => "点燃伤害+80%",
-            213 => "范围增加100%",
-            214 => "范围内减速50%",
-            215 => "点燃的怪物死亡后留下一片无强化燃烧区域",
-            216 => "滞留火焰进化, 灼烧伤害+100%, 点燃伤害+100%",
+            209 => () => { ArmUtil.flameOrbConfig.AttackCount += 1; }
+            , //次数+1",
+            210 => () => { ArmUtil.flameOrbConfig.addition -= 0.2f; ArmUtil.flameOrbConfig.AttackCount += 2; }
+            , //伤害-20%, 次数+2",
+            211 => () => { ArmUtil.flameOrbConfig.addition += 0.8f; }
+            , //灼烧伤害+80%",
+            212 => () => { ArmUtil.flameOrbConfig.fireTlc += 0.5f; }
+            , //点燃伤害+50%",
+            213 => () => { ArmUtil.flameOrbConfig.SelfScale += 1; }
+            , //范围增加100%",
+            214 => () => { ArmUtil.flameOrbConfig.SlowDegree += 0.5f; ArmUtil.flameOrbConfig.ComponentStrs.Add("减速"); }
+            , //范围内减速50%",
+            215 => () =>
+            {
+                ArmUtil.flameOrbConfig.typeActions["enter"].Add((selfObj, enemyObj) =>
+                {
+                    EnemyBase eb = enemyObj.GetComponent<EnemyBase>();
+                    eb.allTypeActions["die"].Add(() =>
+                    {
+                        if (eb.buffEffects.Contains("滞留火焰点燃"))
+                        {
+                            FlameOrbConfig initConfig = ArmUtil.flameOrbConfig.CreateInitConfig<FlameOrbConfig>();
+                            initConfig.ComponentStrs.Clear();
+                            initConfig.Owner = nameof(FlameOrb);
+                            FighteManager.Instance.AttackWithCustomConfig(enemyObj, initConfig, selfObj, 1);
+                        }
+                    });
+                });
+            }
+            , //点燃的怪物死亡后留下一片无强化燃烧区域",
+            216 => () => { ArmUtil.flameOrbConfig.IsUpgrade = true; }
+            , //滞留火焰进化, 灼烧伤害+100%, 点燃伤害+100%",
 
             //旋转利刃
-            226 => "速度+40%,持续时间+40%",
-            227 => "附加点燃",
-            228 => "附加两秒眩晕",
-            229 => "伤害+60%",
-            230 => "持续时间+50%",
-            231 => "体积增加50%",
-            232 => "每次命中30次敌人时,释放一个无强化的小型利刃",
-            ,
+            226 => () => { ArmUtil.whirlingBladeConfig.Speed *= 0.4f; ArmUtil.whirlingBladeConfig.Duration += 0.4f; }
+            , //速度+40%,持续时间+40%",
+            227 => () => { ArmUtil.whirlingBladeConfig.IsFire = true; ArmUtil.whirlingBladeConfig.ComponentStrs.Add("点燃"); }
+            , //附加点燃",
+            228 => () => { ArmUtil.whirlingBladeConfig.DizzyTime = 2; ArmUtil.whirlingBladeConfig.ComponentStrs.Add("眩晕"); }
+            , //附加两秒眩晕",
+            229 => () => { ArmUtil.whirlingBladeConfig.addition += 0.6f; }
+            , //伤害+60%",
+            230 => () => { ArmUtil.whirlingBladeConfig.Duration *= 1.5f; }
+            , //持续时间+50%",
+            231 => () => { ArmUtil.whirlingBladeConfig.SelfScale += 0.5f; }
+            , //体积增加50%",
+            232 => () =>
+            {
+                FighteManager.Instance.AddAccumulateListener(nameof(WhirlingBlade), 30, (selfObj) =>
+                {
+                    WhirlingBladeConfig initConfig = ArmUtil.whirlingBladeConfig.CreateInitConfig<WhirlingBladeConfig>();
+                    initConfig.SelfScale = 0.5f;
+                    List<GameObject> objs = ArmUtil.whirlingBladeConfig.TheArm.FindRandomTarget();
+                    GameObject targetEnemy;
+                    if (objs.Count > 0)
+                    {
+                        targetEnemy = objs[0];
+                    }
+                    else
+                    {
+                        targetEnemy = null;
+                    }
+                    FighteManager.Instance.AttackWithCustomConfig(targetEnemy, initConfig, selfObj);
+
+                });
+            }
+            , //每次命中30次敌人时,释放一个无强化的小型利刃",
         };
 
     }

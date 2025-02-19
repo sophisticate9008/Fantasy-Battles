@@ -20,6 +20,7 @@ public static class BuffFactory
             "眩晕" => new Dizzy(buffName, duration, selfObj, enemyObj),
             "冰冻" => new Freeze(buffName, duration, selfObj, enemyObj),
             "麻痹" => new Palsy(buffName, duration, selfObj, enemyObj),
+            "深度冻结" => new Freeze(buffName, duration, selfObj, enemyObj),
             // 处理未知的 Buff 类型
             _ => throw new ArgumentException($"Unknown debuff: {buffName}"),
         };

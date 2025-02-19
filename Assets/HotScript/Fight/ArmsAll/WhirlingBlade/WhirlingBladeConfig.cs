@@ -5,6 +5,7 @@ using MyEnums;
 public class WhirlingBladeConfig : ArmConfigBase, IReboundable
 {
     public int ReboundCount { get; set; } = 999;
+    public bool IsFire{get;set;} = false;
 
     public override void Init()
     {

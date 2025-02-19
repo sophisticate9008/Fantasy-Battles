@@ -12,10 +12,16 @@ public class ArmConfigBase : ConfigBase
         {"enter", new()},
         {"stay", new()},
         {"exit", new()},
+        {"return", new()}
     };
-    public static T CreateInitConfig<T>() where T : ArmConfigBase, new()
+    public T CreateInitConfig<T>(bool IsClear = true) where T : ArmConfigBase, new()
     {
-        return new T();
+        T theNew = new T();
+        theNew.Owner = Owner;
+        if(IsClear) {
+            theNew.ComponentStrs.Clear();
+        }
+        return theNew;
     }
     public ArmBase TheArm { get; set; }
     public PlayerDataConfig PlayerDataConfig => ConfigManager.Instance.GetConfigByClassName("PlayerData") as PlayerDataConfig;
@@ -62,6 +68,7 @@ public class ArmConfigBase : ConfigBase
     public virtual float PalsyTime { get => palsyTime; set => palsyTime = value; }
     public virtual float DizzyTime { get => dizzyTime; set => dizzyTime = value; }
     public virtual float FireTime { get => fireTime; set => fireTime = value; }
+    public virtual float EasyHurtTime{get;set;} = 5;
     public virtual float EasyHurtDegree{get;set;} = 0;
     public virtual float CrushProb{get;set;} = 0;
     public float fireTlc = 0.1f;
@@ -69,7 +76,7 @@ public class ArmConfigBase : ConfigBase
     public float GBHRate = 0;
     public float DizzyProb = 1;
     public float percentage = 0;//正常附加 的百分比
-    public float addition = 0;//伤害加成
+    public virtual float addition {get;set;} = 0;//伤害加成
     // Prefab 属性
     public override GameObject Prefab
     {

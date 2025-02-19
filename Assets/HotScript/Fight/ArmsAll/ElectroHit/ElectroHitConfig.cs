@@ -1,9 +1,14 @@
 
 
-public class ElectroHitConfig : ArmConfigBase, IBoomable
+public class ElectroHitConfig : ArmConfigBase, IBoomable,IFissionable
 {
     public ArmConfigBase BoomChildConfig =>
         ConfigManager.Instance.GetConfigByClassName("ElectroHitBoom") as ElectroHitBoomConfig;
+
+    public ArmConfigBase FissionableChildConfig => throw new System.NotImplementedException();
+
+    public string FindType { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    
     public override void Init()
     {
         base.Init();

@@ -389,6 +389,9 @@ public class ArmChildBase : MonoBehaviour, IArmChild
     {
         if (Config != null)
         {
+            foreach(var action in Config.typeActions["return"]) {
+                action.Invoke(gameObject,null);
+            }
             ChangeScale(1 / Config.SelfScale);
             Config = null;
             ObjectPoolManager.Instance.ReturnToPool(GetType().Name + "Pool", gameObject);

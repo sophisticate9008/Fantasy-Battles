@@ -479,7 +479,7 @@ public class FighteManager : ManagerBase<FighteManager>
     #endregion
 
     #region 自定义配置，目标敌人，配置的一次攻击
-    public void AttackWithCustomConfig( GameObject targetEnemy, ArmConfigBase armConfigBase, GameObject selfObj)
+    public void AttackWithCustomConfig( GameObject targetEnemy, ArmConfigBase armConfigBase, GameObject selfObj, int pos = 0)
     {
         if(targetEnemy == null || !targetEnemy.activeSelf) {
             return;
@@ -488,7 +488,12 @@ public class FighteManager : ManagerBase<FighteManager>
         GameObject prefab = armConfigBase.Prefab;
         ObjectPoolManager.Instance.CreatePool(theName, prefab, 5, 20);
         ArmChildBase obj = ObjectPoolManager.Instance.GetFromPool(theName, prefab).GetComponent<ArmChildBase>();
-        obj.transform.position = selfObj.transform.position;
+        if(pos == 0) {
+            obj.transform.position = selfObj.transform.position;
+        }else {
+            obj.transform.position = targetEnemy.transform.position;
+        }
+        
         obj.TargetEnemyByArm = targetEnemy;
         obj.Config = armConfigBase;
         obj.Init();

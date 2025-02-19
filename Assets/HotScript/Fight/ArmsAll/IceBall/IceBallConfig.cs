@@ -1,6 +1,7 @@
 
 public class IceBallConfig : ArmConfigBase, IPenetrable, IMultipleable,IReboundable
 {
+    public bool IsUpgrade { get; set; } = false;
     public int PenetrationLevel { get; set; } = 1;
     public int MultipleLevel { get; set; } = 1;
     public float AngleDifference { get; set; } = 5;

@@ -1,13 +1,17 @@
 
-public class BoomFireBallConfig : ArmConfigBase, IPenetrable, IBoomable, IHoldable,IReboundable
+public class BoomFireBallConfig : ArmConfigBase, IPenetrable, IBoomable, IHoldable,IReboundable,IFissionable
 {
-    public int PenetrationLevel { get; set; } = 1;
+    public virtual int PenetrationLevel { get; set; } = 1;
     
     public ArmConfigBase BoomChildConfig => ConfigManager.Instance.GetConfigByClassName("BoomFireBallBoom") as BoomFireBallBoomConfig;
 
     public ArmConfigBase HoldChildConfig => ConfigManager.Instance.GetConfigByClassName("BoomFireBallHold") as BoomFireBallHoldConfig;
 
     public int ReboundCount { get ; set ; } = 0;
+
+    public ArmConfigBase FissionableChildConfig => ConfigManager.Instance.GetConfigByClassName("BoomFireBallFission") as BoomFireBallFissionConfig;
+
+    public string FindType { get ; set; } ="random";
 
     public override void Init()
     {

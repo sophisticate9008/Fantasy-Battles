@@ -266,9 +266,9 @@ public static class ArmUtil
             "击杀怪物后减少0.2sCd",
             "解锁技能，效果：[伤害变为200%]",
             "每次释放造成两次伤害",
-            "解锁技能，效果：[击杀后范围内触发一次追击,不触发附加效果]",
+            "解锁技能，效果：[杀死怪物后再释放一次]",
             "命中后，触发一次弹射三次的跳跃电子，不继承强化和效果",
-            "命中后，10s内受到的所有伤害提高10%",
+            "命中后，受到的所有伤害提高10%",
         }},
         {"GroundStab", new() {
             "减速效果提高10%",
@@ -339,7 +339,7 @@ public static class ArmUtil
             "击退力度增加",
             "使敌人受到的伤害增加10%",
             "cd - 2",
-            "伤害增加100%"
+            "伤害倍率增加100%"
         }},
         {"PressureCutter", new() {
             "cd - 1",
@@ -474,9 +474,8 @@ public static class ArmUtil
             () => {SkillManager.Instance.UnlockSkill(69);},
             () => {
                 electroHitConfig.TheArm.Config.typeActions["enter"].Add((selfObj, enemyObj) => {
-                    JumpElectroConfig initConfig = ArmConfigBase.CreateInitConfig<JumpElectroConfig>();
+                    JumpElectroConfig initConfig = electroHitConfig.CreateInitConfig<JumpElectroConfig>();
                     initConfig.JumpCount = 3;
-                    initConfig.Owner = electroHitConfig.Owner;
                     List<GameObject> objs = electroHitConfig.TheArm.FindRandomTarget();
                     GameObject targetEnemy;
                     if(objs.Count > 0) {
@@ -563,8 +562,7 @@ public static class ArmUtil
             () => {tornadoConfig.Cd -= 3;},
             () => {
                 FighteManager.Instance.AddAccumulateListener(nameof(Tornado), 30, (selfObj) => {
-                    PressureCutterConfig initConfig = ArmConfigBase.CreateInitConfig<PressureCutterConfig>();
-                    initConfig.Owner = nameof(Tornado);
+                    PressureCutterConfig initConfig = tornadoConfig.CreateInitConfig<PressureCutterConfig>();
                     List<GameObject> objs = tornadoConfig.TheArm.FindRandomTarget();
                     GameObject targetEnemy;
                     if(objs.Count > 0) {
