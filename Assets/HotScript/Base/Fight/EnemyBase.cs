@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour, IEnemy
 {
+
+    public float GBHRate = 0;
     public bool isFire => buffEffects.Any(buff => buff.Contains("点燃"));
     public bool isFreezen => buffEffects.Contains("冰冻");
     public float lastAddBloodTime = 0;
@@ -50,10 +52,12 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public int ImmunityCount { get; set; }
     public int MaxLife { get; set; }
     public int NowLife { get; set; }
-    public float EasyHurt { get; set; }
+    public float EasyHurt { get; set; } = 0;
+    public int FrozenHurtCount { get; set; } = 0;
     public bool isDead;
     public virtual void Init()
     {
+        EasyHurt = 0;
         lastAddBloodTime = Time.time;
         allTypeActions = new() { { "die", new() } };
         ControlEndTime = 0;

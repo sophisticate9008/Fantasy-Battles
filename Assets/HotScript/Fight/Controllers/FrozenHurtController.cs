@@ -1,0 +1,4 @@
+public class FrozenHurtController :EffectControllerBase
+{
+
+}

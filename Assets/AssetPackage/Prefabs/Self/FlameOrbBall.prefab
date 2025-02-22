@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8563620623567956475}
   - component: {fileID: 7425681837334259376}
   - component: {fileID: 8588968906932911962}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4906,7 +4906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4867453934389835797}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FlameOrbBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4941,7 +4941,7 @@ GameObject:
   - component: {fileID: 4747997686036006772}
   - component: {fileID: 6352761616148131520}
   - component: {fileID: 8254134894588333302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}

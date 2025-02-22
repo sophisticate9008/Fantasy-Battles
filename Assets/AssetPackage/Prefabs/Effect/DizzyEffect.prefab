@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3603940957418650781}
   - component: {fileID: 2237214151764254763}
   - component: {fileID: 5554791697432558849}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DizzyEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 3129952108768550699}
   - component: {fileID: 6727207957887341797}
   - component: {fileID: 81774571081718146}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

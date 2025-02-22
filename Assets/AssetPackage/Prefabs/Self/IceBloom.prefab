@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4893527428514310857}
   - component: {fileID: 6013642778281519536}
   - component: {fileID: 5519969670831086547}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 1673444720094831282}
   - component: {fileID: 3779362340598083936}
   - component: {fileID: 115675754066972687}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9787,7 +9787,7 @@ GameObject:
   - component: {fileID: 2015516341280157953}
   - component: {fileID: 713792906602060775}
   - component: {fileID: 4501877086914029612}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14675,7 +14675,7 @@ GameObject:
   - component: {fileID: 4580044060008582959}
   - component: {fileID: 5331799723282990470}
   - component: {fileID: 2642994320357700761}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ice1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19518,7 +19518,7 @@ GameObject:
   - component: {fileID: 2707270978202950545}
   - component: {fileID: 7446123399998150465}
   - component: {fileID: 5115833292050993755}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24406,7 +24406,7 @@ GameObject:
   - component: {fileID: 3445263876013714774}
   - component: {fileID: 6364681032091973468}
   - component: {fileID: 8481479660421162477}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29294,7 +29294,7 @@ GameObject:
   - component: {fileID: 4841875244377329623}
   - component: {fileID: 3748964116051859040}
   - component: {fileID: 7014003324742006230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34182,7 +34182,7 @@ GameObject:
   - component: {fileID: 1229496747909239362}
   - component: {fileID: 4921720229610751372}
   - component: {fileID: 6929589872561825219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39070,7 +39070,7 @@ GameObject:
   - component: {fileID: 5284581615918346126}
   - component: {fileID: 8362418558089772332}
   - component: {fileID: 2265296144829832619}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43958,7 +43958,7 @@ GameObject:
   - component: {fileID: 403702870355582157}
   - component: {fileID: 3444177565933598816}
   - component: {fileID: 6662471057793915543}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48846,7 +48846,7 @@ GameObject:
   - component: {fileID: 7200231409039576255}
   - component: {fileID: 596093657607461897}
   - component: {fileID: 8863534717303156214}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53734,7 +53734,7 @@ GameObject:
   - component: {fileID: 5513382250159434716}
   - component: {fileID: 5167356057921550732}
   - component: {fileID: 2561347614489960243}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58622,7 +58622,7 @@ GameObject:
   - component: {fileID: 3310004706050520802}
   - component: {fileID: 2573001287453706894}
   - component: {fileID: 7946042015043096072}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: IceBloom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58736,6 +58736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9410d5148b1a0409ba70e78c40c404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &4279496495838163800
 GameObject:
   m_ObjectHideFlags: 0
@@ -58747,7 +58748,7 @@ GameObject:
   - component: {fileID: 839678135568691526}
   - component: {fileID: 7054566014882290110}
   - component: {fileID: 4834918764043795483}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63635,7 +63636,7 @@ GameObject:
   - component: {fileID: 2669923201201363551}
   - component: {fileID: 6667593954670506240}
   - component: {fileID: 6351983837477179996}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68523,7 +68524,7 @@ GameObject:
   - component: {fileID: 5507407857197088445}
   - component: {fileID: 278719159992676863}
   - component: {fileID: 6256905932243401274}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73411,7 +73412,7 @@ GameObject:
   - component: {fileID: 4329296044704886232}
   - component: {fileID: 5646132337315107683}
   - component: {fileID: 6444807871368422855}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ice1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78254,7 +78255,7 @@ GameObject:
   - component: {fileID: 6056172558029941621}
   - component: {fileID: 3980980183457115529}
   - component: {fileID: 8508258199842039349}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83142,7 +83143,7 @@ GameObject:
   - component: {fileID: 8319142184191677928}
   - component: {fileID: 4012014810671114232}
   - component: {fileID: 6343690471231346467}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88030,7 +88031,7 @@ GameObject:
   - component: {fileID: 3683814010053767004}
   - component: {fileID: 6224942705735447210}
   - component: {fileID: 3287463592715327000}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92918,7 +92919,7 @@ GameObject:
   - component: {fileID: 2202010975631482538}
   - component: {fileID: 2737961212660292140}
   - component: {fileID: 1687139900260143941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97806,7 +97807,7 @@ GameObject:
   - component: {fileID: 6675982280271786224}
   - component: {fileID: 8434422511318270833}
   - component: {fileID: 6533796330918916080}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102694,7 +102695,7 @@ GameObject:
   - component: {fileID: 5569398313311355157}
   - component: {fileID: 7507990619308020916}
   - component: {fileID: 7986897021395878304}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107582,7 +107583,7 @@ GameObject:
   - component: {fileID: 8256593672423707215}
   - component: {fileID: 2368441654322949071}
   - component: {fileID: 1001115856584071560}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112470,7 +112471,7 @@ GameObject:
   - component: {fileID: 2784178875810837726}
   - component: {fileID: 5768012655954117373}
   - component: {fileID: 8618742114669861219}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117300,7 +117301,7 @@ GameObject:
   - component: {fileID: 4159892565459220925}
   - component: {fileID: 3203522027030571318}
   - component: {fileID: 7880756670308417463}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122188,7 +122189,7 @@ GameObject:
   - component: {fileID: 8891000604119977735}
   - component: {fileID: 6838090584561130435}
   - component: {fileID: 5213822297773570874}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127018,7 +127019,7 @@ GameObject:
   - component: {fileID: 4736067252658441793}
   - component: {fileID: 5288090512152490758}
   - component: {fileID: 3053874849909439221}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131906,7 +131907,7 @@ GameObject:
   - component: {fileID: 6522443676486585654}
   - component: {fileID: 748100326729172708}
   - component: {fileID: 8036752793382561967}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: patical1 (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

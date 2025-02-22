@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2055288928351293265}
   - component: {fileID: 683802954262859201}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 1396244286001801673}
   - component: {fileID: 6379037970307316721}
   - component: {fileID: 1491784282393166488}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4977,7 +4977,7 @@ GameObject:
   - component: {fileID: 1496130772605893012}
   - component: {fileID: 6974739536923647246}
   - component: {fileID: 4459077280613561816}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9805,7 +9805,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6715876607578178835}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StartVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9843,7 +9843,7 @@ GameObject:
   - component: {fileID: 8721387342990799075}
   - component: {fileID: 7457539081469939620}
   - component: {fileID: 6057976143127554493}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9880,6 +9880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b9dd0e4786afe4b8d1e0b42a81abd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!58 &1946065067086821811
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10037,7 +10038,7 @@ GameObject:
   - component: {fileID: 927588030482458524}
   - component: {fileID: 7442191386675023494}
   - component: {fileID: 3906783083283025054}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14867,7 +14868,7 @@ GameObject:
   - component: {fileID: 4902828659429320540}
   - component: {fileID: 6597607084800075998}
   - component: {fileID: 3982021641507533670}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19695,7 +19696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3102659451831908369}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EndVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}

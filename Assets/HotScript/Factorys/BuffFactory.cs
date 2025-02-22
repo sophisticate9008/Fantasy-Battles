@@ -14,6 +14,9 @@ public static class BuffFactory
         {
             return new Fire(buffName, duration, selfObj, enemyObj, (float)args[0]);
         }
+        if(buffName.Contains("易伤")) {
+            return new EasyHurt(buffName, duration, selfObj, enemyObj, (float)args[0]);
+        }
         return buffName switch
         {
             // 不需要自定义参数的 Buffs

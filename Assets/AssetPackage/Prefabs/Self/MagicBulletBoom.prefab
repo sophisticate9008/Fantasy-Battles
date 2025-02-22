@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 314053973006468102}
   - component: {fileID: 6882581940128910021}
   - component: {fileID: 5122421999201483451}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 3997006119349439125}
   - component: {fileID: 1303487458391190613}
   - component: {fileID: 1775712702546595496}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9787,7 +9787,7 @@ GameObject:
   - component: {fileID: 4656321026916370899}
   - component: {fileID: 7682934169347809508}
   - component: {fileID: 6025289728983810469}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MagicBulletBoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9859,6 +9859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb29e161c82cfc142a4db60489d7f0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &8655644464814628550
 GameObject:
   m_ObjectHideFlags: 0
@@ -9870,7 +9871,7 @@ GameObject:
   - component: {fileID: 7731161438186766096}
   - component: {fileID: 6411142227782760980}
   - component: {fileID: 5537349825921958304}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

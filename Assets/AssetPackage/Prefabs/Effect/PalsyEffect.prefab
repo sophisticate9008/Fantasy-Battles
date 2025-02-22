@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8710310841823764828}
   - component: {fileID: 7655548302539333060}
   - component: {fileID: 1524337082872956707}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PalsyEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 5523389651096435826}
   - component: {fileID: 7901308730715886726}
   - component: {fileID: 1115816853947947125}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

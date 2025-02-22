@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6263853257899765986}
   - component: {fileID: 7026307030235609007}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 108944573020050684}
   - component: {fileID: 7366903815666898217}
   - component: {fileID: 4194367304546662297}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FreezenEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1164848909636430540}
   - component: {fileID: 5478392713829263823}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: IceBulk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

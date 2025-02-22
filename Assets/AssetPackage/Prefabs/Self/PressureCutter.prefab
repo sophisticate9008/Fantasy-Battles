@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2753206996511028004}
   - component: {fileID: 188275378701351423}
   - component: {fileID: 1662661208273622426}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 6269594785724510871}
   - component: {fileID: 4272938949225065284}
   - component: {fileID: -1834215460383464210}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PressureCutter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4922,6 +4922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ff2c5d6ad141c4ebd998ecc22a7fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &7715233634339598382
 GameObject:
   m_ObjectHideFlags: 0
@@ -4933,7 +4934,7 @@ GameObject:
   - component: {fileID: 7302215552913793444}
   - component: {fileID: 3714262762198893650}
   - component: {fileID: 5739773494186689156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

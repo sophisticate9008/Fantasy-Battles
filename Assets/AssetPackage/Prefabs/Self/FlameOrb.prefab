@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 836343796528182550}
   - component: {fileID: 2716170315775825814}
   - component: {fileID: 3809983937814928124}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FlameOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 689176da18d04384ca94e170a2f5eea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &2758833025128939708
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +106,7 @@ GameObject:
   - component: {fileID: 3727196864672232892}
   - component: {fileID: 7663160741966561600}
   - component: {fileID: 516762186083466292}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4935,7 +4936,7 @@ GameObject:
   - component: {fileID: 7504662966435328570}
   - component: {fileID: 6566087005608451380}
   - component: {fileID: 766372765060807028}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: show
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9823,7 +9824,7 @@ GameObject:
   - component: {fileID: 8356149271240931691}
   - component: {fileID: 1088691834721392574}
   - component: {fileID: 6185924879276987670}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: const
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14653,7 +14654,7 @@ GameObject:
   - component: {fileID: 2218315345907800615}
   - component: {fileID: 5144568806989214585}
   - component: {fileID: 8172446671217934362}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: range
   m_TagString: Untagged
   m_Icon: {fileID: 0}

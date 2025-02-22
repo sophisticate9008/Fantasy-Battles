@@ -463,7 +463,7 @@ public static class ArmUtil
             () => {iceBallConfig.FreezenProb += 0.3f;},
             () => {iceBallConfig.ReboundCount += 1;},
             () => {iceBallConfig.PenetrationLevel += 1;},
-            () => {globalConfig.freezenHurtMaxLevel += 5;},
+            () => {globalConfig.frozenHurtMaxCount += 5;},
         }},
         {"ElectroHit", new () {
             () => {electroHitConfig.Tlc += 0.5f;},

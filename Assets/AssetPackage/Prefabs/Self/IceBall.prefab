@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5602177312598996264}
   - component: {fileID: 5526187377223040305}
   - component: {fileID: 4728822518442955427}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: IceBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9dda3dd3931d4049a852fcd2249b9b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &5174898026870279665
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +95,7 @@ GameObject:
   - component: {fileID: 4302041774014351233}
   - component: {fileID: 389195407525687537}
   - component: {fileID: 1819050795235141094}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4924,7 +4925,7 @@ GameObject:
   - component: {fileID: 6865255844749629706}
   - component: {fileID: 1700578435855615796}
   - component: {fileID: 2357871483917302539}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9754,7 +9755,7 @@ GameObject:
   - component: {fileID: 5625390194192833016}
   - component: {fileID: 1492255924234991526}
   - component: {fileID: 1161759879519663638}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}

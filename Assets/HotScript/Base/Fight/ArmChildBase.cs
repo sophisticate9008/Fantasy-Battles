@@ -13,12 +13,15 @@ public class ArmChildBase : MonoBehaviour, IArmChild
     public bool isUseComponent = true;
     private float alreadyStayTime;
     ArmConfigBase config;
-    public ArmConfigBase Config {
-        get{
+    public ArmConfigBase Config
+    {
+        get
+        {
             config ??= ConfigManager.Instance.GetConfigByClassName(GetType().Name) as ArmConfigBase;
             return config;
         }
-        set {
+        set
+        {
             config = value;
         }
     }
@@ -211,9 +214,12 @@ public class ArmChildBase : MonoBehaviour, IArmChild
                 FighteManager.Instance.AddTriggerCount(GetType().Name, gameObject);
                 CreateDamage(obj);
             }
-            foreach(var item in Config.typeActions) {
-                if (item.Key == key) {
-                    foreach(var action in item.Value) {
+            foreach (var item in Config.typeActions)
+            {
+                if (item.Key == key)
+                {
+                    foreach (var action in item.Value)
+                    {
                         action.Invoke(gameObject, obj);
                     }
                 }
@@ -241,7 +247,7 @@ public class ArmChildBase : MonoBehaviour, IArmChild
         {
             for (int i = 0; i < Config.harmCount; i++)
             {
-                FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, percentage:Config.percentage);
+                FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, percentage: Config.percentage);
             }
         }
 
@@ -252,7 +258,7 @@ public class ArmChildBase : MonoBehaviour, IArmChild
         {
             for (int i = 0; i < Config.harmCount; i++)
             {
-                FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, tlc:tlc,percentage:Config.percentage);
+                FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, tlc: tlc, percentage: Config.percentage);
             }
         }
     }
@@ -389,8 +395,21 @@ public class ArmChildBase : MonoBehaviour, IArmChild
     {
         if (Config != null)
         {
-            foreach(var action in Config.typeActions["return"]) {
-                action.Invoke(gameObject,null);
+            foreach (var action in Config.typeActions["return"])
+            {
+                action.Invoke(gameObject, null);
+            }
+            foreach (var component in InstalledComponents)
+            {
+
+                foreach (var _ in component.Value.Types)
+                {
+
+                    if (_ == "return" && isUseComponent)
+                    {
+                        component.Value.Exec(null);
+                    }
+                }
             }
             ChangeScale(1 / Config.SelfScale);
             Config = null;
@@ -485,6 +504,10 @@ public class ArmChildBase : MonoBehaviour, IArmChild
     public virtual ArmChildBase GetOneFromPool()
     {
         ArmChildBase obj = ObjectPoolManager.Instance.GetFromPool(GetType().Name + "Pool", Config.Prefab).GetComponent<ArmChildBase>();
+        return ProcessObj(obj);
+    }
+    public virtual ArmChildBase ProcessObj(ArmChildBase obj)
+    {
         return obj;
     }
     public void ApplyForce(Collider2D collider)

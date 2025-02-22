@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6313953797237113072}
   - component: {fileID: 6437410756680100545}
   - component: {fileID: 6582975104134442209}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 2734345086844065634}
   - component: {fileID: 932022710580186781}
   - component: {fileID: 665505287226544921}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BoomFireBallBoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4971,6 +4971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5661450a27c4742a4121b176ae0656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &3259767463793315902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4982,7 +4983,7 @@ GameObject:
   - component: {fileID: 3778809518682646857}
   - component: {fileID: 4548732167136487220}
   - component: {fileID: 8386971329750418905}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9870,7 +9871,7 @@ GameObject:
   - component: {fileID: 2868873634512066160}
   - component: {fileID: 549289222246254602}
   - component: {fileID: 1103222150805297660}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

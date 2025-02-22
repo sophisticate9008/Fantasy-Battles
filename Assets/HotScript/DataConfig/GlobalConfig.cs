@@ -125,7 +125,7 @@ public class GlobalConfig : ConfigBase
     public virtual float[] DamageWithPercentageAndMax { get; set; } = new float[2] { 0, 0 };
 
     public virtual float EnemyBuffTimeAddition { get; set; } = 1;
-    public int freezenHurtMaxLevel = 0;
+    public int frozenHurtMaxCount = 0;
     // 获取伤害加成的字典
     public virtual Dictionary<string, float> GetDamageAddition()
     {

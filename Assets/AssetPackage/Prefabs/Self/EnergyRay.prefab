@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6950117540441703531}
   - component: {fileID: 4999679007063504714}
   - component: {fileID: 6634251934042129563}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnergyRay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5d7278b9d645647818cfcd9d38e892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &4058717034191542957
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3941556536014045763}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StartVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +136,7 @@ GameObject:
   - component: {fileID: 3730726874830833394}
   - component: {fileID: 8939073344657919322}
   - component: {fileID: 223303709061885709}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4964,7 +4965,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3112821281662865789}
   - component: {fileID: 2971428507691692574}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}

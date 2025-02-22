@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7272357761617183939}
   - component: {fileID: 5224785164992234600}
   - component: {fileID: 7723015417413398880}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4843,7 +4843,7 @@ GameObject:
   - component: {fileID: 8300287777376169654}
   - component: {fileID: 6961049135216252291}
   - component: {fileID: 6882395036733151434}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9673,7 +9673,7 @@ GameObject:
   - component: {fileID: 5814020838751599244}
   - component: {fileID: 2439699871689105831}
   - component: {fileID: 6101959453085288933}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WhirlingBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9754,6 +9754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35def7fae39e49c4782663945ccff386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &5531257066894868875
 GameObject:
   m_ObjectHideFlags: 0
@@ -9765,7 +9766,7 @@ GameObject:
   - component: {fileID: 2253025066281564581}
   - component: {fileID: 188438022229967267}
   - component: {fileID: 4331035005394789652}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9870,8 +9871,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 5
-      minScalar: 3
+      scalar: 3
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -11245,7 +11246,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -14595,7 +14596,7 @@ GameObject:
   - component: {fileID: 3919297828274372270}
   - component: {fileID: 5287159189023851825}
   - component: {fileID: 243761725794887859}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}

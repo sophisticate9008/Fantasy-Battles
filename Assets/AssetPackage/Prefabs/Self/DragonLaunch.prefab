@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5995360241073141961}
   - component: {fileID: 787408819356244822}
   - component: {fileID: 8584275862994647863}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4844,7 +4844,7 @@ GameObject:
   - component: {fileID: 3814352904027340968}
   - component: {fileID: 4391578091591542893}
   - component: {fileID: 8573864128144619336}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9732,7 +9732,7 @@ GameObject:
   - component: {fileID: 1338525660906273938}
   - component: {fileID: 633060267838600822}
   - component: {fileID: 2908132565326204444}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14620,7 +14620,7 @@ GameObject:
   - component: {fileID: 7210989327427929446}
   - component: {fileID: 5952691944653139252}
   - component: {fileID: 155270604122310237}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19508,7 +19508,7 @@ GameObject:
   - component: {fileID: 4052964662998746555}
   - component: {fileID: 2704472549815862491}
   - component: {fileID: 2602654404872093146}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DragonLaunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19578,3 +19578,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7726253ee32e08e4b84c54d44826c44b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1

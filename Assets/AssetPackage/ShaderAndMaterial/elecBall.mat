@@ -50,7 +50,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Seed: 5
+    - _Seed: 30
     m_Colors:
     - _Color: {r: 4.4516435, g: 2.1943173, b: 0, a: 0}
   m_BuildTextureStacks: []

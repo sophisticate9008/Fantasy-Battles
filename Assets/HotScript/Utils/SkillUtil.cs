@@ -685,7 +685,10 @@ public static class SkillUtil
                     eb.allTypeActions["die"].Add(() =>
                     {
                         var InitConfig = ArmUtil.boomFireBallConfig.CreateInitConfig<BoomFireBallBoomConfig>(false);
-                        FighteManager.Instance.AttackWithCustomConfig(enemyObj, InitConfig, selfObj, 1);
+                        if(eb.buffEffects.Contains(ArmUtil.boomFireBallConfig.ChineseOwner + "点燃")) {
+                            FighteManager.Instance.AttackWithCustomConfig(enemyObj, InitConfig, selfObj, 1);
+                        }
+                        
                     });
                 });
             }
@@ -707,7 +710,7 @@ public static class SkillUtil
             ,//"寒冰弹伤害+60%,穿透+1",
             52 => () => { ArmUtil.iceBallConfig.addition += 1; }
             ,//"寒冰弹伤害+100%",
-            53 => () => { ArmUtil.iceBallConfig.ComponentStrs.Add("冻伤"); ArmUtil.globalConfig.freezenHurtMaxLevel += 5; }
+            53 => () => { ArmUtil.iceBallConfig.ComponentStrs.Add("冻伤"); ArmUtil.globalConfig.frozenHurtMaxCount += 5; }
             ,//"寒冰弹叠加冻伤,上限加5层，持续5s",
             54 => () => { ArmUtil.iceBallConfig.PenetrationLevel += 1; ArmUtil.iceBallConfig.MaxForce *= 0.6f; }
             ,//"寒冰弹穿透+1,击退+60%",
@@ -741,8 +744,8 @@ public static class SkillUtil
             72 => () => { ArmUtil.electroHitConfig.BoomChildConfig.SelfScale += 0.8f; }
             , //"爆炸范围+80%",
             73 => () => { ArmUtil.electroHitConfig.ComponentStrs.Add("Hold"); }
-            , //"爆炸范围内生成电磁场,持续两秒,减速50%,造成攻击力50%的伤害",
-            74 => () => { }
+            , //"爆炸范围内生成电磁场,持续两秒,减速50%,造成本体10%倍率的伤害",
+            74 => () => {ArmUtil.electroHitConfig.HoldChildConfig.Duration += 4; }
             ,//"电磁场持续时间+4s",
             75 => () => { ArmUtil.electroHitConfig.addition += 2; }
             ,//"电流直击进化,相关所有伤害+200%",
@@ -827,7 +830,7 @@ public static class SkillUtil
             , //持续时间+2s",
             130 => () => { ArmUtil.iceBloomConfig.AttackCount += 1; }
             , //多释放+1",
-            132 => () => { ArmUtil.iceBloomConfig.ComponentStrs.Add("冻伤"); ArmUtil.globalConfig.freezenHurtMaxLevel += 5; }
+            132 => () => { ArmUtil.iceBloomConfig.ComponentStrs.Add("冻伤"); ArmUtil.globalConfig.frozenHurtMaxCount += 5; }
             , //可以叠加冻伤",
             131 => () =>
             {
@@ -842,13 +845,7 @@ public static class SkillUtil
             , //5%概率深度冻结,无视冰冻抗性",
             133 => () =>
             {
-                ArmUtil.iceBloomConfig.typeActions["return"].Add((selfObj, enemyObj) =>
-                {
-                    for (int i = 0; i < ArmUtil.iceBloomConfig.IceChipNum; i++)
-                    {
-
-                    }
-                });
+                ArmUtil.iceBloomConfig.ComponentStrs.Add("退出时分裂");
             }
             , //结束后释放6个冰魔法弹冰片",
 
@@ -948,7 +945,7 @@ public static class SkillUtil
                     EnemyBase eb = enemyObj.GetComponent<EnemyBase>();
                     eb.allTypeActions["die"].Add(() =>
                     {
-                        if (eb.buffEffects.Contains("滞留火焰点燃"))
+                        if (eb.buffEffects.Contains(ArmUtil.flameOrbConfig.ChineseOwner + "点燃"))
                         {
                             FlameOrbConfig initConfig = ArmUtil.flameOrbConfig.CreateInitConfig<FlameOrbConfig>();
                             initConfig.ComponentStrs.Clear();
@@ -996,6 +993,7 @@ public static class SkillUtil
                 });
             }
             , //每次命中30次敌人时,释放一个无强化的小型利刃",
+            _ => throw new NotImplementedException(),
         };
 
     }

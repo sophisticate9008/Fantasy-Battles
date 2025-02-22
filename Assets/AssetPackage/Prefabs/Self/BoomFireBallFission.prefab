@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 640635015360861315}
   - component: {fileID: 2329073882528516972}
   - component: {fileID: 4090766532685889323}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4840,7 +4840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6637800511217568276}
   - component: {fileID: 3128098059080068034}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BoomFireBallFission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4911,7 +4911,7 @@ GameObject:
   - component: {fileID: 6493263664552721833}
   - component: {fileID: 5546635178729980579}
   - component: {fileID: 8747931240987197293}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9740,7 +9740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7210769842673989903}
   - component: {fileID: 8796573819577945229}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

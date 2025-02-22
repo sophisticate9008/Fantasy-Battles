@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3580493887662983231}
   - component: {fileID: 3000793971882674868}
   - component: {fileID: 4679413129392404643}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 1502860214879430663}
   - component: {fileID: 7387244705479152502}
   - component: {fileID: 6320031651493739820}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BoomFireBallHold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4924,6 +4924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ea076a8f9bda74d8971b71a85696e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUseComponent: 1
 --- !u!1 &3835546545317985754
 GameObject:
   m_ObjectHideFlags: 0
@@ -4935,7 +4936,7 @@ GameObject:
   - component: {fileID: 6736186145191201205}
   - component: {fileID: 1447606970718308587}
   - component: {fileID: 4655774321730376083}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: show
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9823,7 +9824,7 @@ GameObject:
   - component: {fileID: 8426637521626377904}
   - component: {fileID: 2320419084064048715}
   - component: {fileID: 2041076302575341569}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: const
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14653,7 +14654,7 @@ GameObject:
   - component: {fileID: 8907436911780949319}
   - component: {fileID: 2241646185198584796}
   - component: {fileID: 3729249942494751738}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: range
   m_TagString: Untagged
   m_Icon: {fileID: 0}

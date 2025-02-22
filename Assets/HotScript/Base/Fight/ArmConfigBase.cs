@@ -8,6 +8,7 @@ using YooAsset;
 [System.Serializable] // 标记为可序列化
 public class ArmConfigBase : ConfigBase
 {
+    public string ChineseOwner => ArmUtil.ArmTypeToArmName(Owner);
     public Dictionary<string, List<Action<GameObject, GameObject>>> typeActions = new(){
         {"enter", new()},
         {"stay", new()},
