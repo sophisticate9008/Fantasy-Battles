@@ -3,20 +3,41 @@ using System.Linq;
 using UnityEngine;
 public class SkillManager : ManagerBase<SkillManager>
 {
+
     private readonly List<SkillNode> selectedSkills = new();
     private readonly List<int> initialSkillIds = new() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-    public List<SkillNode> Skills = SkillUtil.AllSkill();
-    public Dictionary<int, List<int>> preList = SkillUtil.GetPreListDict();
+    private List<SkillNode> _cachedSkills;
+    private Dictionary<int, List<int>> _cachedPreList;
+
+    // 使用懒加载缓存 Skills
+    public List<SkillNode> Skills
+    {
+        get
+        {
+            _cachedSkills ??= SkillUtil.AllSkill();  // 第一次访问时计算并缓存
+            return _cachedSkills;
+        }
+    }
+
+    // 使用懒加载缓存 preList
+    public Dictionary<int, List<int>> PreList
+    {
+        get
+        {
+            _cachedPreList ??= SkillUtil.GetPreListDict();  // 第一次访问时计算并缓存
+            return _cachedPreList;
+        }
+    }
     private int initialSkillCount = 0;
     #region 前置列表
     public List<int> IdToPreList(int id)
     {
-        return preList[id];
+        return PreList[id];
     }
     #endregion
     public void CancelPreList(int id)
     {
-        preList[id].Clear();
+        PreList[id].Clear();
     }
     public readonly List<string> SelectedArmTypes = new();
     public void UnlockSkill(int id)

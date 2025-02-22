@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class Constant
 {
-    public static readonly string ConfigsPath = Path.Combine(Application.persistentDataPath, "Configs");
+        public static readonly string ConfigsPath = Path.Combine(Application.persistentDataPath, "Configs");
     public static readonly string DataPath = Path.Combine(Application.persistentDataPath, "Data");
     public static readonly int JewelMaxId = 10;
     public static readonly int MissionMaxId = 2;
