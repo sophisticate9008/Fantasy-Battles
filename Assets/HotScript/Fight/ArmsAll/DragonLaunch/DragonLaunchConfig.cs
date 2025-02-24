@@ -6,7 +6,6 @@ public class DragonLaunchConfig : ArmConfigBase
         base.Init();
         Duration = 0.5f;
         OnType = "enter";
-        ComponentStrs.Add("眩晕");
         MaxForce = 100;
     }
 }

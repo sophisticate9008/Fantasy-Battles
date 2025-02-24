@@ -14,7 +14,6 @@ public class MagicBulletFissionConfig : ArmConfigBase, IMultipleable, IPenetrabl
     public int MultipleLevel { get; set; } = 0;
     public float AngleDifference { get; set; } = 15f;
     public override float CritRate => MagicBulletConfig.CritRate;
-    public override string Owner => MagicBulletConfig.Name;
 
     public int PenetrationLevel { get => MagicBulletConfig.PenetrationLevel; set { } }
 

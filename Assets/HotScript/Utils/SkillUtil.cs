@@ -33,7 +33,7 @@ public static class SkillUtil
         {"icon_GroundStab", CommonUtil.AsList(3, 85, 86, 87, 88, 89, 90, 91)},
         {"icon_EnergyRay", CommonUtil.AsList(4, 95, 96, 97, 98, 99, 100, 101)},
         {"icon_Laser", CommonUtil.AsList(5, 111, 112, 113, 114, 115, 116, 117)},
-        {"icon_IceBloom", CommonUtil.AsList(6, 127, 128, 129, 130, 131, 132)},
+        {"icon_IceBloom", CommonUtil.AsList(6, 127, 128, 129, 130, 131, 132,133)},
         {"icon_JumpElectro", CommonUtil.AsList(7, 142, 143, 144, 145, 146, 147, 148, 149, 150)},
         {"icon_Tornado", CommonUtil.AsList(8, 160, 161, 162, 163, 164, 165, 166, 167)},
         {"icon_DragonLaunch", CommonUtil.AsList(9, 177, 178, 179, 180, 181)},
@@ -135,14 +135,14 @@ public static class SkillUtil
 
             28 => "高爆火球冲撞伤害+75%,爆炸击退+60%",
             29 => "高爆火球爆炸伤害+80%",
-            30 => "高爆火球爆炸范围+80%",
+            30 => "高爆火球爆炸范围+40%",
             31 => "高爆火球数量+1",
             32 => "高爆火球数量+2",
             33 => "高爆火球点燃敌人6s",
             34 => "高爆火球点燃附加最大生命值3%",
             35 => "高爆火球击中释放3个火焰碎片",
             36 => "高爆火球点燃的怪物死亡后爆炸",
-            37 => "高爆火球进化,穿透+2, 爆炸范围+80%, 爆炸击退+60%",
+            37 => "高爆火球进化,穿透+2, 爆炸范围+40%, 爆炸击退+60%",
             //预留10个
             48 => "寒冰弹齐射+1",
             50 => "寒冰弹伤害-20%, 穿透+2",
@@ -196,7 +196,7 @@ public static class SkillUtil
 
             //寒冰绽放
             127 => "伤害+60%",
-            128 => "范围+100%",
+            128 => "范围+80%",
             129 => "持续时间+2s",
             130 => "多释放+1",
             132 => "可以叠加冻伤,冻伤层数上限+5",
@@ -235,7 +235,6 @@ public static class SkillUtil
             //压缩气刃
             191 => "次数+1",
             192 => "伤害-20%,次数+2",
-
             194 => "齐射+1",
             195 => "穿透+6",
             196 => "体积增大50%,伤害增加50%",
@@ -369,6 +368,8 @@ public static class SkillUtil
             148 => "受伤增幅",
             149 => "爆炸效果",
             150 => "爆炸范围扩展",
+
+
             160 => "伤害增幅",
             161 => "速度增幅",
             162 => "持续增幅",
@@ -377,6 +378,8 @@ public static class SkillUtil
             165 => "范围扩展",
             166 => "冰龙卷",
             167 => "雷龙卷",
+
+
             177 => "数量提升I",
             178 => "数量提升II",
             179 => "范围增幅",
@@ -390,6 +393,7 @@ public static class SkillUtil
             197 => "伤害强化",
             198 => "冷却减少",
             199 => "击退强化",
+
             209 => "数量增幅I",
             210 => "数量增幅II",
             211 => "灼烧增伤",
@@ -398,6 +402,7 @@ public static class SkillUtil
             214 => "减速效果",
             215 => "燃烧区域",
             216 => "燃油进化",
+            
             226 => "速度增幅",
             227 => "点燃附加",
             228 => "眩晕附加",
@@ -471,7 +476,7 @@ public static class SkillUtil
     }
     public static List<int> IdToPreList(int id)
     {
-        if (CommonUtil.AsList(28, 29, 30, 31, 32, 33, 35, 36).Contains(id))
+        if (CommonUtil.AsList(28, 29, 30, 31, 32, 33, 35).Contains(id))
         {
             return CommonUtil.AsList(0);
         }
@@ -535,6 +540,7 @@ public static class SkillUtil
             25 => CommonUtil.AsList(19),
             37 => CommonUtil.AsList(28, 29, 33),
             34 => CommonUtil.AsList(33),
+            36 =>  CommonUtil.AsList(33),
             56 => CommonUtil.AsList(53, 55),
             72 => CommonUtil.AsList(71),
             73 => CommonUtil.AsList(71),
@@ -665,7 +671,7 @@ public static class SkillUtil
             ,//"高爆火球冲撞伤害+75%,爆炸击退+60%",
             29 => () => { ArmUtil.boomFireBallConfig.addition += 0.8f; }
             ,//"高爆火球爆炸伤害+80%",
-            30 => () => { ArmUtil.boomFireBallConfig.BoomChildConfig.SelfScale += 0.8f; }
+            30 => () => { ArmUtil.boomFireBallConfig.BoomChildConfig.SelfScale += 0.4f; }
             ,//"高爆火球爆炸范围+80%",
             31 => () => { ArmUtil.boomFireBallConfig.AttackCount += 1; }
             ,//"高爆火球数量+1",
@@ -697,7 +703,7 @@ public static class SkillUtil
             {
                 ArmUtil.boomFireBallConfig.PenetrationLevel += 2;
                 ArmUtil.boomFireBallConfig.SelfScale *= 1.5f;
-                ArmUtil.boomFireBallConfig.BoomChildConfig.SelfScale += 0.8f;
+                ArmUtil.boomFireBallConfig.BoomChildConfig.SelfScale += 0.4f;
                 ArmUtil.boomFireBallConfig.BoomChildConfig.MaxForce *= 1.6f;
             }
             , //"高爆火球进化,穿透+2, 爆炸范围+80%, 爆炸击退+60%",
@@ -824,8 +830,8 @@ public static class SkillUtil
             //寒冰绽放
             127 => () => { ArmUtil.iceBloomConfig.addition += 0.6f; }
             , //伤害+60%",
-            128 => () => { ArmUtil.iceBloomConfig.SelfScale += 1; }
-            , //范围+100%",
+            128 => () => { ArmUtil.iceBloomConfig.SelfScale += 0.8f; }
+            , //范围+80%",
             129 => () => { ArmUtil.iceBloomConfig.Duration += 2; }
             , //持续时间+2s",
             130 => () => { ArmUtil.iceBloomConfig.AttackCount += 1; }
@@ -880,7 +886,7 @@ public static class SkillUtil
             //龙卷风
             160 => () => { ArmUtil.tornadoConfig.addition += 0.6f; }
             , //伤害+60%",
-            161 => () => { ArmUtil.tornadoConfig.Speed *= 0.4f; ArmUtil.tornadoConfig.Duration += 2f; }
+            161 => () => { ArmUtil.tornadoConfig.Speed *= 1.4f; ArmUtil.tornadoConfig.Duration += 2f; }
             , //速度+40%,持续时间+40%",
             162 => () => { ArmUtil.tornadoConfig.Duration *= 2f; }
             , //持续时间+100%",
@@ -890,9 +896,9 @@ public static class SkillUtil
             , //双重龙卷,持续时间-30%",
             165 => () => { ArmUtil.tornadoConfig.SelfScale += 0.5f; }
             , //范围+50%",
-            166 => () => { ArmUtil.tornadoConfig.IsIceTornado = false; }
+            166 => () => { ArmUtil.tornadoConfig.IsIceTornado = true;   ArmUtil.tornadoConfig.ComponentStrs.Add("冰冻"); ArmUtil.tornadoConfig.FreezeTime = 0.2f;}
             , //冰龙卷",
-            167 => () => { ArmUtil.tornadoConfig.IsElecTornado = true; }
+            167 => () => { ArmUtil.tornadoConfig.IsElecTornado = true; ArmUtil.tornadoConfig.ComponentStrs.Add("麻痹"); ArmUtil.tornadoConfig.PalsyTime = 0.2f;}
             , //雷龙卷",
 
             //飞龙投射

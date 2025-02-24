@@ -10,6 +10,7 @@ public class Monster7Config : EnemyConfigBase
         Blocks = 1;
         RangeFire = 0;
         CharacterType = "normal";
+        ActionType = "sky";
         Damage = 30;
         DerateWind = -0.5f;
         DerateEnergy = -0.5f;

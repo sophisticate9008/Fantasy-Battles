@@ -25,19 +25,29 @@ public class GroundStab : ArmChildBase
             GameObject TheEffect = GetEffectOneFromPool();
             if (ConcreteConfig.isFire) {
                 TheEffect.transform.RecursiveFind("fire").gameObject.SetActive(true);
+                ChangeEffectScale(TheEffect.transform,false);
             }
             TheEffect.transform.position = transform.position;
             //防止父对象消失丢失对特效的控制
-            ToolManager.Instance.SetTimeout(() => ReturnToPool(TheEffect), callEffectCd);
+            ToolManager.Instance.SetTimeout(() => EffectReturnToPool(TheEffect), callEffectCd);
             yield return new WaitForSeconds(callEffectCd);
+        }
+    }
+    void ChangeEffectScale( Transform effect,bool isRecovery) {
+
+        if(isRecovery) {
+            effect.localScale /= Config.SelfScale;
+        }else {
+            effect.localScale *= Config.SelfScale;
         }
     }
     GameObject GetEffectOneFromPool()
     {
         return ObjectPoolManager.Instance.GetFromPool("GroundStabEffect", EffectPrefab);
     }
-    void ReturnToPool(GameObject obj)
+    void EffectReturnToPool(GameObject obj)
     {
+        ChangeEffectScale(obj.transform,true);
         ObjectPoolManager.Instance.ReturnToPool("GroundStabEffect", obj);
     }
 

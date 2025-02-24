@@ -34,8 +34,8 @@ public class ResourceManager : MonoBehaviour
     protected void AwakeCallBack()
     {
         // DisableOldTLS1();
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-        ServicePointManager.ServerCertificateValidationCallback += (p1, p2, p3, p4) => true;
+        // ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        // ServicePointManager.ServerCertificateValidationCallback += (p1, p2, p3, p4) => true;
         DontDestroyOnLoad(gameObject);
     }
     private void Start()
@@ -386,7 +386,7 @@ public class ResourceManager : MonoBehaviour
             UnityEngine.TextAsset textAsset = assetObj as UnityEngine.TextAsset;
             Assembly.Load(textAsset.bytes);
         }
-        // LoadScene();
+        LoadScene();
         // SceneManager.LoadScene("Fight");
     }
 
@@ -410,7 +410,7 @@ public class ResourceManager : MonoBehaviour
     // }
     private void LoadScene()
     {
-        string location = "Fight";
+        string location = "Begin";
         var sceneMode = UnityEngine.SceneManagement.LoadSceneMode.Single;
         // bool suspendLoad = false;
         package.LoadSceneSync(location, sceneMode);

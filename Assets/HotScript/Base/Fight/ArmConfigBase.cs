@@ -43,7 +43,7 @@ public class ArmConfigBase : ConfigBase
     [SerializeField] private float buffDamageTlc = 0.1f;//待定
     [SerializeField] private float selfScale = 1;
     //持续时间
-    [SerializeField] private float duration = 20f;
+    [SerializeField] private float duration = 2f;
     //力的程度
     [SerializeField] private string owner = "";
     [SerializeField] private string damageType;
@@ -269,6 +269,7 @@ public class ArmConfigBase : ConfigBase
             {
                 IPenetrable config = this as IPenetrable;
                 config.PenetrationLevel = armProp.penetration;
+                Duration = 20f;
             }
         }
     }

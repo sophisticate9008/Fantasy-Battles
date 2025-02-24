@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tornado : ArmChildBase
 {
-    private float smoothDamp = 1f; 
+    private float smoothDamp = 1f;
     public TornadoConfig tornadoConfig => Config as TornadoConfig;
     public List<GameObject> exceptObjs = new();
     public override void Init()
@@ -12,7 +12,29 @@ public class Tornado : ArmChildBase
         base.Init();
         exceptObjs.Clear();
     }
-
+    public override ArmChildBase ProcessObj(ArmChildBase obj)
+    {
+        if (tornadoConfig.IsElecTornado)
+        {
+            transform.GetChild(1).gameObject.SetActive(true);
+        }
+        if (tornadoConfig.IsIceTornado)
+        {
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
+        return base.ProcessObj(obj);
+    }
+    public override void CreateDamageOther(GameObject enemyObj)
+    {
+        if (tornadoConfig.IsElecTornado)
+        {
+            FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, percentage: Config.percentage, damageType: "elec");
+        }
+        if (tornadoConfig.IsIceTornado)
+        {
+            FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, percentage: Config.percentage, damageType: "ice");
+        }
+    }
     public override void Move()
     {
         int maxExcept = (EnemyManager.Instance.liveCount + 100) / 4;
@@ -48,7 +70,7 @@ public class Tornado : ArmChildBase
         base.OnTriggerStay2D(collider);
         if (TargetEnemy == collider.gameObject)
         {
-            ToolManager.Instance.SetTimeout(() => TargetEnemy = null,  0.05f);
+            ToolManager.Instance.SetTimeout(() => TargetEnemy = null, 0.05f);
             TargetEnemy = null;
 
         }

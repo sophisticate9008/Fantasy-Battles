@@ -12,6 +12,7 @@ public class Monster4Config : EnemyConfigBase
         Blocks = 1;
         RangeFire = 1.2f;
         CharacterType = "normal";
+        ActionType = "sky";
         Damage = 30;
         SelfScale = 1.5f;
         attackRange = AttackRange.tel;

@@ -35,7 +35,7 @@ public class MagicBulletConfig : ArmConfigBase, IMultipleable, IFissionable, IPe
         // 初始化 MagicBulletConfig 的属性
         Speed = 10f;
         ComponentStrs.Add("穿透");
-        ComponentStrs.Add("点燃");
+        // ComponentStrs.Add("点燃");
         // ComponentStrs.Add("冰冻");
         // ComponentStrs.Add("麻痹");
         // ComponentStrs.Add("眩晕");

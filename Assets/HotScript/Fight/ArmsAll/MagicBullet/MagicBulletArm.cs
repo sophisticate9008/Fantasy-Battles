@@ -12,13 +12,11 @@ public class MagicBulletArm : ArmBase, IRepeatable
     public MagicBulletConfig ConcreteConfig => Config as MagicBulletConfig;
     //锁定的敌人
 
-    public int RepeatLevel { get; set; }
+    public int RepeatLevel { get { return ConcreteConfig.RepeatLevel; } set { } }
 
     protected override void Start()
     {
         base.Start();
-        RepeatLevel = ConcreteConfig.RepeatLevel;
-
     }
 
     // [Inject]

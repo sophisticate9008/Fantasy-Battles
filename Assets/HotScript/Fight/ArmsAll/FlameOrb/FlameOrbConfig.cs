@@ -6,6 +6,7 @@ public class FlameOrbConfig : ArmConfigBase
     {
         base.Init();
         OnType = "stay";
+        DamagePos = "land";
         Speed = 0;
         fireTlc = 0.5f;
         ComponentStrs.Add("点燃");

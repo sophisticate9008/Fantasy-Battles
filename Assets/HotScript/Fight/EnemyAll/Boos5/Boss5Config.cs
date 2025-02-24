@@ -10,6 +10,7 @@ public class Boss5Config : EnemyConfigBase
         Blocks = 1;
         RangeFire = 0;
         CharacterType = "normal";
+        ActionType = "sky";
         Damage = 200;
         DerateWind = -0.5f;
     }

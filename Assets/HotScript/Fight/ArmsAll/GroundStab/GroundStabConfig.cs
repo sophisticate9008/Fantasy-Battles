@@ -6,6 +6,7 @@ public class GroundStabConfig : ArmConfigBase
     {
         base.Init();
         OnType = "stay";
+        DamagePos = "land";
         AttackCd = 0.1f;
         Speed = 1.5f;
         MaxForce = 50;

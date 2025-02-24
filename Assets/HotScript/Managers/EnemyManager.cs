@@ -108,7 +108,7 @@ public class EnemyManager : ManagerBase<EnemyManager>
 
     public void GenerateBoss()
     {
-        GameObject prefab = EnemyPrefabFactory.Create("Boos" + mb.bossIdx, "boss");
+        GameObject prefab = EnemyPrefabFactory.Create("Boss" + mb.bossIdx, "boss");
         GameObject theEnemy = Instantiate(prefab);
         theEnemy.SetActive(false);
         EnemyBase boss = SpawnMonster(mb.eliteIdx, theEnemy, false);

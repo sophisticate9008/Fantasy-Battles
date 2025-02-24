@@ -685,8 +685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1db271d4bf709247b2e4d047e90b1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirmButton: {fileID: 0}
-  noticeWindow: {fileID: 0}
   beginButton: {fileID: 115195622}
 --- !u!1 &1841089836
 GameObject:
@@ -910,7 +908,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932984015}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17def1fd179291f4dbef2a3bde6b6490, type: 3}
   m_Name: 

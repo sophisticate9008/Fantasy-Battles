@@ -10,5 +10,6 @@ public class JumpElectroBoomConfig: ArmConfigBase {
         DamageType = "elec";
         OnType = "enter";
         ComponentStrs.Add("麻痹");
+        
     }
 }

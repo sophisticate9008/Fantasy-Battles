@@ -248,8 +248,12 @@ public class ArmChildBase : MonoBehaviour, IArmChild
             for (int i = 0; i < Config.harmCount; i++)
             {
                 FighteManager.Instance.SelfDamageFilter(enemyObj, gameObject, percentage: Config.percentage);
+                CreateDamageOther(enemyObj);
             }
         }
+
+    }
+    public virtual void CreateDamageOther(GameObject enemyObj) {
 
     }
     public virtual void CreateDamage(GameObject enemyObj, float tlc)
@@ -407,6 +411,7 @@ public class ArmChildBase : MonoBehaviour, IArmChild
 
                     if (_ == "return" && isUseComponent)
                     {
+                        Debug.Log("退出组件触发");
                         component.Value.Exec(null);
                     }
                 }
@@ -471,13 +476,9 @@ public class ArmChildBase : MonoBehaviour, IArmChild
         }
 
     }
-    void ChangeScale(float scaleFactor)
+    public virtual void ChangeScale(float scaleFactor)
     {
         gameObject.transform.localScale *= scaleFactor;
-        foreach (Transform child in gameObject.transform)
-        {
-            child.localScale *= scaleFactor;
-        }
     }
     //技能持续时间结束后销毁
 
